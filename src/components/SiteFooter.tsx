@@ -1,0 +1,79 @@
+import { Link } from "@tanstack/react-router";
+import { Heart, Mail, Truck, Sparkles } from "lucide-react";
+
+const promises = [
+  { icon: Truck, title: "Fri frakt över 800 kr", text: "Spårbar leverans inom Sverige." },
+  { icon: Sparkles, title: "Skapas efter din order", text: "Digital skiss innan tillverkning." },
+  { icon: Heart, title: "Handgjort i Småland", text: "Små serier, stor omtanke." },
+];
+
+export function SiteFooter() {
+  return (
+    <footer className="mt-24">
+      <div className="border-y border-border bg-cream">
+        <div className="mx-auto grid max-w-6xl gap-6 px-5 py-10 sm:grid-cols-3">
+          {promises.map((p) => (
+            <div key={p.title} className="flex items-start gap-3">
+              <p.icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+              <div>
+                <p className="font-semibold">{p.title}</p>
+                <p className="text-sm text-muted-foreground">{p.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-ink text-ink-foreground">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-3">
+          <div>
+            <p className="font-serif text-2xl font-semibold">
+              Lins &amp; Lager <span className="text-gold">♥</span>
+            </p>
+            <p className="mt-3 max-w-xs text-sm opacity-80">
+              Personliga smycken, gravyr, 3D-utskrifter och foto – tillverkat för hand i Småland med
+              omtanke om varje detalj.
+            </p>
+            <p className="mt-4 flex items-center gap-2 text-sm opacity-80">
+              <Mail className="h-4 w-4 text-gold" /> hej@linsochlager.se
+            </p>
+          </div>
+
+          <nav className="text-sm" aria-label="Köpvillkor">
+            <h2 className="mb-3 font-serif text-lg font-semibold">Köpvillkor</h2>
+            <ul className="space-y-2 opacity-80">
+              <li>
+                <Link to="/frakt-leverans" className="hover:text-gold">
+                  Frakt &amp; leveranstid
+                </Link>
+              </li>
+              <li>
+                <Link to="/retur" className="hover:text-gold">
+                  Retur &amp; reklamation
+                </Link>
+              </li>
+              <li>
+                <Link to="/garanti" className="hover:text-gold">
+                  Garanti
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          <div className="text-sm opacity-80">
+            <h2 className="mb-3 font-serif text-lg font-semibold text-ink-foreground">
+              Har du en idé?
+            </h2>
+            <p>
+              Skriv några rader om tillfället, namnen och känslan du vill fånga – du får ett förslag
+              med skiss innan vi börjar tillverka.
+            </p>
+          </div>
+        </div>
+        <div className="border-t border-ink-foreground/15 py-5 text-center text-xs opacity-70">
+          © {new Date().getFullYear()} Lins &amp; Lager. Alla rättigheter förbehållna.
+        </div>
+      </div>
+    </footer>
+  );
+}

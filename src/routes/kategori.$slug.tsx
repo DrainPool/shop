@@ -1,0 +1,126 @@
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { ProductCard } from "@/components/ProductCard";
+import { CategoryIconRow } from "@/components/CategoryIconRow";
+import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
+import { CutoffCountdown } from "@/components/FomoBanner";
+import { fetchProducts } from "@/lib/shopify";
+import { getCategory } from "@/lib/categories";
+
+export const Route = createFileRoute("/kategori/$slug")({
+  component: CategoryPage,
+  loader: ({ params }) => {
+    const category = getCategory(params.slug);
+    if (!category) throw notFound();
+    return { category };
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) {
+      return { meta: [{ title: "Kategorin hittades inte – Lins & Lager" }, { name: "robots", content: "noindex" }] };
+    }
+    const { title, description } = loaderData.category;
+    const pageTitle = `${title} – Lins & Lager`;
+    return {
+      meta: [
+        { title: pageTitle },
+        { name: "description", content: description },
+        { property: "og:title", content: pageTitle },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    };
+  },
+  notFoundComponent: CategoryNotFound,
+});
+
+function CategoryNotFound() {
+  return (
+    <div className="mx-auto max-w-3xl px-5 py-24 text-center">
+      <h1 className="font-serif text-4xl font-black tracking-tight">Kategorin finns inte</h1>
+      <p className="mt-3 text-muted-foreground">Kika i sortimentet så hittar vi rätt present ihop.</p>
+      <Link to="/" className="mt-6 inline-block font-semibold text-primary hover:underline">
+        Till startsidan
+      </Link>
+    </div>
+  );
+}
+
+function CategoryPage() {
+  const { category } = Route.useLoaderData();
+  const {
+    data: products = [],
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["products", "tag", category.tag],
+    queryFn: () => fetchProducts(50, `tag:${category.tag}`),
+  });
+
+  const filters = useProductFilters(products, [category.tag]);
+
+  return (
+    <>
+      <CategoryIconRow activeSlug={category.slug} />
+      <div className="mx-auto max-w-6xl px-5 py-14">
+      <nav className="text-sm text-muted-foreground">
+        <Link to="/" className="hover:text-primary">
+          Hem
+        </Link>
+        <span className="px-2">/</span>
+        <span>{category.title}</span>
+      </nav>
+
+      <p className="mt-6 font-script text-2xl text-primary">{category.kicker}</p>
+      <h1 className="mt-1 font-serif text-4xl font-black tracking-tight md:text-5xl">
+        {category.title}
+      </h1>
+      <p className="mt-3 max-w-2xl text-lg text-muted-foreground">{category.description}</p>
+
+      <p className="mt-4 inline-flex flex-wrap items-center gap-2 rounded-full bg-gold/15 px-4 py-2 text-sm">
+        <span className="text-primary">✦</span>
+        <span>
+          Beställ inom <CutoffCountdown className="text-primary" /> så ryms din present i veckans
+          tillverkning – annars blir det nästa vecka.
+        </span>
+      </p>
+
+      {isPending ? (
+        <div className="flex justify-center py-16">
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+        </div>
+      ) : isError ? (
+        <p className="py-16 text-center text-muted-foreground">
+          Kunde inte hämta produkterna just nu. Försök gärna igen om en stund.
+        </p>
+      ) : products.length === 0 ? (
+        <div className="mt-10 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
+          <p className="font-serif text-xl font-bold">Inga produkter här ännu</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Hör av dig så tar vi fram något personligt till just ditt tillfälle.
+          </p>
+        </div>
+      ) : (
+        <>
+          <ProductFilters {...filters} total={products.length} />
+          {filters.filtered.length === 0 ? (
+            <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
+              <p className="font-serif text-xl font-bold">Inget matchade ditt filter</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Rensa filtret – eller skriv till mig, jag gör gärna något helt eget åt dig.
+              </p>
+            </div>
+          ) : (
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {filters.filtered.map((p) => (
+                <ProductCard key={p.node.id} product={p} />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+      </div>
+    </>
+  );
+}
