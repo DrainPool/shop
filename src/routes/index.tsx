@@ -8,12 +8,13 @@ import {
   Loader2,
   MessageCircle,
   Paintbrush,
-  Star,
+  Sparkles,
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
-import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
+
 import { TrustedMarquee } from "@/components/TrustedMarquee";
 import { CustomerGallery } from "@/components/CustomerGallery";
 import { WorkshopGallery } from "@/components/WorkshopGallery";
@@ -55,11 +56,11 @@ export const Route = createFileRoute("/")({
 });
 
 const categories = [
-  { title: "Till barnen", text: "Namnskyltar & dopsmycken", image: katBarn, slug: "barn" },
-  { title: "Personliga smycken", text: "Gravyr i silver & stål", image: katSmycken, slug: "smycken" },
-  { title: "Gravyr i trä & läder", text: "Skärbrädor & farsdag", image: katGravyr, slug: "gravyr" },
-  { title: "Fototavlor & 3D", text: "Minnen att hänga upp", image: katFoto, slug: "fototavlor" },
-  { title: "Till bröllopet", text: "Ringaskar & gästgåvor", image: katBrollop, slug: "brollop" },
+  { title: "Till barnen", text: "Dopsmycken, personliga halsband", image: katBarn, slug: "barn" },
+  { title: "Personliga smycken", text: "Gravyr i silver & guld", image: katSmycken, slug: "smycken" },
+  { title: "Gravyr i trä & läder", text: " Ge pappa en personlig present- En present för generationer", image: katGravyr, slug: "gravyr" },
+  { title: "Fototavlor & 3D", text: "Minnen du vill hänga upp", image: katFoto, slug: "fototavlor" },
+  { title: "Till bröllopet", text: "Bordsplaceringar & dekorationer", image: katBrollop, slug: "brollop" },
 ];
 
 const occasions = [
@@ -137,7 +138,8 @@ function Index() {
 
   const bestsellers = products.filter((p) => p.node.tags?.includes("bastsaljare"));
   const news = products.filter((p) => p.node.tags?.includes("nyhet"));
-  const filters = useProductFilters(products);
+
+
 
 
   return (
@@ -182,13 +184,10 @@ function Index() {
               </Button>
             </div>
             <p className="mt-7 flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <span className="flex text-gold">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <Star key={i} className="h-4 w-4 fill-current" />
-                ))}
-              </span>
-              4,9 av 5 · handgjort sedan 2016
+              <Sparkles className="h-4 w-4 text-gold" aria-hidden="true" />
+              Handgjort i egen verkstad · digital skiss innan gravyr · personlig kontakt hela vägen
             </p>
+
           </div>
 
           <div className="relative">
@@ -244,6 +243,65 @@ function Index() {
             </Link>
           ))}
 
+        </div>
+      </section>
+
+      <section id="om-mig" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-14">
+        <div className="grid items-center gap-10 md:grid-cols-[3fr_2fr]">
+          <div>
+            <p className="font-script text-2xl text-primary">mer än en pryl</p>
+            <h2 className="mt-1 font-serif text-4xl font-black tracking-tight">
+              Tillsammans skapar vi minnen
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Jag började med kameran och fotograferade bröllop och dop. Med tiden ville jag att
+              minnena skulle gå att hålla i – därför kom gravyren, 3D-printern och Cricut-maskinen.
+              Idag gör jag smycken, skärbrädor, namnbrickor och stickers till samma familjer,
+              företag och tillfällen.
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              Bröllop, dop, familj och produktbilder. Jag fotograferar dagen och gör sedan tavlan,
+              smycket eller graveringen i samma verkstad. Ett samtal, en person, hela vägen.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href="https://linsochlager.net/foto"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-gold px-6 py-3 font-semibold text-ink transition-colors hover:bg-gold/85"
+              >
+                Läs om fotografering
+              </a>
+              <Link
+                to="/kategori/$slug"
+                params={{ slug: "fototavlor" }}
+                className="rounded-full border border-ink/20 px-6 py-3 font-semibold transition-colors hover:border-primary hover:text-primary"
+              >
+                Se fototavlor
+              </Link>
+            </div>
+            <p className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">
+              <MessageCircle className="h-4 w-4 shrink-0 text-primary" />
+              <span>
+                Har du en idé som inte finns i butiken?{" "}
+                <a
+                  href="mailto:hej@linsochlager.se"
+                  className="font-semibold text-primary hover:underline"
+                >
+                  Hör av dig
+                </a>
+                , så löser vi den tillsammans.
+              </span>
+            </p>
+          </div>
+          <img
+            src={storyImage}
+            alt="Händer som håller en handgraverad träask i en ljus verkstad"
+            width={1200}
+            height={1200}
+            loading="lazy"
+            className="-rotate-1 rounded-3xl border-4 border-ink shadow-lift"
+          />
         </div>
       </section>
 
@@ -308,17 +366,22 @@ function Index() {
       )}
 
       <section id="butiken" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-14">
-        <p className="font-script text-2xl text-primary">hela sortimentet</p>
-        <h2 className="mt-1 font-serif text-4xl font-black tracking-tight">Allt jag gör</h2>
-        <p className="mt-2 text-muted-foreground">
-          Varje produkt kan personaliseras med namn, datum eller din egen hälsning – och du får
-          alltid en skiss innan jag graverar.
-        </p>
-
-        <div className="mt-5">
-          <ProductFilters {...filters} total={products.length} />
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="font-script text-2xl text-primary">hela sortimentet</p>
+            <h2 className="mt-1 font-serif text-4xl font-black tracking-tight">Allt jag gör</h2>
+            <p className="mt-2 max-w-xl text-muted-foreground">
+              Varje produkt kan personaliseras med namn, datum eller din egen hälsning – och du får
+              alltid en skiss innan jag graverar.
+            </p>
+          </div>
+          <Link
+            to="/sortiment"
+            className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
+          >
+            Visa allt <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
-
 
         {isPending ? (
           <div className="flex justify-center py-16">
@@ -335,18 +398,21 @@ function Index() {
               Här visas dina produkter så fort de finns i butiken.
             </p>
           </div>
-        ) : filters.filtered.length === 0 ? (
-          <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-            <p className="font-serif text-xl font-bold">Inget matchade ditt filter</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Rensa filtret – eller skriv till mig, jag gör gärna något helt eget åt dig.
-            </p>
-          </div>
         ) : (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {filters.filtered.map((p) => (
+            {products.slice(0, 8).map((p) => (
               <ProductCard key={p.node.id} product={p} />
             ))}
+          </div>
+        )}
+
+        {products.length > 8 && (
+          <div className="mt-10 text-center">
+            <Button asChild size="lg" className="rounded-full px-7">
+              <Link to="/sortiment">
+                Se hela sortimentet <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
+              </Link>
+            </Button>
           </div>
         )}
       </section>
@@ -401,44 +467,6 @@ function Index() {
               <p className="mt-2 text-sm text-muted-foreground">{s.text}</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section id="om-mig" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-10">
-        <div className="grid items-center gap-10 md:grid-cols-2">
-          <img
-            src={storyImage}
-            alt="Händer som håller en handgraverad träask i en ljus verkstad"
-            width={1200}
-            height={1200}
-            loading="lazy"
-            className="-rotate-1 rounded-3xl border-4 border-ink shadow-lift"
-          />
-          <div>
-            <p className="font-script text-2xl text-primary">mer än en pryl</p>
-            <h2 className="mt-1 font-serif text-4xl font-black tracking-tight">
-              Tillsammans skapar vi minnen
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Jag började med kameran och fotograferade bröllop och dop. Med tiden ville jag att
-              minnena skulle gå att hålla i – därför kom gravyren, 3D-printern och Cricut-maskinen.
-              Idag gör jag smycken, skärbrädor, namnbrickor och stickers till samma familjer,
-              företag och tillfällen.
-            </p>
-            <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-              <MessageCircle className="h-4 w-4 shrink-0 text-primary" />
-              <span>
-                Har du en idé som inte finns i butiken?{" "}
-                <a
-                  href="mailto:hej@linsochlager.se"
-                  className="font-semibold text-primary hover:underline"
-                >
-                  Hör av dig
-                </a>
-                , så löser vi den tillsammans.
-              </span>
-            </p>
-          </div>
         </div>
       </section>
     </>

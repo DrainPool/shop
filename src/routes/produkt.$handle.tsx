@@ -15,8 +15,16 @@ import { Button } from "@/components/ui/button";
 import { CutoffCountdown } from "@/components/FomoBanner";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductCustomizer } from "@/components/ProductCustomizer";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ReviewSection } from "@/components/ReviewSection";
+import { PaymentLogos } from "@/components/PaymentLogos";
 import { productTypes } from "@/lib/categories";
-import { fetchProductByHandle, fetchProducts, formatPrice } from "@/lib/shopify";
+import { fetchProductByHandle, fetchProducts, formatPrice, getPricing } from "@/lib/shopify";
 
 export const Route = createFileRoute("/produkt/$handle")({
   component: ProductPage,
@@ -75,9 +83,28 @@ function ProductPage() {
   const minPrice = node.priceRange.minVariantPrice;
   const tags = node.tags || [];
   const freeShipping = parseFloat(minPrice.amount) >= 800;
+  const { price, compare, onSale, currency, discountPercent } = getPricing(product);
+  const variants = node.variants?.edges ?? [];
+  const inStock = variants.length === 0 || variants.some((v) => v.node.availableForSale);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: node.title,
+    description: node.description,
+    image: images.map((i) => i.url),
+    brand: { "@type": "Brand", name: "Lins & Lager" },
+    offers: {
+      "@type": "Offer",
+      price: price.toFixed(2),
+      priceCurrency: currency,
+      availability: inStock
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+    },
+  };
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-12">
+    <div className="mx-auto max-w-6xl px-5 py-12 pb-28 md:pb-12">
       <Link
         to="/"
         className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
@@ -144,8 +171,27 @@ function ProductPage() {
 
         <div>
           <h1 className="font-serif text-4xl leading-tight font-semibold">{node.title}</h1>
-          <p className="mt-4 text-2xl font-medium text-primary">
-            {formatPrice(minPrice.amount, minPrice.currencyCode)}
+          <div className="mt-4 flex flex-wrap items-baseline gap-3">
+            <p className="text-2xl font-medium text-primary">{formatPrice(price, currency)}</p>
+            {onSale && (
+              <>
+                <span className="text-lg text-muted-foreground line-through">
+                  {formatPrice(compare, currency)}
+                </span>
+                <span className="rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground">
+                  Du sparar {discountPercent}%
+                </span>
+              </>
+            )}
+          </div>
+          <p className="mt-2 text-sm font-medium">
+            {inStock ? (
+              <span className="text-primary">I lager – tillverkas efter din beställning</span>
+            ) : (
+              <span className="text-muted-foreground">
+                Tillfälligt slut – hör av dig så bokar vi in nästa tillverkning
+              </span>
+            )}
           </p>
 
           <ul className="mt-6 space-y-2.5 text-sm">
@@ -174,7 +220,9 @@ function ProductPage() {
 
           <p className="mt-6 whitespace-pre-line text-muted-foreground">{node.description}</p>
 
-          <ProductCustomizer product={product} />
+          <div id="personalisering">
+            <ProductCustomizer product={product} />
+          </div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
             {[
@@ -203,7 +251,69 @@ function ProductPage() {
         </div>
       </div>
 
+      <div className="mt-14 grid gap-10 md:grid-cols-2">
+        <div>
+          <h2 className="font-serif text-2xl font-bold">Bra att veta</h2>
+          <Accordion type="single" collapsible className="mt-3">
+            <AccordionItem value="tillverkning">
+              <AccordionTrigger className="text-left font-semibold">
+                Så tillverkas den
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                Allt görs här i verkstaden efter din beställning. Du får en digital skiss på
+                gravyren innan jag börjar, och jag hör av mig om något i texten ser konstigt ut.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="leverans">
+              <AccordionTrigger className="text-left font-semibold">
+                Leverans &amp; leveranstid
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                Tillverkning 3–7 arbetsdagar, därefter spårbar frakt med PostNord. Fri frakt inom
+                Sverige vid köp över 800 kr. Har du ett datum som måste hållas – skriv det i
+                beställningen.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="retur">
+              <AccordionTrigger className="text-left font-semibold">
+                Retur &amp; reklamation
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                Personligt tillverkade varor har ingen ångerrätt, eftersom de görs unikt till dig.
+                Blir något fel på min sida gör jag om den – utan diskussion.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="skotsel">
+              <AccordionTrigger className="text-left font-semibold">Skötselråd</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                Trä torkas av för hand och oljas då och då. Smycken tål vardag men mår bäst utan
+                parfym och klor. Läder blir vackrare med åren.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <PaymentLogos className="mt-6" />
+        </div>
+        <ReviewSection />
+      </div>
+
       <RelatedProducts tags={product.node.tags || []} handle={handle} />
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 backdrop-blur md:hidden">
+        <div className="flex items-center justify-between gap-3">
+          <span className="min-w-0">
+            <span className="block truncate text-sm font-medium">{node.title}</span>
+            <span className="text-sm text-primary">{formatPrice(price, currency)}</span>
+          </span>
+          <Button asChild size="lg">
+            <a href="#personalisering">Personalisera</a>
+          </Button>
+        </div>
+      </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </div>
   );
 }

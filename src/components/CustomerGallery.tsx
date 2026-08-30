@@ -13,35 +13,41 @@ import { Link } from "@tanstack/react-router";
 const CARDS = [
   {
     id: "nyckelringar",
+    slug: "nyckelringar",
     image: "/images/ugc/nyckelringar.webp",
     tag: "Nyckelringar",
     alt: "Tränyckelringar klara för gravyr i verkstaden",
   },
   {
     id: "minnesaskar",
+    slug: "gravyr",
     image: "/images/ugc/minnesaskar.webp",
     tag: "Minnesaskar",
     alt: "Handgjorda träaskar i verkstaden",
   },
   {
     id: "smycken",
+    slug: "smycken",
     image: "/images/ugc/smycken.webp",
     tag: "Personliga smycken",
     alt: "Graverade halsband och hängen",
   },
   {
     id: "skarbrador",
+    slug: "skarbrador",
     image: "/images/ugc/skarbrador.webp",
     tag: "Skärbrädor",
     alt: "Skärbräda i ek under tillverkning",
   },
   {
     id: "barhalsband",
+    slug: "gravyr",
     image: "/images/ugc/barhalsband.webp",
     tag: "Graverade presenter",
     alt: "Graverade bar-halsband",
   },
 ];
+
 
 export function CustomerGallery() {
   return (
@@ -60,30 +66,36 @@ export function CustomerGallery() {
 
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {CARDS.map((c) => (
-            <figure
+            <Link
               key={c.id}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
+              to="/kategori/$slug"
+              params={{ slug: c.slug }}
+              aria-label={`Se ${c.tag}`}
+              className="group relative block overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
             >
-              <div className="aspect-[4/5] overflow-hidden bg-muted">
-                <img
-                  src={c.image}
-                  alt={c.alt}
-                  width={480}
-                  height={600}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <figcaption className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-2">
-                <span className="rounded-full bg-ink/85 px-3 py-1.5 text-xs font-semibold text-ink-foreground backdrop-blur-sm">
-                  {c.tag}
-                </span>
-                <span className="rounded-full bg-background/90 p-1.5 opacity-0 transition-opacity group-hover:opacity-100">
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </span>
-              </figcaption>
-            </figure>
+              <figure>
+                <div className="aspect-[4/5] overflow-hidden bg-muted">
+                  <img
+                    src={c.image}
+                    alt={c.alt}
+                    width={480}
+                    height={600}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <figcaption className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-2">
+                  <span className="rounded-full bg-ink/85 px-3 py-1.5 text-xs font-semibold text-ink-foreground backdrop-blur-sm">
+                    {c.tag}
+                  </span>
+                  <span className="rounded-full bg-background/90 p-1.5 opacity-0 transition-opacity group-hover:opacity-100">
+                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </span>
+                </figcaption>
+              </figure>
+            </Link>
           ))}
+
         </div>
 
         <div className="mt-10 text-center">

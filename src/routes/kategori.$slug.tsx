@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Sparkles } from "lucide-react";
+import { Check, Loader2, Sparkles } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
@@ -78,6 +78,19 @@ function CategoryPage() {
       </h1>
       <p className="mt-3 max-w-2xl text-lg text-muted-foreground">{category.description}</p>
 
+      <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        {[
+          "Tillverkas här hemma efter din beställning",
+          "Digital skiss på gravyren innan jag börjar",
+          "Fri frakt inom Sverige över 800 kr",
+        ].map((t) => (
+          <p key={t} className="flex items-start gap-2 rounded-2xl bg-cream p-4 text-sm">
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+            <span>{t}</span>
+          </p>
+        ))}
+      </div>
+
       <p className="mt-4 inline-flex flex-wrap items-center gap-2 rounded-full bg-gold/15 px-4 py-2 text-sm">
         <Sparkles className="h-4 w-4 text-primary" aria-hidden="true" />
         <span>
@@ -120,6 +133,31 @@ function CategoryPage() {
           )}
         </>
       )}
+      <section className="mt-16 rounded-3xl bg-cream p-8">
+        <h2 className="font-serif text-2xl font-bold">Om {category.title.toLowerCase()}</h2>
+        <p className="mt-3 max-w-3xl text-muted-foreground">
+          {category.description} Allt tillverkas i min egen verkstad – gravyr, tryck och montering –
+          och jag fotograferar dessutom bröllop, dop och produkter, så bilden du älskar kan bli både
+          tavla och graverat minne. Vet du inte vilket material som passar? Skriv några rader om vem
+          presenten är till, så föreslår jag ett upplägg som håller i många år.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
+          <Link to="/vanliga-fragor" className="text-primary hover:underline">
+            Vanliga frågor
+          </Link>
+          <a
+            href="https://linsochlager.net/foto"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            Boka fotografering
+          </a>
+          <Link to="/kontakt" className="text-primary hover:underline">
+            Fråga mig direkt
+          </Link>
+        </div>
+      </section>
       </div>
     </>
   );

@@ -1,11 +1,12 @@
 import { useMemo, useState } from "react";
-import { X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import manifest from "@/lib/galleryManifest.json";
 
 /**
- * Verkstadsgalleri — alla produktbilder i olika miljör (hall/handla/hem/bord).
- * Bilderna är produkt­presentationer i miljö (genererade), presenterade ärligt.
+ * Verkstadsgalleri — en klickbar produktbild per produkt.
+ * I lightboxen bläddrar besökaren mellan produktens alla bilder.
+ * Bilderna är produktpresentationer i miljö (genererade), presenterade ärligt.
  */
 
 const CAT_LABELS: Record<string, string> = {
@@ -23,120 +24,116 @@ const CAT_LABELS: Record<string, string> = {
   beslag: "Beslag",
 };
 
-const MILJO_LABELS: Record<string, string> = {
-  alla: "Alla miljör",
-  hall: "I handen",
-  handla: "I butiken",
-  hem: "Hemma",
-  bord: "På bordet",
-};
-
 type Entry = { cat: string; miljo: string; file: string; promptkey: string };
+type Product = { cat: string; images: Entry[] };
 
 export function WorkshopGallery() {
   const [cat, setCat] = useState("alla");
-  const [miljo, setMiljo] = useState("alla");
-  const [lightbox, setLightbox] = useState<Entry | null>(null);
+  const [lightbox, setLightbox] = useState<Product | null>(null);
+  const [imgIdx, setImgIdx] = useState(0);
 
-  const cats = useMemo(() => {
-    const set = new Set(manifest.map((m) => m.cat));
-    return ["alla", ...set];
+  const products = useMemo<Product[]>(() => {
+    const byCat = new Map<string, Entry[]>();
+    for (const m of manifest) {
+      const list = byCat.get(m.cat) ?? [];
+      list.push(m);
+      byCat.set(m.cat, list);
+    }
+    return [...byCat.entries()].map(([c, images]) => ({ cat: c, images }));
   }, []);
 
-  const miljos = useMemo(() => {
-    const set = new Set(manifest.filter((m) => cat === "alla" || m.cat === cat).map((m) => m.miljo));
-    return ["alla", ...set];
-  }, [cat]);
+  const cats = useMemo(() => ["alla", ...products.map((p) => p.cat)], [products]);
 
-  const shown = manifest.filter(
-    (m) => (cat === "alla" || m.cat === cat) && (miljo === "alla" || m.miljo === miljo),
-  );
+  const shown = cat === "alla" ? products : products.filter((p) => p.cat === cat);
+
+  const open = (p: Product) => {
+    setLightbox(p);
+    setImgIdx(0);
+  };
+
+  const step = (dir: number) => {
+    if (!lightbox) return;
+    setImgIdx((i) => (i + dir + lightbox.images.length) % lightbox.images.length);
+  };
 
   return (
     <section className="mx-auto max-w-6xl px-5 py-16">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="font-script text-3xl text-primary">ditt hantverk, miljör runt om</p>
+        <p className="font-script text-3xl text-primary">ditt hantverk, upp nära</p>
         <h2 className="mt-2 font-serif text-4xl font-black tracking-tight">
-          Verkstadsgalleri — {manifest.length} bilder
+          Verkstadsgalleri
         </h2>
         <p className="mt-3 text-lg text-muted-foreground">
-          Samma produkter fotograferade i olika miljör: i handen, i butiken, hemma och på bordet.
+          Klicka på en produkt för att se flera bilder av den — i olika vinklar och miljöer.
         </p>
       </div>
 
-      {/* Filter */}
-      <div className="mt-8 space-y-3">
-        <div className="flex flex-wrap justify-center gap-2">
-          {cats.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => { setCat(c); setMiljo("alla"); }}
-              className={cn(
-                "rounded-full border px-4 py-1.5 text-sm transition-colors",
-                cat === c
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-background hover:border-primary",
-              )}
-            >
-              {CAT_LABELS[c] || c}
-            </button>
-          ))}
-        </div>
-        <div className="flex flex-wrap justify-center gap-2">
-          {miljos.map((mj) => (
-            <button
-              key={mj}
-              type="button"
-              onClick={() => setMiljo(mj)}
-              className={cn(
-                "rounded-full border px-3 py-1 text-xs transition-colors",
-                miljo === mj
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-background hover:border-primary",
-              )}
-            >
-              {MILJO_LABELS[mj] || mj}
-            </button>
-          ))}
-        </div>
+      {/* Filter per produkt */}
+      <div className="mt-8 flex flex-wrap justify-center gap-2">
+        {cats.map((c) => (
+          <button
+            key={c}
+            type="button"
+            onClick={() => setCat(c)}
+            className={cn(
+              "rounded-full border px-4 py-1.5 text-sm transition-colors",
+              cat === c
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-background hover:border-primary",
+            )}
+          >
+            {CAT_LABELS[c] || c}
+          </button>
+        ))}
       </div>
 
-      {/* Grid */}
+      {/* Grid — en bild per produkt */}
       <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {shown.map((m) => (
+        {shown.map((p) => (
           <button
-            key={m.file}
+            key={p.cat}
             type="button"
-            onClick={() => setLightbox(m)}
-            className="group overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
+            onClick={() => open(p)}
+            className="group overflow-hidden rounded-2xl border border-border bg-card text-left shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
           >
             <img
-              src={`/images/products/${m.file}`}
-              alt={`${CAT_LABELS[m.cat] || m.cat} i ${MILJO_LABELS[m.miljo] || m.miljo}`}
+              src={`/images/products/${p.images[0]!.file}`}
+              alt={CAT_LABELS[p.cat] || p.cat}
               loading="lazy"
               className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
+            <div className="flex items-center justify-between px-3 py-2">
+              <span className="font-serif text-sm font-bold">
+                {CAT_LABELS[p.cat] || p.cat}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {p.images.length} bilder
+              </span>
+            </div>
           </button>
         ))}
       </div>
 
       {shown.length === 0 && (
-        <p className="mt-10 text-center text-muted-foreground">Inga bilder matchar filtret.</p>
+        <p className="mt-10 text-center text-muted-foreground">Inga produkter matchar filtret.</p>
       )}
 
-      {/* Lightbox */}
+      {/* Lightbox med bläddring mellan produktens bilder */}
       {lightbox && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 p-5 backdrop-blur-sm"
           onClick={() => setLightbox(null)}
         >
-          <div className="relative max-h-[90vh] max-w-[90vw]">
+          <div
+            className="relative max-h-[90vh] max-w-[90vw]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
-              src={`/images/products/${lightbox.file}`}
-              alt={`${CAT_LABELS[lightbox.cat]} ${MILJO_LABELS[lightbox.miljo]}`}
-              className="max-h-[85vh] w-auto rounded-2xl border-2 border-ink object-contain"
+              src={`/images/products/${lightbox.images[imgIdx]!.file}`}
+              alt={CAT_LABELS[lightbox.cat] || lightbox.cat}
+              className="max-h-[80vh] w-auto rounded-2xl border-2 border-ink object-contain"
             />
+
             <button
               type="button"
               onClick={() => setLightbox(null)}
@@ -145,9 +142,49 @@ export function WorkshopGallery() {
             >
               <X className="h-4 w-4" />
             </button>
-            <p className="mt-3 text-center font-serif text-lg font-bold text-background">
-              {CAT_LABELS[lightbox.cat] || lightbox.cat} · {MILJO_LABELS[lightbox.miljo] || lightbox.miljo}
-            </p>
+
+            {lightbox.images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => step(-1)}
+                  className="absolute top-1/2 -left-4 -translate-y-1/2 rounded-full bg-ink p-2 text-ink-foreground shadow-lift"
+                  aria-label="Föregående bild"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => step(1)}
+                  className="absolute top-1/2 -right-4 -translate-y-1/2 rounded-full bg-ink p-2 text-ink-foreground shadow-lift"
+                  aria-label="Nästa bild"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </>
+            )}
+
+            <div className="mt-3 flex items-center justify-center gap-3">
+              <p className="font-serif text-lg font-bold text-background">
+                {CAT_LABELS[lightbox.cat] || lightbox.cat}
+              </p>
+              {lightbox.images.length > 1 && (
+                <div className="flex gap-1.5">
+                  {lightbox.images.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setImgIdx(i)}
+                      aria-label={`Bild ${i + 1}`}
+                      className={cn(
+                        "h-2 w-2 rounded-full transition-colors",
+                        i === imgIdx ? "bg-background" : "bg-background/40",
+                      )}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

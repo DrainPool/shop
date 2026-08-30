@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Heart, Mail, Truck, Sparkles } from "lucide-react";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { PaymentLogos } from "@/components/PaymentLogos";
 
 const promises = [
   { icon: Truck, title: "Fri frakt över 800 kr", text: "Spårbar leverans inom Sverige." },
@@ -22,6 +24,10 @@ export function SiteFooter() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-5 py-12">
+        <NewsletterSignup />
       </div>
 
       <div className="bg-ink text-ink-foreground">
@@ -80,6 +86,21 @@ export function SiteFooter() {
                   Om mig
                 </Link>
               </li>
+              <li>
+                <Link to="/vanliga-fragor" className="hover:text-gold">
+                  Vanliga frågor
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="https://linsochlager.net/foto"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gold"
+                >
+                  Fotografering
+                </a>
+              </li>
             </ul>
           </nav>
 
@@ -106,6 +127,10 @@ export function SiteFooter() {
               </Link>
             </div>
           </div>
+        </div>
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-5 pb-6">
+          <p className="text-xs opacity-70">Trygg betalning via Shopifys kassa</p>
+          <PaymentLogos />
         </div>
         <div className="border-t border-ink-foreground/15 py-5 text-center text-xs opacity-70">
           © {new Date().getFullYear()} Lins &amp; Lager. Alla rättigheter förbehållna.

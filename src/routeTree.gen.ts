@@ -11,13 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ForetagRouteImport } from './routes/foretag'
+import { Route as FotograferingRouteImport } from './routes/fotografering'
 import { Route as FraktLeveransRouteImport } from './routes/frakt-leverans'
 import { Route as GarantiRouteImport } from './routes/garanti'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as OmMigRouteImport } from './routes/om-mig'
 import { Route as ReturRouteImport } from './routes/retur'
+import { Route as SortimentRouteImport } from './routes/sortiment'
 import { Route as TillverkningsprocessenRouteImport } from './routes/tillverkningsprocessen'
+import { Route as VanligaFragorRouteImport } from './routes/vanliga-fragor'
 import { Route as VillkorRouteImport } from './routes/villkor'
 import { Route as KategoriSlugRouteImport } from './routes/kategori.$slug'
 import { Route as ProduktHandleRouteImport } from './routes/produkt.$handle'
@@ -31,6 +34,11 @@ const IndexRoute = IndexRouteImport.update({
 const ForetagRoute = ForetagRouteImport.update({
   id: '/foretag',
   path: '/foretag',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FotograferingRoute = FotograferingRouteImport.update({
+  id: '/fotografering',
+  path: '/fotografering',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FraktLeveransRoute = FraktLeveransRouteImport.update({
@@ -63,9 +71,19 @@ const ReturRoute = ReturRouteImport.update({
   path: '/retur',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SortimentRoute = SortimentRouteImport.update({
+  id: '/sortiment',
+  path: '/sortiment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TillverkningsprocessenRoute = TillverkningsprocessenRouteImport.update({
   id: '/tillverkningsprocessen',
   path: '/tillverkningsprocessen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VanligaFragorRoute = VanligaFragorRouteImport.update({
+  id: '/vanliga-fragor',
+  path: '/vanliga-fragor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VillkorRoute = VillkorRouteImport.update({
@@ -92,13 +110,16 @@ const ApiPublicFirecrawlCrawlRoute = ApiPublicFirecrawlCrawlRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/foretag': typeof ForetagRoute
+  '/fotografering': typeof FotograferingRoute
   '/frakt-leverans': typeof FraktLeveransRoute
   '/garanti': typeof GarantiRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
   '/retur': typeof ReturRoute
+  '/sortiment': typeof SortimentRoute
   '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
+  '/vanliga-fragor': typeof VanligaFragorRoute
   '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
@@ -107,13 +128,16 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/foretag': typeof ForetagRoute
+  '/fotografering': typeof FotograferingRoute
   '/frakt-leverans': typeof FraktLeveransRoute
   '/garanti': typeof GarantiRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
   '/retur': typeof ReturRoute
+  '/sortiment': typeof SortimentRoute
   '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
+  '/vanliga-fragor': typeof VanligaFragorRoute
   '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
@@ -123,13 +147,16 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/foretag': typeof ForetagRoute
+  '/fotografering': typeof FotograferingRoute
   '/frakt-leverans': typeof FraktLeveransRoute
   '/garanti': typeof GarantiRoute
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
   '/retur': typeof ReturRoute
+  '/sortiment': typeof SortimentRoute
   '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
+  '/vanliga-fragor': typeof VanligaFragorRoute
   '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
@@ -140,13 +167,16 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/foretag'
+    | '/fotografering'
     | '/frakt-leverans'
     | '/garanti'
     | '/integritetspolicy'
     | '/kontakt'
     | '/om-mig'
     | '/retur'
+    | '/sortiment'
     | '/tillverkningsprocessen'
+    | '/vanliga-fragor'
     | '/villkor'
     | '/kategori/$slug'
     | '/produkt/$handle'
@@ -155,13 +185,16 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/foretag'
+    | '/fotografering'
     | '/frakt-leverans'
     | '/garanti'
     | '/integritetspolicy'
     | '/kontakt'
     | '/om-mig'
     | '/retur'
+    | '/sortiment'
     | '/tillverkningsprocessen'
+    | '/vanliga-fragor'
     | '/villkor'
     | '/kategori/$slug'
     | '/produkt/$handle'
@@ -170,13 +203,16 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/foretag'
+    | '/fotografering'
     | '/frakt-leverans'
     | '/garanti'
     | '/integritetspolicy'
     | '/kontakt'
     | '/om-mig'
     | '/retur'
+    | '/sortiment'
     | '/tillverkningsprocessen'
+    | '/vanliga-fragor'
     | '/villkor'
     | '/kategori/$slug'
     | '/produkt/$handle'
@@ -186,13 +222,16 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ForetagRoute: typeof ForetagRoute
+  FotograferingRoute: typeof FotograferingRoute
   FraktLeveransRoute: typeof FraktLeveransRoute
   GarantiRoute: typeof GarantiRoute
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   OmMigRoute: typeof OmMigRoute
   ReturRoute: typeof ReturRoute
+  SortimentRoute: typeof SortimentRoute
   TillverkningsprocessenRoute: typeof TillverkningsprocessenRoute
+  VanligaFragorRoute: typeof VanligaFragorRoute
   VillkorRoute: typeof VillkorRoute
   KategoriSlugRoute: typeof KategoriSlugRoute
   ProduktHandleRoute: typeof ProduktHandleRoute
@@ -213,6 +252,13 @@ declare module '@tanstack/react-router' {
       path: '/foretag'
       fullPath: '/foretag'
       preLoaderRoute: typeof ForetagRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fotografering': {
+      id: '/fotografering'
+      path: '/fotografering'
+      fullPath: '/fotografering'
+      preLoaderRoute: typeof FotograferingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/frakt-leverans': {
@@ -257,11 +303,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReturRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sortiment': {
+      id: '/sortiment'
+      path: '/sortiment'
+      fullPath: '/sortiment'
+      preLoaderRoute: typeof SortimentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tillverkningsprocessen': {
       id: '/tillverkningsprocessen'
       path: '/tillverkningsprocessen'
       fullPath: '/tillverkningsprocessen'
       preLoaderRoute: typeof TillverkningsprocessenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vanliga-fragor': {
+      id: '/vanliga-fragor'
+      path: '/vanliga-fragor'
+      fullPath: '/vanliga-fragor'
+      preLoaderRoute: typeof VanligaFragorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/villkor': {
@@ -298,13 +358,16 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ForetagRoute: ForetagRoute,
+  FotograferingRoute: FotograferingRoute,
   FraktLeveransRoute: FraktLeveransRoute,
   GarantiRoute: GarantiRoute,
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   OmMigRoute: OmMigRoute,
   ReturRoute: ReturRoute,
+  SortimentRoute: SortimentRoute,
   TillverkningsprocessenRoute: TillverkningsprocessenRoute,
+  VanligaFragorRoute: VanligaFragorRoute,
   VillkorRoute: VillkorRoute,
   KategoriSlugRoute: KategoriSlugRoute,
   ProduktHandleRoute: ProduktHandleRoute,

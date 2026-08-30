@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { CreditCard, Heart, Menu, Package, Paintbrush, Sparkles } from "lucide-react";
+import { CreditCard, Heart, Menu, Package, Paintbrush } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/sheet";
 import { CartDrawer } from "@/components/CartDrawer";
 import { FomoBanner } from "@/components/FomoBanner";
+import { MegaMenu } from "@/components/MegaMenu";
+import { SearchOverlay } from "@/components/SearchOverlay";
+
 
 const trustItems = [
   { icon: Package, text: "Fri frakt över 800 kr" },
@@ -23,15 +26,18 @@ const navLinks = [
   { label: "Hem", href: "/" },
   { label: "Mest älskade", slug: "bastsaljare" },
   { label: "Nyheter", slug: "nyheter" },
+  { label: "Fotografering", external: "https://linsochlager.net/foto" },
   { label: "Alla produkter", hash: "butiken" },
-  { label: "Vem ska du överraska?", hash: "tillfallen" },
   { label: "Så funkar det", hash: "sa-gar-det-till" },
   // Info-/förtroende-sidor: bara i mobilmeny + footer (håller topp-menyn ren)
+  { label: "Vem ska du överraska?", hash: "tillfallen", mobileOnly: true },
+  { label: "Vanliga frågor", href: "/vanliga-fragor", mobileOnly: true },
   { label: "Om mig", href: "/om-mig", mobileOnly: true },
   { label: "Så tillverkas det", href: "/tillverkningsprocessen", mobileOnly: true },
   { label: "Kontakt", href: "/kontakt", mobileOnly: true },
   { label: "Frakt & leverans", href: "/frakt-leverans", mobileOnly: true },
 ] as const;
+
 
 const primaryLinks = navLinks.filter((l) => !("mobileOnly" in l && l.mobileOnly));
 
@@ -56,6 +62,19 @@ function NavItem({
       </Link>
     );
   }
+  if ("external" in link) {
+    return (
+      <a
+        href={link.external}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+        onClick={onNavigate}
+      >
+        {link.label}
+      </a>
+    );
+  }
   if ("hash" in link) {
     return (
       <a href={`/#${link.hash}`} className={className} onClick={onNavigate}>
@@ -77,13 +96,10 @@ export function SiteHeader() {
     <>
       <div className="bg-ink text-ink-foreground">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-5 py-2.5 text-xs font-medium sm:text-sm">
-          {trustItems.map((item, i) => (
-            <span key={item.text} className="flex items-center gap-6">
-              {i > 0 && <Sparkles className="h-3.5 w-3.5 text-gold" aria-hidden="true" />}
-              <span className="flex items-center gap-1.5">
-                <item.icon className="h-4 w-4 text-gold" aria-hidden="true" />
-                {item.text}
-              </span>
+          {trustItems.map((item) => (
+            <span key={item.text} className="flex items-center gap-1.5">
+              <item.icon className="h-4 w-4 text-gold" aria-hidden="true" />
+              {item.text}
             </span>
           ))}
         </div>
@@ -97,13 +113,16 @@ export function SiteHeader() {
           </Link>
 
           <nav className="hidden items-center gap-6 text-sm font-semibold lg:flex">
+            <MegaMenu />
             {primaryLinks.map((l) => (
               <NavItem key={l.label} link={l} className="transition-colors hover:text-primary" />
             ))}
           </nav>
 
           <div className="flex items-center gap-2">
+            <SearchOverlay />
             <CartDrawer />
+
 
             {/* Mobilmeny – syns under lg */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>

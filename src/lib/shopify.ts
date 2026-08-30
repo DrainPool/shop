@@ -3,7 +3,7 @@ import { toast } from "sonner";
 export const SHOPIFY_API_VERSION = "2025-07";
 export const SHOPIFY_STORE_PERMANENT_DOMAIN = "sweet-savvy-shop-qfxf9-bktz9kkn.myshopify.com";
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
-export const SHOPIFY_STOREFRONT_TOKEN = import.meta.env["VITE_SHOPIFY_STOREFRONT_TOKEN"] || "DIN_STOREFRONT_TOKEN";
+export const SHOPIFY_STOREFRONT_TOKEN = "SHOPIFY_STOREFRONT_TOKEN";
 
 export interface ShopifyProduct {
   node: {
@@ -13,7 +13,9 @@ export interface ShopifyProduct {
     handle: string;
     productType?: string;
     tags?: string[];
+    availableForSale?: boolean;
     priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
+    compareAtPriceRange?: { minVariantPrice: { amount: string; currencyCode: string } };
     images: { edges: Array<{ node: { url: string; altText: string | null } }> };
     variants: {
       edges: Array<{
@@ -21,6 +23,7 @@ export interface ShopifyProduct {
           id: string;
           title: string;
           price: { amount: string; currencyCode: string };
+          compareAtPrice?: { amount: string; currencyCode: string } | null;
           availableForSale: boolean;
           selectedOptions: Array<{ name: string; value: string }>;
         };
@@ -29,6 +32,7 @@ export interface ShopifyProduct {
     options: Array<{ name: string; values: string[] }>;
   };
 }
+
 
 export async function storefrontApiRequest(query: string, variables: any = {}) {
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
@@ -64,7 +68,9 @@ const PRODUCT_FIELDS = `
   handle
   productType
   tags
+  availableForSale
   priceRange { minVariantPrice { amount currencyCode } }
+  compareAtPriceRange { minVariantPrice { amount currencyCode } }
   images(first: 5) { edges { node { url altText } } }
   variants(first: 20) {
     edges {
@@ -72,6 +78,7 @@ const PRODUCT_FIELDS = `
         id
         title
         price { amount currencyCode }
+        compareAtPrice { amount currencyCode }
         availableForSale
         selectedOptions { name value }
       }
@@ -112,4 +119,29 @@ export function formatPrice(amount: string | number, currencyCode = "SEK") {
     currency: currencyCode,
     maximumFractionDigits: 0,
   }).format(value);
+}
+
+/** Fritextsök mot Shopify (titel, beskrivning, tagg). */
+export async function searchProducts(term: string, first = 8): Promise<ShopifyProduct[]> {
+  const q = term.trim();
+  if (!q) return [];
+  const escaped = q.replace(/["\\]/g, "");
+  const query = `title:*${escaped}* OR tag:*${escaped}* OR product_type:*${escaped}*`;
+  const data = await storefrontApiRequest(STOREFRONT_QUERY, { first, query });
+  return data?.data?.products?.edges ?? [];
+}
+
+/** Rabatterat pris om jämförelsepris finns i Shopify. */
+export function getPricing(product: ShopifyProduct) {
+  const price = parseFloat(product.node.priceRange.minVariantPrice.amount);
+  const compareRaw = product.node.compareAtPriceRange?.minVariantPrice?.amount;
+  const compare = compareRaw ? parseFloat(compareRaw) : 0;
+  const onSale = compare > price;
+  return {
+    price,
+    compare,
+    onSale,
+    currency: product.node.priceRange.minVariantPrice.currencyCode,
+    discountPercent: onSale ? Math.round(((compare - price) / compare) * 100) : 0,
+  };
 }

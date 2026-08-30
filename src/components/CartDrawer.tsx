@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+import { Link } from "@tanstack/react-router";
+import { PaymentLogos } from "@/components/PaymentLogos";
+import { Progress } from "@/components/ui/progress";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -12,6 +16,8 @@ import {
 import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
+
+const FREE_SHIPPING_LIMIT = 800;
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,13 +68,31 @@ export function CartDrawer() {
 
         <div className="flex min-h-0 flex-1 flex-col px-4 pt-4">
           {items.length === 0 ? (
-            <div className="flex flex-1 items-center justify-center">
-              <div className="text-center">
-                <ShoppingBag className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
-                <p className="text-muted-foreground">Här dyker dina utvalda favoriter upp.</p>
+            <div className="flex flex-1 flex-col justify-center gap-4 text-center">
+              <ShoppingBag className="mx-auto h-12 w-12 text-muted-foreground" />
+              <p className="text-muted-foreground">Här dyker dina utvalda favoriter upp.</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {[
+                  { slug: "bastsaljare", label: "Mest älskade" },
+                  { slug: "nyheter", label: "Nyheter" },
+                  { slug: "smycken", label: "Smycken" },
+                  { slug: "skarbrador", label: "Skärbrädor" },
+                ].map((c) => (
+                  <Link
+                    key={c.slug}
+                    to="/kategori/$slug"
+                    params={{ slug: c.slug }}
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-full bg-cream px-4 py-2 text-sm font-medium hover:text-primary"
+                  >
+                    {c.label}
+                  </Link>
+                ))}
               </div>
+              <PaymentLogos className="justify-center" />
             </div>
           ) : (
+
             <>
               <div className="min-h-0 flex-1 overflow-y-auto pr-2">
                 <div className="space-y-4">
@@ -137,6 +161,25 @@ export function CartDrawer() {
                 </div>
               </div>
               <div className="flex-shrink-0 space-y-4 border-t bg-background pt-4 pb-4">
+                <div className="rounded-2xl bg-cream p-4">
+                  {totalPrice >= FREE_SHIPPING_LIMIT ? (
+                    <p className="text-sm font-semibold text-primary">
+                      Grattis – du har fri frakt inom Sverige!
+                    </p>
+                  ) : (
+                    <p className="text-sm">
+                      Handla för{" "}
+                      <span className="font-semibold text-primary">
+                        {formatPrice(FREE_SHIPPING_LIMIT - totalPrice, currency)}
+                      </span>{" "}
+                      till så bjuder jag på frakten.
+                    </p>
+                  )}
+                  <Progress
+                    className="mt-2 h-2"
+                    value={Math.min(100, (totalPrice / FREE_SHIPPING_LIMIT) * 100)}
+                  />
+                </div>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-semibold">Summa</span>
                   <span className="font-serif text-2xl font-semibold">
@@ -146,6 +189,7 @@ export function CartDrawer() {
                 <p className="text-xs text-muted-foreground">
                   Frakt och eventuell personlig gravyrtext bekräftas i kassan.
                 </p>
+
                 <Button
                   onClick={handleCheckout}
                   className="w-full"
@@ -161,6 +205,7 @@ export function CartDrawer() {
                     </>
                   )}
                 </Button>
+                <PaymentLogos className="justify-center" />
               </div>
             </>
           )}
