@@ -116,6 +116,16 @@ export const productTypes: Category[] = [
       "Massiv ek med djup gravyr – familjenamn, recept eller en hälsning till farsdagen.",
   },
   {
+    slug: "bil",
+    tag: "bil",
+    short: "Till bilen",
+    // Ikon: lägg in egen bild som src/assets/ikon-bil.png så swappen sker automatiskt
+    title: "Till bilen",
+    kicker: "för den som buffar på motorn",
+    description:
+      "Nyckelring med registreringsnummer, garageskylt med eget namn och plaketter till bilträffen – graverade detaljer för bilentusiasten som redan har allt.",
+  },
+  {
     slug: "lader",
     tag: "lader",
     short: "Läder",
@@ -180,7 +190,7 @@ export const occasions: Category[] = [
     title: "Till bröllopet",
     kicker: "för dagen ni minns hela livet",
     description:
-      "Ringaskar, placeringskort, graverade smycken och gästgåvor – allt med era namn och ert datum.",
+      "Graverade tostglas till toasten, glas- och flaskeetiketter till gästerna, ringaskar och placeringsdetaljer – allt med era namn och ert datum, i samma stil genom hela bröllopet.",
   },
   {
     slug: "dop",

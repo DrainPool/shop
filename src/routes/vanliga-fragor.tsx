@@ -24,6 +24,30 @@ const FAQ = [
     a: "Nej. Personligt tillverkade varor omfattas inte av ångerrätt eller öppet köp, eftersom de görs unikt till dig. Reklamationsrätten gäller alltid vid fel på varan eller om jag gjort fel mot din beställning.",
   },
   {
+    q: "Säljer ni paket till hela bröllopet?",
+    a: "Ja, det är det vanligaste sättet att beställa: graverade tostglas till toasten, glas- eller flaskeetiketter till gästerna och gåvor till brudparet – allt i samma stil med era namn och ert datum. Berätta om antal gäster och datum så får du ett paketpris med digital skiss innan jag börjar.",
+  },
+  {
+    q: "Han har redan allt – vad ska jag ge honom?",
+    a: "Min vanligaste utmaning: mannen som styrt verkstaden, garaget eller jaktpasset i 40–80 år och aldrig ber om något. Klassikerna som alltid landar rätt: skärbräda i ek med familjens favoritrecept graverat, tumbler med namn, garageskylt med hans bil eller en fototavla från ett gammalt fotografi. Berätta en mening om honom så skissar jag på förslag.",
+  },
+  {
+    q: "Kan jag få paketet skickat som present direkt till mottagaren?",
+    a: "Ja. Skriv mottagarens adress som leveransadress och att det är en present i beställningen – så packar jag det presentklart. Vill du ha en graverad hälsning med i paketet löser vi det också.",
+  },
+  {
+    q: "Kan ni gravera på föremål jag redan har?",
+    a: "Ofta – det beror på materialet. Trä, läder, glas och de flesta metaller går bra, medan vissa ytbehandlingar och lacker är svårare. Skicka en bild och en beskrivning så säger jag ärligt vad som är möjligt innan du skickar in något.",
+  },
+  {
+    q: "Kan jag få en nyckelring eller skylt med mitt registreringsnummer?",
+    a: "Ja – skriv reg-numret i beställningen så graverar jag det i bilskyltens stil. Observera att dekorativa skyltar bara får användas som dekoration (till exempel i garaget), inte på bilen i trafik – de är inte godkända av Transportstyrelsen.",
+  },
+  {
+    q: "Hinner ni klart innan jul eller farsdagen?",
+    a: "Allt tillverkas efter beställning, normalt på 3–7 arbetsdagar plus frakt, så ju tidigare du beställer desto säkrare. Har du ett viktigt datum – skriv det i beställningen så svarar jag ärligt om jag hinner innan dess.",
+  },
+  {
     q: "Vilka material jobbar du med?",
     a: "Massiv ek och björk, äkta läder, rostfritt stål, silver, glas, keramik och 3D-utskrifter i PLA/PETG. Berätta hur produkten ska användas så rekommenderar jag material som håller.",
   },

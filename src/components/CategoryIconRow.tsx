@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Car } from "lucide-react";
 import { productTypes } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 
@@ -25,14 +26,18 @@ export function CategoryIconRow({ activeSlug }: { activeSlug?: string }) {
                     active && "bg-gold/30",
                   )}
                 >
-                  <img
-                    src={c.icon}
-                    alt=""
-                    width={512}
-                    height={512}
-                    loading="lazy"
-                    className="h-10 w-10 object-contain opacity-80"
-                  />
+                  {c.icon ? (
+                    <img
+                      src={c.icon}
+                      alt=""
+                      width={512}
+                      height={512}
+                      loading="lazy"
+                      className="h-10 w-10 object-contain opacity-80"
+                    />
+                  ) : (
+                    <Car className="h-7 w-7 text-primary/80" aria-hidden="true" />
+                  )}
                 </span>
                 <span
                   className={cn(

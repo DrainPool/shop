@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Building2, CalendarClock, Check, Mail, Percent, Sparkles } from "lucide-react";
+import { Building2, CalendarClock, Check, Flag, Mail, Percent, Sparkles, Sticker, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import katForetag from "@/assets/till-foretag-2.jpg";
 import katGravyr from "@/assets/kat-gravyr.jpg";
@@ -11,13 +11,13 @@ export const Route = createFileRoute("/foretag")({
       {
         name: "description",
         content:
-          "Personliga företagsgåvor som stickar ut: graverade namnbrickor, kundgåvor med er logga och mässmaterial. Små serier – stora ögonblick. Offert inom 24 timmar.",
+          "Personliga företagsgåvor: graverade namnbrickor, kundgåvor med er logga, dash-plaketter och klasspriser för bilträffar. Paketpris till arrangören – offert inom 24 timmar.",
       },
       { property: "og:title", content: "Företagsgåvor & profilprodukter – Lins & Lager" },
       {
         property: "og:description",
         content:
-          "Graverade namnbrickor, kundgåvor och profilprodukter för företag. Små serier, personligt hantverk, offert inom 24 timmar.",
+          "Graverade namnbrickor, kundgåvor, bilträff-paket med plaketter och troféer. Små serier, personligt hantverk, offert inom 24 timmar.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -37,6 +37,10 @@ const offerings = [
   {
     title: "Profilprodukter med er logga",
     text: "Muggar, tumblers, kepsar och stickers med er logotyp graverad eller tryckt. Små upplagor från 10 st.",
+  },
+  {
+    title: "Bilträffar & klubbar",
+    text: "Dash-plaketter till deltagarna, klasspriser med gravyr och klubbdekaler – paketpris till arrangören.",
   },
   {
     title: "Mäss- & eventmaterial",
@@ -121,6 +125,46 @@ function BusinessPage() {
         </div>
       </section>
 
+      <section className="mt-20">
+        <p className="font-script text-2xl text-primary">för arrangören</p>
+        <h2 className="mt-1 font-serif text-4xl font-black tracking-tight">
+          Bilträff-paketet – allt till träffen i en beställning
+        </h2>
+        <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
+          Plaketter till alla deltagare, priser till vinnarna och dekaler till klubben. Du väljer
+          motiv – jag skissar, graverar och levererar i tid till donnet.
+        </p>
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {[
+            {
+              icon: Flag,
+              title: "Dash-plaketter i bulk",
+              text: "En plakett till varje deltagare med träffens namn, år och klass. Paket från ca 690 kr för 25 st.",
+            },
+            {
+              icon: Trophy,
+              title: "Klasspriser & troféer",
+              text: "Bäst i klass, Publikens val, Best in Show – graverade priser med biltema, 149–499 kr/st.",
+            },
+            {
+              icon: Sticker,
+              title: "Klubbdekaler & nyckelringar",
+              text: "Klubbmärket som dekal och graverad nyckelring – populärt i försäljning på plats. Från 10 st.",
+            },
+          ].map((p) => (
+            <div key={p.title} className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+              <p.icon className="h-6 w-6 text-primary" aria-hidden="true" />
+              <h3 className="mt-4 font-serif text-xl font-bold">{p.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{p.text}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 rounded-2xl bg-cream p-4 text-sm">
+          Ungefärliga paketpriser – exakt pris får du med offerten (inom 24 timmar) tillsammans med
+          digital skiss. On-site-gravyr på träffen kan bokas efter överenskommelse.
+        </p>
+      </section>
+
       <section className="mt-20 grid items-center gap-12 md:grid-cols-2">
         <img
           src={katGravyr}
@@ -156,7 +200,7 @@ function BusinessPage() {
           <div>
             <p className="font-script text-2xl text-gold">tryggt för inköpare</p>
             <h2 className="mt-2 font-serif text-3xl font-black tracking-tight md:text-4xl">
-              Därför companies väljer Lins & Lager
+              Därför företag väljer Lins & Lager
             </h2>
             <ul className="mt-6 space-y-3 text-sm opacity-90">
               {benefits.map((b) => (

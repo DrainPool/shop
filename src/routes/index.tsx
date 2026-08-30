@@ -60,13 +60,13 @@ const categories = [
   { title: "Personliga smycken", text: "Gravyr i silver & guld", image: katSmycken, slug: "smycken" },
   { title: "Gravyr i trä & läder", text: " Ge pappa en personlig present- En present för generationer", image: katGravyr, slug: "gravyr" },
   { title: "Fototavlor & 3D", text: "Minnen du vill hänga upp", image: katFoto, slug: "fototavlor" },
-  { title: "Till bröllopet", text: "Bordsplaceringar & dekorationer", image: katBrollop, slug: "brollop" },
+  { title: "Till bröllopet", text: "Toastglas, ringaskar & detaljer", image: katBrollop, slug: "brollop" },
 ];
 
 const occasions = [
   {
     title: "Bröllop",
-    text: "Ringaskar, placeringskort, smycken till brudparet och gästgåvor.",
+    text: "Graverade tostglas, ringaskar, glas-etiketter till gästerna och gåvor till brudparet.",
     images: [katBrollop, tillBrollop2],
     slug: "brollop",
   },

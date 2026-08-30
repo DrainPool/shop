@@ -77,6 +77,7 @@ export function CartDrawer() {
                   { slug: "nyheter", label: "Nyheter" },
                   { slug: "smycken", label: "Smycken" },
                   { slug: "skarbrador", label: "Skärbrädor" },
+                  { slug: "bil", label: "Till bilen" },
                 ].map((c) => (
                   <Link
                     key={c.slug}

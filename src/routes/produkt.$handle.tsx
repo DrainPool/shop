@@ -29,7 +29,9 @@ import { fetchProductByHandle, fetchProducts, formatPrice, getPricing } from "@/
 export const Route = createFileRoute("/produkt/$handle")({
   component: ProductPage,
   head: ({ params }) => {
-    const name = params.handle.replace(/-/g, " ");
+    // "regnummers-nyckelring-i-ek" -> "Regnummers-nyckelring-i-ek"
+    const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+    const name = capitalize(params.handle.replace(/-/g, " "));
     const title = `${name} – Lins & Lager`;
     const description = `${name} – personligt hantverk från Lins & Lager. Gravyr, smycken, 3D-utskrifter och foto, handgjort på beställning.`;
     return {

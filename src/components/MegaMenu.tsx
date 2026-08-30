@@ -26,6 +26,11 @@ const GROUPS: Group[] = [
     note: "Tryck och broderi från ett plagg och uppåt – till laget och företaget.",
   },
   {
+    label: "Till bilen & Garaget",
+    slugs: ["bil", "nyckelringar", "tumblers"],
+    note: "Nyckelring med reg.nr, garageskylt och graverade prylar till bilentusiasten.",
+  },
+  {
     label: "Foto & 3D",
     slugs: ["fototavlor", "3d-utskrifter"],
     note: "Jag fotograferar också – bilden blir tavla, smycke eller 3D-detalj.",
