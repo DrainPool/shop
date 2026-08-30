@@ -73,30 +73,32 @@
 
 :root {
   --radius: 0.9rem;
-  --background: oklch(0.972 0.018 75);
-  --foreground: oklch(0.27 0.035 40);
-  --card: oklch(0.99 0.012 80);
-  --card-foreground: oklch(0.27 0.035 40);
-  --popover: oklch(0.99 0.012 80);
-  --popover-foreground: oklch(0.27 0.035 40);
-  --primary: oklch(0.5 0.15 20);
-  --primary-foreground: oklch(0.98 0.012 80);
-  --secondary: oklch(0.93 0.035 78);
-  --secondary-foreground: oklch(0.3 0.035 40);
-  --muted: oklch(0.945 0.024 78);
-  --muted-foreground: oklch(0.47 0.03 45);
-  --accent: oklch(0.9 0.06 82);
-  --accent-foreground: oklch(0.3 0.04 40);
-  --gold: oklch(0.72 0.11 78);
-  --gold-foreground: oklch(0.27 0.035 40);
-  --cream: oklch(0.955 0.026 75);
-  --ink: oklch(0.24 0.035 35);
-  --ink-foreground: oklch(0.97 0.018 75);
+  /* Färgskala = samma som linsochlagernet (v2-paletten):
+     ink #141010, paper #F8F5F0, sepia #C8A96E, muted #8A8178, rule #E2DDD8 */
+  --background: oklch(0.967 0.008 85);      /* #F8F5F0 paper */
+  --foreground: oklch(0.18 0.012 30);       /* #141010 ink */
+  --card: oklch(0.975 0.006 85);
+  --card-foreground: oklch(0.18 0.012 30);
+  --popover: oklch(0.975 0.006 85);
+  --popover-foreground: oklch(0.18 0.012 30);
+  --primary: oklch(0.62 0.09 80);           /* #C8A96E sepia */
+  --primary-foreground: oklch(0.18 0.012 30);
+  --secondary: oklch(0.93 0.012 80);
+  --secondary-foreground: oklch(0.35 0.02 60);
+  --muted: oklch(0.92 0.012 80);
+  --muted-foreground: oklch(0.51 0.02 70);  /* #8A8178 muted */
+  --accent: oklch(0.93 0.02 82);
+  --accent-foreground: oklch(0.3 0.02 60);
+  --gold: oklch(0.72 0.1 80);               /* #C8A96E-aktig sepia/guld */
+  --gold-foreground: oklch(0.18 0.012 30);
+  --cream: oklch(0.95 0.01 85);
+  --ink: oklch(0.18 0.012 30);              /* #141010 */
+  --ink-foreground: oklch(0.95 0.01 85);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.985 0.006 90);
-  --border: oklch(0.88 0.028 72);
-  --input: oklch(0.88 0.028 72);
-  --ring: oklch(0.5 0.15 20);
+  --border: oklch(0.9 0.008 80);            /* #E2DDD8 rule */
+  --input: oklch(0.9 0.008 80);
+  --ring: oklch(0.62 0.09 80);
   --chart-1: oklch(0.54 0.03 145);
   --chart-2: oklch(0.56 0.065 85);
   --chart-3: oklch(0.68 0.05 60);

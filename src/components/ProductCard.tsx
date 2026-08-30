@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
@@ -76,8 +76,9 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
           </h3>
         </Link>
         <p className="line-clamp-2 flex-1 text-sm text-muted-foreground">{node.description}</p>
-        <p className="text-xs font-medium text-primary">
-          ✦ Graveras med din text – digital skiss innan jag börjar
+        <p className="flex items-center gap-1.5 text-xs font-medium text-primary">
+          <Sparkles className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          Graveras med din text – digital skiss innan jag börjar
         </p>
         <div className="mt-3 flex items-center justify-between gap-3">
           <span className="font-medium">

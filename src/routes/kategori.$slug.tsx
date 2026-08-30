@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
@@ -79,7 +79,7 @@ function CategoryPage() {
       <p className="mt-3 max-w-2xl text-lg text-muted-foreground">{category.description}</p>
 
       <p className="mt-4 inline-flex flex-wrap items-center gap-2 rounded-full bg-gold/15 px-4 py-2 text-sm">
-        <span className="text-primary">✦</span>
+        <Sparkles className="h-4 w-4 text-primary" aria-hidden="true" />
         <span>
           Beställ inom <CutoffCountdown className="text-primary" /> så ryms din present i veckans
           tillverkning – annars blir det nästa vecka.

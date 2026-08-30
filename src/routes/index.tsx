@@ -1,11 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Loader2, MessageCircle, Star } from "lucide-react";
+import {
+  ArrowRight,
+  Gift,
+  Heart,
+  Loader2,
+  MessageCircle,
+  Paintbrush,
+  Star,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
+import { TrustedMarquee } from "@/components/TrustedMarquee";
+import { CustomerGallery } from "@/components/CustomerGallery";
+import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
+import { GlowingShadow } from "@/components/ui/glowing-shadow";
 import { fetchProducts } from "@/lib/shopify";
 import heroImage from "@/assets/hero-workbench.jpg";
 import storyImage from "@/assets/story-hands.jpg";
@@ -130,9 +142,18 @@ function Index() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 md:grid-cols-2 md:py-20">
+        {/* Animerat rutnät i sepia-ton (Magic UI AnimatedGridPattern, MIT) */}
+        <AnimatedGridPattern
+          numSquares={30}
+          maxOpacity={0.08}
+          duration={3}
+          className="absolute inset-0 h-full w-full [mask-image:radial-gradient(500px_circle_at_center,white,transparent)] text-ink"
+        />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 md:grid-cols-2 md:py-20">
           <div>
-            <p className="font-script text-3xl text-primary">med namn, gravyr &amp; en massa kärlek ♥</p>
+            <p className="font-script text-3xl text-primary">
+              med namn, gravyr &amp; en massa kärlek <Heart className="inline h-5 w-5 fill-primary text-primary" aria-label="kärlek" />
+            </p>
             <h1 className="mt-3 font-serif text-5xl leading-[1.02] font-black tracking-tight md:text-6xl">
               Ge bort en present som verkligen{" "}
               <span className="relative inline-block text-primary">
@@ -146,7 +167,9 @@ function Index() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-full px-7 text-base">
-                <a href="#sortiment">Skapa din present 🎁</a>
+                <a href="#sortiment">
+                  <Gift className="mr-2 h-5 w-5" aria-hidden="true" /> Skapa din present
+                </a>
               </Button>
               <Button
                 asChild
@@ -168,19 +191,23 @@ function Index() {
           </div>
 
           <div className="relative">
-            <img
-              src={heroImage}
-              alt="Graverad skärbräda, personligt smycke, 3D-utskrifter och stickers på ett arbetsbord"
-              width={1600}
-              height={1104}
-              className="rotate-2 rounded-3xl border-4 border-ink shadow-lift"
-            />
+            <GlowingShadow>
+              <img
+                src={heroImage}
+                alt="Graverad skärbräda, personligt smycke, 3D-utskrifter och stickers på ett arbetsbord"
+                width={1600}
+                height={1104}
+                fetchPriority="high"
+                className="rotate-2 rounded-3xl border-4 border-ink shadow-lift"
+              />
+            </GlowingShadow>
             <span className="absolute -top-5 -left-4 -rotate-3 rounded-2xl border-2 border-ink bg-card px-4 py-2 font-script text-xl shadow-soft">
               Till <strong className="font-script">Astrid</strong>{" "}
-              <span className="text-primary">♥</span>
+              <Heart className="inline h-4 w-4 fill-primary text-primary align-middle" aria-hidden="true" />
             </span>
             <span className="absolute -right-3 -bottom-5 rotate-2 rounded-2xl border-2 border-ink bg-card px-4 py-2 text-sm font-semibold shadow-soft">
-              🎨 Skapas efter din beställning
+              <Paintbrush className="mr-1.5 inline h-4 w-4 align-middle" aria-hidden="true" />
+              Skapas efter din beställning
             </span>
           </div>
         </div>
@@ -236,9 +263,9 @@ function Index() {
               <Link
                 to="/kategori/$slug"
                 params={{ slug: "bastsaljare" }}
-                className="font-semibold text-primary hover:underline"
+                className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
               >
-                Se alla favoriter →
+                Se alla favoriter <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -266,9 +293,9 @@ function Index() {
             <Link
               to="/kategori/$slug"
               params={{ slug: "nyheter" }}
-              className="font-semibold text-primary hover:underline"
+              className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
             >
-              Se alla nyheter →
+              Se alla nyheter <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -281,7 +308,7 @@ function Index() {
 
       <section id="butiken" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-14">
         <p className="font-script text-2xl text-primary">hela sortimentet</p>
-        <h2 className="mt-1 font-serif text-4xl font-black tracking-tight">Allt jag gör ⭐</h2>
+        <h2 className="mt-1 font-serif text-4xl font-black tracking-tight">Allt jag gör</h2>
         <p className="mt-2 text-muted-foreground">
           Varje produkt kan personaliseras med namn, datum eller din egen hälsning – och du får
           alltid en skiss innan jag graverar.
@@ -343,7 +370,9 @@ function Index() {
                     {o.title}
                   </h3>
                   <p className="mt-2 text-sm text-muted-foreground">{o.text}</p>
-                  <p className="mt-4 text-sm font-semibold text-primary">Se produkter →</p>
+                  <p className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                    Se produkter <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </p>
                 </div>
               </Link>
             ))}
@@ -351,6 +380,10 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <TrustedMarquee />
+
+      <CustomerGallery />
 
       <section id="sa-gar-det-till" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-16">
         <p className="font-script text-2xl text-primary">enklare än du tror</p>
@@ -390,8 +423,17 @@ function Index() {
               företag och tillfällen.
             </p>
             <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-              <MessageCircle className="h-4 w-4 text-primary" />
-              Har du en idé som inte finns i butiken? Hör av dig, så löser vi den tillsammans.
+              <MessageCircle className="h-4 w-4 shrink-0 text-primary" />
+              <span>
+                Har du en idé som inte finns i butiken?{" "}
+                <a
+                  href="mailto:hej@linsochlager.se"
+                  className="font-semibold text-primary hover:underline"
+                >
+                  Hör av dig
+                </a>
+                , så löser vi den tillsammans.
+              </span>
             </p>
           </div>
         </div>

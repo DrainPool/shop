@@ -27,15 +27,18 @@ export function SiteFooter() {
       <div className="bg-ink text-ink-foreground">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-3">
           <div>
-            <p className="font-serif text-2xl font-semibold">
-              Lins &amp; Lager <span className="text-gold">♥</span>
+            <p className="flex items-center gap-2 font-serif text-2xl font-semibold">
+              Lins &amp; Lager <Heart className="h-5 w-5 fill-gold text-gold" aria-hidden="true" />
             </p>
             <p className="mt-3 max-w-xs text-sm opacity-80">
               Personliga smycken, gravyr, 3D-utskrifter och foto – tillverkat för hand i Småland med
               omtanke om varje detalj.
             </p>
             <p className="mt-4 flex items-center gap-2 text-sm opacity-80">
-              <Mail className="h-4 w-4 text-gold" /> hej@linsochlager.se
+              <Mail className="h-4 w-4 text-gold" />
+              <a href="mailto:hej@linsochlager.se" className="hover:text-gold hover:underline">
+                hej@linsochlager.se
+              </a>
             </p>
           </div>
 
@@ -57,6 +60,26 @@ export function SiteFooter() {
                   Garanti
                 </Link>
               </li>
+              <li>
+                <Link to="/villkor" className="hover:text-gold">
+                  Allmänna villkor
+                </Link>
+              </li>
+              <li>
+                <Link to="/integritetspolicy" className="hover:text-gold">
+                  Integritetspolicy
+                </Link>
+              </li>
+              <li>
+                <Link to="/tillverkningsprocessen" className="hover:text-gold">
+                  Tillverkningsprocessen
+                </Link>
+              </li>
+              <li>
+                <Link to="/om-mig" className="hover:text-gold">
+                  Om mig
+                </Link>
+              </li>
             </ul>
           </nav>
 
@@ -68,6 +91,20 @@ export function SiteFooter() {
               Skriv några rader om tillfället, namnen och känslan du vill fånga – du får ett förslag
               med skiss innan vi börjar tillverka.
             </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Link
+                to="/kontakt"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-gold/85"
+              >
+                <Mail className="h-4 w-4" /> Kontakta mig
+              </Link>
+              <Link
+                to="/foretag"
+                className="inline-flex items-center gap-2 rounded-full border border-ink-foreground/30 px-4 py-2 text-sm font-semibold transition-colors hover:border-gold hover:text-gold"
+              >
+                För företag
+              </Link>
+            </div>
           </div>
         </div>
         <div className="border-t border-ink-foreground/15 py-5 text-center text-xs opacity-70">

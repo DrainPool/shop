@@ -10,9 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ForetagRouteImport } from './routes/foretag'
 import { Route as FraktLeveransRouteImport } from './routes/frakt-leverans'
 import { Route as GarantiRouteImport } from './routes/garanti'
+import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
+import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as OmMigRouteImport } from './routes/om-mig'
 import { Route as ReturRouteImport } from './routes/retur'
+import { Route as TillverkningsprocessenRouteImport } from './routes/tillverkningsprocessen'
+import { Route as VillkorRouteImport } from './routes/villkor'
 import { Route as KategoriSlugRouteImport } from './routes/kategori.$slug'
 import { Route as ProduktHandleRouteImport } from './routes/produkt.$handle'
 import { Route as ApiPublicFirecrawlCrawlRouteImport } from './routes/api/public/firecrawl-crawl'
@@ -20,6 +26,11 @@ import { Route as ApiPublicFirecrawlCrawlRouteImport } from './routes/api/public
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForetagRoute = ForetagRouteImport.update({
+  id: '/foretag',
+  path: '/foretag',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FraktLeveransRoute = FraktLeveransRouteImport.update({
@@ -32,9 +43,34 @@ const GarantiRoute = GarantiRouteImport.update({
   path: '/garanti',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IntegritetspolicyRoute = IntegritetspolicyRouteImport.update({
+  id: '/integritetspolicy',
+  path: '/integritetspolicy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KontaktRoute = KontaktRouteImport.update({
+  id: '/kontakt',
+  path: '/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OmMigRoute = OmMigRouteImport.update({
+  id: '/om-mig',
+  path: '/om-mig',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReturRoute = ReturRouteImport.update({
   id: '/retur',
   path: '/retur',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TillverkningsprocessenRoute = TillverkningsprocessenRouteImport.update({
+  id: '/tillverkningsprocessen',
+  path: '/tillverkningsprocessen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VillkorRoute = VillkorRouteImport.update({
+  id: '/villkor',
+  path: '/villkor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KategoriSlugRoute = KategoriSlugRouteImport.update({
@@ -55,18 +91,30 @@ const ApiPublicFirecrawlCrawlRoute = ApiPublicFirecrawlCrawlRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/foretag': typeof ForetagRoute
   '/frakt-leverans': typeof FraktLeveransRoute
   '/garanti': typeof GarantiRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
+  '/om-mig': typeof OmMigRoute
   '/retur': typeof ReturRoute
+  '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
+  '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
   '/api/public/firecrawl-crawl': typeof ApiPublicFirecrawlCrawlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/foretag': typeof ForetagRoute
   '/frakt-leverans': typeof FraktLeveransRoute
   '/garanti': typeof GarantiRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
+  '/om-mig': typeof OmMigRoute
   '/retur': typeof ReturRoute
+  '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
+  '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
   '/api/public/firecrawl-crawl': typeof ApiPublicFirecrawlCrawlRoute
@@ -74,9 +122,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/foretag': typeof ForetagRoute
   '/frakt-leverans': typeof FraktLeveransRoute
   '/garanti': typeof GarantiRoute
+  '/integritetspolicy': typeof IntegritetspolicyRoute
+  '/kontakt': typeof KontaktRoute
+  '/om-mig': typeof OmMigRoute
   '/retur': typeof ReturRoute
+  '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
+  '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
   '/api/public/firecrawl-crawl': typeof ApiPublicFirecrawlCrawlRoute
@@ -85,27 +139,45 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/foretag'
     | '/frakt-leverans'
     | '/garanti'
+    | '/integritetspolicy'
+    | '/kontakt'
+    | '/om-mig'
     | '/retur'
+    | '/tillverkningsprocessen'
+    | '/villkor'
     | '/kategori/$slug'
     | '/produkt/$handle'
     | '/api/public/firecrawl-crawl'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/foretag'
     | '/frakt-leverans'
     | '/garanti'
+    | '/integritetspolicy'
+    | '/kontakt'
+    | '/om-mig'
     | '/retur'
+    | '/tillverkningsprocessen'
+    | '/villkor'
     | '/kategori/$slug'
     | '/produkt/$handle'
     | '/api/public/firecrawl-crawl'
   id:
     | '__root__'
     | '/'
+    | '/foretag'
     | '/frakt-leverans'
     | '/garanti'
+    | '/integritetspolicy'
+    | '/kontakt'
+    | '/om-mig'
     | '/retur'
+    | '/tillverkningsprocessen'
+    | '/villkor'
     | '/kategori/$slug'
     | '/produkt/$handle'
     | '/api/public/firecrawl-crawl'
@@ -113,9 +185,15 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ForetagRoute: typeof ForetagRoute
   FraktLeveransRoute: typeof FraktLeveransRoute
   GarantiRoute: typeof GarantiRoute
+  IntegritetspolicyRoute: typeof IntegritetspolicyRoute
+  KontaktRoute: typeof KontaktRoute
+  OmMigRoute: typeof OmMigRoute
   ReturRoute: typeof ReturRoute
+  TillverkningsprocessenRoute: typeof TillverkningsprocessenRoute
+  VillkorRoute: typeof VillkorRoute
   KategoriSlugRoute: typeof KategoriSlugRoute
   ProduktHandleRoute: typeof ProduktHandleRoute
   ApiPublicFirecrawlCrawlRoute: typeof ApiPublicFirecrawlCrawlRoute
@@ -128,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/foretag': {
+      id: '/foretag'
+      path: '/foretag'
+      fullPath: '/foretag'
+      preLoaderRoute: typeof ForetagRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/frakt-leverans': {
@@ -144,11 +229,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GarantiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/integritetspolicy': {
+      id: '/integritetspolicy'
+      path: '/integritetspolicy'
+      fullPath: '/integritetspolicy'
+      preLoaderRoute: typeof IntegritetspolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontakt': {
+      id: '/kontakt'
+      path: '/kontakt'
+      fullPath: '/kontakt'
+      preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/om-mig': {
+      id: '/om-mig'
+      path: '/om-mig'
+      fullPath: '/om-mig'
+      preLoaderRoute: typeof OmMigRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/retur': {
       id: '/retur'
       path: '/retur'
       fullPath: '/retur'
       preLoaderRoute: typeof ReturRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tillverkningsprocessen': {
+      id: '/tillverkningsprocessen'
+      path: '/tillverkningsprocessen'
+      fullPath: '/tillverkningsprocessen'
+      preLoaderRoute: typeof TillverkningsprocessenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/villkor': {
+      id: '/villkor'
+      path: '/villkor'
+      fullPath: '/villkor'
+      preLoaderRoute: typeof VillkorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kategori/$slug': {
@@ -177,9 +297,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ForetagRoute: ForetagRoute,
   FraktLeveransRoute: FraktLeveransRoute,
   GarantiRoute: GarantiRoute,
+  IntegritetspolicyRoute: IntegritetspolicyRoute,
+  KontaktRoute: KontaktRoute,
+  OmMigRoute: OmMigRoute,
   ReturRoute: ReturRoute,
+  TillverkningsprocessenRoute: TillverkningsprocessenRoute,
+  VillkorRoute: VillkorRoute,
   KategoriSlugRoute: KategoriSlugRoute,
   ProduktHandleRoute: ProduktHandleRoute,
   ApiPublicFirecrawlCrawlRoute: ApiPublicFirecrawlCrawlRoute,

@@ -44,9 +44,15 @@ export function CutoffCountdown({ className = "" }: { className?: string }) {
   );
 }
 
-export function FomoBanner() {
+export function FomoBanner({ floating = false }: { floating?: boolean }) {
   return (
-    <div className="border-y border-gold/30 bg-gold/10">
+    <div
+      className={
+        floating
+          ? "border-b border-gold/30 bg-gold/10"
+          : "border-y border-gold/30 bg-gold/10"
+      }
+    >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-5 py-2.5 text-center text-sm">
         <Clock className="h-4 w-4 shrink-0 text-primary" />
         <p className="text-foreground">

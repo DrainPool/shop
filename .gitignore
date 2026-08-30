@@ -7,3 +7,7 @@ dist
 tsconfig.tsbuildinfo
 .lovable
 .workspace
+.output
+.tanstack
+.wrangler
+.output
