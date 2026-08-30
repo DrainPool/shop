@@ -1,0 +1,554 @@
+[
+ {
+  "cat": "kors",
+  "miljo": "bord",
+  "file": "kors_bord_H0586.webp",
+  "promptkey": "H0586"
+ },
+ {
+  "cat": "kors",
+  "miljo": "hall",
+  "file": "kors_hall_H0586.webp",
+  "promptkey": "H0586"
+ },
+ {
+  "cat": "kors",
+  "miljo": "handla",
+  "file": "kors_handla_H0586.webp",
+  "promptkey": "H0586"
+ },
+ {
+  "cat": "kors",
+  "miljo": "hem",
+  "file": "kors_hem_H0586.webp",
+  "promptkey": "H0586"
+ },
+ {
+  "cat": "korgar",
+  "miljo": "bord",
+  "file": "korgar_bord_H0a665.webp",
+  "promptkey": "H0a665"
+ },
+ {
+  "cat": "korgar",
+  "miljo": "hall",
+  "file": "korgar_hall_H0a665.webp",
+  "promptkey": "H0a665"
+ },
+ {
+  "cat": "korgar",
+  "miljo": "handla",
+  "file": "korgar_handla_H0a665.webp",
+  "promptkey": "H0a665"
+ },
+ {
+  "cat": "korgar",
+  "miljo": "hem",
+  "file": "korgar_hem_H0a665.webp",
+  "promptkey": "H0a665"
+ },
+ {
+  "cat": "nyckelringar",
+  "miljo": "bord",
+  "file": "nyckelringar_bord_H13eab.webp",
+  "promptkey": "H13eab"
+ },
+ {
+  "cat": "nyckelringar",
+  "miljo": "hall",
+  "file": "nyckelringar_hall_H13eab.webp",
+  "promptkey": "H13eab"
+ },
+ {
+  "cat": "nyckelringar",
+  "miljo": "handla",
+  "file": "nyckelringar_handla_H13eab.webp",
+  "promptkey": "H13eab"
+ },
+ {
+  "cat": "nyckelringar",
+  "miljo": "hem",
+  "file": "nyckelringar_hem_H13eab.webp",
+  "promptkey": "H13eab"
+ },
+ {
+  "cat": "kors",
+  "miljo": "bord",
+  "file": "kors_bord_H1871.webp",
+  "promptkey": "H1871"
+ },
+ {
+  "cat": "kors",
+  "miljo": "hall",
+  "file": "kors_hall_H1871.webp",
+  "promptkey": "H1871"
+ },
+ {
+  "cat": "kors",
+  "miljo": "handla",
+  "file": "kors_handla_H1871.webp",
+  "promptkey": "H1871"
+ },
+ {
+  "cat": "kors",
+  "miljo": "hem",
+  "file": "kors_hem_H1871.webp",
+  "promptkey": "H1871"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "bord",
+  "file": "halshalsband_bord_H1880.webp",
+  "promptkey": "H1880"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "hall",
+  "file": "halshalsband_hall_H1880.webp",
+  "promptkey": "H1880"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "handla",
+  "file": "halshalsband_handla_H1880.webp",
+  "promptkey": "H1880"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "hem",
+  "file": "halshalsband_hem_H1880.webp",
+  "promptkey": "H1880"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "bord",
+  "file": "hjartan_bord_H1e2e7.webp",
+  "promptkey": "H1e2e7"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "hall",
+  "file": "hjartan_hall_H1e2e7.webp",
+  "promptkey": "H1e2e7"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "handla",
+  "file": "hjartan_handla_H1e2e7.webp",
+  "promptkey": "H1e2e7"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "hem",
+  "file": "hjartan_hem_H1e2e7.webp",
+  "promptkey": "H1e2e7"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "bord",
+  "file": "hjartan_bord_H23b2.webp",
+  "promptkey": "H23b2"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "hall",
+  "file": "hjartan_hall_H23b2.webp",
+  "promptkey": "H23b2"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "handla",
+  "file": "hjartan_handla_H23b2.webp",
+  "promptkey": "H23b2"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "hem",
+  "file": "hjartan_hem_H23b2.webp",
+  "promptkey": "H23b2"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "bord",
+  "file": "barhalsband_bord_H5b004.webp",
+  "promptkey": "H5b004"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "hall",
+  "file": "barhalsband_hall_H5b004.webp",
+  "promptkey": "H5b004"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "handla",
+  "file": "barhalsband_handla_H5b004.webp",
+  "promptkey": "H5b004"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "hem",
+  "file": "barhalsband_hem_H5b004.webp",
+  "promptkey": "H5b004"
+ },
+ {
+  "cat": "charms",
+  "miljo": "bord",
+  "file": "charms_bord_H60ab2.webp",
+  "promptkey": "H60ab2"
+ },
+ {
+  "cat": "charms",
+  "miljo": "hall",
+  "file": "charms_hall_H60ab2.webp",
+  "promptkey": "H60ab2"
+ },
+ {
+  "cat": "charms",
+  "miljo": "handla",
+  "file": "charms_handla_H60ab2.webp",
+  "promptkey": "H60ab2"
+ },
+ {
+  "cat": "charms",
+  "miljo": "hem",
+  "file": "charms_hem_H60ab2.webp",
+  "promptkey": "H60ab2"
+ },
+ {
+  "cat": "nyckelringar",
+  "miljo": "bord",
+  "file": "nyckelringar_bord_H63402.webp",
+  "promptkey": "H63402"
+ },
+ {
+  "cat": "nyckelringar",
+  "miljo": "hall",
+  "file": "nyckelringar_hall_H63402.webp",
+  "promptkey": "H63402"
+ },
+ {
+  "cat": "nyckelringar",
+  "miljo": "handla",
+  "file": "nyckelringar_handla_H63402.webp",
+  "promptkey": "H63402"
+ },
+ {
+  "cat": "nyckelringar",
+  "miljo": "hem",
+  "file": "nyckelringar_hem_H63402.webp",
+  "promptkey": "H63402"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "bord",
+  "file": "halshalsband_bord_H740e5.webp",
+  "promptkey": "H740e5"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "hall",
+  "file": "halshalsband_hall_H740e5.webp",
+  "promptkey": "H740e5"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "handla",
+  "file": "halshalsband_handla_H740e5.webp",
+  "promptkey": "H740e5"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "hem",
+  "file": "halshalsband_hem_H740e5.webp",
+  "promptkey": "H740e5"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "bord",
+  "file": "barhalsband_bord_H78735.webp",
+  "promptkey": "H78735"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "hall",
+  "file": "barhalsband_hall_H78735.webp",
+  "promptkey": "H78735"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "handla",
+  "file": "barhalsband_handla_H78735.webp",
+  "promptkey": "H78735"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "hem",
+  "file": "barhalsband_hem_H78735.webp",
+  "promptkey": "H78735"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "bord",
+  "file": "hjartan_bord_H7d33c.webp",
+  "promptkey": "H7d33c"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "hall",
+  "file": "hjartan_hall_H7d33c.webp",
+  "promptkey": "H7d33c"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "handla",
+  "file": "hjartan_handla_H7d33c.webp",
+  "promptkey": "H7d33c"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "hem",
+  "file": "hjartan_hem_H7d33c.webp",
+  "promptkey": "H7d33c"
+ },
+ {
+  "cat": "minnesaskar",
+  "miljo": "bord",
+  "file": "minnesaskar_bord_H83f8f.webp",
+  "promptkey": "H83f8f"
+ },
+ {
+  "cat": "minnesaskar",
+  "miljo": "hall",
+  "file": "minnesaskar_hall_H83f8f.webp",
+  "promptkey": "H83f8f"
+ },
+ {
+  "cat": "minnesaskar",
+  "miljo": "handla",
+  "file": "minnesaskar_handla_H83f8f.webp",
+  "promptkey": "H83f8f"
+ },
+ {
+  "cat": "minnesaskar",
+  "miljo": "hem",
+  "file": "minnesaskar_hem_H83f8f.webp",
+  "promptkey": "H83f8f"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "bord",
+  "file": "hjartan_bord_H883c3.webp",
+  "promptkey": "H883c3"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "hall",
+  "file": "hjartan_hall_H883c3.webp",
+  "promptkey": "H883c3"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "handla",
+  "file": "hjartan_handla_H883c3.webp",
+  "promptkey": "H883c3"
+ },
+ {
+  "cat": "hjartan",
+  "miljo": "hem",
+  "file": "hjartan_hem_H883c3.webp",
+  "promptkey": "H883c3"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "bord",
+  "file": "barhalsband_bord_H90ec1.webp",
+  "promptkey": "H90ec1"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "hall",
+  "file": "barhalsband_hall_H90ec1.webp",
+  "promptkey": "H90ec1"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "handla",
+  "file": "barhalsband_handla_H90ec1.webp",
+  "promptkey": "H90ec1"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "hem",
+  "file": "barhalsband_hem_H90ec1.webp",
+  "promptkey": "H90ec1"
+ },
+ {
+  "cat": "beslag",
+  "miljo": "bord",
+  "file": "beslag_bord_Ha7f65.webp",
+  "promptkey": "Ha7f65"
+ },
+ {
+  "cat": "beslag",
+  "miljo": "hall",
+  "file": "beslag_hall_Ha7f65.webp",
+  "promptkey": "Ha7f65"
+ },
+ {
+  "cat": "beslag",
+  "miljo": "handla",
+  "file": "beslag_handla_Ha7f65.webp",
+  "promptkey": "Ha7f65"
+ },
+ {
+  "cat": "beslag",
+  "miljo": "hem",
+  "file": "beslag_hem_Ha7f65.webp",
+  "promptkey": "Ha7f65"
+ },
+ {
+  "cat": "kedjor",
+  "miljo": "bord",
+  "file": "kedjor_bord_Hb408a.webp",
+  "promptkey": "Hb408a"
+ },
+ {
+  "cat": "kedjor",
+  "miljo": "hall",
+  "file": "kedjor_hall_Hb408a.webp",
+  "promptkey": "Hb408a"
+ },
+ {
+  "cat": "kedjor",
+  "miljo": "handla",
+  "file": "kedjor_handla_Hb408a.webp",
+  "promptkey": "Hb408a"
+ },
+ {
+  "cat": "kedjor",
+  "miljo": "hem",
+  "file": "kedjor_hem_Hb408a.webp",
+  "promptkey": "Hb408a"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "bord",
+  "file": "halshalsband_bord_Hbc72d.webp",
+  "promptkey": "Hbc72d"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "hall",
+  "file": "halshalsband_hall_Hbc72d.webp",
+  "promptkey": "Hbc72d"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "handla",
+  "file": "halshalsband_handla_Hbc72d.webp",
+  "promptkey": "Hbc72d"
+ },
+ {
+  "cat": "halshalsband",
+  "miljo": "hem",
+  "file": "halshalsband_hem_Hbc72d.webp",
+  "promptkey": "Hbc72d"
+ },
+ {
+  "cat": "charms",
+  "miljo": "bord",
+  "file": "charms_bord_Hd6a05.webp",
+  "promptkey": "Hd6a05"
+ },
+ {
+  "cat": "charms",
+  "miljo": "hall",
+  "file": "charms_hall_Hd6a05.webp",
+  "promptkey": "Hd6a05"
+ },
+ {
+  "cat": "charms",
+  "miljo": "handla",
+  "file": "charms_handla_Hd6a05.webp",
+  "promptkey": "Hd6a05"
+ },
+ {
+  "cat": "charms",
+  "miljo": "hem",
+  "file": "charms_hem_Hd6a05.webp",
+  "promptkey": "Hd6a05"
+ },
+ {
+  "cat": "armband",
+  "miljo": "bord",
+  "file": "armband_bord_Heddb6.webp",
+  "promptkey": "Heddb6"
+ },
+ {
+  "cat": "armband",
+  "miljo": "hall",
+  "file": "armband_hall_Heddb6.webp",
+  "promptkey": "Heddb6"
+ },
+ {
+  "cat": "armband",
+  "miljo": "handla",
+  "file": "armband_handla_Heddb6.webp",
+  "promptkey": "Heddb6"
+ },
+ {
+  "cat": "armband",
+  "miljo": "hem",
+  "file": "armband_hem_Heddb6.webp",
+  "promptkey": "Heddb6"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "bord",
+  "file": "barhalsband_bord_Hf1c25.webp",
+  "promptkey": "Hf1c25"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "hall",
+  "file": "barhalsband_hall_Hf1c25.webp",
+  "promptkey": "Hf1c25"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "handla",
+  "file": "barhalsband_handla_Hf1c25.webp",
+  "promptkey": "Hf1c25"
+ },
+ {
+  "cat": "barhalsband",
+  "miljo": "hem",
+  "file": "barhalsband_hem_Hf1c25.webp",
+  "promptkey": "Hf1c25"
+ },
+ {
+  "cat": "kedjor",
+  "miljo": "bord",
+  "file": "kedjor_bord_Hfcea4.webp",
+  "promptkey": "Hfcea4"
+ },
+ {
+  "cat": "kedjor",
+  "miljo": "hall",
+  "file": "kedjor_hall_Hfcea4.webp",
+  "promptkey": "Hfcea4"
+ },
+ {
+  "cat": "kedjor",
+  "miljo": "handla",
+  "file": "kedjor_handla_Hfcea4.webp",
+  "promptkey": "Hfcea4"
+ },
+ {
+  "cat": "kedjor",
+  "miljo": "hem",
+  "file": "kedjor_hem_Hfcea4.webp",
+  "promptkey": "Hfcea4"
+ }
+]

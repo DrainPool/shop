@@ -16,6 +16,7 @@ import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
 import { TrustedMarquee } from "@/components/TrustedMarquee";
 import { CustomerGallery } from "@/components/CustomerGallery";
+import { WorkshopGallery } from "@/components/WorkshopGallery";
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 import { GlowingShadow } from "@/components/ui/glowing-shadow";
 import { fetchProducts } from "@/lib/shopify";
@@ -384,6 +385,8 @@ function Index() {
       <TrustedMarquee />
 
       <CustomerGallery />
+
+      <WorkshopGallery />
 
       <section id="sa-gar-det-till" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-16">
         <p className="font-script text-2xl text-primary">enklare än du tror</p>
