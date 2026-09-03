@@ -1,7 +1,38 @@
+import { useId } from "react";
 import { Link } from "@tanstack/react-router";
 import { Heart, Mail, Truck, Sparkles } from "lucide-react";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PaymentLogos } from "@/components/PaymentLogos";
+
+/** Tape-variant av 21st.dev "Footer Taped Design" (radu, id 4448) — dekortejp i sepia. */
+function Tape({ className }: { className?: string }) {
+  const sheenId = useId();
+  return (
+    <svg
+      viewBox="0 0 95 40"
+      fill="none"
+      aria-hidden="true"
+      className={className}
+    >
+      <path
+        d="M4 12 L91 4 L88 30 L2 34 Z"
+        fill="currentColor"
+        opacity="0.85"
+      />
+      <path
+        d="M4 12 L91 4 L88 30 L2 34 Z"
+        fill={`url(#${sheenId})`}
+      />
+      <defs>
+        <linearGradient id={sheenId} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0.25" />
+          <stop offset="50%" stopColor="#fff" stopOpacity="0.05" />
+          <stop offset="100%" stopColor="#000" stopOpacity="0.12" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
 
 const promises = [
   { icon: Truck, title: "Fri frakt över 800 kr", text: "Spårbar leverans inom Sverige." },
@@ -12,7 +43,9 @@ const promises = [
 export function SiteFooter() {
   return (
     <footer className="mt-24">
-      <div className="border-y border-border bg-cream">
+      <div className="relative border-y border-border bg-cream">
+        <Tape className="absolute -top-3 left-6 h-7 w-16 -rotate-6 text-gold/70" />
+        <Tape className="absolute -bottom-3 right-8 h-7 w-16 rotate-3 text-gold/70" />
         <div className="mx-auto grid max-w-6xl gap-6 px-5 py-10 sm:grid-cols-3">
           {promises.map((p) => (
             <div key={p.title} className="flex items-start gap-3">
