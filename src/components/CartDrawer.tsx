@@ -13,7 +13,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
+import { ShoppingBag, Minus, Plus, Trash2, ExternalLink } from "lucide-react";
+import { LiquidLoader } from "@/components/ui/liquid-loader";
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
 
@@ -198,7 +199,7 @@ export function CartDrawer() {
                   disabled={items.length === 0 || isLoading || isSyncing}
                 >
                   {isLoading || isSyncing ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <LiquidLoader size="sm" variant="light" label="Förbereder kassan" />
                   ) : (
                     <>
                       <ExternalLink className="mr-2 h-4 w-4" />

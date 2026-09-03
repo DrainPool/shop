@@ -6,11 +6,11 @@ import {
   Check,
   Clock,
   Heart,
-  Loader2,
   ShieldCheck,
   Sparkles,
   Truck,
 } from "lucide-react";
+import { LiquidLoader } from "@/components/ui/liquid-loader";
 import { Button } from "@/components/ui/button";
 import { CutoffCountdown } from "@/components/FomoBanner";
 import { ProductCard } from "@/components/ProductCard";
@@ -59,8 +59,9 @@ function ProductPage() {
 
   if (isPending) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
+        <LiquidLoader size="md" label="Hämtar produkten" />
+        <p className="text-sm text-muted-foreground">Hämtar produkten &hellip;</p>
       </div>
     );
   }

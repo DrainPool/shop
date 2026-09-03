@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Check, Loader2, Sparkles } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
+import { LiquidLoader } from "@/components/ui/liquid-loader";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
 import { CutoffCountdown } from "@/components/FomoBanner";
@@ -101,7 +102,7 @@ function CategoryPage() {
 
       {isPending ? (
         <div className="flex justify-center py-16">
-          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+          <LiquidLoader size="sm" label="Hämtar produkter" />
         </div>
       ) : isError ? (
         <p className="py-16 text-center text-muted-foreground">
