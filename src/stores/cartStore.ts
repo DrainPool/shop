@@ -340,6 +340,9 @@ export const useCartStore = create<CartStore>()(
       syncCart: async () => {
         const { cartId, isSyncing, clearCart } = get();
         if (!cartId || isSyncing) return;
+        // Demo-läge: cart finns bara lokalt — ingen Shopify-sync
+        const { isDemoMode } = await import("@/lib/demoProducts");
+        if (isDemoMode()) return;
         set({ isSyncing: true });
         try {
           const data = await storefrontApiRequest(CART_QUERY, { id: cartId });
