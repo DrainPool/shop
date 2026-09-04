@@ -116,6 +116,15 @@ function matchLine(edges: any[], item: CartItem) {
 }
 
 async function createShopifyCart(item: CartItem) {
+  // Demo-läge: hoppa över Shopify-anrop — lokalt cart räcker för QA
+  const { isDemoMode } = await import("@/lib/demoProducts");
+  if (isDemoMode()) {
+    return {
+      cartId: `demo-cart-${Date.now()}`,
+      checkoutUrl: "https://demo.checkout.invalid",
+      lineId: `demo-line-${Date.now()}`,
+    };
+  }
   const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
     input: {
       lines: [
@@ -142,6 +151,11 @@ async function createShopifyCart(item: CartItem) {
 }
 
 async function addLineToShopifyCart(cartId: string, item: CartItem) {
+  // Demo-läge: hoppa över Shopify-anrop
+  const { isDemoMode } = await import("@/lib/demoProducts");
+  if (isDemoMode()) {
+    return { success: true, lineId: `demo-line-${Date.now()}` };
+  }
   const data = await storefrontApiRequest(CART_LINES_ADD_MUTATION, {
     cartId,
     lines: [
@@ -166,6 +180,9 @@ async function addLineToShopifyCart(cartId: string, item: CartItem) {
 }
 
 async function updateShopifyCartLine(cartId: string, lineId: string, quantity: number) {
+  // Demo-läge: hoppa över Shopify-anrop
+  const { isDemoMode } = await import("@/lib/demoProducts");
+  if (isDemoMode()) return { success: true };
   const data = await storefrontApiRequest(CART_LINES_UPDATE_MUTATION, {
     cartId,
     lines: [{ id: lineId, quantity }],

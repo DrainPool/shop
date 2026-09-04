@@ -104,11 +104,15 @@ const PRODUCT_BY_HANDLE_QUERY = `
 `;
 
 export async function fetchProducts(first = 50, query?: string): Promise<ShopifyProduct[]> {
+  const { isDemoMode, demoFetchProducts } = await import("@/lib/demoProducts");
+  if (isDemoMode()) return demoFetchProducts(first, query);
   const data = await storefrontApiRequest(STOREFRONT_QUERY, { first, query });
   return data?.data?.products?.edges ?? [];
 }
 
 export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | null> {
+  const { isDemoMode, demoFetchProductByHandle } = await import("@/lib/demoProducts");
+  if (isDemoMode()) return demoFetchProductByHandle(handle);
   const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
   const node = data?.data?.productByHandle;
   return node ? { node } : null;
