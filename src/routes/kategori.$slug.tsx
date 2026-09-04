@@ -23,8 +23,26 @@ export const Route = createFileRoute("/kategori/$slug")({
     if (!loaderData) {
       return { meta: [{ title: "Kategorin hittades inte – Lins & Lager" }, { name: "robots", content: "noindex" }] };
     }
-    const { title, description } = loaderData.category;
+    const { title, description, slug } = loaderData.category;
     const pageTitle = `${title} – Lins & Lager`;
+    const jsonLd = [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Hem", item: "https://linsochlager.net/" },
+          { "@type": "ListItem", position: 2, name: "Sortiment", item: "https://linsochlager.net/sortiment" },
+          { "@type": "ListItem", position: 3, name: title, item: `https://linsochlager.net/kategori/${slug}` },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: title,
+        description,
+        url: `https://linsochlager.net/kategori/${slug}`,
+      },
+    ];
     return {
       meta: [
         { title: pageTitle },
@@ -33,6 +51,12 @@ export const Route = createFileRoute("/kategori/$slug")({
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(jsonLd),
+        },
       ],
     };
   },
