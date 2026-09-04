@@ -46,7 +46,7 @@ export const productTypes: Category[] = [
     title: "Graverade glas",
     kicker: "skål för det ni firar",
     description:
-      "Ölglas, vinglas och whiskyglas med sandblästrad gravyr. Perfekt till toastmastern, brudparet eller kollegan som fyller jämnt.",
+      "Ölglas, vinglas, champagneglas och whiskyglas med sandblästrad gravyr som tål maskindisk. Perfekt till toastmastern, brudparet, studenten eller kollegan som fyller jämnt.",
   },
   {
     slug: "kepsar",
@@ -105,7 +105,8 @@ export const productTypes: Category[] = [
     icon: ikonSmycke,
     title: "Personliga smycken",
     kicker: "gravyr i silver & guld",
-    description: "Halsband och hängen graverade med namn, datum eller initialer.",
+    description:
+      "Namnhalsband, hängen och armband graverade med namn, datum eller initialer – även som parsmycken. Levereras i smyckesask, klart att ge bort.",
   },
   {
     slug: "skarbrador",
@@ -115,7 +116,7 @@ export const productTypes: Category[] = [
     title: "Skärbrädor i ek",
     kicker: "till köket och grillplatsen",
     description:
-      "Massiv ek med djup gravyr – familjenamn, recept eller en hälsning till farsdagen.",
+      "Massiv ek med djup gravyr – familjenamn, favoritreceptet eller en hälsning till farsdagen. Välj ett av mina färdiga motiv eller skriv din egen text.",
   },
   {
     slug: "bil",
