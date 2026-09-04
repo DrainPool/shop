@@ -53,7 +53,7 @@ const FAQ = [
   },
   {
     q: "Hinner ni klart innan jul eller farsdagen?",
-    a: "Allt tillverkas efter beställning, normalt på 3–7 arbetsdagar plus frakt, så ju tidigare du beställer desto säkrare. Har du ett viktigt datum – skriv det i beställningen så svarar jag ärligt om jag hinner innan dess.",
+    a: "Allt tillverkas efter beställning, normalt på 3–7 arbetsdagar plus frakt, så ju tidigare du beställer desto säkrare. Inför jul rekommenderar jag att beställa senast i början av december – skriv att presenten ska vara framme till jul i beställningen så prioriterar jag den och svarar ärligt om jag hinner.",
   },
   {
     q: "Vilka material jobbar du med?",

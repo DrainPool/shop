@@ -77,6 +77,21 @@ function CategoryPage() {
       </h1>
       <p className="mt-3 max-w-2xl text-lg text-muted-foreground">{category.description}</p>
 
+      {category.subcategories && category.subcategories.length > 0 && (
+        <div className="mt-6 flex flex-wrap gap-2">
+          {category.subcategories.map((sub) => (
+            <Link
+              key={sub.slug}
+              to="/kategori/$slug"
+              params={{ slug: sub.slug }}
+              className="rounded-full bg-cream px-4 py-2 text-sm font-medium transition-colors hover:text-primary"
+            >
+              {sub.label}
+            </Link>
+          ))}
+        </div>
+      )}
+
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
         {[
           "Tillverkas här hemma efter din beställning",
@@ -131,6 +146,41 @@ function CategoryPage() {
       )}
 
       <RecentlyViewed />
+
+      {category.slug === "jul" && (
+        <section className="mt-16 rounded-3xl bg-ink p-8 text-ink-foreground md:p-10">
+          <p className="font-script text-2xl text-gold">julklappsguiden</p>
+          <h2 className="mt-1 font-serif text-3xl font-black tracking-tight">
+            Vem ska du överraska i år?
+          </h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {[
+              {
+                t: "Han som har allt",
+                d: "Tumbler med namn, garageskylt med hans bil eller skärbräda med favoritreceptet graverat.",
+              },
+              {
+                t: "Barn & ungdomar",
+                d: "Namnskylt till barnrummet, nyckelring med första reg-numret eller dopring som följer genom livet.",
+              },
+              {
+                t: "Kollegor & värdar",
+                d: "Graverade glas, julgranskulor med årtalet och små presenter som känns personliga utan att kosta skjortan.",
+              },
+            ].map((g) => (
+              <div key={g.t} className="rounded-2xl bg-ink-foreground/5 p-5">
+                <h3 className="font-serif text-lg font-bold">{g.t}</h3>
+                <p className="mt-1.5 text-sm opacity-80">{g.d}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 flex items-center gap-2 rounded-2xl bg-ink-foreground/5 p-4 text-sm">
+            <Sparkles className="h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
+            Beställ senast i början av december så hinner jag med – skriv \"framme till jul\" i
+            beställningen så prioriterar jag den.
+          </p>
+        </section>
+      )}
 
       <section className="mt-16 rounded-3xl bg-cream p-8">
 

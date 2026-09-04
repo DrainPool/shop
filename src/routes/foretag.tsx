@@ -195,6 +195,35 @@ function BusinessPage() {
         </div>
       </section>
 
+      <section className="mt-20 rounded-3xl border border-border bg-card p-10 md:p-12">
+        <p className="font-script text-2xl text-primary">staffelpriser</p>
+        <h2 className="mt-1 font-serif text-3xl font-black tracking-tight md:text-4xl">
+          Ju fler, desto vänligare pris
+        </h2>
+        <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
+          Volymstaffeln nedan är vägledande – exakt pris sätts efter motiv, material och antal i
+          offerten (inom 24 timmar, alltid fast pris innan ni bestämmer er).
+        </p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { n: "10+ st", d: "Profilprodukter & gåvor — startnivån" },
+            { n: "25+ st", d: "Bilträff-plaketter — paketpris till arrangören" },
+            { n: "50+ st", d: "Personal- & kundgåvor — staffelrabatt nivå 2" },
+            { n: "100+ st", d: "Större serier — skräddarsytt paket + faktura 30 d" },
+          ].map((s) => (
+            <div key={s.n} className="rounded-2xl bg-cream p-5">
+              <p className="font-serif text-2xl font-black text-primary">{s.n}</p>
+              <p className="mt-1.5 text-sm text-muted-foreground">{s.d}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
+          <Check className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+          Alltid: digital skiss godkänns innan tillverkning · faktura med godkänd kredit ·
+          presentklart per mottagare.
+        </p>
+      </section>
+
       <section className="mt-20 rounded-3xl bg-ink p-10 text-ink-foreground md:p-14">
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div>

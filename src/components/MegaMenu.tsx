@@ -37,7 +37,7 @@ const GROUPS: Group[] = [
   },
 ];
 
-const OCCASION_SLUGS = ["brollop", "dop", "foretag", "farsdag", "barn", "gravyr"];
+const OCCASION_SLUGS = ["jul", "brollop", "dop", "fodelsedag", "foretag", "farsdag", "barn", "gravyr"];
 
 function findType(slug: string) {
   return productTypes.find((c) => c.slug === slug);

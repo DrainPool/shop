@@ -68,6 +68,12 @@ const categories = [
 
 const occasions = [
   {
+    title: "Jul",
+    text: "Julklappar med eget namn, julgranskulor graverade i trä och gåvor till hela listan.",
+    images: [katGravyr, katFoto],
+    slug: "jul",
+  },
+  {
     title: "Bröllop",
     text: "Graverade tostglas, ringaskar, glas-etiketter till gästerna och gåvor till brudparet.",
     images: [katBrollop, tillBrollop2],

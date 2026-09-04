@@ -24,6 +24,10 @@
   <url><loc>https://linsochlager.net/kategori/nyheter</loc><priority>0.7</priority></url>
   <url><loc>https://linsochlager.net/kategori/brollop</loc><priority>0.9</priority></url>
   <url><loc>https://linsochlager.net/kategori/dop</loc><priority>0.9</priority></url>
+  <url><loc>https://linsochlager.net/kategori/jul</loc><priority>0.9</priority></url>
+  <url><loc>https://linsochlager.net/kategori/fodelsedag</loc><priority>0.8</priority></url>
+  <url><loc>https://linsochlager.net/kategori/student</loc><priority>0.6</priority></url>
+  <url><loc>https://linsochlager.net/kategori/morsdag</loc><priority>0.6</priority></url>
   <url><loc>https://linsochlager.net/kategori/foretag</loc><priority>0.8</priority></url>
   <url><loc>https://linsochlager.net/kategori/farsdag</loc><priority>0.8</priority></url>
   <url><loc>https://linsochlager.net/kategori/gravyr</loc><priority>0.7</priority></url>

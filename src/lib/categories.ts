@@ -22,6 +22,8 @@ export interface Category {
   icon?: string;
   /** Kort etikett i ikonraden */
   short?: string;
+  /** Underkategorier (occasion-grupper, länkar till andra kategorisidor) */
+  subcategories?: { slug: string; label: string }[];
 }
 
 /** Produkttyper – primär navigation, visas som ikonrad */
@@ -168,6 +170,29 @@ export const productTypes: Category[] = [
 
 /** Tillfällen och urval – sekundär navigation */
 export const occasions: Category[] = [
+  {
+    slug: "fodelsedag",
+    tag: "fodelsedag",
+    title: "Till födelsedagen",
+    kicker: "en present för just den personen",
+    description:
+      "Födelsedagspresenter med personlig gravyr – till studenten, pappa, mamma, barnet som fyller år eller vännen som har allt. Välj underkategori och gör presenten unik.",
+    subcategories: [
+      { slug: "student", label: "Student" },
+      { slug: "farsdag", label: "Fars dag" },
+      { slug: "morsdag", label: "Mors dag" },
+      { slug: "brollop", label: "Bröllop" },
+      { slug: "dop", label: "Dop" },
+    ],
+  },
+  {
+    slug: "jul",
+    tag: "jul",
+    title: "Till julen",
+    kicker: "julklappar med ett eget namn",
+    description:
+      "Personliga julklappar som inte finns i hyllan: graverade detaljer, julgranskulor med namn och gåvor till hela listan. Beställ i god tid – allt tillverkas för hand inför jul.",
+  },
   {
     slug: "bastsaljare",
     tag: "bastsaljare",
