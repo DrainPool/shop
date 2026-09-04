@@ -1,10 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import { ProductCard } from "@/components/ProductCard";
+import { ProductGrid } from "@/components/ProductGrid";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
 import { fetchProducts } from "@/lib/shopify";
+
 
 export const Route = createFileRoute("/sortiment")({
   component: SortimentPage,
@@ -41,13 +44,8 @@ function SortimentPage() {
     <>
       <CategoryIconRow />
       <div className="mx-auto max-w-6xl px-5 py-14">
-        <nav className="text-sm text-muted-foreground">
-          <Link to="/" className="hover:text-primary">
-            Hem
-          </Link>
-          <span className="px-2">/</span>
-          <span>Hela sortimentet</span>
-        </nav>
+        <Breadcrumbs items={[{ label: "Hela sortimentet" }]} />
+
 
         <p className="mt-6 font-script text-2xl text-primary">hela sortimentet</p>
         <h1 className="mt-1 font-serif text-4xl font-black tracking-tight md:text-5xl">
@@ -84,14 +82,13 @@ function SortimentPage() {
                 </p>
               </div>
             ) : (
-              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                {filters.filtered.map((p) => (
-                  <ProductCard key={p.node.id} product={p} />
-                ))}
-              </div>
+              <ProductGrid products={filters.filtered} resetKey="sortiment" />
             )}
           </>
         )}
+
+        <RecentlyViewed />
+
       </div>
     </>
   );

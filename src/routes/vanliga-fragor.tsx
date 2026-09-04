@@ -36,14 +36,6 @@ const FAQ = [
     a: "Ja. Skriv mottagarens adress som leveransadress och att det är en present i beställningen – så packar jag det presentklart. Vill du ha en graverad hälsning med i paketet löser vi det också.",
   },
   {
-    q: "Kan jag beställa något som inte finns i butiken?",
-    a: "Ja, gärna! Beskriv din idé – material, motiv, storlek och tillfälle – så får du ett förslag med digital skiss och pris innan något tillverkas. Ofta kan jag dessutom gravera på föremål du redan äger.",
-  },
-  {
-    q: "Inpackas beställningen som en present?",
-    a: "Ja. Allt packas presentklart – smycken i presentask och övrigt i omsorgsfullt emballage, klart att ge bort direkt. Vill du ha en handskriven hälsning eller graverad text med i paketet skriver du det i beställningen; på presentleveranser hålls prislappar borta.",
-  },
-  {
     q: "Kan ni gravera på föremål jag redan har?",
     a: "Ofta – det beror på materialet. Trä, läder, glas och de flesta metaller går bra, medan vissa ytbehandlingar och lacker är svårare. Skicka en bild och en beskrivning så säger jag ärligt vad som är möjligt innan du skickar in något.",
   },

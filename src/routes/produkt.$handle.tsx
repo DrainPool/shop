@@ -6,15 +6,17 @@ import {
   Check,
   Clock,
   Heart,
+  Loader2,
   ShieldCheck,
   Sparkles,
   Truck,
 } from "lucide-react";
-import { LiquidLoader } from "@/components/ui/liquid-loader";
 import { Button } from "@/components/ui/button";
 import { CutoffCountdown } from "@/components/FomoBanner";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductCustomizer } from "@/components/ProductCustomizer";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { RecentlyViewed, useTrackRecentlyViewed } from "@/components/RecentlyViewed";
 import {
   Accordion,
   AccordionContent,
@@ -25,6 +27,7 @@ import { ReviewSection } from "@/components/ReviewSection";
 import { PaymentLogos } from "@/components/PaymentLogos";
 import { productTypes } from "@/lib/categories";
 import { fetchProductByHandle, fetchProducts, formatPrice, getPricing } from "@/lib/shopify";
+
 
 export const Route = createFileRoute("/produkt/$handle")({
   component: ProductPage,
@@ -57,11 +60,24 @@ function ProductPage() {
     queryFn: () => fetchProductByHandle(handle),
   });
 
+  useTrackRecentlyViewed(
+    product
+      ? {
+          handle: product.node.handle,
+          title: product.node.title,
+          image: product.node.images?.edges?.[0]?.node?.url,
+          price: product.node.priceRange.minVariantPrice.amount,
+          currency: product.node.priceRange.minVariantPrice.currencyCode,
+        }
+      : null,
+  );
+
+
+
   if (isPending) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4">
-        <LiquidLoader size="md" label="Hämtar produkten" />
-        <p className="text-sm text-muted-foreground">Hämtar produkten &hellip;</p>
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-primary" />
       </div>
     );
   }
@@ -106,14 +122,24 @@ function ProductPage() {
     },
   };
 
+  const typeCategory = productTypes.find((t) => tags.includes(t.tag));
+
   return (
     <div className="mx-auto max-w-6xl px-5 py-12 pb-28 md:pb-12">
+      <Breadcrumbs
+        items={[
+          { label: "Sortiment", to: "/sortiment" },
+          ...(typeCategory ? [{ label: typeCategory.title, slug: typeCategory.slug }] : []),
+          { label: node.title },
+        ]}
+      />
       <Link
-        to="/"
-        className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
+        to="/sortiment"
+        className="mt-4 mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
       >
-        <ArrowLeft className="h-4 w-4" /> Tillbaka till butiken
+        <ArrowLeft className="h-4 w-4" /> Tillbaka till sortimentet
       </Link>
+
 
       <div className="grid gap-10 md:grid-cols-2">
         <div>
@@ -301,17 +327,32 @@ function ProductPage() {
 
       <RelatedProducts tags={product.node.tags || []} handle={handle} />
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 backdrop-blur md:hidden">
+      <RecentlyViewed excludeHandle={handle} />
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 shadow-lift backdrop-blur md:hidden">
         <div className="flex items-center justify-between gap-3">
           <span className="min-w-0">
             <span className="block truncate text-sm font-medium">{node.title}</span>
-            <span className="text-sm text-primary">{formatPrice(price, currency)}</span>
+            <span className="flex items-baseline gap-2">
+              <span className="text-sm font-semibold text-primary">
+                {formatPrice(price, currency)}
+              </span>
+              {onSale && (
+                <span className="text-xs text-muted-foreground line-through">
+                  {formatPrice(compare, currency)}
+                </span>
+              )}
+            </span>
+            <span className="text-[11px] text-muted-foreground">
+              {inStock ? "I lager · 3–7 arbetsdagar" : "Tillfälligt slut"}
+            </span>
           </span>
-          <Button asChild size="lg">
-            <a href="#personalisering">Personalisera</a>
+          <Button asChild size="lg" className="rounded-full">
+            <a href="#personalisering">Personalisera &amp; köp</a>
           </Button>
         </div>
       </div>
+
 
       <script
         type="application/ld+json"

@@ -19,31 +19,13 @@ import { useCartSync } from "@/hooks/useCartSync";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-[70vh] items-center justify-center bg-background px-4 py-16">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <p className="font-script text-3xl text-primary">åh nej</p>
-        <h1 className="mt-1 font-serif text-6xl font-black tracking-tight text-foreground">404</h1>
-        <h2 className="mt-3 text-xl font-semibold text-foreground">Sidan hittades inte</h2>
+        <h1 className="text-7xl font-bold text-foreground">404</h1>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Sidan hittades inte</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Sidan du letar efter finns inte eller har flyttats. Här är några vända vägar vidare:
+          Sidan du letar efter finns inte eller har flyttats.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          {[
-            { slug: "bastsaljare", label: "Mest älskade" },
-            { slug: "brollop", label: "Till bröllopet" },
-            { slug: "dop", label: "Till dopet" },
-            { slug: "bil", label: "Till bilen" },
-          ].map((c) => (
-            <Link
-              key={c.slug}
-              to="/kategori/$slug"
-              params={{ slug: c.slug }}
-              className="rounded-full bg-cream px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
-            >
-              {c.label}
-            </Link>
-          ))}
-        </div>
         <div className="mt-6">
           <Link
             to="/"
@@ -52,16 +34,6 @@ function NotFoundComponent() {
             Till startsidan
           </Link>
         </div>
-        <p className="mt-6 text-sm text-muted-foreground">
-          Söker du något särskilt? Skriv till{" "}
-          <a
-            href="mailto:hej@linsochlager.se"
-            className="font-medium text-primary hover:underline"
-          >
-            hej@linsochlager.se
-          </a>{" "}
-          så hittar vi det ihop.
-        </p>
       </div>
     </div>
   );
@@ -124,14 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Handgjorda och personliga presenter: smycken, gravyr, 3D-utskrifter, foto och stickers.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Lins & Lager" },
-      { property: "og:locale", content: "sv_SE" },
-      { property: "og:image", content: "https://linsochlager.net/og-default.jpg" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Verkstaden hos Lins & Lager – graverade detaljer" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://linsochlager.net/og-default.jpg" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

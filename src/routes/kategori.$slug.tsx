@@ -1,13 +1,15 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Check, Sparkles } from "lucide-react";
-import { ProductCard } from "@/components/ProductCard";
-import { LiquidLoader } from "@/components/ui/liquid-loader";
+import { Check, Loader2, Sparkles } from "lucide-react";
+import { ProductGrid } from "@/components/ProductGrid";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
 import { CutoffCountdown } from "@/components/FomoBanner";
 import { fetchProducts } from "@/lib/shopify";
 import { getCategory } from "@/lib/categories";
+
 
 export const Route = createFileRoute("/kategori/$slug")({
   component: CategoryPage,
@@ -65,15 +67,10 @@ function CategoryPage() {
     <>
       <CategoryIconRow activeSlug={category.slug} />
       <div className="mx-auto max-w-6xl px-5 py-14">
-      <nav className="text-sm text-muted-foreground">
-        <Link to="/" className="hover:text-primary">
-          Hem
-        </Link>
-        <span className="px-2">/</span>
-        <span>{category.title}</span>
-      </nav>
+      <Breadcrumbs items={[{ label: "Sortiment", to: "/sortiment" }, { label: category.title }]} />
 
       <p className="mt-6 font-script text-2xl text-primary">{category.kicker}</p>
+
       <h1 className="mt-1 font-serif text-4xl font-black tracking-tight md:text-5xl">
         {category.title}
       </h1>
@@ -102,7 +99,7 @@ function CategoryPage() {
 
       {isPending ? (
         <div className="flex justify-center py-16">
-          <LiquidLoader size="sm" label="Hämtar produkter" />
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
         </div>
       ) : isError ? (
         <p className="py-16 text-center text-muted-foreground">
@@ -126,15 +123,15 @@ function CategoryPage() {
               </p>
             </div>
           ) : (
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {filters.filtered.map((p) => (
-                <ProductCard key={p.node.id} product={p} />
-              ))}
-            </div>
+            <ProductGrid products={filters.filtered} resetKey={category.slug} />
           )}
         </>
       )}
+
+      <RecentlyViewed />
+
       <section className="mt-16 rounded-3xl bg-cream p-8">
+
         <h2 className="font-serif text-2xl font-bold">Om {category.title.toLowerCase()}</h2>
         <p className="mt-3 max-w-3xl text-muted-foreground">
           {category.description} Allt tillverkas i min egen verkstad – gravyr, tryck och montering –

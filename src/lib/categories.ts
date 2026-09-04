@@ -102,7 +102,7 @@ export const productTypes: Category[] = [
     short: "Smycken",
     icon: ikonSmycke,
     title: "Personliga smycken",
-    kicker: "gravyr i silver & stål",
+    kicker: "gravyr i silver & guld",
     description: "Halsband och hängen graverade med namn, datum eller initialer.",
   },
   {

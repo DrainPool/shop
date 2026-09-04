@@ -108,10 +108,6 @@ function ContactPage() {
           <MessageCircleQuestion className="h-6 w-6 text-primary" aria-hidden="true" />
           <h2 className="mt-4 font-serif text-2xl font-bold">Snabbast hjälp</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            <Link to="/vanliga-fragor" className="text-primary hover:underline">
-              Vanliga frågor
-            </Link>{" "}
-            ·{" "}
             <Link to="/frakt-leverans" className="text-primary hover:underline">
               Frakt &amp; leverans
             </Link>{" "}

@@ -14,6 +14,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { RecentlyViewed } from "@/components/RecentlyViewed";
+
 
 import { TrustedMarquee } from "@/components/TrustedMarquee";
 import { CustomerGallery } from "@/components/CustomerGallery";
@@ -244,7 +247,13 @@ function Index() {
           ))}
 
         </div>
+
+        <RecentlyViewed title="Du tittade nyss på" />
+
+        <NewsletterSignup className="mt-12" />
       </section>
+
+
 
       <section id="om-mig" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-14">
         <div className="grid items-center gap-10 md:grid-cols-[3fr_2fr]">

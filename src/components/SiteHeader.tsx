@@ -14,7 +14,6 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { FomoBanner } from "@/components/FomoBanner";
 import { MegaMenu } from "@/components/MegaMenu";
 import { SearchOverlay } from "@/components/SearchOverlay";
-import { occasions } from "@/lib/categories";
 
 
 const trustItems = [
@@ -142,7 +141,7 @@ export function SiteHeader() {
                   <SheetTitle className="font-serif text-2xl">Meny</SheetTitle>
                   <SheetDescription>Hitta rätt present snabbt</SheetDescription>
                 </SheetHeader>
-                <nav className="flex flex-col gap-1 px-4 pb-4" aria-label="Huvudmeny">
+                <nav className="flex flex-col gap-1 px-4 pb-8" aria-label="Huvudmeny">
                   {navLinks.map((l) => (
                     <NavItem
                       key={l.label}
@@ -152,28 +151,6 @@ export function SiteHeader() {
                     />
                   ))}
                 </nav>
-
-                {/* Tillfällen – samma urval som dator-megamenyns "Passar till" */}
-                <nav className="mt-2 border-t border-border/60 px-4 pt-4" aria-label="Passar till">
-                  <p className="px-3 font-serif text-sm font-bold text-muted-foreground">
-                    Passar till
-                  </p>
-                  <ul className="mt-2 grid grid-cols-2 gap-1">
-                    {occasions.map((o) => (
-                      <li key={o.slug}>
-                        <Link
-                          to="/kategori/$slug"
-                          params={{ slug: o.slug }}
-                          onClick={() => setMobileOpen(false)}
-                          className="block rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-cream hover:text-primary"
-                        >
-                          {o.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-
                 <p className="mt-auto px-6 pb-6 text-sm text-muted-foreground">
                   Frågor? Skriv till{" "}
                   <a href="mailto:hej@linsochlager.se" className="font-medium text-primary hover:underline">

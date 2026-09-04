@@ -173,7 +173,36 @@ export function ProductFilters(props: FiltersProps) {
         </label>
       </div>
 
+      {props.activeCount > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {props.activeTags.map((tag) => (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => props.toggleTag(tag)}
+              className="inline-flex items-center gap-1 rounded-full bg-cream px-3 py-1 text-xs font-medium hover:text-primary"
+            >
+              {TAG_LABELS[tag] || tag}
+              <X className="h-3 w-3" aria-hidden="true" />
+              <span className="sr-only">Ta bort filter</span>
+            </button>
+          ))}
+          {props.bucket && (
+            <button
+              type="button"
+              onClick={() => props.setBucket(props.bucket as string)}
+              className="inline-flex items-center gap-1 rounded-full bg-cream px-3 py-1 text-xs font-medium hover:text-primary"
+            >
+              {PRICE_BUCKETS.find((b) => b.id === props.bucket)?.label}
+              <X className="h-3 w-3" aria-hidden="true" />
+              <span className="sr-only">Ta bort prisfilter</span>
+            </button>
+          )}
+        </div>
+      )}
+
       {open && (
+
         <div className="mt-5 grid gap-6 border-t border-border pt-5 sm:grid-cols-3">
           {(
             [
