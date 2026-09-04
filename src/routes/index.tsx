@@ -40,17 +40,17 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Lins & Lager – personliga smycken, gravyr & 3D-utskrifter" },
+      { title: "Personliga presenter med gravyr – handgjort i Småland | Lins & Lager" },
       {
         name: "description",
         content:
-          "Handgjorda presenter med personlig gravyr: smycken till bröllop och dop, namnbrickor för företag, skärbrädor för jägare, 3D-utskrifter, foto och stickers.",
+          "Personliga presenter med gravyr: nyckelringar med namn, graverade glas till bröllop, skärbrädor till farsdagen och julklappar med eget namn. Handgjort på beställning i Småland – digital skiss innan jag graverar.",
       },
-      { property: "og:title", content: "Lins & Lager – personligt hantverk" },
+      { property: "og:title", content: "Personliga presenter med gravyr – handgjort i Småland | Lins & Lager" },
       {
         property: "og:description",
         content:
-          "Personliga smycken, lädergravyr, skärbrädor, 3D-utskrifter och stickers – handgjort på beställning i Småland.",
+          "Nyckelringar, glas, skärbrädor och julklappar – graverade med namn, datum eller egen text. Handgjort på beställning i Småland.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -134,8 +134,8 @@ function RotatingImage({ images, alt }: { images: string[]; alt: string }) {
 
 const steps = [
   { n: "1", title: "Välj din produkt", text: "Allt i butiken går att kombinera – smycke, gravyr och sticker i samma paket." },
-  { n: "2", title: "Skriv din text", text: "Namn, datum eller en hälsning. Du får en digital skiss innan jag börjar." },
-  { n: "3", title: "Handgjort & skickat", text: "Tillverkas i mitt lager och skickas ompaketerat, redo att ge bort." },
+  { n: "2", title: "Skriv din text", text: "Namn, datum eller en hälsning. Du får en digital skiss att godkänna innan jag börjar graverar." },
+  { n: "3", title: "Handgjort & skickat", text: "Tillverkas för hand i min verkstad i Småland och skickas presentklart, redo att ge bort." },
 ];
 
 function Index() {
