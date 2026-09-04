@@ -8,7 +8,7 @@ export const Route = createFileRoute("/retur")({
       {
         name: "description",
         content:
-          "Eftersom alla produkter är personligt tillverkade gäller inget öppet köp – men full reklamationsrätt vid fel. Läs våra villkor.",
+          "Eftersom alla produkter är personligt tillverkade gäller inget öppet köp – men full reklamationsrätt vid fel. Läs villkoren.",
       },
       { property: "og:title", content: "Retur & reklamation – Lins & Lager" },
       {
@@ -34,10 +34,10 @@ function ReturnsPage() {
           <div>
             <h2 className="font-serif text-xl font-semibold">Inga returer på personliga produkter</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Alla våra produkter tillverkas specifikt för dig – med ditt namn, din text, ditt
+              Alla produkter tillverkas specifikt för dig – med ditt namn, din text, ditt
               foto eller ditt motiv. Enligt lag (13 § i lagen om distansavtal och avtal utanför
               affärslokaler) gäller <strong>inte ångerrätten</strong> för varor som tillverkats
-              enligt dina anvisningar eller fått en tydlig personlig prägel. Därför kan vi
+              enligt dina anvisningar eller fått en tydlig personlig prägel. Därför kan jag
               tyvärr inte ta emot returer eller erbjuda öppet köp.
             </p>
           </div>

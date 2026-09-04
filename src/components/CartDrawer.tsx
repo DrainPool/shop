@@ -236,7 +236,10 @@ export function CartDrawer() {
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Frakt och eventuell personlig gravyrtext bekräftas i kassan.
+                  <Link to="/frakt-leverans" className="underline hover:text-primary">
+                    Fraktalternativ och leveranstid
+                  </Link>{" "}
+                  väljs i kassan – personlig gravyrtext bekräftas där.
                 </p>
 
                 <Button

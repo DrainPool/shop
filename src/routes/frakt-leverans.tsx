@@ -69,7 +69,7 @@ function ShippingPage() {
           <MapPin className="h-6 w-6 text-primary" aria-hidden="true" />
           <h2 className="mt-3 font-serif text-xl font-semibold">Leveransområde</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Vi levererar i hela Sverige. Vid beställning fyller du i din fraktadress direkt i
+            Jag levererar i hela Sverige. Vid beställning fyller du i din fraktadress direkt i
             kassan och ser exakt fraktkostnad innan du betalar.
           </p>
         </section>
@@ -80,7 +80,7 @@ function ShippingPage() {
         <a href="mailto:hej@linsochlager.se" className="text-primary underline">
           hej@linsochlager.se
         </a>{" "}
-        så återkommer vi snabbast möjligt. Se även våra villkor för{" "}
+        så återkommer jag snabbast möjligt. Se även villkoren för{" "}
         <Link to="/retur" className="text-primary underline">
           retur & reklamation
         </Link>{" "}
