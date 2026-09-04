@@ -13,12 +13,58 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, Trash2, ExternalLink } from "lucide-react";
+import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Heart } from "lucide-react";
 import { LiquidLoader } from "@/components/ui/liquid-loader";
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
+import { useWishlist } from "@/lib/wishlist";
 
 const FREE_SHIPPING_LIMIT = 800;
+
+/** Spara-tips: sparade produkter från önskelistan när varukorgen är tom. */
+function WishlistStrip({ onDone }: { onDone: () => void }) {
+  const { items } = useWishlist();
+  if (items.length === 0) return null;
+
+  return (
+    <div className="rounded-2xl border border-gold/40 bg-gold/10 p-4 text-left">
+      <p className="flex items-center gap-2 text-sm font-semibold">
+        <Heart className="h-4 w-4 fill-primary text-primary" aria-hidden="true" />
+        Dina sparade favoriter ({items.length})
+      </p>
+      <ul className="mt-3 space-y-2">
+        {items.slice(0, 3).map((p) => (
+          <li key={p.handle} className="flex items-center gap-3">
+            <Link
+              to="/produkt/$handle"
+              params={{ handle: p.handle }}
+              onClick={onDone}
+              className="group flex min-w-0 flex-1 items-center gap-3"
+            >
+              {p.image && (
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  loading="lazy"
+                  className="h-10 w-10 shrink-0 rounded-lg object-cover"
+                />
+              )}
+              <span className="min-w-0 truncate text-sm font-medium group-hover:text-primary">
+                {p.title}
+              </span>
+              <span className="ml-auto shrink-0 text-xs text-muted-foreground">
+                {formatPrice(p.price, p.currency)}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      {items.length > 3 && (
+        <p className="mt-2 text-xs text-muted-foreground">+ {items.length - 3} till</p>
+      )}
+    </div>
+  );
+}
 
 export function CartDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -91,6 +137,7 @@ export function CartDrawer() {
                   </Link>
                 ))}
               </div>
+              <WishlistStrip onDone={() => setIsOpen(false)} />
               <PaymentLogos className="justify-center" />
             </div>
           ) : (

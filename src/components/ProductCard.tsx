@@ -3,6 +3,7 @@ import { Loader2, Plus, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { QuickView } from "@/components/QuickView";
+import { WishlistHeart } from "@/components/WishlistHeart";
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice, getPricing, type ShopifyProduct } from "@/lib/shopify";
 
@@ -99,11 +100,22 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
             </span>
           )}
           {parseFloat(node.priceRange.minVariantPrice.amount) >= 800 && (
-            <span className="rounded-full bg-ink/85 px-3 py-1 text-xs font-semibold text-ink-foreground shadow-soft">
-              Fri frakt
-            </span>
-          )}
-        </div>
+              <span className="rounded-full bg-ink/85 px-3 py-1 text-xs font-semibold text-ink-foreground shadow-soft">
+                Fri frakt
+              </span>
+            )}
+          </div>
+          <div className="absolute top-3 right-3 z-10">
+            <WishlistHeart
+              item={{
+                handle: node.handle,
+                title: node.title,
+                image: image?.url,
+                price: node.priceRange.minVariantPrice.amount,
+                currency: node.priceRange.minVariantPrice.currencyCode,
+              }}
+            />
+          </div>
         {image ? (
           <img
             src={image.url}

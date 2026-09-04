@@ -17,6 +17,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductCustomizer } from "@/components/ProductCustomizer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { RecentlyViewed, useTrackRecentlyViewed } from "@/components/RecentlyViewed";
+import { WishlistHeart } from "@/components/WishlistHeart";
 import {
   Accordion,
   AccordionContent,
@@ -252,6 +253,19 @@ function ProductPage() {
 
           <div id="personalisering">
             <ProductCustomizer product={product} />
+          </div>
+
+          <div className="mt-4">
+            <WishlistHeart
+              variant="labeled"
+              item={{
+                handle: node.handle,
+                title: node.title,
+                image: images[0]?.url,
+                price: minPrice.amount,
+                currency: minPrice.currencyCode,
+              }}
+            />
           </div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
