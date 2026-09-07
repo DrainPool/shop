@@ -35,7 +35,9 @@ export const Route = createFileRoute("/api/public/firecrawl-crawl")({
         const startData = await startRes.json();
         if (!startRes.ok || !startData.id) {
           return Response.json(
-            { error: `Crawl kunde inte startas [${startRes.status}]: ${JSON.stringify(startData)}` },
+            {
+              error: `Crawl kunde inte startas [${startRes.status}]: ${JSON.stringify(startData)}`,
+            },
             { status: 502 },
           );
         }

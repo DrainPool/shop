@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { toast } from "sonner";
 import { storefrontApiRequest, type ShopifyProduct } from "@/lib/shopify";
 
 export interface CartAttribute {
@@ -197,7 +198,13 @@ async function updateShopifyCartLine(cartId: string, lineId: string, quantity: n
 }
 
 async function removeLineFromShopifyCart(cartId: string, lineId: string) {
-  const data = await storefrontApiRequest(CART_LINES_REMOVE_MUTATION, { cartId, lineIds: [lineId] });
+  // Demo-läge: hoppa över Shopify-anrop (samma gren som övriga mutationer)
+  const { isDemoMode } = await import("@/lib/demoProducts");
+  if (isDemoMode()) return { success: true };
+  const data = await storefrontApiRequest(CART_LINES_REMOVE_MUTATION, {
+    cartId,
+    lineIds: [lineId],
+  });
   const userErrors = data?.data?.cartLinesRemove?.userErrors || [];
   if (isCartNotFoundError(userErrors)) return { success: false, cartNotFound: true };
   if (userErrors.length > 0) {
@@ -215,7 +222,7 @@ interface CartStore {
   isSyncing: boolean;
   addItem: (
     item: Omit<CartItem, "lineId" | "lineKey" | "attributes"> & { attributes?: CartAttribute[] },
-  ) => Promise<void>;
+  ) => Promise<boolean>;
   updateQuantity: (lineKey: string, quantity: number) => Promise<void>;
   removeItem: (lineKey: string) => Promise<void>;
   clearCart: () => void;
@@ -247,16 +254,31 @@ export const useCartStore = create<CartStore>()(
         try {
           if (!cartId) {
             const result = await createShopifyCart(item);
-            if (result) {
-              set({
-                cartId: result.cartId,
-                checkoutUrl: result.checkoutUrl,
-                items: [{ ...item, lineId: result.lineId }],
+            if (!result) {
+              toast.error("Det gick inte att lägga till i varukorgen", {
+                description: "Prova igen, eller skriv till mig så hjälper jag dig.",
+                position: "top-center",
               });
+              return false;
             }
+            set({
+              cartId: result.cartId,
+              checkoutUrl: result.checkoutUrl,
+              items: [{ ...item, lineId: result.lineId }],
+            });
           } else if (existingItem) {
             const newQuantity = existingItem.quantity + item.quantity;
-            if (!existingItem.lineId) return;
+            // Raden matchades aldrig i Shopify (lineId saknas) – slå ihop
+            // lokalt så varukorgen alltid fungerar.
+            if (!existingItem.lineId || !cartId) {
+              const currentItems = get().items;
+              set({
+                items: currentItems.map((i) =>
+                  i.lineKey === item.lineKey ? { ...i, quantity: newQuantity } : i,
+                ),
+              });
+              return true;
+            }
             const result = await updateShopifyCartLine(cartId, existingItem.lineId, newQuantity);
             if (result.success) {
               const currentItems = get().items;
@@ -267,6 +289,13 @@ export const useCartStore = create<CartStore>()(
               });
             } else if (result.cartNotFound) {
               clearCart();
+              return get().addItem(item);
+            } else {
+              toast.error("Det gick inte att lägga till i varukorgen", {
+                description: "Prova igen, eller skriv till mig så hjälper jag dig.",
+                position: "top-center",
+              });
+              return false;
             }
           } else {
             const result = await addLineToShopifyCart(cartId, item);
@@ -275,10 +304,23 @@ export const useCartStore = create<CartStore>()(
               set({ items: [...currentItems, { ...item, lineId: result.lineId ?? null }] });
             } else if (result.cartNotFound) {
               clearCart();
+              return get().addItem(item);
+            } else {
+              toast.error("Det gick inte att lägga till i varukorgen", {
+                description: "Prova igen, eller skriv till mig så hjälper jag dig.",
+                position: "top-center",
+              });
+              return false;
             }
           }
+          return true;
         } catch (error) {
           console.error("Failed to add item:", error);
+          toast.error("Det gick inte att lägga till i varukorgen", {
+            description: "Prova igen, eller skriv till mig så hjälper jag dig.",
+            position: "top-center",
+          });
+          return false;
         } finally {
           set({ isLoading: false });
         }
@@ -291,7 +333,16 @@ export const useCartStore = create<CartStore>()(
         }
         const { items, cartId, clearCart } = get();
         const item = items.find((i) => i.lineKey === lineKey);
-        if (!item?.lineId || !cartId) return;
+        if (!item) return;
+        // Raden saknar Shopify-lineId – uppdatera lokalt istället för att
+        // fastna (en tyst no-op här låser varukorgen).
+        if (!item.lineId || !cartId) {
+          const currentItems = get().items;
+          set({
+            items: currentItems.map((i) => (i.lineKey === lineKey ? { ...i, quantity } : i)),
+          });
+          return;
+        }
 
         set({ isLoading: true });
         try {
@@ -306,6 +357,10 @@ export const useCartStore = create<CartStore>()(
           }
         } catch (error) {
           console.error("Failed to update quantity:", error);
+          toast.error("Det gick inte att uppdatera varukorgen", {
+            description: "Prova igen, eller skriv till mig så hjälper jag dig.",
+            position: "top-center",
+          });
         } finally {
           set({ isLoading: false });
         }
@@ -314,7 +369,16 @@ export const useCartStore = create<CartStore>()(
       removeItem: async (lineKey) => {
         const { items, cartId, clearCart } = get();
         const item = items.find((i) => i.lineKey === lineKey);
-        if (!item?.lineId || !cartId) return;
+        if (!item) return;
+        // Raden saknar Shopify-lineId – ta bort lokalt istället för att
+        // lämna en rad som varken kan minskas eller raderas.
+        if (!item.lineId || !cartId) {
+          const currentItems = get().items;
+          const newItems = currentItems.filter((i) => i.lineKey !== lineKey);
+          if (newItems.length === 0) clearCart();
+          else set({ items: newItems });
+          return;
+        }
 
         set({ isLoading: true });
         try {
@@ -329,6 +393,10 @@ export const useCartStore = create<CartStore>()(
           }
         } catch (error) {
           console.error("Failed to remove item:", error);
+          toast.error("Det gick inte att uppdatera varukorgen", {
+            description: "Prova igen, eller skriv till mig så hjälper jag dig.",
+            position: "top-center",
+          });
         } finally {
           set({ isLoading: false });
         }

@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "@tanstack/react-router";
 import { CreditCard, Heart, Menu, Package, Paintbrush } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -15,19 +16,25 @@ import { FomoBanner } from "@/components/FomoBanner";
 import { MegaMenu } from "@/components/MegaMenu";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { occasions } from "@/lib/categories";
-
+import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
+import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
+import { useWishlist } from "@/lib/wishlist";
+import { useUiStore } from "@/stores/uiStore";
 
 const trustItems = [
-  { icon: Package, text: "Fri frakt över 800 kr" },
+  { icon: Package, text: `Fri frakt över ${FREE_SHIPPING_LIMIT} kr` },
   { icon: Paintbrush, text: "Tillverkas efter din beställning" },
   { icon: CreditCard, text: "Trygg betalning med Klarna & Swish" },
 ];
+
+// Sidor vars syfte är att stilla oro – där ska ingen nedräkning ticka
+const COUNTDOWN_FREE_PATHS = ["/retur", "/garanti", "/vanliga-fragor"];
 
 const navLinks = [
   { label: "Hem", href: "/" },
   { label: "Mest älskade", slug: "bastsaljare" },
   { label: "Nyheter", slug: "nyheter" },
-  { label: "Fotografering", external: "https://linsochlager.net/foto" },
+  { label: "Fotografering", external: FOTOGRAFERING_URL },
   { label: "Alla produkter", hash: "butiken" },
   { label: "Så funkar det", hash: "sa-gar-det-till" },
   // Info-/förtroende-sidor: bara i mobilmeny + footer (håller topp-menyn ren)
@@ -38,7 +45,6 @@ const navLinks = [
   { label: "Kontakt", href: "/kontakt", mobileOnly: true },
   { label: "Frakt & leverans", href: "/frakt-leverans", mobileOnly: true },
 ] as const;
-
 
 const primaryLinks = navLinks.filter((l) => !("mobileOnly" in l && l.mobileOnly));
 
@@ -90,8 +96,50 @@ function NavItem({
   );
 }
 
+/** Önskeliste-hjärta med räknare – länkar till /onskelista. */
+function WishlistHeaderButton() {
+  const { items } = useWishlist();
+  // localStorage finns inte på servern – räkna ut antalet först efter montering
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const count = mounted ? items.length : 0;
+
+  return (
+    <Button asChild variant="outline" size="icon" className="relative rounded-full">
+      <Link
+        to="/onskelista"
+        aria-label={count > 0 ? `Önskelista (${count} sparade)` : "Önskelista"}
+      >
+        <Heart
+          className={`h-5 w-5 ${count > 0 ? "fill-primary text-primary-deep" : "text-foreground"}`}
+          aria-hidden="true"
+        />
+        {count > 0 && (
+          <Badge className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full p-0 text-xs">
+            {count}
+          </Badge>
+        )}
+      </Link>
+    </Button>
+  );
+}
+
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const setSearchOpen = useUiStore((s) => s.setSearchOpen);
+  const pathname = useLocation().pathname;
+
+  // ⌘K / Ctrl-K öppnar söket (pekplattor har redan sökknappen i headern)
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [setSearchOpen]);
 
   return (
     <>
@@ -109,21 +157,27 @@ export function SiteHeader() {
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
           <Link to="/" className="flex items-baseline gap-1">
-            <span className="font-serif text-2xl font-semibold tracking-tight">Lins &amp; Lager</span>
-            <Heart className="h-5 w-5 fill-primary text-primary" aria-hidden="true" />
+            <span className="font-serif text-2xl font-semibold tracking-tight">
+              Lins &amp; Lager
+            </span>
+            <Heart className="h-5 w-5 fill-primary text-primary-deep" aria-hidden="true" />
           </Link>
 
           <nav className="hidden items-center gap-6 text-sm font-semibold lg:flex">
             <MegaMenu />
             {primaryLinks.map((l) => (
-              <NavItem key={l.label} link={l} className="transition-colors hover:text-primary" />
+              <NavItem
+                key={l.label}
+                link={l}
+                className="transition-colors hover:text-primary-deep"
+              />
             ))}
           </nav>
 
           <div className="flex items-center gap-2">
             <SearchOverlay />
+            <WishlistHeaderButton />
             <CartDrawer />
-
 
             {/* Mobilmeny – syns under lg */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -148,7 +202,7 @@ export function SiteHeader() {
                       key={l.label}
                       link={l}
                       onNavigate={() => setMobileOpen(false)}
-                      className="rounded-xl px-3 py-3 text-base font-semibold transition-colors hover:bg-cream hover:text-primary"
+                      className="rounded-xl px-3 py-3 text-base font-semibold transition-colors hover:bg-cream hover:text-primary-deep"
                     />
                   ))}
                 </nav>
@@ -165,7 +219,7 @@ export function SiteHeader() {
                           to="/kategori/$slug"
                           params={{ slug: o.slug }}
                           onClick={() => setMobileOpen(false)}
-                          className="block rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-cream hover:text-primary"
+                          className="flex min-h-11 items-center rounded-lg px-3 py-2 text-sm leading-snug font-medium transition-colors hover:bg-cream hover:text-primary-deep"
                         >
                           {o.title}
                         </Link>
@@ -176,7 +230,10 @@ export function SiteHeader() {
 
                 <p className="mt-auto px-6 pb-6 text-sm text-muted-foreground">
                   Frågor? Skriv till{" "}
-                  <a href="mailto:hej@linsochlager.se" className="font-medium text-primary hover:underline">
+                  <a
+                    href="mailto:hej@linsochlager.se"
+                    className="font-medium text-primary-deep hover:underline"
+                  >
                     hej@linsochlager.se
                   </a>
                 </p>
@@ -186,7 +243,9 @@ export function SiteHeader() {
         </div>
       </header>
 
-      <FomoBanner floating />
+      {/* Nedräkningen pausas på trygghetssidorna – säljtryck och
+          köpmodet-frågor ska inte ticka i samma vy. */}
+      {!COUNTDOWN_FREE_PATHS.includes(pathname) && <FomoBanner floating />}
     </>
   );
 }

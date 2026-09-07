@@ -3,26 +3,15 @@ import { Link } from "@tanstack/react-router";
 import { Heart, Mail, Truck, Sparkles } from "lucide-react";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PaymentLogos } from "@/components/PaymentLogos";
+import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
 
 /** Tape-variant av 21st.dev "Footer Taped Design" (radu, id 4448) — dekortejp i sepia. */
 function Tape({ className }: { className?: string }) {
   const sheenId = useId();
   return (
-    <svg
-      viewBox="0 0 95 40"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      <path
-        d="M4 12 L91 4 L88 30 L2 34 Z"
-        fill="currentColor"
-        opacity="0.85"
-      />
-      <path
-        d="M4 12 L91 4 L88 30 L2 34 Z"
-        fill={`url(#${sheenId})`}
-      />
+    <svg viewBox="0 0 95 40" fill="none" aria-hidden="true" className={className}>
+      <path d="M4 12 L91 4 L88 30 L2 34 Z" fill="currentColor" opacity="0.85" />
+      <path d="M4 12 L91 4 L88 30 L2 34 Z" fill={`url(#${sheenId})`} />
       <defs>
         <linearGradient id={sheenId} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#fff" stopOpacity="0.25" />
@@ -49,7 +38,7 @@ export function SiteFooter() {
         <div className="mx-auto grid max-w-6xl gap-6 px-5 py-10 sm:grid-cols-3">
           {promises.map((p) => (
             <div key={p.title} className="flex items-start gap-3">
-              <p.icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+              <p.icon className="mt-0.5 h-5 w-5 shrink-0 text-primary-deep" />
               <div>
                 <p className="font-semibold">{p.title}</p>
                 <p className="text-sm text-muted-foreground">{p.text}</p>
@@ -126,7 +115,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <a
-                  href="https://linsochlager.net/foto"
+                  href={FOTOGRAFERING_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-gold"

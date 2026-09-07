@@ -23,7 +23,9 @@ export function ProductGrid({
 
   return (
     <>
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Två kolumner redan på mobil – enkelkolumn sväljer en halv skärm
+          per kort och döljer sortimentskänslan på Google-träffar. */}
+      <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
         {shown.map((p) => (
           <ProductCard key={p.node.id} product={p} />
         ))}

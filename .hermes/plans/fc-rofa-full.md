@@ -14,19 +14,13 @@ Personliga glas med gravyr. Utforska vårt sortiment av glas med namn, här finn
 
 Sortering
 
-Rekommenderad  Namn  Pris stigande  Pris fallande  Nyheter
+Rekommenderad Namn Pris stigande Pris fallande Nyheter
 
 - [![Dricksglas med sugrör, formad som en julgranskula och märks med valfritt namn](https://www.rofa.se/images/2x/list/4491-christmasbaubleglassred_senodk2.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/dricksglas-med-namn-och-sugror-julkula/)
 
 3 för 2
 
-
-
-
 ### Dricksglas med namn och sugrör - Julkula
-
-
-
 
 199 kr
 
@@ -34,13 +28,7 @@ Rekommenderad  Namn  Pris stigande  Pris fallande  Nyheter
 
 3 för 2
 
-
-
-
 ### Vinglas med namn, röd - Polkagris
-
-
-
 
 329 kr
 
@@ -48,13 +36,7 @@ Rekommenderad  Namn  Pris stigande  Pris fallande  Nyheter
 
 3 för 2
 
-
-
-
 ### Vinglas med namn, röd - Jultomte
-
-
-
 
 329 kr
 
@@ -62,13 +44,7 @@ Rekommenderad  Namn  Pris stigande  Pris fallande  Nyheter
 
 3 för 2
 
-
-
-
 ### Vinglas med namn, röd - Rosett
-
-
-
 
 317 kr
 
@@ -76,27 +52,13 @@ Rekommenderad  Namn  Pris stigande  Pris fallande  Nyheter
 
 3 för 2
 
-
-
-
 ### Vinglas med namn - Initials
-
-
-
 
 299 kr
 
 - [![Vinglas med namn, rosa - Quote](https://www.rofa.se/images/2x/list/4465wineglasspinkwcoasterpink-quote-henne-se.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-rosa-quote/)
 
-
-
-
 ### Vinglas med namn, rosa - Quote
-
-
-
-
-
 
 (13)
 
@@ -106,27 +68,13 @@ Rekommenderad  Namn  Pris stigande  Pris fallande  Nyheter
 
 NYHET!
 
-
-
-
 ### Whiskyglas med gravyr - Levels
-
-
-
 
 269 kr
 
 - [![Present för ölälskaren](https://www.rofa.se/images/2x/list/4437nyolkorgmednamn-seolfadern.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/olkorg-med-namn/)
 
-
-
-
 ### Ölkorg med namn
-
-
-
-
-
 
 (107)
 
@@ -134,15 +82,7 @@ NYHET!
 
 - [![tekoppar med personlig text](https://www.rofa.se/images/2x/list/4465teamugv2-quote-henne-se-87485.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/tekopp-med-namn-sked-tesil-quote/)
 
-
-
-
 ### Tekopp med namn, sked & tesil - Quote
-
-
-
-
-
 
 (25)
 
@@ -150,15 +90,7 @@ NYHET!
 
 - [![whiskyset med personlig gravyr](https://www.rofa.se/images/2x/list/4471whiskeydecantersetmountain-honom-30y.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/whiskyset-med-gravyr-0/)
 
-
-
-
 ### Whiskyset med gravyr
-
-
-
-
-
 
 (14)
 
@@ -168,15 +100,7 @@ NYHET!
 
 Kommer i oktober
 
-
-
-
 ### Champagneglas med gravyr - Heart
-
-
-
-
-
 
 (11)
 
@@ -186,13 +110,7 @@ Kommer i oktober
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Heart
-
-
-
 
 299 kr
 
@@ -200,15 +118,7 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Whiskyglas med gravyr
-
-
-
-
-
 
 (2)
 
@@ -216,15 +126,7 @@ NYHET!
 
 - [![Rosa vinglas med guldfärgad kant och personlig gravyr](https://www.rofa.se/images/2x/list/4464-7wineglasspinkwcoaster-statement-idontneed.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-rosa-statement/)
 
-
-
-
 ### Vinglas med namn, rosa - Statement
-
-
-
-
-
 
 (3)
 
@@ -234,27 +136,13 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Statement
-
-
-
 
 299 kr
 
 - [![Glas med personlig gravyr](https://www.rofa.se/images/2x/list/4476-17wineglass-statement-noone.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-statement/)
 
-
-
-
 ### Vinglas med namn - Statement
-
-
-
-
-
 
 (6)
 
@@ -264,15 +152,7 @@ NYHET!
 
 Flera val!
 
-
-
-
 ### Whiskeyset med gravyr - Hunting
-
-
-
-
-
 
 (4)
 
@@ -282,27 +162,13 @@ Flera val!
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Crown
-
-
-
 
 299 kr
 
 - [![Personligt graverat vinglas](https://www.rofa.se/images/2x/list/4476-16wineglass-levels-henne2_se2.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-levels/)
 
-
-
-
 ### Vinglas med namn - Levels
-
-
-
-
-
 
 (5)
 
@@ -314,13 +180,7 @@ Flera val!
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Hunting
-
-
-
 
 299 kr
 
@@ -328,15 +188,7 @@ NYHET!
 
 Kommer i oktober
 
-
-
-
 ### Champagneglas med gravyr - Statement
-
-
-
-
-
 
 (4)
 
@@ -346,15 +198,7 @@ Kommer i oktober
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Lounge
-
-
-
-
-
 
 (1)
 
@@ -364,13 +208,7 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Whiskyglas med gravyr - Statement
-
-
-
 
 269 kr
 
@@ -378,39 +216,19 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Älskar dig
-
-
-
 
 299 kr
 
 - [![Vinglas med jägarmotiv](https://www.rofa.se/images/2x/list/4476-15wineglass-hunting-bear2.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-hunting/)
 
-
-
-
 ### Vinglas med namn - Hunting
-
-
-
 
 299 kr
 
 - [![Vinglas med vacker och personlig gravyr](https://www.rofa.se/images/2x/list/4476-14-wineglass-heart1_se.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-heart/)
 
-
-
-
 ### Vinglas med namn - Heart
-
-
-
-
-
 
 (17)
 
@@ -420,13 +238,7 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Quote
-
-
-
 
 299 kr
 
@@ -434,13 +246,7 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Whiskyglas med gravyr - Älskar dig
-
-
-
 
 269 kr
 
@@ -448,27 +254,13 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Sigill
-
-
-
 
 299 kr
 
 - [![Vinglas med namn, rosa - Pristine](https://www.rofa.se/images/2x/list/4465wineglasspinkwcoasterpink-pristine.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-rosa-pristine/)
 
-
-
-
 ### Vinglas med namn, rosa - Pristine
-
-
-
-
-
 
 (9)
 
@@ -478,27 +270,13 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Whiskyglas med gravyr - Quote
-
-
-
 
 269 kr
 
 - [![Vinglas med namn, rosa - Levels](https://www.rofa.se/images/2x/list/4465wineglasspinkwcoasterpink-levels-henne.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-rosa-levels/)
 
-
-
-
 ### Vinglas med namn, rosa - Levels
-
-
-
-
-
 
 (4)
 
@@ -508,27 +286,13 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Whiskyglas med gravyr - Heart
-
-
-
 
 269 kr
 
 - [![svart fickplunta med personlig gravyr](https://www.rofa.se/images/2x/list/pluntasvartfrilagdlounge4-10564.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/fickplunta-med-namn-lounge/)
 
-
-
-
 ### Fickplunta med namn - Lounge
-
-
-
-
-
 
 (6)
 
@@ -536,15 +300,7 @@ NYHET!
 
 - [![temugg med namn eller text](https://www.rofa.se/images/2x/list/4465teamugv2-pristine-72309.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/tekopp-med-namn-sked-tesil-pristine/)
 
-
-
-
 ### Tekopp med namn, sked & tesil - Pristine
-
-
-
-
-
 
 (5)
 
@@ -552,15 +308,7 @@ NYHET!
 
 - [![Rosa vinglas med guldfärgad kant och underlägg](https://www.rofa.se/images/2x/list/4465wineglasspinkwcoasterpink-heart-henne.jpg.webp)](https://www.rofa.se/sortiment/hemmet/glas/vinglas-med-namn-rosa-heart/)
 
-
-
-
 ### Vinglas med namn, rosa - Heart
-
-
-
-
-
 
 (12)
 
@@ -572,13 +320,7 @@ Flera val!
 
 NYHET!
 
-
-
-
 ### Whiskyglas med gravyr - Hunting
-
-
-
 
 269 kr
 
@@ -586,16 +328,9 @@ NYHET!
 
 NYHET!
 
-
-
-
 ### Ölglas med gravyr – Student
 
-
-
-
 299 kr
-
 
 ## Personligt graverade glas
 
@@ -657,7 +392,6 @@ BekräftaAvbryt
 - [![Vinglas i svart presentlåda](https://www.rofa.se/images/2x/normal/4465wineglasspinkwcoasterpinkdetail-6675.jpg.webp)](https://www.rofa.se/images/zoom/4465wineglasspinkwcoasterpinkdetail-6675.jpg)
 
 - [![Vinglas med glasunderlägg och personlig gravyr till mors dag](https://www.rofa.se/images/2x/normal/morsdag-2026-4465wineglasspinkwcoaster-miljo-se.jpg.webp)](https://www.rofa.se/images/zoom/morsdag-2026-4465wineglasspinkwcoaster-miljo-se.jpg)
-
 
 - ![Rosa vinglas med guldfärgad kant och underlägg](https://www.rofa.se/images/mini/4465wineglasspinkwcoasterpink-heart-henne.jpg.webp)
 - ![Vinglas i svart presentlåda](https://www.rofa.se/images/mini/4465wineglasspinkwcoasterpinkdetail-6675.jpg.webp)
@@ -771,7 +505,7 @@ UNDERLÄGG
 
 Recensioner
 
-##### Medelbetyg 5 av 5   12 recensioner
+##### Medelbetyg 5 av 5 12 recensioner
 
 2026-06-15
 
@@ -923,7 +657,6 @@ BekräftaAvbryt
 
 - [![Vinglas med namn, rosa - Levels](https://www.rofa.se/images/2x/normal/4465wineglasspinkwcoasterpinkdetail.jpg.webp)](https://www.rofa.se/images/zoom/4465wineglasspinkwcoasterpinkdetail.jpg)
 
-
 - ![Vinglas med namn, rosa - Levels](https://www.rofa.se/images/mini/4465wineglasspinkwcoasterpink-levels-henne.jpg.webp)
 - ![Vinglas med namn, rosa - Levels](https://www.rofa.se/images/mini/4465wineglasspinkwcoasterpinkdetail.jpg.webp)
 
@@ -1043,7 +776,7 @@ UNDERLÄGG
 
 Recensioner
 
-##### Medelbetyg 5 av 5   4 recensioner
+##### Medelbetyg 5 av 5 4 recensioner
 
 2026-05-13
 
@@ -1134,7 +867,6 @@ BekräftaAvbryt
 - [![Vinglas med namn, rosa - Pristine](https://www.rofa.se/images/normal/4465wineglasspinkwcoasterpink-pristine.jpg.webp)](https://www.rofa.se/images/zoom/4465wineglasspinkwcoasterpink-pristine.jpg)
 
 - [![Vinglas med namn, rosa - Pristine](https://www.rofa.se/images/2x/normal/4465wineglasspinkwcoasterpinkdetail-96181.jpg.webp)](https://www.rofa.se/images/zoom/4465wineglasspinkwcoasterpinkdetail-96181.jpg)
-
 
 - ![Vinglas med namn, rosa - Pristine](https://www.rofa.se/images/mini/4465wineglasspinkwcoasterpink-pristine.jpg.webp)
 - ![Vinglas med namn, rosa - Pristine](https://www.rofa.se/images/mini/4465wineglasspinkwcoasterpinkdetail-96181.jpg.webp)
@@ -1235,7 +967,7 @@ UNDERLÄGG
 
 Recensioner
 
-##### Medelbetyg 5 av 5   9 recensioner
+##### Medelbetyg 5 av 5 9 recensioner
 
 2026-04-23
 

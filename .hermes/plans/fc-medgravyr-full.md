@@ -10,246 +10,200 @@ Meny
 
 GRAVERADE GLAS
 
-
-
-
-
-
-
 [GRAVERADE GLAS](https://medgravyr.se/collections/nyckelringar)
 
+- [ÖLGLAS](https://medgravyr.se/collections/nyckelringar)
 
+- [WHISKYGLAS](https://medgravyr.se/collections/nyckelringar)
 
+- [CHAMPAGNEGLAS](https://medgravyr.se/collections/nyckelringar)
 
+- [VINGLAS](https://medgravyr.se/collections/nyckelringar)
 
-  - [ÖLGLAS](https://medgravyr.se/collections/nyckelringar)
+- [SEJDLAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [WHISKYGLAS](https://medgravyr.se/collections/nyckelringar)
+- [KARAFFER](https://medgravyr.se/collections/nyckelringar)
 
-  - [CHAMPAGNEGLAS](https://medgravyr.se/collections/nyckelringar)
+- [DRINKGLAS](https://medgravyr.se/collections/nyckelringar)
 
-  - [VINGLAS](https://medgravyr.se/collections/nyckelringar)
-
-  - [SEJDLAR](https://medgravyr.se/collections/nyckelringar)
-
-  - [KARAFFER](https://medgravyr.se/collections/nyckelringar)
-
-  - [DRINKGLAS](https://medgravyr.se/collections/nyckelringar)
-
-  - [SNAPSGLAS](https://medgravyr.se/collections/nyckelringar)
-
+- [SNAPSGLAS](https://medgravyr.se/collections/nyckelringar)
 
 PRESENTTIPS
 
 [PRESENTTIPS](about:blank#)
 
-  - HÖGTIDER & TILLFÄLLEN
+- HÖGTIDER & TILLFÄLLEN
 
+  [HÖGTIDER & TILLFÄLLEN](about:blank#)
 
+  - [ALLA HJÄRTANS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [AVTACKNINGSPRESENTER](https://medgravyr.se/collections/nyckelringar)
+  - [BRÖLLOPSPRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [DOPPRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [EXAMENSPRESENT](https://medgravyr.se/collections/examenspresent)
+  - [FARS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [GÅ BORT PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [INFLYTTNINGSPRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [JULKLAPPAR](https://medgravyr.se/collections/nyckelringar)
+  - [NYÅRSPRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [MIDSOMMAR PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [MORS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [STUDENTPRESENT](https://medgravyr.se/collections/nyckelringar)
 
+- FÖDELSEDAGAR
 
+  [FÖDELSEDAGAR](about:blank#)
 
+  - [TILL 15-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 18-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 20-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 25-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 30-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 35-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 40-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 45-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 50-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
 
+- PRESENT TILL
 
-    [HÖGTIDER & TILLFÄLLEN](about:blank#)
+  [PRESENT TILL](about:blank#)
 
-
-
-
-
-    - [ALLA HJÄRTANS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [AVTACKNINGSPRESENTER](https://medgravyr.se/collections/nyckelringar)
-    - [BRÖLLOPSPRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [DOPPRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [EXAMENSPRESENT](https://medgravyr.se/collections/examenspresent)
-    - [FARS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [GÅ BORT PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [INFLYTTNINGSPRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [JULKLAPPAR](https://medgravyr.se/collections/nyckelringar)
-    - [NYÅRSPRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [MIDSOMMAR PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [MORS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [STUDENTPRESENT](https://medgravyr.se/collections/nyckelringar)
-
-  - FÖDELSEDAGAR
-
-
-
-
-
-
-
-    [FÖDELSEDAGAR](about:blank#)
-
-
-
-
-
-    - [TILL 15-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 18-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 20-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 25-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 30-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 35-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 40-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 45-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 50-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-
-  - PRESENT TILL
-
-
-
-
-
-
-
-    [PRESENT TILL](about:blank#)
-
-
-
-
-
-    - [PRESENT TILL FLICKVÄN](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL POJKVÄN](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL HONOM](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL HENNE](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL MAMMA](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL PAPPA](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL DOTTER](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL SON](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL FARMOR / MORMOR](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL FARFAR / MORFAR](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL FLICKVÄN](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL POJKVÄN](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL HONOM](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL HENNE](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL MAMMA](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL PAPPA](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL DOTTER](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL SON](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL FARMOR / MORMOR](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL FARFAR / MORFAR](https://medgravyr.se/collections/nyckelringar)
 
 KÖK & HEM
 
 [KÖK & HEM](about:blank#)
 
-  - [BAD & MORGONROCKAR](https://medgravyr.se/collections/nyckelringar)
+- [BAD & MORGONROCKAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [CHAMPAGNESABLAR OCH ISHINKAR](https://medgravyr.se/collections/nyckelringar)
+- [CHAMPAGNESABLAR OCH ISHINKAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [FÖRKLÄDEN](https://medgravyr.se/collections/nyckelringar)
+- [FÖRKLÄDEN](https://medgravyr.se/collections/nyckelringar)
 
-  - [GLASUNDERLÄGG](https://medgravyr.se/collections/nyckelringar)
+- [GLASUNDERLÄGG](https://medgravyr.se/collections/nyckelringar)
 
-  - [GRAVERADE SKÅLAR](https://medgravyr.se/collections/nyckelringar)
+- [GRAVERADE SKÅLAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [GRILLTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
+- [GRILLTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
 
-  - [GRYTOR & FORMAR](https://medgravyr.se/collections/nyckelringar)
+- [GRYTOR & FORMAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [HANDDUKAR](https://medgravyr.se/collections/nyckelringar)
+- [HANDDUKAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [KNIVAR & KNIVSTÄLL](https://medgravyr.se/collections/nyckelringar)
+- [KNIVAR & KNIVSTÄLL](https://medgravyr.se/collections/nyckelringar)
 
-  - [LJUSHÅLLARE & LYKTOR](https://medgravyr.se/collections/nyckelringar)
+- [LJUSHÅLLARE & LYKTOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [OSTBRICKOR](https://medgravyr.se/collections/nyckelringar)
+- [OSTBRICKOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [PLÄDAR & FILTAR](https://medgravyr.se/collections/nyckelringar)
+- [PLÄDAR & FILTAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [SKYLTAR / DÖRRSKYLTAR](https://medgravyr.se/collections/nyckelringar)
+- [SKYLTAR / DÖRRSKYLTAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [SKÄRBRÄDOR](https://medgravyr.se/collections/nyckelringar)
+- [SKÄRBRÄDOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [TERMOSMUGGAR](https://medgravyr.se/collections/nyckelringar)
-
+- [TERMOSMUGGAR](https://medgravyr.se/collections/nyckelringar)
 
 BARN
 
 [BARN](https://medgravyr.se/collections/nyckelringar)
 
-  - [BARNBESTICK](https://medgravyr.se/collections/nyckelringar)
+- [BARNBESTICK](https://medgravyr.se/collections/nyckelringar)
 
-  - [DOP & NAMNGIVNING](https://medgravyr.se/collections/nyckelringar)
+- [DOP & NAMNGIVNING](https://medgravyr.se/collections/nyckelringar)
 
-  - [GOSEDJUR](https://medgravyr.se/collections/nyckelringar)
+- [GOSEDJUR](https://medgravyr.se/collections/nyckelringar)
 
-  - [GYMPAPÅSE](https://medgravyr.se/collections/nyckelringar)
+- [GYMPAPÅSE](https://medgravyr.se/collections/nyckelringar)
 
-  - [JULSTRUMPA](https://medgravyr.se/collections/nyckelringar)
+- [JULSTRUMPA](https://medgravyr.se/collections/nyckelringar)
 
-  - [LEKSAKER](https://medgravyr.se/collections/nyckelringar)
+- [LEKSAKER](https://medgravyr.se/collections/nyckelringar)
 
-  - [POKALER & MEDALJER](https://medgravyr.se/collections/nyckelringar)
+- [POKALER & MEDALJER](https://medgravyr.se/collections/nyckelringar)
 
-  - [RYGGSÄCK TILL BARN](https://medgravyr.se/collections/nyckelringar)
+- [RYGGSÄCK TILL BARN](https://medgravyr.se/collections/nyckelringar)
 
-  - [SMYCKESKRIN & SPELDOSOR](https://medgravyr.se/collections/nyckelringar)
+- [SMYCKESKRIN & SPELDOSOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [SNUTTEFILTAR](https://medgravyr.se/collections/nyckelringar)
+- [SNUTTEFILTAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [TANDBORSTE MED NAMN](https://medgravyr.se/collections/nyckelringar)
+- [TANDBORSTE MED NAMN](https://medgravyr.se/collections/nyckelringar)
 
-  - [VATTENFLASKOR TILL BARN](https://medgravyr.se/collections/nyckelringar)
-
+- [VATTENFLASKOR TILL BARN](https://medgravyr.se/collections/nyckelringar)
 
 FRITID & OUTDOOR
 
 [FRITID & OUTDOOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [CAMPINGMUGGAR](https://medgravyr.se/collections/nyckelringar)
+- [CAMPINGMUGGAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [FICKPLUNTOR](https://medgravyr.se/collections/nyckelringar)
+- [FICKPLUNTOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [FICKKNIVAR OCH MULTIVERKTYG](https://medgravyr.se/collections/nyckelringar)
+- [FICKKNIVAR OCH MULTIVERKTYG](https://medgravyr.se/collections/nyckelringar)
 
-  - [GOLFTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
+- [GOLFTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
 
-  - [JAKTPRYLAR](https://medgravyr.se/collections/nyckelringar)
+- [JAKTPRYLAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [MATLÅDOR](https://medgravyr.se/collections/nyckelringar)
+- [MATLÅDOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [MATTERMOSAR](https://medgravyr.se/collections/nyckelringar)
+- [MATTERMOSAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [SVAMPTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
+- [SVAMPTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
 
-  - [TERMOSAR](https://medgravyr.se/collections/nyckelringar)
+- [TERMOSAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [VATTENFLASKOR](https://medgravyr.se/collections/nyckelringar)
-
+- [VATTENFLASKOR](https://medgravyr.se/collections/nyckelringar)
 
 ACCESSOARER
 
 [ACCESSOARER](https://medgravyr.se/collections/nyckelringar)
 
-  - [ARMBAND](https://medgravyr.se/collections/nyckelringar)
+- [ARMBAND](https://medgravyr.se/collections/nyckelringar)
 
-  - [HALSBAND](https://medgravyr.se/collections/nyckelringar)
+- [HALSBAND](https://medgravyr.se/collections/nyckelringar)
 
-  - [HÄNGLÅS MED NAMN](https://medgravyr.se/collections/nyckelringar)
+- [HÄNGLÅS MED NAMN](https://medgravyr.se/collections/nyckelringar)
 
-  - [KEPSAR MED NAMN](https://medgravyr.se/collections/nyckelringar)
+- [KEPSAR MED NAMN](https://medgravyr.se/collections/nyckelringar)
 
-  - [KLOCKFÖRVARING](https://medgravyr.se/collections/nyckelringar)
+- [KLOCKFÖRVARING](https://medgravyr.se/collections/nyckelringar)
 
-  - [MANSCHETTKNAPPAR](https://medgravyr.se/collections/nyckelringar)
+- [MANSCHETTKNAPPAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [NYCKELRINGAR](https://medgravyr.se/collections/nyckelringar)
+- [NYCKELRINGAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [PENNOR](https://medgravyr.se/collections/nyckelringar)
+- [PENNOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [PLÅNBOK](https://medgravyr.se/collections/nyckelringar)
+- [PLÅNBOK](https://medgravyr.se/collections/nyckelringar)
 
-  - [SNUSDOSOR MED GRAVYR](https://medgravyr.se/collections/nyckelringar)
+- [SNUSDOSOR MED GRAVYR](https://medgravyr.se/collections/nyckelringar)
 
-  - [TÄNDARE](https://medgravyr.se/collections/nyckelringar)
-
+- [TÄNDARE](https://medgravyr.se/collections/nyckelringar)
 
 VÄSKOR
 
 [VÄSKOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [DATORVÄSKOR](https://medgravyr.se/collections/nyckelringar)
+- [DATORVÄSKOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [GYMPAPÅSAR](https://medgravyr.se/collections/nyckelringar)
+- [GYMPAPÅSAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [RYGGSÄCKAR](https://medgravyr.se/collections/nyckelringar)
+- [RYGGSÄCKAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [WEEKENDVÄSKOR](https://medgravyr.se/collections/nyckelringar)
+- [WEEKENDVÄSKOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [NECESSÄRER](https://medgravyr.se/collections/nyckelringar)
-
+- [NECESSÄRER](https://medgravyr.se/collections/nyckelringar)
 
 [OUTLET](https://medgravyr.se/collections/nyckelringar)
 
@@ -261,246 +215,200 @@ Meny
 
 GRAVERADE GLAS
 
-
-
-
-
-
-
 [GRAVERADE GLAS](https://medgravyr.se/collections/nyckelringar)
 
+- [ÖLGLAS](https://medgravyr.se/collections/nyckelringar)
 
+- [WHISKYGLAS](https://medgravyr.se/collections/nyckelringar)
 
+- [CHAMPAGNEGLAS](https://medgravyr.se/collections/nyckelringar)
 
+- [VINGLAS](https://medgravyr.se/collections/nyckelringar)
 
-  - [ÖLGLAS](https://medgravyr.se/collections/nyckelringar)
+- [SEJDLAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [WHISKYGLAS](https://medgravyr.se/collections/nyckelringar)
+- [KARAFFER](https://medgravyr.se/collections/nyckelringar)
 
-  - [CHAMPAGNEGLAS](https://medgravyr.se/collections/nyckelringar)
+- [DRINKGLAS](https://medgravyr.se/collections/nyckelringar)
 
-  - [VINGLAS](https://medgravyr.se/collections/nyckelringar)
-
-  - [SEJDLAR](https://medgravyr.se/collections/nyckelringar)
-
-  - [KARAFFER](https://medgravyr.se/collections/nyckelringar)
-
-  - [DRINKGLAS](https://medgravyr.se/collections/nyckelringar)
-
-  - [SNAPSGLAS](https://medgravyr.se/collections/nyckelringar)
-
+- [SNAPSGLAS](https://medgravyr.se/collections/nyckelringar)
 
 PRESENTTIPS
 
 [PRESENTTIPS](about:blank#)
 
-  - HÖGTIDER & TILLFÄLLEN
+- HÖGTIDER & TILLFÄLLEN
 
+  [HÖGTIDER & TILLFÄLLEN](about:blank#)
 
+  - [ALLA HJÄRTANS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [AVTACKNINGSPRESENTER](https://medgravyr.se/collections/nyckelringar)
+  - [BRÖLLOPSPRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [DOPPRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [EXAMENSPRESENT](https://medgravyr.se/collections/examenspresent)
+  - [FARS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [GÅ BORT PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [INFLYTTNINGSPRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [JULKLAPPAR](https://medgravyr.se/collections/nyckelringar)
+  - [NYÅRSPRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [MIDSOMMAR PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [MORS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
+  - [STUDENTPRESENT](https://medgravyr.se/collections/nyckelringar)
 
+- FÖDELSEDAGAR
 
+  [FÖDELSEDAGAR](about:blank#)
 
+  - [TILL 15-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 18-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 20-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 25-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 30-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 35-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 40-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 45-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
+  - [TILL 50-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
 
+- PRESENT TILL
 
-    [HÖGTIDER & TILLFÄLLEN](about:blank#)
+  [PRESENT TILL](about:blank#)
 
-
-
-
-
-    - [ALLA HJÄRTANS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [AVTACKNINGSPRESENTER](https://medgravyr.se/collections/nyckelringar)
-    - [BRÖLLOPSPRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [DOPPRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [EXAMENSPRESENT](https://medgravyr.se/collections/examenspresent)
-    - [FARS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [GÅ BORT PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [INFLYTTNINGSPRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [JULKLAPPAR](https://medgravyr.se/collections/nyckelringar)
-    - [NYÅRSPRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [MIDSOMMAR PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [MORS DAG PRESENT](https://medgravyr.se/collections/nyckelringar)
-    - [STUDENTPRESENT](https://medgravyr.se/collections/nyckelringar)
-
-  - FÖDELSEDAGAR
-
-
-
-
-
-
-
-    [FÖDELSEDAGAR](about:blank#)
-
-
-
-
-
-    - [TILL 15-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 18-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 20-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 25-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 30-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 35-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 40-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 45-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-    - [TILL 50-ÅRSDAGEN](https://medgravyr.se/collections/nyckelringar)
-
-  - PRESENT TILL
-
-
-
-
-
-
-
-    [PRESENT TILL](about:blank#)
-
-
-
-
-
-    - [PRESENT TILL FLICKVÄN](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL POJKVÄN](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL HONOM](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL HENNE](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL MAMMA](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL PAPPA](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL DOTTER](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL SON](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL FARMOR / MORMOR](https://medgravyr.se/collections/nyckelringar)
-    - [PRESENT TILL FARFAR / MORFAR](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL FLICKVÄN](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL POJKVÄN](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL HONOM](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL HENNE](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL MAMMA](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL PAPPA](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL DOTTER](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL SON](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL FARMOR / MORMOR](https://medgravyr.se/collections/nyckelringar)
+  - [PRESENT TILL FARFAR / MORFAR](https://medgravyr.se/collections/nyckelringar)
 
 KÖK & HEM
 
 [KÖK & HEM](about:blank#)
 
-  - [BAD & MORGONROCKAR](https://medgravyr.se/collections/nyckelringar)
+- [BAD & MORGONROCKAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [CHAMPAGNESABLAR OCH ISHINKAR](https://medgravyr.se/collections/nyckelringar)
+- [CHAMPAGNESABLAR OCH ISHINKAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [FÖRKLÄDEN](https://medgravyr.se/collections/nyckelringar)
+- [FÖRKLÄDEN](https://medgravyr.se/collections/nyckelringar)
 
-  - [GLASUNDERLÄGG](https://medgravyr.se/collections/nyckelringar)
+- [GLASUNDERLÄGG](https://medgravyr.se/collections/nyckelringar)
 
-  - [GRAVERADE SKÅLAR](https://medgravyr.se/collections/nyckelringar)
+- [GRAVERADE SKÅLAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [GRILLTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
+- [GRILLTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
 
-  - [GRYTOR & FORMAR](https://medgravyr.se/collections/nyckelringar)
+- [GRYTOR & FORMAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [HANDDUKAR](https://medgravyr.se/collections/nyckelringar)
+- [HANDDUKAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [KNIVAR & KNIVSTÄLL](https://medgravyr.se/collections/nyckelringar)
+- [KNIVAR & KNIVSTÄLL](https://medgravyr.se/collections/nyckelringar)
 
-  - [LJUSHÅLLARE & LYKTOR](https://medgravyr.se/collections/nyckelringar)
+- [LJUSHÅLLARE & LYKTOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [OSTBRICKOR](https://medgravyr.se/collections/nyckelringar)
+- [OSTBRICKOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [PLÄDAR & FILTAR](https://medgravyr.se/collections/nyckelringar)
+- [PLÄDAR & FILTAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [SKYLTAR / DÖRRSKYLTAR](https://medgravyr.se/collections/nyckelringar)
+- [SKYLTAR / DÖRRSKYLTAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [SKÄRBRÄDOR](https://medgravyr.se/collections/nyckelringar)
+- [SKÄRBRÄDOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [TERMOSMUGGAR](https://medgravyr.se/collections/nyckelringar)
-
+- [TERMOSMUGGAR](https://medgravyr.se/collections/nyckelringar)
 
 BARN
 
 [BARN](https://medgravyr.se/collections/nyckelringar)
 
-  - [BARNBESTICK](https://medgravyr.se/collections/nyckelringar)
+- [BARNBESTICK](https://medgravyr.se/collections/nyckelringar)
 
-  - [DOP & NAMNGIVNING](https://medgravyr.se/collections/nyckelringar)
+- [DOP & NAMNGIVNING](https://medgravyr.se/collections/nyckelringar)
 
-  - [GOSEDJUR](https://medgravyr.se/collections/nyckelringar)
+- [GOSEDJUR](https://medgravyr.se/collections/nyckelringar)
 
-  - [GYMPAPÅSE](https://medgravyr.se/collections/nyckelringar)
+- [GYMPAPÅSE](https://medgravyr.se/collections/nyckelringar)
 
-  - [JULSTRUMPA](https://medgravyr.se/collections/nyckelringar)
+- [JULSTRUMPA](https://medgravyr.se/collections/nyckelringar)
 
-  - [LEKSAKER](https://medgravyr.se/collections/nyckelringar)
+- [LEKSAKER](https://medgravyr.se/collections/nyckelringar)
 
-  - [POKALER & MEDALJER](https://medgravyr.se/collections/nyckelringar)
+- [POKALER & MEDALJER](https://medgravyr.se/collections/nyckelringar)
 
-  - [RYGGSÄCK TILL BARN](https://medgravyr.se/collections/nyckelringar)
+- [RYGGSÄCK TILL BARN](https://medgravyr.se/collections/nyckelringar)
 
-  - [SMYCKESKRIN & SPELDOSOR](https://medgravyr.se/collections/nyckelringar)
+- [SMYCKESKRIN & SPELDOSOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [SNUTTEFILTAR](https://medgravyr.se/collections/nyckelringar)
+- [SNUTTEFILTAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [TANDBORSTE MED NAMN](https://medgravyr.se/collections/nyckelringar)
+- [TANDBORSTE MED NAMN](https://medgravyr.se/collections/nyckelringar)
 
-  - [VATTENFLASKOR TILL BARN](https://medgravyr.se/collections/nyckelringar)
-
+- [VATTENFLASKOR TILL BARN](https://medgravyr.se/collections/nyckelringar)
 
 FRITID & OUTDOOR
 
 [FRITID & OUTDOOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [CAMPINGMUGGAR](https://medgravyr.se/collections/nyckelringar)
+- [CAMPINGMUGGAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [FICKPLUNTOR](https://medgravyr.se/collections/nyckelringar)
+- [FICKPLUNTOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [FICKKNIVAR OCH MULTIVERKTYG](https://medgravyr.se/collections/nyckelringar)
+- [FICKKNIVAR OCH MULTIVERKTYG](https://medgravyr.se/collections/nyckelringar)
 
-  - [GOLFTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
+- [GOLFTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
 
-  - [JAKTPRYLAR](https://medgravyr.se/collections/nyckelringar)
+- [JAKTPRYLAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [MATLÅDOR](https://medgravyr.se/collections/nyckelringar)
+- [MATLÅDOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [MATTERMOSAR](https://medgravyr.se/collections/nyckelringar)
+- [MATTERMOSAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [SVAMPTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
+- [SVAMPTILLBEHÖR](https://medgravyr.se/collections/nyckelringar)
 
-  - [TERMOSAR](https://medgravyr.se/collections/nyckelringar)
+- [TERMOSAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [VATTENFLASKOR](https://medgravyr.se/collections/nyckelringar)
-
+- [VATTENFLASKOR](https://medgravyr.se/collections/nyckelringar)
 
 ACCESSOARER
 
 [ACCESSOARER](https://medgravyr.se/collections/nyckelringar)
 
-  - [ARMBAND](https://medgravyr.se/collections/nyckelringar)
+- [ARMBAND](https://medgravyr.se/collections/nyckelringar)
 
-  - [HALSBAND](https://medgravyr.se/collections/nyckelringar)
+- [HALSBAND](https://medgravyr.se/collections/nyckelringar)
 
-  - [HÄNGLÅS MED NAMN](https://medgravyr.se/collections/nyckelringar)
+- [HÄNGLÅS MED NAMN](https://medgravyr.se/collections/nyckelringar)
 
-  - [KEPSAR MED NAMN](https://medgravyr.se/collections/nyckelringar)
+- [KEPSAR MED NAMN](https://medgravyr.se/collections/nyckelringar)
 
-  - [KLOCKFÖRVARING](https://medgravyr.se/collections/nyckelringar)
+- [KLOCKFÖRVARING](https://medgravyr.se/collections/nyckelringar)
 
-  - [MANSCHETTKNAPPAR](https://medgravyr.se/collections/nyckelringar)
+- [MANSCHETTKNAPPAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [NYCKELRINGAR](https://medgravyr.se/collections/nyckelringar)
+- [NYCKELRINGAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [PENNOR](https://medgravyr.se/collections/nyckelringar)
+- [PENNOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [PLÅNBOK](https://medgravyr.se/collections/nyckelringar)
+- [PLÅNBOK](https://medgravyr.se/collections/nyckelringar)
 
-  - [SNUSDOSOR MED GRAVYR](https://medgravyr.se/collections/nyckelringar)
+- [SNUSDOSOR MED GRAVYR](https://medgravyr.se/collections/nyckelringar)
 
-  - [TÄNDARE](https://medgravyr.se/collections/nyckelringar)
-
+- [TÄNDARE](https://medgravyr.se/collections/nyckelringar)
 
 VÄSKOR
 
 [VÄSKOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [DATORVÄSKOR](https://medgravyr.se/collections/nyckelringar)
+- [DATORVÄSKOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [GYMPAPÅSAR](https://medgravyr.se/collections/nyckelringar)
+- [GYMPAPÅSAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [RYGGSÄCKAR](https://medgravyr.se/collections/nyckelringar)
+- [RYGGSÄCKAR](https://medgravyr.se/collections/nyckelringar)
 
-  - [WEEKENDVÄSKOR](https://medgravyr.se/collections/nyckelringar)
+- [WEEKENDVÄSKOR](https://medgravyr.se/collections/nyckelringar)
 
-  - [NECESSÄRER](https://medgravyr.se/collections/nyckelringar)
-
+- [NECESSÄRER](https://medgravyr.se/collections/nyckelringar)
 
 [OUTLET](https://medgravyr.se/collections/nyckelringar)
 
@@ -517,7 +425,6 @@ Visa
 26
 
 30
-
 
 per sida
 
@@ -547,7 +454,6 @@ Enhetspris/ per
 
 45244160672008
 
-
 [![Nyckelring bildäck - med personlig gravyr](https://medgravyr.se/cdn/shop/products/0025-Silver.jpg?v=1708947599&width=1500)\\
 \\
 ![Nyckelring bildäck - med personlig gravyr](https://medgravyr.se/cdn/shop/products/0025-Silver.jpg?v=1708947599&width=1500)\\
@@ -574,7 +480,6 @@ Enhetspris/ per
 
 45410535112968
 
-
 [![Nyckelring hus - med graverat namn](https://medgravyr.se/cdn/shop/products/nyckelring-husmg-19-a02-4515-2.jpg?v=1736842500&width=1500)\\
 \\
 ![Nyckelring hus - med graverat namn](https://medgravyr.se/cdn/shop/products/nyckelring-husmg-19-a02-4515.jpg?v=1736842486&width=1500)\\
@@ -599,7 +504,6 @@ Enhetspris/ per
 
 45244161360136
 
-
 Visa
 
 20
@@ -607,7 +511,6 @@ Visa
 26
 
 30
-
 
 per sida
 
@@ -927,67 +830,19 @@ Utmärkt!
 
 [Lämna en recension](https://search.google.com/local/writereview?placeid=ChIJxx12uZT1T0YR4BN14m1RIc0)
 
-## Varför välja Medgravyr   ?
+## Varför välja Medgravyr ?
 
 ![](https://medgravyr.se/cdn/shop/files/quality_1.png?v=1746521355&width=100)
 
-
-
-
-
-
-
-
-
 40 års erfarenhet inom gravyr och brodyr
-
-
-
-
-
-
-
-
 
 ![](https://medgravyr.se/cdn/shop/files/best-seller_1.png?v=1746521356&width=100)
 
-
-
-
-
-
-
-
-
 Hög kvalitet och snabb leverans
-
-
-
-
-
-
-
-
 
 ![](https://medgravyr.se/cdn/shop/files/personalization_1.png?v=1746521356&width=100)
 
-
-
-
-
-
-
-
-
 Unika och personliga presenter för alla tillfällen
-
-
-
-
-
-
-
-
 
 KONTAKT
 
@@ -995,31 +850,25 @@ Adress
 
 Norra Ågatan 10, 41664 Göteborg
 
-
 Skriv till oss
 
 info(at)medgravyr.se
 
-
 Chat/informationsdatabas
 
 dygnet runt
-
 
 Adress
 
 Norra Ågatan 10, 41664 Göteborg
 
-
 Skriv till oss
 
 info(at)medgravyr.se
 
-
 Chat/informationsdatabas
 
 dygnet runt
-
 
 INFORMATION
 
@@ -1051,8 +900,7 @@ INFORMATION
 
 © 2026,
 
-[medgravyr](https://medgravyr.se/ "").
-
+[medgravyr](https://medgravyr.se/).
 
 - American Express
 - Apple Pay
@@ -1067,7 +915,6 @@ INFORMATION
 
 - Öppnas i ett nytt fönster.
 
-
 shop.app
 
 # shop.app is blocked
@@ -1080,10 +927,9 @@ ERR\_BLOCKED\_BY\_CLIENT
 
 Reload
 
-
 This page has been blocked by an extension
 
-![](<Base64-Image-Removed>)![](<Base64-Image-Removed>)
+![](Base64-Image-Removed)![](Base64-Image-Removed)
 
 medgravyr.se
 
@@ -1097,10 +943,9 @@ ERR\_BLOCKED\_BY\_CLIENT
 
 Reload
 
-
 This page has been blocked by an extension
 
-![](<Base64-Image-Removed>)![](<Base64-Image-Removed>)
+![](Base64-Image-Removed)![](Base64-Image-Removed)
 
 medgravyr.se
 
@@ -1114,10 +959,9 @@ ERR\_BLOCKED\_BY\_CLIENT
 
 Reload
 
-
 This page has been blocked by an extension
 
-![](<Base64-Image-Removed>)![](<Base64-Image-Removed>)
+![](Base64-Image-Removed)![](Base64-Image-Removed)
 
 medgravyr.se
 
@@ -1131,9 +975,8 @@ ERR\_BLOCKED\_BY\_CLIENT
 
 Reload
 
-
 This page has been blocked by an extension
 
-![](<Base64-Image-Removed>)![](<Base64-Image-Removed>)
+![](Base64-Image-Removed)![](Base64-Image-Removed)
 
 Få snabbt svar

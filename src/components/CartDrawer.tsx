@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
 import { PaymentLogos } from "@/components/PaymentLogos";
 import { Progress } from "@/components/ui/progress";
@@ -13,61 +13,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Heart } from "lucide-react";
+import { ShoppingBag, Minus, Plus, Trash2, ExternalLink } from "lucide-react";
+import { toast } from "sonner";
 import { LiquidLoader } from "@/components/ui/liquid-loader";
+import { WishlistRow } from "@/components/WishlistRow";
 import { useCartStore } from "@/stores/cartStore";
-import { formatPrice } from "@/lib/shopify";
-import { useWishlist } from "@/lib/wishlist";
-
-const FREE_SHIPPING_LIMIT = 800;
-
-/** Spara-tips: sparade produkter från önskelistan när varukorgen är tom. */
-function WishlistStrip({ onDone }: { onDone: () => void }) {
-  const { items } = useWishlist();
-  if (items.length === 0) return null;
-
-  return (
-    <div className="rounded-2xl border border-gold/40 bg-gold/10 p-4 text-left">
-      <p className="flex items-center gap-2 text-sm font-semibold">
-        <Heart className="h-4 w-4 fill-primary text-primary" aria-hidden="true" />
-        Dina sparade favoriter ({items.length})
-      </p>
-      <ul className="mt-3 space-y-2">
-        {items.slice(0, 3).map((p) => (
-          <li key={p.handle} className="flex items-center gap-3">
-            <Link
-              to="/produkt/$handle"
-              params={{ handle: p.handle }}
-              onClick={onDone}
-              className="group flex min-w-0 flex-1 items-center gap-3"
-            >
-              {p.image && (
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  loading="lazy"
-                  className="h-10 w-10 shrink-0 rounded-lg object-cover"
-                />
-              )}
-              <span className="min-w-0 truncate text-sm font-medium group-hover:text-primary">
-                {p.title}
-              </span>
-              <span className="ml-auto shrink-0 text-xs text-muted-foreground">
-                {formatPrice(p.price, p.currency)}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      {items.length > 3 && (
-        <p className="mt-2 text-xs text-muted-foreground">+ {items.length - 3} till</p>
-      )}
-    </div>
-  );
-}
+import { useUiStore } from "@/stores/uiStore";
+import { isDemoMode } from "@/lib/demoProducts";
+import { FREE_SHIPPING_LIMIT, formatPrice } from "@/lib/shopify";
 
 export function CartDrawer() {
-  const [isOpen, setIsOpen] = useState(false);
+  // Öppet-läge ligger i uiStore så toastens "Öppna varukorgen" kan nå den
+  const isOpen = useUiStore((s) => s.cartOpen);
+  const setCartOpen = useUiStore((s) => s.setCartOpen);
   const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } =
     useCartStore();
 
@@ -78,29 +36,67 @@ export function CartDrawer() {
   );
   const currency = items[0]?.price.currencyCode || "SEK";
 
+  // Kort scale-puls när antalet ändras — transform-only och avstängd vid reduced-motion
+  const [bounce, setBounce] = useState(false);
+  const prevCount = useRef(totalItems);
+  useEffect(() => {
+    if (totalItems === prevCount.current) return;
+    prevCount.current = totalItems;
+    if (totalItems === 0) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setBounce(true);
+    const id = setTimeout(() => setBounce(false), 150);
+    return () => clearTimeout(id);
+  }, [totalItems]);
+
   useEffect(() => {
     if (isOpen) syncCart();
   }, [isOpen, syncCart]);
 
+  // I demoläget finns ingen riktig kassa – berätta det istället för att
+  // öppna den fejkade URL:en (demo.checkout.invalid ger bara DNS-fel).
+  // isDemoMode importeras statiskt så window.open sker i samma
+  // event-loop-svar som klicket – en await emellan blockerar popups i Safari.
   const handleCheckout = () => {
+    if (isDemoMode()) {
+      toast.info("Kassan är avstängd i demoläget", {
+        description:
+          "Butiken körs just nu med exempelprodukter. När riktiga produkter finns i Shopify kopplas kassan på automatiskt.",
+        position: "top-center",
+      });
+      return;
+    }
     const checkoutUrl = getCheckoutUrl();
     if (checkoutUrl) {
-      window.open(checkoutUrl, "_blank");
-      setIsOpen(false);
+      // Samma flik: kunden ska inte komma tillbaka till en varukorg som
+      // ser oköpt ut (window.open lämnade drawern öppen bakom kassan).
+      window.location.href = checkoutUrl;
     }
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={setCartOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="relative rounded-full">
-          <ShoppingBag className="h-5 w-5" />
+        <Button
+          variant="outline"
+          size="icon"
+          className="relative rounded-full"
+          aria-label={
+            totalItems > 0
+              ? `Öppna varukorgen, ${totalItems} ${totalItems === 1 ? "vara" : "varor"}`
+              : "Öppna varukorgen"
+          }
+        >
+          <ShoppingBag className="h-5 w-5" aria-hidden="true" />
           {totalItems > 0 && (
-            <Badge className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full p-0 text-xs">
+            <Badge
+              className={`absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full p-0 text-xs transition-transform duration-150 ${
+                bounce ? "scale-125" : "scale-100"
+              }`}
+            >
               {totalItems}
             </Badge>
           )}
-          <span className="sr-only">Öppna varukorgen</span>
         </Button>
       </SheetTrigger>
       <SheetContent className="flex h-full w-full flex-col sm:max-w-lg">
@@ -130,18 +126,17 @@ export function CartDrawer() {
                     key={c.slug}
                     to="/kategori/$slug"
                     params={{ slug: c.slug }}
-                    onClick={() => setIsOpen(false)}
-                    className="rounded-full bg-cream px-4 py-2 text-sm font-medium hover:text-primary"
+                    onClick={() => setCartOpen(false)}
+                    className="rounded-full bg-cream px-4 py-2 text-sm font-medium hover:text-primary-deep"
                   >
                     {c.label}
                   </Link>
                 ))}
               </div>
-              <WishlistStrip onDone={() => setIsOpen(false)} />
+              <WishlistRow limit={3} onNavigate={() => setCartOpen(false)} />
               <PaymentLogos className="justify-center" />
             </div>
           ) : (
-
             <>
               <div className="min-h-0 flex-1 overflow-y-auto pr-2">
                 <div className="space-y-4">
@@ -153,6 +148,7 @@ export function CartDrawer() {
                             src={item.product.node.images.edges[0].node.url}
                             alt={item.product.node.title}
                             loading="lazy"
+                            decoding="async"
                             className="h-full w-full object-cover"
                           />
                         )}
@@ -172,36 +168,39 @@ export function CartDrawer() {
                             ))}
                           </ul>
                         )}
-                        <p className="font-semibold">
+                        <p className="font-semibold tabular-nums">
                           {formatPrice(item.price.amount, item.price.currencyCode)}
                         </p>
                       </div>
-                      <div className="flex flex-shrink-0 flex-col items-end gap-2">
+                      <div className="flex flex-shrink-0 flex-col items-end gap-3">
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-6 w-6"
+                          className="h-11 w-11 md:h-9 md:w-9"
                           onClick={() => removeItem(item.lineKey)}
+                          aria-label={`Ta bort ${item.product.node.title} från varukorgen`}
                         >
-                          <Trash2 className="h-3 w-3" />
+                          <Trash2 className="h-4 w-4" />
                         </Button>
                         <div className="flex items-center gap-1">
                           <Button
                             variant="outline"
                             size="icon"
-                            className="h-6 w-6"
+                            className="h-11 w-11 md:h-9 md:w-9"
                             onClick={() => updateQuantity(item.lineKey, item.quantity - 1)}
+                            aria-label={`Minska antal ${item.product.node.title} till ${item.quantity - 1}`}
                           >
-                            <Minus className="h-3 w-3" />
+                            <Minus className="h-4 w-4" />
                           </Button>
                           <span className="w-8 text-center text-sm">{item.quantity}</span>
                           <Button
                             variant="outline"
                             size="icon"
-                            className="h-6 w-6"
+                            className="h-11 w-11 md:h-9 md:w-9"
                             onClick={() => updateQuantity(item.lineKey, item.quantity + 1)}
+                            aria-label={`Öka antal ${item.product.node.title} till ${item.quantity + 1}`}
                           >
-                            <Plus className="h-3 w-3" />
+                            <Plus className="h-4 w-4" />
                           </Button>
                         </div>
                       </div>
@@ -209,16 +208,16 @@ export function CartDrawer() {
                   ))}
                 </div>
               </div>
-              <div className="flex-shrink-0 space-y-4 border-t bg-background pt-4 pb-4">
+              <div className="flex-shrink-0 space-y-4 border-t bg-background pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
                 <div className="rounded-2xl bg-cream p-4">
                   {totalPrice >= FREE_SHIPPING_LIMIT ? (
-                    <p className="text-sm font-semibold text-primary">
+                    <p className="text-sm font-semibold text-primary-deep">
                       Grattis – du har fri frakt inom Sverige!
                     </p>
                   ) : (
                     <p className="text-sm">
                       Handla för{" "}
-                      <span className="font-semibold text-primary">
+                      <span className="font-semibold text-primary-deep">
                         {formatPrice(FREE_SHIPPING_LIMIT - totalPrice, currency)}
                       </span>{" "}
                       till så bjuder jag på frakten.
@@ -231,20 +230,20 @@ export function CartDrawer() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-semibold">Summa</span>
-                  <span className="font-serif text-2xl font-semibold">
+                  <span className="font-serif text-2xl font-semibold tabular-nums">
                     {formatPrice(totalPrice, currency)}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  <Link to="/frakt-leverans" className="underline hover:text-primary">
+                  <Link to="/frakt-leverans" className="underline hover:text-primary-deep">
                     Fraktalternativ och leveranstid
                   </Link>{" "}
-                  väljs i kassan – personlig gravyrtext bekräftas där.
+                  väljs i kassan – dina gravyrtexter följer med i beställningen.
                 </p>
 
                 <Button
                   onClick={handleCheckout}
-                  className="w-full"
+                  className="w-full rounded-full"
                   size="lg"
                   disabled={items.length === 0 || isLoading || isSyncing}
                 >
@@ -257,6 +256,12 @@ export function CartDrawer() {
                     </>
                   )}
                 </Button>
+                {/* Skiss-löftet vid sista steget – stillar stavnings- och
+                    personoron precis före främmande kassa. */}
+                <p className="text-center text-xs text-muted-foreground">
+                  Du får alltid en skiss på gravyren att godkänna innan jag börjar tillverka – skriv
+                  till mig när som helst om du känner dig tveksam.
+                </p>
                 <PaymentLogos className="justify-center" />
               </div>
             </>

@@ -4,8 +4,7 @@ export const SHOPIFY_API_VERSION = "2025-07";
 export const SHOPIFY_STORE_PERMANENT_DOMAIN = "sweet-savvy-shop-qfxf9-bktz9kkn.myshopify.com";
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 export const SHOPIFY_STOREFRONT_TOKEN =
-  import.meta.env["VITE_SHOPIFY_STOREFRONT_TOKEN"] ||
-  "DIN_SHOPIFY_STOREFRONT_TOKEN";
+  import.meta.env["VITE_SHOPIFY_STOREFRONT_TOKEN"] || "DIN_SHOPIFY_STOREFRONT_TOKEN";
 
 export interface ShopifyProduct {
   node: {
@@ -34,7 +33,6 @@ export interface ShopifyProduct {
     options: Array<{ name: string; values: string[] }>;
   };
 }
-
 
 export async function storefrontApiRequest(query: string, variables: any = {}) {
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
@@ -118,6 +116,13 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   return node ? { node } : null;
 }
 
+/**
+ * Gränsen för fri frakt inom Sverige (kr). ALL copy som nämner gränsen
+ * ska läsa härifrån – ändras fraktregeln i Shopify ändras den på en plats.
+ * Kontrollera att den stämmer med Shopify-inställningarna vid lansering.
+ */
+export const FREE_SHIPPING_LIMIT = 800;
+
 export function formatPrice(amount: string | number, currencyCode = "SEK") {
   const value = typeof amount === "string" ? parseFloat(amount) : amount;
   return new Intl.NumberFormat("sv-SE", {
@@ -131,6 +136,9 @@ export function formatPrice(amount: string | number, currencyCode = "SEK") {
 export async function searchProducts(term: string, first = 8): Promise<ShopifyProduct[]> {
   const q = term.trim();
   if (!q) return [];
+  // Demo-läge: sök lokalt mot demo-produkterna i stället för Storefront-API:t
+  const { isDemoMode, demoSearchProducts } = await import("@/lib/demoProducts");
+  if (isDemoMode()) return demoSearchProducts(q, first);
   const escaped = q.replace(/["\\]/g, "");
   const query = `title:*${escaped}* OR tag:*${escaped}* OR product_type:*${escaped}*`;
   const data = await storefrontApiRequest(STOREFRONT_QUERY, { first, query });

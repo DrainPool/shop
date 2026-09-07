@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink } from "lucide-react";
-
-const EXTERNAL = "https://linsochlager.net/foto";
+import { FOTOGRAFERING_URL as EXTERNAL } from "@/lib/siteUrls";
 
 export const Route = createFileRoute("/fotografering")({
   component: RedirectPage,
   head: () => ({
     meta: [
       {
-        // Meta-refresh som резерв: skickar vidare omdirigering i SSR/innehållsförhandlare
+        // Meta-refresh som reserv: skickar vidare omdirigering i SSR/innehållsförhandlare
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         "http-equiv": "refresh",
         content: `0;url=${EXTERNAL}`,
@@ -32,10 +31,10 @@ function RedirectPage() {
 
   return (
     <div className="mx-auto max-w-xl px-5 py-24 text-center">
-      <h1 className="font-serif text-3xl font-black tracking-tight">Fotografering</h1>
+      <h1 className="font-serif text-3xl font-bold tracking-tight">Fotografering</h1>
       <p className="mt-3 text-muted-foreground">
-        Allt om fotografering – bröllop, dop, familj och produktbilder – finns på min
-        fotografiska sajt.
+        Allt om fotografering – bröllop, dop, familj och produktbilder – finns på min fotografiska
+        sajt.
       </p>
       <a
         href={EXTERNAL}

@@ -19,7 +19,8 @@ export function useCutdown() {
   const [ms, setMs] = useState<number | null>(null);
   useEffect(() => {
     setMs(msUntilCutoff());
-    const id = setInterval(() => setMs(msUntilCutoff()), 1000);
+    // Lugnt 60-sekundersintervall – vi visar ändå inga sekunder
+    const id = setInterval(() => setMs(msUntilCutoff()), 60_000);
     return () => clearInterval(id);
   }, []);
   if (ms === null) return null;
@@ -28,7 +29,6 @@ export function useCutdown() {
     days: Math.floor(totalSeconds / 86400),
     hours: Math.floor((totalSeconds % 86400) / 3600),
     minutes: Math.floor((totalSeconds % 3600) / 60),
-    seconds: totalSeconds % 60,
   };
 }
 
@@ -39,7 +39,7 @@ export function CutoffCountdown({ className = "" }: { className?: string }) {
   return (
     <span className={`font-semibold tabular-nums ${className}`}>
       {t.days > 0 ? `${t.days} d ` : ""}
-      {pad(t.hours)}:{pad(t.minutes)}:{pad(t.seconds)}
+      {pad(t.hours)}:{pad(t.minutes)}
     </span>
   );
 }
@@ -48,17 +48,15 @@ export function FomoBanner({ floating = false }: { floating?: boolean }) {
   return (
     <div
       className={
-        floating
-          ? "border-b border-gold/30 bg-gold/10"
-          : "border-y border-gold/30 bg-gold/10"
+        floating ? "border-b border-gold/30 bg-gold/10" : "border-y border-gold/30 bg-gold/10"
       }
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-5 py-2.5 text-center text-sm">
-        <Clock className="h-4 w-4 shrink-0 text-primary" />
+        <Clock className="h-4 w-4 shrink-0 text-primary-deep" />
         <p className="text-foreground">
-          Jag tillverkar allt själv och tar in ett begränsat antal beställningar per vecka.
-          Lägg din order inom <CutoffCountdown className="text-primary" /> så hinner den med i
-          veckans tillverkning.
+          Jag tillverkar allt själv och tar in ett begränsat antal beställningar per vecka. Lägg din
+          order inom <CutoffCountdown className="text-primary-deep" /> så hinner den med i veckans
+          tillverkning.
         </p>
       </div>
     </div>

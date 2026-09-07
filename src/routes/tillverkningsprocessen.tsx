@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Check,
@@ -121,16 +122,10 @@ const phases: Phase[] = [
 function ProcessPage() {
   return (
     <div className="mx-auto max-w-4xl px-5 py-14">
-      <nav className="text-sm text-muted-foreground">
-        <Link to="/" className="hover:text-primary">
-          Hem
-        </Link>
-        <span className="px-2">/</span>
-        <span>Tillverkningsprocessen</span>
-      </nav>
+      <Breadcrumbs items={[{ label: "Tillverkningsprocessen" }]} />
 
-      <p className="mt-8 font-script text-3xl text-primary">från idé till present</p>
-      <h1 className="mt-3 font-serif text-4xl font-black tracking-tight md:text-5xl">
+      <p className="mt-8 font-script text-3xl text-primary-deep">från idé till present</p>
+      <h1 className="mt-3 font-serif text-4xl font-bold tracking-tight md:text-5xl">
         Tillverkningsprocessen
       </h1>
       <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
@@ -154,7 +149,7 @@ function ProcessPage() {
               <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground">
                 {phase.n}
               </span>
-              <h2 className="font-serif text-3xl font-black tracking-tight">{phase.title}</h2>
+              <h2 className="font-serif text-3xl font-bold tracking-tight">{phase.title}</h2>
             </div>
             <p className="mt-2 text-muted-foreground">{phase.intro}</p>
 
@@ -165,7 +160,7 @@ function ProcessPage() {
                   className="flex gap-4 rounded-2xl border border-border bg-card p-6 shadow-soft"
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cream">
-                    <s.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <s.icon className="h-5 w-5 text-primary-deep" aria-hidden="true" />
                   </span>
                   <div>
                     <h3 className="font-serif text-lg font-bold">{s.title}</h3>
@@ -179,7 +174,7 @@ function ProcessPage() {
       </div>
 
       <section className="mt-16 rounded-3xl bg-cream p-10 text-center">
-        <h2 className="font-serif text-2xl font-black tracking-tight md:text-3xl">
+        <h2 className="font-serif text-2xl font-bold tracking-tight md:text-3xl">
           Redo att skapa något personligt?
         </h2>
         <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
@@ -188,9 +183,14 @@ function ProcessPage() {
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" className="rounded-full px-7 text-base">
-            <Link to="/">Se hela sortimentet</Link>
+            <Link to="/sortiment">Se hela sortimentet</Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="rounded-full border-2 px-7 text-base">
+          <Button
+            asChild
+            size="lg"
+            variant="outline"
+            className="rounded-full border-2 px-7 text-base"
+          >
             <a href="mailto:hej@linsochlager.se">
               <Mail className="mr-2 h-4 w-4" /> Ställ en fråga
             </a>

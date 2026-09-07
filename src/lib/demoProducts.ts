@@ -27,7 +27,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "nyckelring-i-ek-med-eget-namn",
     description:
       "Massiv ek, lasergraverad med namn eller din egen text. Rymmer upp till 40 tecken. Handgjord i Småland — du får en digital skiss att godkänna innan jag graverar.",
-    tags: ["nyckelring", "tra", "gravyr", "fodelsedag", "bastsaljare"],
+    tags: ["nyckelring", "tra", "gravyr", "fodelsedag", "bastsaljare", "nytt-hem"],
     price: "179.00",
     image: img("nyckelringar_bord_H13eab.webp"),
     extraImages: [
@@ -55,7 +55,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "kors-hange-dop-silver",
     description:
       "Fint kors-hänge i silver med barnets namn och dopdatum graverade. Levereras i smyckesask, presentklart.",
-    tags: ["smycken", "dop", "barn", "bastsaljare"],
+    tags: ["smycken", "dop", "barn", "bastsaljare", "konfirmation"],
     price: "449.00",
     image: img("kors_bord_H0586.webp"),
     extraImages: [
@@ -83,7 +83,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "namnhalsband-handgraverat",
     description:
       "Klassiskt namnhalsband graverat för hand med namnet du väljer. Äkta silver eller förgyllt. Levereras i smyckesask.",
-    tags: ["smycken", "fodelsedag", "bastsaljare"],
+    tags: ["smycken", "fodelsedag", "bastsaljare", "hjartansdag", "konfirmation"],
     price: "449.00",
     image: img("halshalsband_bord_H18804.webp"),
     extraImages: [
@@ -97,7 +97,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "parsmycke-tva-halsband",
     description:
       "Två matchande halsband graverade med era namn, era koordinater eller ert datum. För er som är två — eller bästa vännerna.",
-    tags: ["smycken", "brollop"],
+    tags: ["smycken", "brollop", "hjartansdag", "arsdag"],
     price: "890.00",
     image: img("halshalsband_bord_Hbc72de.webp"),
     extraImages: [
@@ -139,7 +139,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "charm-personlig-berlock",
     description:
       "Liten berlock i silver att kombinera med ditt halsband eller armband. Graverad med bokstav, siffra eller liten symbol.",
-    tags: ["smycken", "fodelsedag", "nyhet"],
+    tags: ["smycken", "fodelsedag", "nyhet", "halloween", "hjartansdag", "konfirmation"],
     price: "249.00",
     image: img("charms_bord_H60ab2.webp"),
     extraImages: [
@@ -153,7 +153,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "korg-i-ek-med-gravyr",
     description:
       "Handgjord korg i ek, graverad med familjenamn eller en hälsning. Till nycklarna, brödet eller som gåva.",
-    tags: ["foretag", "tra", "gravyr"],
+    tags: ["foretag", "tra", "gravyr", "halloween", "nytt-hem", "pension"],
     price: "349.00",
     image: img("korgar_bord_H0a665.webp"),
     extraImages: [
@@ -181,13 +181,29 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "kedja-halsband-med-gravyr",
     description:
       "Fin kedja i stål med graverad berlock — namn, initialer eller ett datum. Till honom, henne eller er båda.",
-    tags: ["smycken", "brollop"],
+    tags: ["smycken", "brollop", "arsdag", "pension"],
     price: "549.00",
     image: img("kedjor_bord_Hb408a.webp"),
     extraImages: [
       img("kedjor_hall_Hb408a.webp"),
       img("kedjor_handla_Hb408a.webp"),
       img("kedjor_hem_Hb408a.webp"),
+    ],
+  },
+  {
+    // Fångar besökaren som inte kan bestämma – konverterar i stället för
+    // att lämna sajten. Bilden är platsmarkör tills riktiga finns.
+    title: "Presentkort — 500 kr",
+    handle: "presentkort-500",
+    description:
+      "Digitalt presentkort på 500 kr, giltigt i hela butiken. Mottagaren väljer själv present och text – och du slipper gissa fel.",
+    tags: ["presentkort", "fodelsedag", "jul"],
+    price: "500.00",
+    image: img("korgar_bord_H0a665.webp"),
+    extraImages: [
+      img("korgar_hall_H0a665.webp"),
+      img("korgar_handla_H0a665.webp"),
+      img("korgar_hem_H0a665.webp"),
     ],
   },
 ];
@@ -242,4 +258,24 @@ export function demoFetchProducts(first: number, query?: string): ShopifyProduct
 export function demoFetchProductByHandle(handle: string): ShopifyProduct | null {
   const found = DEMO_PRODUCTS.find((p) => p.handle === handle);
   return found ? toShopifyShape(found) : null;
+}
+
+/**
+ * Fritextsök i demoläget (searchProducts grenar hit) – titel,
+ * beskrivning och taggar, alla ord i termen måste träffa.
+ */
+export function demoSearchProducts(term: string, first: number): ShopifyProduct[] {
+  const words = term
+    .toLowerCase()
+    .split(/\s+/)
+    .map((w) => w.trim())
+    .filter(Boolean);
+  if (words.length === 0) return [];
+  return DEMO_PRODUCTS.map(toShopifyShape)
+    .filter((p) => {
+      const hay =
+        `${p.node.title} ${p.node.description} ${(p.node.tags || []).join(" ")}`.toLowerCase();
+      return words.every((w) => hay.includes(w));
+    })
+    .slice(0, first);
 }

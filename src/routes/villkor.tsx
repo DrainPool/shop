@@ -1,5 +1,15 @@
+import type { ReactNode } from "react";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CreditCard, FileQuestion, Hammer, MessageCircleWarning, Package, PenLine, Scale } from "lucide-react";
+import {
+  CreditCard,
+  FileQuestion,
+  Hammer,
+  MessageCircleWarning,
+  Package,
+  PenLine,
+  Scale,
+} from "lucide-react";
 
 export const Route = createFileRoute("/villkor")({
   head: () => ({
@@ -22,11 +32,12 @@ export const Route = createFileRoute("/villkor")({
   component: TermsPage,
 });
 
-const sections = [
+/** Stycken kan vara ren text eller JSX med länkar (se "Tillverkning & leverans") */
+const sections: { title: string; body: ReactNode[] }[] = [
   {
     title: "Allmänt",
     body: [
-      "Dessa villkor gäller när du beställer varor från Lins & Lager (enskild firma, org.nummer 8706242453, Aneby, Sverige). Genom att slutföra ett köp i webshoppen godkänner du villkoren nedan. Beställningar lägger du i webshopen; för skräddarsydda uppdrag kan vi även komma överens via e-post.",
+      "Dessa villkor gäller när du beställer varor från Lins & Lager (enskild firma, org.nummer 870624-2453, Aneby, Sverige). Genom att slutföra ett köp i webshoppen godkänner du villkoren nedan. Beställningar lägger du i webshopen; för skräddarsydda uppdrag kan vi även komma överens via e-post.",
     ],
   },
   {
@@ -40,20 +51,24 @@ const sections = [
     title: "Priser & betalning",
     body: [
       "Alla priser anges i svenska kronor inklusive moms. Eventuella fraktkostnader visas i kassan innan du fullföljer köpet – fri frakt vid beställning över 800 kr.",
-      "Betalning sker tryggt i Shopifys kassa med Klarna eller Swish. Vi reserverar oss för att en produkt har blivit slutsåld och prisändringar eller felskrivningar kan förekomma – då kontaktar vi dig alltid innan vi levererar.",
+      "Betalning sker tryggt i Shopifys kassa med kort, Klarna och Swish beroende på vad som är aktivt i butiken vid köptillfället. Vi reserverar oss för att en produkt har blivit slutsåld och prisändringar eller felskrivningar kan förekomma – då kontaktar vi dig alltid innan vi levererar.",
     ],
   },
   {
     title: "Tillverkning & leverans",
     body: [
       "Ordertid: beställningar som läggs innan söndag 23:59 tillverkas och skickas under följande vecka. Ange gärna ett önskad leveransdatum om du beställer till ett bestämt tillfälle – anstränger mig alltid att hinna, men kontakta mig först om datumet är nära förestående.",
-      "Leverans sker med spårbar frakt inom Sverige. Läs mer om leveranstider på sidan Frakt & leverans.",
+      "Leverans sker med spårbar frakt inom Sverige. Läs mer om leveranstider på sidan ",
+      <Link to="/frakt-leverans" className="text-primary-deep underline">
+        Frakt &amp; leverans
+      </Link>,
+      ".",
     ],
   },
   {
     title: "Ångerrätt",
     body: [
-      "Varor som tillverkas, graveras eller annars anpassas särskilt efter dina önskemål omfattas inte av ångerrätten (18 § lagen om distansavtal). Det gäller samtliga produkter med personlig gravyr, tryck eller annat eget önskemål.",
+      "Varor som tillverkas, graveras eller annars anpassas särskilt efter dina önskemål omfattas inte av ångerrätten. Enligt 2 kap. 11 § lagen (2005:59) om distansavtal och avtal utanför affärslokaler gäller inte ångerrätten för varor som har tillverkats enligt konsumentens anvisningar eller som annars har fått en tydlig personlig prägel. Det gäller samtliga produkter med personlig gravyr, tryck eller annat eget önskemål.",
       "Har du beställt en produkt utan personlig anpassning gäller 14 dagars öppet köp från det att du mottagit varan. Varan ska då vara oanvänd och i originalförpackning. Kontakta mig via e-post innan du returnerar.",
     ],
   },
@@ -74,16 +89,10 @@ const sections = [
 function TermsPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-14">
-      <nav className="text-sm text-muted-foreground">
-        <Link to="/" className="hover:text-primary">
-          Hem
-        </Link>
-        <span className="px-2">/</span>
-        <span>Allmänna villkor</span>
-      </nav>
+      <Breadcrumbs items={[{ label: "Allmänna villkor" }]} />
 
-      <p className="mt-8 font-script text-3xl text-primary">ärliga &amp; tydliga villkor</p>
-      <h1 className="mt-3 font-serif text-4xl font-black tracking-tight md:text-5xl">
+      <p className="mt-8 font-script text-3xl text-primary-deep">ärliga &amp; tydliga villkor</p>
+      <h1 className="mt-3 font-serif text-4xl font-bold tracking-tight md:text-5xl">
         Allmänna villkor
       </h1>
       <p className="mt-4 text-lg text-muted-foreground">
@@ -93,7 +102,10 @@ function TermsPage() {
 
       <div className="mt-10 space-y-8">
         {sections.map((s) => (
-          <section key={s.title} className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+          <section
+            key={s.title}
+            className="rounded-3xl border border-border bg-card p-7 shadow-soft"
+          >
             <h2 className="font-serif text-2xl font-bold">{s.title}</h2>
             {s.body.map((p, i) => (
               <p key={i} className="mt-3 leading-relaxed text-muted-foreground">

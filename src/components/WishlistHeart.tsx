@@ -33,15 +33,20 @@ export function WishlistHeart({
         type="button"
         onClick={handleClick}
         aria-pressed={saved}
-        aria-label={saved ? "Ta bort från önskelistan" : "Spara i önskelistan"}
+        aria-label={
+          saved ? `Ta bort ${item.title} från önskelistan` : `Spara ${item.title} i önskelistan`
+        }
         className={cn(
           "inline-flex items-center gap-2 rounded-full border-2 px-4 py-2.5 text-sm font-semibold transition-colors",
           saved
-            ? "border-primary bg-primary/10 text-primary"
+            ? "border-primary bg-primary/10 text-primary-deep"
             : "border-border text-foreground hover:border-primary/50",
         )}
       >
-        <Heart className={cn("h-4 w-4", saved && "fill-primary text-primary")} aria-hidden="true" />
+        <Heart
+          className={cn("h-4 w-4", saved && "fill-primary text-primary-deep")}
+          aria-hidden="true"
+        />
         {saved ? "Sparad" : "Spara i min lista"}
       </button>
     );
@@ -52,10 +57,12 @@ export function WishlistHeart({
       type="button"
       onClick={handleClick}
       aria-pressed={saved}
-      aria-label={saved ? "Ta bort från önskelistan" : "Spara i önskelistan"}
+      aria-label={
+        saved ? `Ta bort ${item.title} från önskelistan` : `Spara ${item.title} i önskelistan`
+      }
       className={cn(
         "flex h-9 w-9 items-center justify-center rounded-full bg-background/90 shadow-soft backdrop-blur transition-all hover:scale-110",
-        saved ? "text-primary" : "text-muted-foreground hover:text-primary",
+        saved ? "text-primary-deep" : "text-muted-foreground hover:text-primary-deep",
       )}
     >
       <Heart className={cn("h-4.5 w-4.5", saved && "fill-primary")} aria-hidden="true" />

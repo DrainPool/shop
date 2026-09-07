@@ -1,27 +1,39 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { FaqAccordion } from "@/components/FaqAccordion";
+import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
 
 const TITLE = "Vanliga frågor om gravyr, leverans och personliga presenter | Lins & Lager";
 const DESCRIPTION =
-  "Svar på de vanligaste frågorna: leveranstid, material, korrektur, gravyr, returer på personliga varor och hur du beställer till bröllop, dop och företag.";
+  "Svar på de vanligaste frågorna: leveranstid, material, digital skiss, gravyr, returer på personliga varor och hur du beställer till bröllop, dop och företag.";
 
-const FAQ = [
+/**
+ * FAQ-typen håller svaret som ren sträng så JSON-LD (FAQPage) alltid
+ * serialiseras rent – länkar renderas i accordion men följer aldrig
+ * med i JSON-LD.
+ */
+type FaqEntry = {
+  q: string;
+  a: string;
+  link?: { label: string; to: "/frakt-leverans" | "/retur" | "/foretag" };
+  categoryLink?: { label: string; slug: string };
+  externalLink?: { label: string; href: string };
+};
+
+const FAQ: FaqEntry[] = [
   {
     q: "Hur lång är leveranstiden?",
-    a: "Tillverkningen tar normalt 3–7 arbetsdagar eftersom allt görs efter din beställning. Med frakten är du oftast framme inom 5–11 arbetsdagar. Har du ett datum som måste hållas – skriv det i beställningen så säger jag ärligt om det går.",
+    a: "Tillverkningen tar normalt 3–7 arbetsdagar, med frakten är du oftast framme inom 5–11 arbetsdagar. Har du ett datum som måste hållas – skriv det i beställningen, så säger jag ärligt om det går.",
+    link: { label: "Läs om frakt och leverans", to: "/frakt-leverans" },
   },
   {
     q: "Får jag se hur graveringen blir innan ni tillverkar?",
-    a: "Vid större beställningar och all företagsgravyr skickar jag korrektur för godkännande. På enklare namngravyr följer jag texten du skrivit exakt, så dubbelkolla stavning och versaler.",
+    a: "Ja, alltid. Innan jag börjar tillverka skickar jag en digital skiss på gravyren som du godkänner – det gäller alla beställningar, från en enskild nyckelring till hela bröllopsserien. Dubbelkolla gärna stavning och versaler redan i beställningen, så går det snabbare från skiss till färdig present.",
   },
   {
     q: "Kan jag lämna tillbaka en personlig produkt?",
-    a: "Nej. Personligt tillverkade varor omfattas inte av ångerrätt eller öppet köp, eftersom de görs unikt till dig. Reklamationsrätten gäller alltid vid fel på varan eller om jag gjort fel mot din beställning.",
+    a: "Nej – personligt tillverkade varor omfattas inte av ångerrätt eller öppet köp, eftersom de görs unikt till dig. Reklamationsrätten gäller alltid: blir något fel på varan eller mot din beställning rightar jag till det.",
+    link: { label: "Läs om retur och garanti", to: "/retur" },
   },
   {
     q: "Säljer ni paket till hela bröllopet?",
@@ -53,7 +65,8 @@ const FAQ = [
   },
   {
     q: "Hinner ni klart innan jul eller farsdagen?",
-    a: "Allt tillverkas efter beställning, normalt på 3–7 arbetsdagar plus frakt, så ju tidigare du beställer desto säkrare. Inför jul rekommenderar jag att beställa senast i början av december – skriv att presenten ska vara framme till jul i beställningen så prioriterar jag den och svarar ärligt om jag hinner.",
+    a: "Allt tillverkas efter beställning, normalt på 3–7 arbetsdagar plus frakt – ju tidigare du beställer desto säkrare. Skriv att presenten ska vara framme till jul, så prioriterar jag den och svarar ärligt om jag hinner.",
+    categoryLink: { label: "Se julklapparna", slug: "jul" },
   },
   {
     q: "Vilka material jobbar du med?",
@@ -62,10 +75,12 @@ const FAQ = [
   {
     q: "Gör ni företagsbeställningar och större serier?",
     a: "Ja – namnbrickor, presenter till kunder och profilprodukter. Från tio enheter får du offert med staffelpris, och du kan få faktura.",
+    link: { label: "Läs om företagsbeställningar", to: "/foretag" },
   },
   {
     q: "Kan ni fotografera också?",
-    a: "Ja. Jag fotograferar bröllop, dop, familj och produkter och kan göra bilden till en fototavla, ett smycke eller en graverad detalj i samma flöde.",
+    a: "Ja. Jag fotograferar bröllop, dop, familj och produkter – och bilden kan bli fototavla, smycke eller graverad detalj i samma flöde.",
+    externalLink: { label: "Läs om fotografering", href: FOTOGRAFERING_URL },
   },
   {
     q: "Hur betalar jag?",
@@ -110,21 +125,53 @@ export const Route = createFileRoute("/vanliga-fragor")({
 function FaqPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-16">
-      <p className="font-script text-2xl text-primary">Fråga på</p>
-      <h1 className="mt-1 font-serif text-4xl font-black tracking-tight">Vanliga frågor</h1>
+      <Breadcrumbs items={[{ label: "Vanliga frågor" }]} />
+      <p className="mt-6 font-script text-2xl text-primary-deep">Fråga på</p>
+      <h1 className="mt-1 font-serif text-4xl font-bold tracking-tight">Vanliga frågor</h1>
       <p className="mt-3 text-muted-foreground">
         Hittar du inte svaret? Skriv till mig – du får svar av samma person som tillverkar din
         produkt.
       </p>
 
-      <Accordion type="single" collapsible className="mt-8">
-        {FAQ.map((f, i) => (
-          <AccordionItem key={f.q} value={`item-${i}`}>
-            <AccordionTrigger className="text-left font-semibold">{f.q}</AccordionTrigger>
-            <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+      <FaqAccordion
+        className="mt-8"
+        items={FAQ.map((f) => ({
+          q: f.q,
+          a: f.link ? (
+            <>
+              {f.a}{" "}
+              <Link to={f.link.to} className="font-semibold text-primary-deep hover:underline">
+                {f.link.label}
+              </Link>
+            </>
+          ) : f.categoryLink ? (
+            <>
+              {f.a}{" "}
+              <Link
+                to="/kategori/$slug"
+                params={{ slug: f.categoryLink.slug }}
+                className="font-semibold text-primary-deep hover:underline"
+              >
+                {f.categoryLink.label}
+              </Link>
+            </>
+          ) : f.externalLink ? (
+            <>
+              {f.a}{" "}
+              <a
+                href={f.externalLink.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary-deep hover:underline"
+              >
+                {f.externalLink.label}
+              </a>
+            </>
+          ) : (
+            f.a
+          ),
+        }))}
+      />
 
       <div className="mt-10 rounded-3xl bg-cream p-8">
         <p className="font-serif text-xl font-bold">Fortfarande osäker?</p>
@@ -133,7 +180,7 @@ function FaqPage() {
         </p>
         <Link
           to="/kontakt"
-          className="mt-4 inline-block font-semibold text-primary hover:underline"
+          className="mt-4 inline-block font-semibold text-primary-deep hover:underline"
         >
           Kontakta mig →
         </Link>

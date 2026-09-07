@@ -1,19 +1,27 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
+import { IdeaBand } from "@/components/IdeaBand";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
 import { fetchProducts } from "@/lib/shopify";
-
+import { SITE_URL } from "@/lib/siteUrls";
 
 export const Route = createFileRoute("/sortiment")({
   component: SortimentPage,
+  // Värm produktcachen före SSR (samma queryKey som useQuery nedan)
+  beforeLoad: ({ context }) =>
+    context.queryClient.ensureQueryData({
+      queryKey: ["products"],
+      queryFn: () => fetchProducts(50),
+    }),
   head: () => ({
     meta: [
       { title: "Hela sortimentet – Lins & Lager" },
+      { rel: "canonical", href: `${SITE_URL}/sortiment` },
       {
         name: "description",
         content:
@@ -46,9 +54,8 @@ function SortimentPage() {
       <div className="mx-auto max-w-6xl px-5 py-14">
         <Breadcrumbs items={[{ label: "Hela sortimentet" }]} />
 
-
-        <p className="mt-6 font-script text-2xl text-primary">hela sortimentet</p>
-        <h1 className="mt-1 font-serif text-4xl font-black tracking-tight md:text-5xl">
+        <p className="mt-6 font-script text-2xl text-primary-deep">hela sortimentet</p>
+        <h1 className="mt-1 font-serif text-4xl font-bold tracking-tight md:text-5xl">
           Allt jag gör
         </h1>
         <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
@@ -58,7 +65,7 @@ function SortimentPage() {
 
         {isPending ? (
           <div className="flex justify-center py-16">
-            <Loader2 className="h-6 w-6 animate-spin text-primary" />
+            <Loader2 className="h-6 w-6 animate-spin text-primary-deep" />
           </div>
         ) : isError ? (
           <p className="py-16 text-center text-muted-foreground">
@@ -78,7 +85,11 @@ function SortimentPage() {
               <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
                 <p className="font-serif text-xl font-bold">Inget matchade ditt filter</p>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Rensa filtret – eller skriv till mig, jag gör gärna något helt eget åt dig.
+                  Rensa filtret – eller{" "}
+                  <Link to="/kontakt" className="font-semibold text-primary-deep hover:underline">
+                    skriv till mig
+                  </Link>
+                  , jag gör gärna något helt eget åt dig.
                 </p>
               </div>
             ) : (
@@ -88,8 +99,9 @@ function SortimentPage() {
         )}
 
         <RecentlyViewed />
-
       </div>
+
+      <IdeaBand />
     </>
   );
 }

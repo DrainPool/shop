@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Package, Clock, Truck, MapPin } from "lucide-react";
 
@@ -25,7 +26,8 @@ export const Route = createFileRoute("/frakt-leverans")({
 function ShippingPage() {
   return (
     <article className="mx-auto max-w-3xl px-5 py-16">
-      <p className="font-hand text-2xl text-primary">Bra att veta</p>
+      <Breadcrumbs items={[{ label: "Frakt & leveranstid" }]} />
+      <p className="mt-6 font-script text-2xl text-primary-deep">Bra att veta</p>
       <h1 className="mt-2 font-serif text-4xl font-semibold">Frakt & leveranstid</h1>
       <p className="mt-4 text-muted-foreground">
         Allt hos Lins &amp; Lager tillverkas för hand efter din beställning. Därför består
@@ -35,7 +37,7 @@ function ShippingPage() {
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2">
         <section className="rounded-2xl border border-border bg-card p-6">
-          <Truck className="h-6 w-6 text-primary" aria-hidden="true" />
+          <Truck className="h-6 w-6 text-primary-deep" aria-hidden="true" />
           <h2 className="mt-3 font-serif text-xl font-semibold">Frakt</h2>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>• Fri frakt på beställningar över 800 kr</li>
@@ -46,7 +48,7 @@ function ShippingPage() {
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-6">
-          <Clock className="h-6 w-6 text-primary" aria-hidden="true" />
+          <Clock className="h-6 w-6 text-primary-deep" aria-hidden="true" />
           <h2 className="mt-3 font-serif text-xl font-semibold">Leveranstid</h2>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>• Tillverkning: 3–7 arbetsdagar</li>
@@ -57,16 +59,16 @@ function ShippingPage() {
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-6">
-          <Package className="h-6 w-6 text-primary" aria-hidden="true" />
+          <Package className="h-6 w-6 text-primary-deep" aria-hidden="true" />
           <h2 className="mt-3 font-serif text-xl font-semibold">Emballage</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Varje beställning packas omsorgsfullt – smycken i presentask, gravyrer och
-            3D-utskrifter i skyddande emballage. Klart att ge bort direkt.
+            Varje beställning packas omsorgsfullt – smycken i presentask, gravyrer och 3D-utskrifter
+            i skyddande emballage. Klart att ge bort direkt.
           </p>
         </section>
 
         <section className="rounded-2xl border border-border bg-card p-6">
-          <MapPin className="h-6 w-6 text-primary" aria-hidden="true" />
+          <MapPin className="h-6 w-6 text-primary-deep" aria-hidden="true" />
           <h2 className="mt-3 font-serif text-xl font-semibold">Leveransområde</h2>
           <p className="mt-3 text-sm text-muted-foreground">
             Jag levererar i hela Sverige. Vid beställning fyller du i din fraktadress direkt i
@@ -77,15 +79,15 @@ function ShippingPage() {
 
       <p className="mt-10 text-sm text-muted-foreground">
         Frågor om din leverans? Maila{" "}
-        <a href="mailto:hej@linsochlager.se" className="text-primary underline">
+        <a href="mailto:hej@linsochlager.se" className="text-primary-deep underline">
           hej@linsochlager.se
         </a>{" "}
         så återkommer jag snabbast möjligt. Se även villkoren för{" "}
-        <Link to="/retur" className="text-primary underline">
+        <Link to="/retur" className="text-primary-deep underline">
           retur & reklamation
         </Link>{" "}
         och{" "}
-        <Link to="/garanti" className="text-primary underline">
+        <Link to="/garanti" className="text-primary-deep underline">
           garanti
         </Link>
         .

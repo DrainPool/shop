@@ -17,7 +17,9 @@ import { Route as GarantiRouteImport } from './routes/garanti'
 import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolicy'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as OmMigRouteImport } from './routes/om-mig'
+import { Route as OnskelistaRouteImport } from './routes/onskelista'
 import { Route as ReturRouteImport } from './routes/retur'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SortimentRouteImport } from './routes/sortiment'
 import { Route as TillverkningsprocessenRouteImport } from './routes/tillverkningsprocessen'
 import { Route as VanligaFragorRouteImport } from './routes/vanliga-fragor'
@@ -66,9 +68,19 @@ const OmMigRoute = OmMigRouteImport.update({
   path: '/om-mig',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnskelistaRoute = OnskelistaRouteImport.update({
+  id: '/onskelista',
+  path: '/onskelista',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReturRoute = ReturRouteImport.update({
   id: '/retur',
   path: '/retur',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SortimentRoute = SortimentRouteImport.update({
@@ -116,7 +128,9 @@ export interface FileRoutesByFullPath {
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
+  '/onskelista': typeof OnskelistaRoute
   '/retur': typeof ReturRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sortiment': typeof SortimentRoute
   '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
   '/vanliga-fragor': typeof VanligaFragorRoute
@@ -134,7 +148,9 @@ export interface FileRoutesByTo {
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
+  '/onskelista': typeof OnskelistaRoute
   '/retur': typeof ReturRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sortiment': typeof SortimentRoute
   '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
   '/vanliga-fragor': typeof VanligaFragorRoute
@@ -153,7 +169,9 @@ export interface FileRoutesById {
   '/integritetspolicy': typeof IntegritetspolicyRoute
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
+  '/onskelista': typeof OnskelistaRoute
   '/retur': typeof ReturRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sortiment': typeof SortimentRoute
   '/tillverkningsprocessen': typeof TillverkningsprocessenRoute
   '/vanliga-fragor': typeof VanligaFragorRoute
@@ -173,7 +191,9 @@ export interface FileRouteTypes {
     | '/integritetspolicy'
     | '/kontakt'
     | '/om-mig'
+    | '/onskelista'
     | '/retur'
+    | '/sitemap.xml'
     | '/sortiment'
     | '/tillverkningsprocessen'
     | '/vanliga-fragor'
@@ -191,7 +211,9 @@ export interface FileRouteTypes {
     | '/integritetspolicy'
     | '/kontakt'
     | '/om-mig'
+    | '/onskelista'
     | '/retur'
+    | '/sitemap.xml'
     | '/sortiment'
     | '/tillverkningsprocessen'
     | '/vanliga-fragor'
@@ -209,7 +231,9 @@ export interface FileRouteTypes {
     | '/integritetspolicy'
     | '/kontakt'
     | '/om-mig'
+    | '/onskelista'
     | '/retur'
+    | '/sitemap.xml'
     | '/sortiment'
     | '/tillverkningsprocessen'
     | '/vanliga-fragor'
@@ -228,7 +252,9 @@ export interface RootRouteChildren {
   IntegritetspolicyRoute: typeof IntegritetspolicyRoute
   KontaktRoute: typeof KontaktRoute
   OmMigRoute: typeof OmMigRoute
+  OnskelistaRoute: typeof OnskelistaRoute
   ReturRoute: typeof ReturRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SortimentRoute: typeof SortimentRoute
   TillverkningsprocessenRoute: typeof TillverkningsprocessenRoute
   VanligaFragorRoute: typeof VanligaFragorRoute
@@ -296,11 +322,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OmMigRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onskelista': {
+      id: '/onskelista'
+      path: '/onskelista'
+      fullPath: '/onskelista'
+      preLoaderRoute: typeof OnskelistaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/retur': {
       id: '/retur'
       path: '/retur'
       fullPath: '/retur'
       preLoaderRoute: typeof ReturRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sortiment': {
@@ -364,7 +404,9 @@ const rootRouteChildren: RootRouteChildren = {
   IntegritetspolicyRoute: IntegritetspolicyRoute,
   KontaktRoute: KontaktRoute,
   OmMigRoute: OmMigRoute,
+  OnskelistaRoute: OnskelistaRoute,
   ReturRoute: ReturRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SortimentRoute: SortimentRoute,
   TillverkningsprocessenRoute: TillverkningsprocessenRoute,
   VanligaFragorRoute: VanligaFragorRoute,

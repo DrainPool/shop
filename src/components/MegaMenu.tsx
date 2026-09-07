@@ -1,9 +1,14 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronDown } from "lucide-react";
 import { occasions, productTypes } from "@/lib/categories";
+import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
+import { cn } from "@/lib/utils";
 
 type Group = { label: string; slugs: string[]; note: string };
 
+// Varje slug ingår i exakt EN grupp – samma kategori två
+// gånger i samma dropdown läses autogenererat ut.
 const GROUPS: Group[] = [
   {
     label: "Smycken & Accessoarer",
@@ -11,13 +16,13 @@ const GROUPS: Group[] = [
     note: "Gravyr i silver, stål och läder – till dop, bröllop och vardag.",
   },
   {
-    label: "Gravyr i trä & läder",
-    slugs: ["skarbrador", "lader", "glas"],
-    note: "Massiv ek, läder och glas med djup gravyr. Populärt till farsdag och jakt.",
+    label: "Gravyr i trä & glas",
+    slugs: ["skarbrador", "glas"],
+    note: "Massiv ek och sandblästrat glas med djup gravyr. Populärt till farsdag och jakt.",
   },
   {
     label: "Dryck & Prylar",
-    slugs: ["muggar", "tumblers", "glas", "stickers"],
+    slugs: ["muggar", "tumblers", "stickers"],
     note: "Muggar, tumblers och dekaler med namn, logga eller eget motiv.",
   },
   {
@@ -27,7 +32,7 @@ const GROUPS: Group[] = [
   },
   {
     label: "Till bilen & Garaget",
-    slugs: ["bil", "nyckelringar", "tumblers"],
+    slugs: ["bil"],
     note: "Nyckelring med reg.nr, garageskylt och graverade prylar till bilentusiasten.",
   },
   {
@@ -37,24 +42,71 @@ const GROUPS: Group[] = [
   },
 ];
 
-const OCCASION_SLUGS = ["jul", "brollop", "dop", "fodelsedag", "foretag", "farsdag", "barn", "gravyr"];
+// Kurerat urval till megamenyn (mobilmenyn listar alla tillfällen
+// automatiskt) — säsongssidorna först, sedan de stora tillfällena.
+const OCCASION_SLUGS = [
+  "jul",
+  "halloween",
+  "alla-hjartans-dag",
+  "brollop",
+  "dop",
+  "konfirmation",
+  "fodelsedag",
+  "arsdag",
+  "foretag",
+  "pension",
+  "farsdag",
+  "barn",
+];
 
 function findType(slug: string) {
   return productTypes.find((c) => c.slug === slug);
 }
 
 export function MegaMenu() {
+  const [open, setOpen] = useState(false);
+
+  // Esc stänger menyn — klick-togglingen gör den dessutom användbar på pekplatta
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <div className="group/menu relative">
       <button
         type="button"
-        className="inline-flex items-center gap-1 text-sm font-semibold transition-colors hover:text-primary"
+        onClick={() => setOpen((o) => !o)}
+        onBlur={(e) => {
+          // Stäng när fokus lämnar hela menyn (klick ut ur komponenten täcks av toggle)
+          if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
+        }}
+        className={cn(
+          "inline-flex items-center gap-1 text-sm font-semibold transition-colors hover:text-primary-deep",
+          open && "text-primary-deep",
+        )}
         aria-haspopup="true"
+        aria-expanded={open}
       >
-        Sortiment <ChevronDown className="h-4 w-4" aria-hidden="true" />
+        Sortiment{" "}
+        <ChevronDown
+          className={cn("h-4 w-4 transition-transform", open && "rotate-180")}
+          aria-hidden="true"
+        />
       </button>
 
-      <div className="invisible absolute top-full left-1/2 z-50 w-[860px] max-w-[92vw] -translate-x-1/2 pt-4 opacity-0 transition-opacity group-hover/menu:visible group-hover/menu:opacity-100 group-focus-within/menu:visible group-focus-within/menu:opacity-100">
+      <div
+        className={cn(
+          "absolute top-full left-1/2 z-50 w-[860px] max-w-[92vw] -translate-x-1/2 pt-4 opacity-0 transition-opacity",
+          // Hover/fokus öppnar på desktop som innan; klick-toggling läggs ovanpå
+          "invisible group-hover/menu:visible group-hover/menu:opacity-100 group-focus-within/menu:visible group-focus-within/menu:opacity-100",
+          open && "visible opacity-100",
+        )}
+      >
         <div className="grid gap-6 rounded-3xl border border-border bg-card p-7 shadow-lift md:grid-cols-3">
           {GROUPS.map((g) => (
             <div key={g.label}>
@@ -69,7 +121,7 @@ export function MegaMenu() {
                       <Link
                         to="/kategori/$slug"
                         params={{ slug: c.slug }}
-                        className="hover:text-primary hover:underline"
+                        className="hover:text-primary-deep hover:underline"
                       >
                         {c.title}
                       </Link>
@@ -91,7 +143,7 @@ export function MegaMenu() {
                     <Link
                       to="/kategori/$slug"
                       params={{ slug: c.slug }}
-                      className="hover:text-primary hover:underline"
+                      className="hover:text-primary-deep hover:underline"
                     >
                       {c.title}
                     </Link>
@@ -100,10 +152,10 @@ export function MegaMenu() {
               })}
             </ul>
             <a
-              href="https://linsochlager.net/foto"
+              href={FOTOGRAFERING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-block text-sm font-semibold text-primary hover:underline"
+              className="mt-4 inline-block text-sm font-semibold text-primary-deep hover:underline"
             >
               Boka fotografering →
             </a>

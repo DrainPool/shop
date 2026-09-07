@@ -28,7 +28,7 @@ export function NewsletterSignup({ className }: { className?: string }) {
   return (
     <div className={cn("rounded-3xl bg-cream p-7", className)}>
       <p className="flex items-center gap-2 font-serif text-xl font-bold">
-        <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
+        <Mail className="h-5 w-5 text-primary-deep" aria-hidden="true" />
         Nyheter, tips och släpp först
       </p>
       <p className="mt-2 text-sm text-muted-foreground">
@@ -37,9 +37,23 @@ export function NewsletterSignup({ className }: { className?: string }) {
       </p>
 
       {sent ? (
-        <p className="mt-4 text-sm font-semibold text-primary">
-          Tack! Skicka mejlet som öppnades så lägger jag till dig.
-        </p>
+        <div className="mt-4 text-sm">
+          <p className="font-semibold text-primary-deep">
+            Tack! Skicka mejlet som öppnades så lägger jag till dig.
+          </p>
+          {/* mailto öppnar ingen mejlklient på alla mobilsystem – visa
+              adressen som synlig reservväg så anmälan inte försvinner tyst. */}
+          <p className="mt-2 text-muted-foreground">
+            Öppnades inget mejl? Skicka ett vanligt mejl till{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="font-medium text-primary-deep hover:underline"
+            >
+              {CONTACT_EMAIL}
+            </a>{" "}
+            så lägger jag till dig ändå.
+          </p>
+        </div>
       ) : (
         <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2 sm:flex-row">
           <label htmlFor="newsletter-email" className="sr-only">

@@ -1,5 +1,4 @@
 import { Star, MessageSquareHeart } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 
 /**
  * Omdömen visas ENDAST när verkliga, verifierbara omdömen finns.
@@ -16,9 +15,7 @@ export type Review = {
 
 export function ReviewSection({ reviews = [] }: { reviews?: Review[] }) {
   const hasReviews = reviews.length > 0;
-  const average = hasReviews
-    ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
-    : 0;
+  const average = hasReviews ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
 
   return (
     <section className="mt-12 border-t border-border pt-8" aria-labelledby="omdomen">
@@ -33,18 +30,18 @@ export function ReviewSection({ reviews = [] }: { reviews?: Review[] }) {
               <Star key={i} className="h-5 w-5 text-muted-foreground/40" aria-hidden="true" />
             ))}
           </div>
-          <p className="mt-3 font-semibold">Inga omdömen ännu för den här produkten</p>
+          <p className="mt-3 font-semibold">Butiken är ny – ditt omdöme blir det första</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Har du köpt något av mig? Skriv några rader – riktiga ord från riktiga kunder är det
-            enda jag vill visa här.
+            Här samlas riktiga ord från riktiga kunder, allteftersom de kommer in. Har du fått något
+            av mig?
           </p>
-          <Link
-            to="/kontakt"
-            className="mt-4 inline-flex items-center gap-2 font-semibold text-primary hover:underline"
+          <a
+            href="mailto:hej@linsochlager.se?subject=Ber%C3%A4tta%20vad%20jag%20fick"
+            className="mt-4 inline-flex items-center gap-2 font-semibold text-primary-deep hover:underline"
           >
             <MessageSquareHeart className="h-4 w-4" aria-hidden="true" />
-            Lämna ett omdöme
-          </Link>
+            Berätta vad du fick
+          </a>
         </div>
       ) : (
         <>

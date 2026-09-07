@@ -5,6 +5,77 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
+ * Självhostade fonter (fraunces/inter/caveat i public/fonts) – inga
+ * förfrågningar till Google i besökarens webbläsare (GDPR: ingen
+ * tredjeparts IP-läcka). Filerna är variabla woff2 från Google Fonts,
+ * OFL-licensierade, nedladdade 2026-09-07. latin-ext täcker åäö.
+ * Viktintervallen motsvarar det designsystemet använder (styles ovan).
+ */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url("/fonts/fraunces-latin-ext.woff2") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url("/fonts/fraunces-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("/fonts/caveat-latin-ext.woff2") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("/fonts/caveat-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*
  * Design system definition.
  *
  * The @theme inline block maps CSS custom properties to Tailwind utility
@@ -36,6 +107,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-deep: var(--primary-deep);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -75,30 +147,33 @@
   --radius: 0.9rem;
   /* Färgskala = samma som linsochlagernet (v2-paletten):
      ink #141010, paper #F8F5F0, sepia #C8A96E, muted #8A8178, rule #E2DDD8 */
-  --background: oklch(0.967 0.008 85);      /* #F8F5F0 paper */
-  --foreground: oklch(0.18 0.012 30);       /* #141010 ink */
+  --background: oklch(0.967 0.008 85); /* #F8F5F0 paper */
+  --foreground: oklch(0.18 0.012 30); /* #141010 ink */
   --card: oklch(0.975 0.006 85);
   --card-foreground: oklch(0.18 0.012 30);
   --popover: oklch(0.975 0.006 85);
   --popover-foreground: oklch(0.18 0.012 30);
-  --primary: oklch(0.62 0.09 80);           /* #C8A96E sepia */
+  --primary: oklch(0.62 0.09 80); /* #C8A96E sepia */
+  --primary-deep: oklch(
+    0.47 0.08 78
+  ); /* #806027 mörkt rostguld — textversion av sepian (>= 4.5:1 mot paper) */
   --primary-foreground: oklch(0.18 0.012 30);
   --secondary: oklch(0.93 0.012 80);
   --secondary-foreground: oklch(0.35 0.02 60);
   --muted: oklch(0.92 0.012 80);
-  --muted-foreground: oklch(0.51 0.02 70);  /* #8A8178 muted */
+  --muted-foreground: oklch(0.43 0.015 75); /* #6B6259 mörkare muted (>= 4.5:1 mot paper) */
   --accent: oklch(0.93 0.02 82);
   --accent-foreground: oklch(0.3 0.02 60);
-  --gold: oklch(0.72 0.1 80);               /* #C8A96E-aktig sepia/guld */
+  --gold: oklch(0.72 0.1 80); /* #C8A96E-aktig sepia/guld */
   --gold-foreground: oklch(0.18 0.012 30);
   --cream: oklch(0.95 0.01 85);
-  --ink: oklch(0.18 0.012 30);              /* #141010 */
+  --ink: oklch(0.18 0.012 30); /* #141010 */
   --ink-foreground: oklch(0.95 0.01 85);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.985 0.006 90);
-  --border: oklch(0.9 0.008 80);            /* #E2DDD8 rule */
+  --border: oklch(0.9 0.008 80); /* #E2DDD8 rule */
   --input: oklch(0.9 0.008 80);
-  --ring: oklch(0.62 0.09 80);
+  --ring: oklch(0.47 0.08 78); /* samma mörka sepia som primary-deep */
   --chart-1: oklch(0.54 0.03 145);
   --chart-2: oklch(0.56 0.065 85);
   --chart-3: oklch(0.68 0.05 60);
@@ -114,50 +189,60 @@
   --sidebar-ring: oklch(0.54 0.03 145);
 }
 
-
+/* Mörkt läge = samma varma sepia-värld, bara inverterad: varma
+   bruntoner istället för ljus-lägets papper. Aldrig blågrå stock-
+   färger — de flesta custom-färgerna (cream, ink, gold) används
+   flätade i ljus-lägets markup och måste följa med hit. */
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
-  --gold: oklch(0.72 0.11 78);
-  --gold-foreground: oklch(0.24 0.035 35);
-  --cream: oklch(0.208 0.042 265.755);
-  --ink: oklch(0.208 0.042 265.755);
-  --ink-foreground: oklch(0.984 0.003 247.858);
+  --background: oklch(0.19 0.014 45); /* varmt nästan-svart */
+  --foreground: oklch(0.95 0.01 85); /* paper */
+  --card: oklch(0.24 0.016 45);
+  --card-foreground: oklch(0.95 0.01 85);
+  --popover: oklch(0.24 0.016 45);
+  --popover-foreground: oklch(0.95 0.01 85);
+  --primary: oklch(0.72 0.1 80); /* sepia uppljusat för mörk botten */
+  --primary-deep: oklch(0.78 0.09 82); /* ljus rostguld-text (>= 4.5:1 mot mörk) */
+  --primary-foreground: oklch(0.18 0.012 30);
+  --secondary: oklch(0.29 0.02 60);
+  --secondary-foreground: oklch(0.95 0.01 85);
+  --muted: oklch(0.28 0.018 55);
+  --muted-foreground: oklch(0.74 0.02 80);
+  --accent: oklch(0.3 0.025 70);
+  --accent-foreground: oklch(0.95 0.01 85);
+  --destructive: oklch(0.65 0.19 25);
+  --destructive-foreground: oklch(0.985 0.006 90);
+  --border: oklch(0.95 0.01 85 / 12%);
+  --input: oklch(0.95 0.01 85 / 16%);
+  --ring: oklch(0.72 0.1 80);
+  --chart-1: oklch(0.54 0.03 145);
+  --chart-2: oklch(0.56 0.065 85);
+  --chart-3: oklch(0.68 0.05 60);
+  --chart-4: oklch(0.72 0.04 145);
+  --chart-5: oklch(0.45 0.03 60);
+  --sidebar: oklch(0.24 0.016 45);
+  --sidebar-foreground: oklch(0.95 0.01 85);
+  --sidebar-primary: oklch(0.72 0.1 80);
+  --sidebar-primary-foreground: oklch(0.18 0.012 30);
+  --sidebar-accent: oklch(0.3 0.025 70);
+  --sidebar-accent-foreground: oklch(0.95 0.01 85);
+  --sidebar-border: oklch(0.95 0.01 85 / 12%);
+  --sidebar-ring: oklch(0.72 0.1 80);
+  --gold: oklch(0.75 0.1 80);
+  --gold-foreground: oklch(0.18 0.012 30);
+  --cream: oklch(0.26 0.018 50); /* "cream-band" blir varm panel */
+  --ink: oklch(0.22 0.014 40); /* mörk sektion, precis som i ljus-läge */
+  --ink-foreground: oklch(0.95 0.01 85);
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
+  }
+
+  /* Synlig fokus överallt — även egna kort, ikonraden och filter som saknar ring-klasser */
+  :focus-visible {
+    outline: 2px solid var(--primary-deep);
+    outline-offset: 2px;
   }
 
   body {
@@ -193,11 +278,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(
-      ellipse 40% 32% at 34% 28%,
-      oklch(1 0 0 / 0.5),
-      transparent 70%
-    );
+    background: radial-gradient(ellipse 40% 32% at 34% 28%, oklch(1 0 0 / 0.5), transparent 70%);
   }
 
   @keyframes liquid-loader-morph {

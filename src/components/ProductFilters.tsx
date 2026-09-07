@@ -1,8 +1,15 @@
 import { useMemo, useState } from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import type { ShopifyProduct } from "@/lib/shopify";
+import { FREE_SHIPPING_LIMIT, type ShopifyProduct } from "@/lib/shopify";
 
 export type SortValue = "popular" | "price-asc" | "price-desc" | "name";
 
@@ -19,6 +26,14 @@ const TAG_LABELS: Record<string, string> = {
   barn: "Barn",
   foretag: "Företag",
   farsdag: "Farsdag",
+  halloween: "Halloween",
+  student: "Student",
+  morsdag: "Mors dag",
+  hjartansdag: "Alla hjärtans dag",
+  arsdag: "Årsdag",
+  konfirmation: "Konfirmation",
+  pension: "Pension",
+  "nytt-hem": "Nytt hem",
   jakt: "Jakt",
   bastsaljare: "Bästsäljare",
   nyhet: "Nyhet",
@@ -53,7 +68,12 @@ const PRICE_BUCKETS = [
   { id: "0-199", label: "Under 200 kr", min: 0, max: 199.99 },
   { id: "200-499", label: "200–499 kr", min: 200, max: 499.99 },
   { id: "500-799", label: "500–799 kr", min: 500, max: 799.99 },
-  { id: "800", label: "800 kr och uppåt (fri frakt)", min: 800, max: Infinity },
+  {
+    id: "800",
+    label: `${FREE_SHIPPING_LIMIT} kr och uppåt (fri frakt)`,
+    min: FREE_SHIPPING_LIMIT,
+    max: Infinity,
+  },
 ];
 
 function priceOf(p: ShopifyProduct) {
@@ -111,7 +131,9 @@ export function useProductFilters(products: ShopifyProduct[], hiddenTags: string
     setSort,
     activeCount,
     toggleTag: (tag: string) =>
-      setActiveTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag])),
+      setActiveTags((prev) =>
+        prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+      ),
     setBucket: (id: string) => setBucket((prev) => (prev === id ? null : id)),
     clear: () => {
       setActiveTags([]);
@@ -127,7 +149,9 @@ export function ProductFilters(props: FiltersProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mt-10 rounded-3xl border border-border bg-card p-4 shadow-soft">
+    // mt-4 på mobil: filtret ska inte skjuta första produktraden
+    // under en skärmhöjd (mt-10 blev för mycket luft på telefonen).
+    <div className="mt-4 rounded-3xl border border-border bg-card p-4 shadow-soft md:mt-10">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <Button
@@ -135,6 +159,8 @@ export function ProductFilters(props: FiltersProps) {
             variant={open ? "default" : "secondary"}
             size="sm"
             onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="filter-panel"
           >
             <SlidersHorizontal className="mr-2 h-4 w-4" />
             Filtrera
@@ -151,26 +177,30 @@ export function ProductFilters(props: FiltersProps) {
             <button
               type="button"
               onClick={props.clear}
-              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+              className="inline-flex items-center gap-1 py-2 text-sm font-medium text-primary-deep hover:underline"
             >
               <X className="h-3.5 w-3.5" /> Rensa
             </button>
           )}
         </div>
 
-        <label className="flex items-center gap-2 text-sm text-muted-foreground">
-          Sortera
-          <select
-            value={props.sort}
-            onChange={(e) => props.setSort(e.target.value as SortValue)}
-            className="rounded-full border border-border bg-background px-3 py-1.5 text-sm text-foreground"
-          >
-            <option value="popular">Mest älskade</option>
-            <option value="price-asc">Lägsta pris</option>
-            <option value="price-desc">Högsta pris</option>
-            <option value="name">Namn A–Ö</option>
-          </select>
-        </label>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span id="sort-label">Sortera</span>
+          <Select value={props.sort} onValueChange={(v) => props.setSort(v as SortValue)}>
+            <SelectTrigger
+              aria-labelledby="sort-label"
+              className="h-11 rounded-full border-border bg-background px-4 text-sm text-foreground md:h-9"
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="popular">Mest älskade</SelectItem>
+              <SelectItem value="price-asc">Lägsta pris</SelectItem>
+              <SelectItem value="price-desc">Högsta pris</SelectItem>
+              <SelectItem value="name">Namn A–Ö</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {props.activeCount > 0 && (
@@ -180,7 +210,7 @@ export function ProductFilters(props: FiltersProps) {
               key={tag}
               type="button"
               onClick={() => props.toggleTag(tag)}
-              className="inline-flex items-center gap-1 rounded-full bg-cream px-3 py-1 text-xs font-medium hover:text-primary"
+              className="inline-flex items-center gap-1 rounded-full bg-cream px-3 py-1 text-xs font-medium hover:text-primary-deep"
             >
               {TAG_LABELS[tag] || tag}
               <X className="h-3 w-3" aria-hidden="true" />
@@ -191,7 +221,7 @@ export function ProductFilters(props: FiltersProps) {
             <button
               type="button"
               onClick={() => props.setBucket(props.bucket as string)}
-              className="inline-flex items-center gap-1 rounded-full bg-cream px-3 py-1 text-xs font-medium hover:text-primary"
+              className="inline-flex items-center gap-1 rounded-full bg-cream px-3 py-1 text-xs font-medium hover:text-primary-deep"
             >
               {PRICE_BUCKETS.find((b) => b.id === props.bucket)?.label}
               <X className="h-3 w-3" aria-hidden="true" />
@@ -202,8 +232,10 @@ export function ProductFilters(props: FiltersProps) {
       )}
 
       {open && (
-
-        <div className="mt-5 grid gap-6 border-t border-border pt-5 sm:grid-cols-3">
+        <div
+          id="filter-panel"
+          className="mt-5 grid gap-6 border-t border-border pt-5 sm:grid-cols-3"
+        >
           {(
             [
               ["Produkttyp", props.availableTags.filter((t) => TYPE_TAGS.includes(t.tag))],
@@ -219,8 +251,10 @@ export function ProductFilters(props: FiltersProps) {
                       key={t.tag}
                       type="button"
                       onClick={() => props.toggleTag(t.tag)}
+                      aria-pressed={props.activeTags.includes(t.tag)}
                       className={cn(
-                        "rounded-full border px-3 py-1.5 text-sm transition-colors",
+                        // min-h-11: 44 px tryckyta – tummens minimimått
+                        "min-h-11 rounded-full border px-3 py-1.5 text-sm transition-colors",
                         props.activeTags.includes(t.tag)
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-border bg-background hover:border-primary",
@@ -234,7 +268,6 @@ export function ProductFilters(props: FiltersProps) {
             ),
           )}
 
-
           <div>
             <p className="text-sm font-semibold">Prisläge</p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -243,8 +276,9 @@ export function ProductFilters(props: FiltersProps) {
                   key={b.id}
                   type="button"
                   onClick={() => props.setBucket(b.id)}
+                  aria-pressed={props.bucket === b.id}
                   className={cn(
-                    "rounded-full border px-3 py-1.5 text-sm transition-colors",
+                    "min-h-11 rounded-full border px-3 py-1.5 text-sm transition-colors",
                     props.bucket === b.id
                       ? "border-primary bg-primary text-primary-foreground"
                       : "border-border bg-background hover:border-primary",

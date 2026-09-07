@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
+import { SITE_URL } from "@/lib/siteUrls";
 
 export interface Crumb {
   label: string;
@@ -11,22 +12,30 @@ export interface Crumb {
 
 /** Brödsmulor med JSON-LD för Google. Sista posten är alltid nuvarande sida. */
 export function Breadcrumbs({ items }: { items: Crumb[] }) {
+  // schema.org kraver absoluta URL:er
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [{ name: "Hem", url: "/" }, ...items.map((i) => ({ name: i.label, url: i.slug ? `/kategori/${i.slug}` : (i.to ?? "") }))].map(
-      (i, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: i.name,
-        ...(i.url ? { item: i.url } : {}),
-      }),
-    ),
+    itemListElement: [
+      { name: "Hem", url: `${SITE_URL}/` },
+      ...items.map((i) => ({
+        name: i.label,
+        url: i.slug ? `${SITE_URL}/kategori/${i.slug}` : i.to ? `${SITE_URL}${i.to}` : "",
+      })),
+    ].map((i, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: i.name,
+      ...(i.url ? { item: i.url } : {}),
+    })),
   };
 
   return (
-    <nav aria-label="Brödsmulor" className="flex flex-wrap items-center gap-1 text-sm text-muted-foreground">
-      <Link to="/" className="hover:text-primary">
+    <nav
+      aria-label="Brödsmulor"
+      className="flex flex-wrap items-center gap-1 text-sm text-muted-foreground"
+    >
+      <Link to="/" className="hover:text-primary-deep">
         Hem
       </Link>
       {items.map((item, i) => {
@@ -37,11 +46,15 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
             {last ? (
               <span className="font-medium text-foreground">{item.label}</span>
             ) : item.slug ? (
-              <Link to="/kategori/$slug" params={{ slug: item.slug }} className="hover:text-primary">
+              <Link
+                to="/kategori/$slug"
+                params={{ slug: item.slug }}
+                className="hover:text-primary-deep"
+              >
                 {item.label}
               </Link>
             ) : (
-              <Link to={item.to ?? "/"} className="hover:text-primary">
+              <Link to={item.to ?? "/"} className="hover:text-primary-deep">
                 {item.label}
               </Link>
             )}

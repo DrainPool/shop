@@ -68,11 +68,12 @@ export function RecentlyViewed({
                     src={p.image}
                     alt={p.title}
                     loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 )}
               </div>
-              <p className="mt-2 line-clamp-2 text-sm font-medium group-hover:text-primary">
+              <p className="mt-2 line-clamp-2 text-sm font-medium group-hover:text-primary-deep">
                 {p.title}
               </p>
               <p className="text-sm text-muted-foreground">{formatPrice(p.price, p.currency)}</p>

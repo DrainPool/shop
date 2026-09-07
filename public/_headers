@@ -1,0 +1,7 @@
+/assets/*
+  cache-control: public, max-age=31536000, immutable
+
+# Självhostade fonter – versionsfilnamn (fraunces/inter/caveat) får
+# ligga ett år i CDN-cache; nya versioner laddas upp under nytt namn.
+/fonts/*
+  cache-control: public, max-age=31536000, immutable

@@ -27,9 +27,13 @@ export function TrustedMarquee() {
   const loop = [...ITEMS, ...ITEMS];
 
   return (
-    <section aria-label="Tillfällen och produkter" className="overflow-hidden border-y border-border/70 bg-cream py-6">
+    <section
+      aria-label="Tillfällen och produkter"
+      className="overflow-hidden border-y border-border/70 bg-cream py-6"
+    >
       <p className="mb-5 text-center font-serif text-lg font-semibold text-muted-foreground">
-        Hantverk till livets tillfällen – <span className="text-primary">sedan 2016</span>
+        Foto &amp; hantverk till livets tillfällen –{" "}
+        <span className="text-primary-deep">sedan 2016</span>
       </p>
 
       <style>{`
@@ -51,9 +55,7 @@ export function TrustedMarquee() {
         }
       `}</style>
 
-      <div
-        className="marquee-wrap overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
-      >
+      <div className="marquee-wrap overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <div className="marquee-track" aria-hidden="true">
           {loop.map((item, i) => (
             <span

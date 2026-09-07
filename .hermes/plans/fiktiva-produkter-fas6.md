@@ -81,4 +81,5 @@
     - Taggar: foretag, tumbler
 
 ---
+
 **Summa:** 18 fiktiva produkter täcker samtliga 11 kategorier + alla tillfällen + bästsäljar/nyhet-taggar. Priser från prismätningen (säljgranskning del 1-3).

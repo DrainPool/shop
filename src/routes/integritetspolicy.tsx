@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Cookie, Lock, Mail, Truck, UserCheck } from "lucide-react";
 
@@ -74,16 +75,10 @@ const sections = [
 function PrivacyPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-14">
-      <nav className="text-sm text-muted-foreground">
-        <Link to="/" className="hover:text-primary">
-          Hem
-        </Link>
-        <span className="px-2">/</span>
-        <span>Integritetspolicy</span>
-      </nav>
+      <Breadcrumbs items={[{ label: "Integritetspolicy" }]} />
 
-      <p className="mt-8 font-script text-3xl text-primary">dina uppgifter är skyddade</p>
-      <h1 className="mt-3 font-serif text-4xl font-black tracking-tight md:text-5xl">
+      <p className="mt-8 font-script text-3xl text-primary-deep">dina uppgifter är skyddade</p>
+      <h1 className="mt-3 font-serif text-4xl font-bold tracking-tight md:text-5xl">
         Integritetspolicy
       </h1>
       <p className="mt-4 text-lg text-muted-foreground">
@@ -99,7 +94,7 @@ function PrivacyPage() {
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 font-serif text-xl font-bold">
               {s.title}
-              <span className="text-primary transition-transform group-open:rotate-45">+</span>
+              <span className="text-primary-deep transition-transform group-open:rotate-45">+</span>
             </summary>
             <div className="space-y-3 px-7 pb-6">
               {s.body.map((p, i) => (
@@ -113,16 +108,24 @@ function PrivacyPage() {
       </div>
 
       <section className="mt-12 rounded-3xl bg-cream p-8 text-center">
-        <Mail className="mx-auto h-6 w-6 text-primary" aria-hidden="true" />
+        <Mail className="mx-auto h-6 w-6 text-primary-deep" aria-hidden="true" />
         <p className="mt-3 text-muted-foreground">
           Frågor om dina uppgifter? Skriv till mig — jag ansvarar för dem.
         </p>
-        <a
-          href="mailto:hej@linsochlager.se"
-          className="mt-5 inline-block rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-        >
-          hej@linsochlager.se
-        </a>
+        <div className="mt-5 flex flex-wrap justify-center gap-3">
+          <a
+            href="mailto:hej@linsochlager.se"
+            className="inline-block rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            hej@linsochlager.se
+          </a>
+          <Link
+            to="/kontakt"
+            className="inline-block rounded-full border-2 border-border px-6 py-3 font-semibold transition-colors hover:border-primary"
+          >
+            Kontaktsidan
+          </Link>
+        </div>
       </section>
     </div>
   );
