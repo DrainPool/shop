@@ -28,7 +28,6 @@ export const Route = createFileRoute("/")({
       return { products: await fetchProducts(50) };
     } catch {
       return { products: [], failed: true };
->>>>>>> origin/main
     }
   },
   head: () => ({
