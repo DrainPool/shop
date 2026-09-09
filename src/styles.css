@@ -139,6 +139,12 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
+  --color-menu-rose: var(--menu-rose);
+  --color-menu-wood: var(--menu-wood);
+  --color-menu-teal: var(--menu-teal);
+  --color-menu-steel: var(--menu-steel);
+  --color-menu-forest: var(--menu-forest);
+  --color-menu-plum: var(--menu-plum);
   --shadow-soft: 0 18px 40px -24px oklch(0.3 0.04 40 / 0.35);
   --shadow-lift: 0 30px 60px -26px oklch(0.3 0.05 40 / 0.45);
 }
@@ -179,6 +185,14 @@
   --chart-3: oklch(0.68 0.05 60);
   --chart-4: oklch(0.72 0.04 145);
   --chart-5: oklch(0.45 0.03 60);
+  /* Färgkod för megamenyn — en varm men tydligt åtskiljd nyans per
+     produktgrupp. Dämpad kroma så de smälter in i sepia-världen. */
+  --menu-rose: oklch(0.52 0.11 15);
+  --menu-wood: oklch(0.5 0.09 60);
+  --menu-teal: oklch(0.48 0.06 185);
+  --menu-steel: oklch(0.48 0.05 245);
+  --menu-forest: oklch(0.46 0.06 145);
+  --menu-plum: oklch(0.47 0.08 325);
   --sidebar: oklch(0.965 0.014 85);
   --sidebar-foreground: oklch(0.26 0.012 65);
   --sidebar-primary: oklch(0.54 0.03 145);

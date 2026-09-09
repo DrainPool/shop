@@ -12,7 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { CartDrawer } from "@/components/CartDrawer";
-import { FomoBanner } from "@/components/FomoBanner";
+import { CutoffInline } from "@/components/FomoBanner";
 import { MegaMenu } from "@/components/MegaMenu";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { occasions } from "@/lib/categories";
@@ -149,6 +149,8 @@ export function SiteHeader() {
 
   return (
     <>
+      {/* Trygghet + nedräkning i samma mörka rad – toppen ska inte äta
+          hela första skärmen. */}
       <div className="bg-ink text-ink-foreground">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-5 py-2.5 text-xs font-medium sm:text-sm">
           {trustItems.map((item, i) => (
@@ -162,6 +164,7 @@ export function SiteHeader() {
               {item.text}
             </span>
           ))}
+          {!COUNTDOWN_FREE_PATHS.includes(pathname) && <CutoffInline />}
         </div>
       </div>
 
@@ -255,9 +258,6 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {/* Nedräkningen pausas på trygghetssidorna – säljtryck och
-          köpmodet-frågor ska inte ticka i samma vy. */}
-      {!COUNTDOWN_FREE_PATHS.includes(pathname) && <FomoBanner floating />}
     </>
   );
 }

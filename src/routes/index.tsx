@@ -1,38 +1,34 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
-import { ProductGridSkeleton } from "@/components/ProductCardSkeleton";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
+import { GiftBundles } from "@/components/GiftBundles";
 import { TrustedMarquee } from "@/components/TrustedMarquee";
 import { TrustFaq } from "@/components/TrustFaq";
 import { IdeaBand } from "@/components/IdeaBand";
-
 import { HomeHero } from "@/components/home/HomeHero";
 import { CategoryBento } from "@/components/home/CategoryBento";
 import { ProcessSection } from "@/components/home/ProcessSection";
 import { StorySection } from "@/components/home/StorySection";
 import { FinalCta } from "@/components/home/FinalCta";
 
-import { fetchProducts } from "@/lib/shopify";
+import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
 
 export const Route = createFileRoute("/")({
   component: Index,
-  // Värm produktcachen före SSR – produkterna följer med i första HTML:en
-  // i stället för att vänta på hydrering + klientanrop.
-  beforeLoad: async ({ context }) => {
-    // Transient Storefront-fel i SSR: låt startsidan rendera i stället för att
-    // dö till roten – klientens useQuery plockar upp samma queryKey igen.
+  // Produkterna hämtas i loadern och följer med i första HTML:en – inga
+  // grå platshållare som ligger kvar medan webbläsaren hämtar i efterhand.
+  loader: async () => {
+    // Transient Storefront-fel: låt startsidan rendera tomt i stället för
+    // att dö till roten – sidan visar ett väntande-meddelande i butikssektionen.
     try {
-      await context.queryClient.ensureQueryData({
-        queryKey: ["products"],
-        queryFn: () => fetchProducts(50),
-      });
-    } catch (error) {
-      console.error("Startsidans loader: kunde inte värma produktcachen", error);
+      return { products: await fetchProducts(50) };
+    } catch {
+      return { products: [], failed: true };
+>>>>>>> origin/main
     }
   },
   head: () => ({
@@ -60,11 +56,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const {
-    data: products = [],
-    isPending,
-    isError,
-  } = useQuery({ queryKey: ["products"], queryFn: () => fetchProducts(50) });
+  const { products = [], failed } = Route.useLoaderData() as {
+    products: ShopifyProduct[];
+    failed?: boolean;
+  };
+  const isError = !!failed;
 
   const bestsellers = products.filter((p) => p.node.tags?.includes("bastsaljare"));
   const news = products.filter((p) => p.node.tags?.includes("nyhet"));
@@ -163,9 +159,7 @@ function Index() {
           </Button>
         </div>
 
-        {isPending ? (
-          <ProductGridSkeleton count={4} />
-        ) : isError ? (
+        {isError ? (
           <p className="py-16 text-center text-muted-foreground">
             Kunde inte hämta produkterna just nu. Försök gärna igen om en stund.
           </p>
@@ -202,7 +196,10 @@ function Index() {
       {/* DESIRE – mörkt processkapitel: från din rad till presentklart paket */}
       <ProcessSection />
 
-      {/* Desire del 2 – om mig + kundvägg (socialt bevis) */}
+      {/* Desire del 2 – presentpaket klara att ge bort */}
+      <GiftBundles />
+
+      {/* Desire del 3 – om mig + kundvägg (socialt bevis) */}
       <StorySection />
 
       {/* Fånga den som inte hittar rätta presenten (renderas som den är) */}

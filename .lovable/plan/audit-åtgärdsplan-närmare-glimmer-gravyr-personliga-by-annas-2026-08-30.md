@@ -24,18 +24,15 @@ Jag har crawlat de fyra referenssidorna med Firecrawl och gått igenom din butik
 ## Vad jag bygger
 
 ### 1. Sök och megameny
-
 - Sökknapp i headern som öppnar overlay, live-sökning mot Shopify (titel + tagg), resultat med bild och pris.
 - Desktop-megameny grupperad i **Smycken & Accessoarer**, **Gravyr i trä & läder**, **Dryck & Prylar**, **Foto & 3D**, **Tillfällen** – byggd på befintliga `productTypes` och `occasions` i `src/lib/categories.ts`.
 
 ### 2. Fototjänsten in i butiken
-
 - Ny sida `/fotografering`: porträtt, bröllop, dop, produktfoto för företag – med paketpriser och förfrågningsformulär.
 - Ny sektion på startsidan: "Fota minnet – gravera det sedan", som kopplar foto → fototavla/smycke.
 - Presentpaket-block: fotografering + graverad present som kombination (unik jämfört med alla fyra referenserna).
 
 ### 3. Produktsida (PDP) mot Glimmer-/Roffi-nivå
-
 - Omdömesrad med stjärnor och antal, plus 3–4 kundcitat per produkttyp.
 - Lagerstatus ("I lager – tillverkas denna vecka") och ordinarie/kampanjpris när Shopify har compareAtPrice.
 - Hopfällbara sektioner: Material & mått, Så graveras det, Frakt & leverans, Vanliga frågor.
@@ -43,13 +40,11 @@ Jag har crawlat de fyra referenssidorna med Firecrawl och gått igenom din butik
 - JSON-LD för produkt (pris, tillgänglighet, betyg) – ingen av småkonkurrenterna gör detta bra.
 
 ### 4. Kategorisidor
-
 - Toppsektion med rubrik, SEO-text och bild per kategori.
 - Filter kompletteras med prisspann-slider och materialval; sortering behålls.
 - Snabbtitt-knapp på produktkort som öppnar dialog med bild, pris och "Lägg i varukorgen".
 
 ### 5. Förtroende och konvertering
-
 - Betalningslogotyper (Klarna, Swish, Visa, Mastercard) i footer och i kundvagnen.
 - Ny `/vanliga-fragor` med gravyr-, material-, leverans- och personaliseringsfrågor + FAQ-schema.
 - E-postfångst i footern: "Få 10 % på din första personliga present".
@@ -57,7 +52,6 @@ Jag har crawlat de fyra referenssidorna med Firecrawl och gått igenom din butik
 - Omdömessektion på startsidan med riktiga citat och namn.
 
 ### 6. Copy och ton
-
 - Genomgång av all text mot "trygg & professionell" med personlig värme, samma röst som Lins och Lager.
 - Tydligare löften: skiss innan gravyr, svar inom 24 h, tillverkning 3–7 arbetsdagar.
 

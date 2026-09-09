@@ -20,11 +20,6 @@ dist-ssr
 .wrangler/
 .dev.vars
 
-# Miljövariabler (nycklar lacker ej i git)
-.env
-.env.local
-.env.*.local
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
