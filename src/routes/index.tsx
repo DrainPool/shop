@@ -1,18 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { ArrowRight, Gift, Heart, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
-import { ProductGridSkeleton } from "@/components/ProductCardSkeleton";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
+import { GiftBundles } from "@/components/GiftBundles";
 
 import { TrustedMarquee } from "@/components/TrustedMarquee";
 import { CustomerShowcase } from "@/components/CustomerShowcase";
 import { TrustFaq } from "@/components/TrustFaq";
 import { IdeaBand } from "@/components/IdeaBand";
-import { fetchProducts } from "@/lib/shopify";
+import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
 import heroImage from "@/assets/hero-workbench.jpg";
 import katBarn from "@/assets/kat-barn.jpg";
@@ -31,13 +30,15 @@ import tillFarsdag2 from "@/assets/till-farsdag-2.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
-  // Värm produktcachen före SSR – produkterna följer med i första HTML:en
-  // i stället för att vänta på hydrering + klientanrop.
-  beforeLoad: ({ context }) =>
-    context.queryClient.ensureQueryData({
-      queryKey: ["products"],
-      queryFn: () => fetchProducts(50),
-    }),
+  // Produkterna hämtas i loadern och följer med i första HTML:en – inga
+  // grå platshållare som ligger kvar medan webbläsaren hämtar i efterhand.
+  loader: async () => {
+    try {
+      return { products: await fetchProducts(50) };
+    } catch {
+      return { products: [], failed: true };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Personliga presenter med gravyr – handgjort i Småland | Lins & Lager" },
@@ -181,11 +182,11 @@ const steps = [
 ];
 
 function Index() {
-  const {
-    data: products = [],
-    isPending,
-    isError,
-  } = useQuery({ queryKey: ["products"], queryFn: () => fetchProducts(50) });
+  const { products = [], failed } = Route.useLoaderData() as {
+    products: ShopifyProduct[];
+    failed?: boolean;
+  };
+  const isError = !!failed;
 
   const bestsellers = products.filter((p) => p.node.tags?.includes("bastsaljare"));
   const news = products.filter((p) => p.node.tags?.includes("nyhet"));
@@ -355,9 +356,7 @@ function Index() {
           </Button>
         </div>
 
-        {isPending ? (
-          <ProductGridSkeleton count={4} />
-        ) : isError ? (
+        {isError ? (
           <p className="py-16 text-center text-muted-foreground">
             Kunde inte hämta produkterna just nu. Försök gärna igen om en stund.
           </p>
@@ -420,6 +419,8 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <GiftBundles />
 
       <IdeaBand />
 
