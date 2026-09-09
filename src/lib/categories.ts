@@ -11,6 +11,18 @@ import ikonLader from "@/assets/ikon-lader.png";
 import ikonSticker from "@/assets/ikon-sticker.png";
 import ikonFototavla from "@/assets/ikon-fototavla.png";
 import ikon3d from "@/assets/ikon-3d.png";
+import ikonGolf from "@/assets/ikon-golf.svg";
+
+export interface PricingRow {
+  label: string;
+  price: string;
+}
+
+export interface PricingBlock {
+  title?: string;
+  rows: PricingRow[];
+  note?: string;
+}
 
 export interface Category {
   slug: string;
@@ -18,7 +30,7 @@ export interface Category {
   title: string;
   kicker: string;
   description: string;
-  /** Unik "Om {kategori}"-text för SEO-blocket – saknas den används generisk fallback */
+  /** Prislistblock – valfritt, process-tjänster */
   about?: string;
   /** Ikon för produkttyp-raden */
   icon?: string;
@@ -28,6 +40,8 @@ export interface Category {
   subcategories?: { slug: string; label: string }[];
   /** "Passar också till"-pills i Om-sektionen – bygger intern länkflod */
   related?: string[];
+  /** Prislistblock – valfritt, för process-/tjänstekategorier */
+  pricing?: PricingBlock[];
 }
 
 /** Produkttyper – primär navigation, visas som ikonrad */
@@ -53,10 +67,26 @@ export const productTypes: Category[] = [
     title: "Graverade glas",
     kicker: "skål för det ni firar",
     description:
-      "Ölglas, vinglas, champagneglas och whiskyglas med sandblästrad gravyr som tål maskindisk. Perfekt till toastmastern, brudparet, studenten eller kollegan som fyller jämnt.",
+      "Ölglas, vinglas, champagneglas och whiskyglas med lasergraverad text som tål maskindisk. Perfekt till toastmastern, brudparet, studenten eller kollegan som fyller jämnt.",
     about:
-      "Graverade glas är klassikern som aldrig går ur tiden – ölglaset med hans namn, vinglaset med årtalen, whiskyglasset med jaktsällskapets signatur. Jag sandblästrar gravyren på riktigt (inte bara tryck som slits), så den tål maskindisk och håller lika länge som glaset. Beställ ett par glas till brudparet, en uppsättning till studenten eller det enskilda glaset till födelsedagen – texten är alltid din egen, och du får en skiss på exakt hur den kommer att se ut innan jag blästrar.",
+      "Graverade glas är klassikern som aldrig går ur tiden – ölglaset med hans namn, vinglaset med årtalen, whiskyglaset med jaktsällskapets signatur. Jag lasergraverar direkt i glaset (inte bara tryck som slits), så det tål maskindisk och håller lika länge som glaset. Beställ ett par glas till brudparet, en uppsättning till studenten eller det enskilda glaset till födelsedagen – texten är alltid din egen, och du får en skiss på exakt hur den kommer att se ut innan jag graverar.",
     related: ["brollop", "student", "pension"],
+  },
+  {
+    // Ny kategori (sep 2026) – roffi säljer glasunderlägg i 4-pack som ren
+    // standardvara; ek och naturkork med lasergravyr och personlig text är
+    // TaggaDets egen vinkel. Ikon: lägg in egen bild som
+    // src/assets/ikon-glasunderlagg.png så swappen sker automatiskt.
+    slug: "glasunderlagg",
+    tag: "glasunderlagg",
+    short: "Underlägg",
+    title: "Glasunderlägg med gravyr",
+    kicker: "ringar på bordet, aldrig på glaset",
+    description:
+      "Glasunderlägg i ek och naturkork, graverade med initialer, monogram eller en liten rad med glimten – 4-pack som håller bordet fint och stilen personlig.",
+    about:
+      "Glasunderlägget är den där detaljen alla lägger märke till och ingen köper åt sig själv – perfekta förutsättningar för en present. Jag graverar underlägg i massiv ek och naturkork med diodlasern, direkt i materialet, så texten blir kvar kalas efter kalas. Välj initialer så varje glas får sin ägare, monogram till bröllopssällskapet eller en rad med glimten till baren. Som alltid får du en digital skiss på text och placering att godkänna innan lasern startar, och setet levereras presentklart.",
+    related: ["nytt-hem", "brollop", "jul"],
   },
   {
     slug: "kepsar",
@@ -107,7 +137,7 @@ export const productTypes: Category[] = [
     description:
       "Muggar med namn, foto eller en liten hälsning. Diskmaskinssäkert tryck som håller.",
     about:
-      "Muggen med namnet är morgonens finaste present – den används varje dag och påminner om dig varje fikapaus. Jag trycker med namn, foto eller en liten hälsning i tryck som tål maskindisk år efter år. Beställ en till mormor med barnbarnens namn, en till pappas skrivbord eller ett helt kaffe-set till företaget. Osäker på vilken text du vill ha? Skriv till mig, så hittar vi på något ihop.",
+      "Muggen med namnet är morgonens finaste present – den används varje dag och påminner om dig varje fikapaus. Jag trycker med namn, foto eller en liten hälsning i tryck som tål maskindisk år efter år. Beställ en till mormor med barnbarnens namn, en till pappas skrivbord eller ett helt kaffe-set till företaget. Osäker på vilken text du vill ha? Skriv till mig, så hittar jag på något ihop.",
     related: ["morsdag", "foretag", "student"],
   },
   {
@@ -159,7 +189,7 @@ export const productTypes: Category[] = [
     description:
       "Nyckelring med registreringsnummer, garageskylt med eget namn och plaketter till bilträffen – graverade detaljer för bilentusiasten som redan har allt.",
     about:
-      "Bilentusiasten är inte svår att handla till – bara svår att överraska. Här samlar jag det som gör bilen, garaget och dragkrogen lite mer hans: nyckelringen med registreringsnumret, garageskylten med namnet och plaketten till bilträffen. Gravyren skickas som skiss först som alltid, så nummerplåten och årtalen blir exakt rätt.",
+      "Bilentusiasten är inte svår att handla till – bara svår att överraska. Här samlar jag det som gör bilen, garaget och dragkroken lite mer hans: nyckelringen med registreringsnumret, garageskylten med namnet och plaketten till bilträffen. Gravyren skickas som skiss först som alltid, så nummerplåten och årtalen blir exakt rätt.",
     related: ["farsdag", "lader"],
   },
   {
@@ -213,6 +243,129 @@ export const productTypes: Category[] = [
       "3D-printern tar idéer som inte finns i någon hylla – namnskylten i exakt rätt mått till barnrummet, en lös detalj som slutar tillverkas, trofén till tävlingen eller figuren av ditt eget hus. Jag designar och skriver ut i verkstaden, i mått och färger du bestämmer. Skriv några rader om idén (gärna med mått), så svarar jag med ett förslag och en bedömning om vad som går att printa.",
     related: ["barn", "foretag", "nytt-hem"],
   },
+  {
+    slug: "golfklubbar",
+    tag: "golfklubbar",
+    short: "Golfklubbar",
+    icon: ikonGolf,
+    title: "Lasergravyr på golfklubbor",
+    kicker: "ditt namn, din logotyp, din klubba",
+    description:
+      "Jag lasergraverar namn, initialer och logotyper direkt i dina golfklubbor — en permanent märkning som varken påverkar svängvikt eller balans. Lämna in hos mig i Aneby eller boka in mig på banan.",
+    about:
+      "En graverad klubba plockas alltid fram först — namnet syns vid första tee, initialerna följer med genom hela setet och logotypen visar vilket gäng du spelar med. Med min fiberlaser (en xTool F1 Ultra) märker jag allt från smidda järn till rostfritt stål, med laserinställningar anpassade efter varje material så kontrasten blir skarp och ren. Gravyren är permanent och tål regn, sol och hårda slag — skillnaden mot tryck och klistermärken är att den aldrig slits.\n\nDu lämnar in klubborna hos mig i Aneby — och jag kommer även ut till banan: medlemsdagar, tävlingar, företagsevent och kickoff-kvällar graverar jag på plats, så spelarna får sina klubbor märkta medan ronden pågår. Brådskar det går det bra med express: lämna in klubborna, ta en fika här i stan, och hämta dem klara för spel.\n\nPrecis som allt annat hos mig börjar det med en skiss: skriv vad du vill ha graverat (namn, initialer eller logotyp) och hur många klubbor det gäller, så svarar jag med förslag och pris att godkänna innan lasern startar. Helt set och event på banan bjuder jag in till en offert på direkten.",
+    pricing: [
+      {
+        title: "Prislista – lasergravyr på golfklubbor",
+        rows: [
+          { label: "En klubba", price: "565 kr" },
+          { label: "Två klubbor", price: "945 kr" },
+          { label: "Tre klubbor", price: "1 230 kr" },
+          { label: "Helt klubbset", price: "Kontakta mig" },
+          { label: "Express – medan du väntar", price: "470 kr" },
+        ],
+        note: "Priser inkl. moms. Inlämning hos mig i Aneby eller graverat på plats ute på banan. Helt klubbset och större volymer → offert via kontaktsidan.",
+      },
+    ],
+    related: ["foretag", "farsdag"],
+  },
+  {
+    // Ny kategori (sep 2026) enligt gap-analysen – pet tags var helt oskyddat
+    // hos båda granskade konkurrenterna och fiberlasern märker plattorna på sekunder.
+    slug: "husdjur",
+    tag: "husdjur",
+    short: "Husdjur",
+    title: "Till husdjuren",
+    kicker: "namnet som sitter kvar i regnet",
+    description:
+      "Pet tags i rostfritt stål och mässing med namn och telefonnummer, plus läderhalsband graverade med hundens namn — märkningen som överlever skogen, badet och lerplogen.",
+    about:
+      "Hundens eller kattens namn är det första alla frågar efter på rastplatsen — och det sista du vill läsa av en sliten hängande skylt. Här graverar jag pet tags i rostfritt stål och mässing med namnet och ditt telefonnummer, med fiberlasern direkt i metallen så märkningen aldrig nöts bort. Läderhalsbandet med namnet bränt in i skinnet blir dessutom bara vackrare av år med regn och koppel. Du godkänner en skiss innan jag graverar, och namnet rymmer upp till tolv tecken — resten hittar vi en lösning på ihop.",
+    related: ["jul", "farsdag"],
+  },
+  {
+    // Ny kategori (sep 2026) – Expertprint bevisar marknaden med 11 idrottspriser,
+    // men är glas- och plasttungt. Träfot + metallplakett är gapet.
+    slug: "idrottspriser",
+    tag: "idrott",
+    short: "Idrottspriser",
+    title: "Idrottspriser med gravyr",
+    kicker: "pokaler och plaketter för hela prisbordet",
+    description:
+      "Pokaler med fot i massivt trä och plakett i metall, plus dash-plaketter i aluminium — graverade med tävlingens namn, placering och årtal. Enkla, hantverksnära priser som skiljer sig från glasstatyetthyllan.",
+    about:
+      "Ett prisbord ska kännas som firat, inte som inköpt i farten. Därför gör jag idrottspriser med fot i massivt trä och plakett i metall som jag graverar med just er tävling, er klass och ert år — djupt och permanent, i samma stil genom hela bordet. Föreningen, firman eller byalaget som behöver ett helt prisbord till turneringen beställer sällan en enda: skriv hur många klasser det gäller, så räknar jag fram ett pris på hela uppsättningen, med en digital skiss att godkänna innan första plaketten graveras.",
+    related: ["foretag", "student"],
+  },
+  {
+    // Ny kategori (sep 2026) – mässings- och träskyltar mot Expertprints 399-kronors
+    // dörrskylt, men med skiss-godkännande och personlig text i beställningen.
+    slug: "skyltar",
+    tag: "skylt",
+    short: "Skyltar",
+    title: "Skyltar & namnskyltar",
+    kicker: "namnet i metall och trä",
+    description:
+      "Dörrskyltar i mässing och namnskyltar i ek — graverade med husets namn, familjen eller barnets namn. Metallen väderkas inte och eken åldras vackert.",
+    about:
+      "En namnskylt är den present som tittas på oftast — varje morgon vid dörren, varje kväll i barnrummet. Jag graverar dörrskyltar i mässing med fiberlasern, djupt in i metallen, och namnskyltar i oljad ek där träets ådring blir en del av motivet. Namnet på huset till inflyttningspresenten, barnets namn till dopet eller rummet, familjens namn vid grinden — texten är alltid din egen och du godkänner en skiss på placering och storlek innan lasern startar.",
+    related: ["nytt-hem", "dop"],
+  },
+  {
+    // Ny kategori (sep 2026) – presentaskar i plywood, enkel bildproduktion och
+    // jul-2026-relevant ("klapparna som redan är inslagna").
+    slug: "askar",
+    tag: "askar",
+    short: "Askar",
+    title: "Askar & presentaskar",
+    kicker: "för det som är värt att spara",
+    description:
+      "Presentaskar i plywood med monogram, namn eller en kort rad graverad i locket — asken som gör klappen presentklar och som sedan återanvänds år efter år.",
+    about:
+      "Vissa saker förtjänar mer än en påse från närbutiken. En presentask i plywood med locket graverat i monogram, namn eller en liten rad gör klappen presentklar innan den ens är inslagen — och asken lever sedan sitt eget liv, till smycket, brevpapperet eller minnena. Jag graverar i plywood och massivt trä, du godkänner en skiss på text och placering först, och vill du ha en ask till förlovningsringen eller ett helt set till bröllopsfesten hittar vi upplägget ihop.",
+    related: ["jul", "brollop", "dop"],
+  },
+  {
+    // Ny kategori (sep 2026) – fyller gapet mellan klubbtjänsten (golfklubbor) och
+    // golfpresenter: Taggaklubban har tjänsten, Expertprint produkterna – ingen båda.
+    slug: "golfpresenter",
+    tag: "golfpresenter",
+    short: "Golf",
+    title: "Golfpresenter",
+    kicker: "till den som redan har allt",
+    description:
+      "Presentaskar i plywood med plakett i ek och ball markers i rostfritt stål med initialer — golfpresenter som graveras i samma stil som klubborna, om du så vill.",
+    about:
+      "Golfspelaren som har allt har ändå inte sitt eget namn på sakerna. Här hittar du presentasken i plywood med graverad ekplakett — till presenten som ska räckas över — och ball markers i rostfritt stål med initialer som slits aldrig. Och eftersom jag graverar golfklubbor också (se gravyr på golfklubbor i menyn) kan allt göras i en och samma stil: asken, markrarna och namnet i klubborna, med en skiss på allt innan lasern startar. Perfekt till farsdagen, julklappen eller presenten till den som är svår att handla till.",
+    related: ["farsdag", "jul"],
+  },
+  {
+    // Ny tjänstekategori (sep 2026) – gravyr på kundens egna föremål. Samma
+    // mönster som golfklubbor: about-copy + pricing-block, inga produkter.
+    slug: "gravyr-egna-foremal",
+    tag: "egna-foremal",
+    short: "Egna föremål",
+    title: "Gravyr på dina egna föremål",
+    kicker: "lasern märker det du redan äger",
+    description:
+      "Nycklar, fickknivar, multiverktyg, metallaskar och plånböcker — du lämnar in det du redan äger, jag graverar ditt namn eller din text. Ofta klart medan du väntar.",
+    about:
+      "Vissa saker går inte att köpa nya — farfars fickkniv, verktyget du haft i tjugo år, asken du ärvt. Då är gravyr på själva föremålet det enda som fungerar. Med fiberlasern märker jag metall — rostfritt stål, aluminium, mässing — och med diodlasern bränner jag in text i trä och läder. Du skriver vad du vill ha graverat och lämnar in föremålet hos mig i Aneby; småsaker graveras ofta medan du tar en fika i stan. Som alltid får du en skiss på text och placering att godkänna innan lasern startar — vissa material (till exempel hardox och härdade ytor) kräver en testgravyr först, så hör av dig om du är osäker.",
+    pricing: [
+      {
+        title: "Prislista – gravyr på egna föremål",
+        rows: [
+          { label: "Små metallföremål (nyckel, tagg, medalj)", price: "149 kr" },
+          { label: "Fickkniv eller multiverktyg", price: "199 kr" },
+          { label: "Större metallföremål (verktyg, askar)", price: "från 295 kr" },
+          { label: "Trä- och läderföremål", price: "från 179 kr" },
+          { label: "Flera föremål eller volym", price: "Kontakta mig" },
+        ],
+        note: "Priser inkl. moms. Text och placering godkänns som skiss innan lasern startar. Osäkert om materialet graverar? Skicka en bild, så bedömer jag det innan du åker hit.",
+      },
+    ],
+    related: ["farsdag", "foretag"],
+  },
 ];
 
 /** Tillfällen och urval – sekundär navigation */
@@ -242,7 +395,7 @@ export const occasions: Category[] = [
     description:
       "Studentpresenter med gravyr – mugg till mottagningen, nyckelring till resan och graverat glas till festen. Beställ i god tid, studentveckan är full.",
     about:
-      "Studenten är en av de där dagarna som ska firas med något som lever längre än mottagningen. Här hittar du presenter att gravera med namn, skola och årstal – eller en liten text som bara klassen förstår. Skriv vilken student det gäller, så föreslår jag något som passar hen.",
+      "Studenten är en av de där dagarna som ska firas med något som lever längre än mottagningen. Här hittar du presenter att gravera med namn, skola och årtal – eller en liten text som bara klassen förstår. Skriv vilken student det gäller, så föreslår jag något som passar hen.",
   },
   {
     slug: "morsdag",
@@ -282,7 +435,7 @@ export const occasions: Category[] = [
     description:
       "Graverade dekorer, charms och stickers till årets läskigaste kväll – med din egen text, era namn eller en symbol som bara gänget förstår. Beställ i god tid, allt tillverkas för hand.",
     about:
-      "Halloween växer för varje år – och de allra flesta dekorationerna köps i butikshyllan, samma som grannen har. Här samlar jag det som går att gravera med namn, årstal eller en egen tvist: charmen till kostymen, dekoren till kalaset och presenten till värden. Berätta om kalaset, så föreslår jag något som passar – och något som håller till nästa år också.",
+      "Halloween växer för varje år – och de allra flesta dekorationerna köps i butikshyllan, samma som grannen har. Här samlar jag det som går att gravera med namn, årtal eller en egen tvist: charmen till kostymen, dekoren till kalaset och presenten till värden. Berätta om kalaset, så föreslår jag något som passar – och något som håller till nästa år också.",
   },
   {
     slug: "jul",
@@ -316,7 +469,7 @@ export const occasions: Category[] = [
     title: "Till bröllopet",
     kicker: "för dagen ni minns hela livet",
     description:
-      "Graverade tostglas till toasten, glas- och flaskeetiketter till gästerna, ringaskar och placeringsdetaljer – allt med era namn och ert datum, i samma stil genom hela bröllopet.",
+      "Graverade toastglas till toasten, glas- och flasketiketter till gästerna, ringaskar och placeringsdetaljer – allt med era namn och ert datum, i samma stil genom hela bröllopet.",
     about:
       "Bröllop är det jag gillar allra bäst att jobba med – jag började ju med bröllopsfotografering. Här hittar du det mesta som går att gravera till bröllopsdagen, från toastens glas till ringasken. Berätta om antal gäster och ert datum så föreslår jag ett samlat paket i en och samma stil, med en digital skiss på allt innan något tillverkas.",
   },
@@ -348,7 +501,7 @@ export const occasions: Category[] = [
     description:
       "Namnbrickor, graverade skyltar och stickers med er logotyp – till personal, kunder och mässan.",
     about:
-      "Företagssidan av verkstaden: namnbrickor till personalen, presenter till kunder som stöttat genom året och profilprodukter till mässan. Från tio enheter får du offert med staffelpris, och faktura är ingen fjärrsikt. Skriv några rader om er logotyp och era datum, så svarar jag med ett upplägg.",
+      "Företagssidan av verkstaden: namnbrickor till personalen, presenter till kunder som stöttat genom året och profilprodukter till mässan. Från tio enheter får du offert med staffelpris, och faktura är inga problem. Skriv några rader om er logotyp och era datum, så svarar jag med ett upplägg.",
   },
   {
     slug: "pension",
@@ -394,7 +547,7 @@ export const occasions: Category[] = [
     description:
       "Presentkort på hela butiken – den som får det väljer själv present och text, och du slipper gissa fel på storlek eller stil.",
     about:
-      "Ibland är det ärligaste svaret: den som ska få presenten väljer bäst själv. Ett presentkort är inget ofullgånget presentkort här – mottagaren får hela verkstadens sortiment att välja bland, samma skiss och samma omsorg som vid en vanlig beställning. Skriv att det är present i beställningen, så skickar jag det presentklart med en liten hälsning.",
+      "Ibland är det ärligaste svaret: den som ska få presenten väljer bäst själv. Ett presentkort är inget andrahandsval här – mottagaren får hela verkstadens sortiment att välja bland, samma skiss och samma omsorg som vid en vanlig beställning. Skriv att det är present i beställningen, så skickar jag det presentklart med en liten hälsning.",
   },
   {
     slug: "nytt-hem",

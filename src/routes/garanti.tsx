@@ -5,13 +5,13 @@ import { BadgeCheck, Gem, Wrench } from "lucide-react";
 export const Route = createFileRoute("/garanti")({
   head: () => ({
     meta: [
-      { title: "Garanti – Lins & Lager" },
+      { title: "Garanti – TaggaDet" },
       {
         name: "description",
         content:
-          "Kvalitetsgaranti på alla handgjorda produkter från Lins & Lager – material, gravyr och utförande.",
+          "Kvalitetsgaranti på alla handgjorda produkter från TaggaDet – material, gravyr och utförande.",
       },
-      { property: "og:title", content: "Garanti – Lins & Lager" },
+      { property: "og:title", content: "Garanti – TaggaDet" },
       {
         property: "og:description",
         content:
@@ -73,7 +73,7 @@ function WarrantyPage() {
               <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
                 <li>• Normalt slitage (repor, patina på läder, avmattning)</li>
                 <li>• Skador orsakade av felaktig skötsel eller olyckshändelse</li>
-                <li>• Textfel där kunden godkänt sin egen stavning i kassan</li>
+                <li>• Textfel som står kvar i den skiss du godkänt</li>
                 <li>• Produktens naturliga åldring</li>
               </ul>
             </div>

@@ -25,6 +25,11 @@ export const PRODUCT_SPECS: Record<string, ProductSpec> = {
     material: "Glas som graveras med laser direkt i materialet – inga dekaler eller kemikalier.",
     skotsel: "Diska för hand eller i maskin; gravyren tål båda lika bra.",
   },
+  glasunderlagg: {
+    material:
+      "Massiv ek eller naturkork – diodlasern bränner in gravyren direkt i materialet, inte på ytan.",
+    skotsel: "Torka av med lätt fuktig trasa; ekmaterialet mår bra av en droppe olja då och då.",
+  },
   mugg: {
     material: "Keramik i tung kvalitet med graverat eller tryckt motiv.",
     skotsel: "Tål diskmaskin, men handdisk skonar motivet längre.",
@@ -65,6 +70,31 @@ export const PRODUCT_SPECS: Record<string, ProductSpec> = {
   "3d": {
     material: "3D-utskrift i PLA eller PETG, formsäkrad och graverad med laser.",
     skotsel: "Torkas av med fuktig trasa; undvik långvarig värme, som i en bil i solen.",
+  },
+  husdjur: {
+    material:
+      "Rostfritt stål eller mässing – fiberlasern graverar in namnet i metallen, inte på ytan.",
+    skotsel: "Tål regn, bad och lerplogar; skölj av och torka torrt så glansen sitter kvar.",
+  },
+  idrott: {
+    material:
+      "Fot i massivt trä med plakett i metall – eller helplakett i aluminium, allt graverat i verkstaden.",
+    skotsel: "Torka av med torr trasa; träfoten mår bra av en droppe möbelfett då och då.",
+  },
+  skylt: {
+    material:
+      "Mässing eller aluminium märkt med fiberlaser, eller namnskylt i oljad ek graverad med diodlaser.",
+    skotsel:
+      "Metallen väderkas inte; ek-skylten håller sig finast om den oljas in när den börjar se torr ut.",
+  },
+  askar: {
+    material: "Plywood eller massivt trä, med locket graverat direkt i materialet.",
+    skotsel: "Torka av torrt eller lätt fuktigt; olja in locket om det börjar torka.",
+  },
+  golfpresenter: {
+    material:
+      "Rostfritt stål och plywood – ball markers märks med fiberlaser, askar och plaketter med diodlaser.",
+    skotsel: "Metallen tål väder och slag; trääskan torkas av och oljas in vid behov.",
   },
 };
 

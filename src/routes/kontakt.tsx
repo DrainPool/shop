@@ -13,24 +13,23 @@ const faq = [
   },
   {
     q: "Jag har fel stavat i min beställning – vad gör jag?",
-    a: "Skriv direkt! Om tillverkningen inte påbörjats ändrar vi gratis. Har du godkänt skissen och jag börjat graverar kan jag tyvärr inte ändra – men hör ändå av dig, vi hittar ofta en lösning.",
+    a: "Skriv direkt! Om tillverkningen inte påbörjats ändrar jag gratis. Har du godkänt skissen och jag börjat gravera kan jag tyvärr inte ändra – men hör ändå av dig, jag hittar ofta en lösning.",
   },
 ];
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
     meta: [
-      { title: "Kontakt – Lins & Lager" },
+      { title: "Kontakt – TaggaDet" },
       {
         name: "description",
         content:
-          "Kontakta Lins & Lager i Aneby: e-post, svarstider, företagsuppgifter. Frågor om beställning, skisser eller egna presentidéer – hör av dig!",
+          "Kontakta TaggaDet i Aneby: e-post, svarstider, företagsuppgifter. Frågor om beställning, skisser eller egna presentidéer – hör av dig!",
       },
-      { property: "og:title", content: "Kontakt – Lins & Lager" },
+      { property: "og:title", content: "Kontakt – TaggaDet" },
       {
         property: "og:description",
-        content:
-          "Kontakta Lins & Lager – svar inom 24 timmar vardagar. E-post, adress och svarstider.",
+        content: "Kontakta TaggaDet – svar inom 24 timmar vardagar. E-post, adress och svarstider.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -103,7 +102,7 @@ function ContactPage() {
           <MapPin className="h-6 w-6 text-primary-deep" aria-hidden="true" />
           <h2 className="mt-4 font-serif text-2xl font-bold">Verkstaden</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Lins &amp; Lager, Aneby i Småland
+            TaggaDet, Aneby i Småland
             <br />
             org.nummer: <span className="tabular-nums">870624-2453</span>
             <br />

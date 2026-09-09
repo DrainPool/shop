@@ -11,8 +11,8 @@ const PERSON_JSON_LD = {
   "@type": "Person",
   name: "Fredrik Arvidsson",
   url: `${SITE_URL}/om-mig`,
-  jobTitle: "Grundare av Lins & Lager",
-  worksFor: { "@type": "Organization", name: "Lins & Lager" },
+  jobTitle: "Grundare av TaggaDet",
+  worksFor: { "@type": "Organization", name: "TaggaDet" },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Aneby",
@@ -23,14 +23,14 @@ const PERSON_JSON_LD = {
 export const Route = createFileRoute("/om-mig")({
   head: () => ({
     meta: [
-      { title: "Om mig – Lins & Lager" },
+      { title: "Om mig – TaggaDet" },
       { rel: "canonical", href: `${SITE_URL}/om-mig` },
       {
         name: "description",
         content:
-          "Möt Fredrik Arvidsson i Aneby – verkstaden bakom Lins & Lager: handgjorda personliga presenter med gravyr, 3D-utskrift och foto, tillverkade i Småland sedan 2016.",
+          "Möt Fredrik Arvidsson i Aneby – verkstaden bakom TaggaDet: handgjorda personliga presenter med gravyr, 3D-utskrift och foto, tillverkade i Småland sedan 2016.",
       },
-      { property: "og:title", content: "Om mig – Lins & Lager" },
+      { property: "og:title", content: "Om mig – TaggaDet" },
       {
         property: "og:description",
         content:
@@ -53,7 +53,7 @@ const workflow = [
   {
     icon: PencilRuler,
     title: "Digital skiss",
-    text: "Du beskriver din idé och får alltid en skiss att godkänna innan jag börjar graverar.",
+    text: "Du beskriver din idé och får alltid en skiss att godkänna innan jag börjar gravera.",
   },
   {
     icon: Hammer,
@@ -76,7 +76,7 @@ function AboutPage() {
         <div>
           <p className="font-script text-3xl text-primary-deep">hej, och välkommen in!</p>
           <h1 className="mt-3 font-serif text-5xl leading-[1.05] font-bold tracking-tight md:text-6xl">
-            Bakom Lins &amp; Lager står jag
+            Bakom TaggaDet står jag
           </h1>
           <p className="mt-7 max-w-md text-lg text-muted-foreground">
             Jag heter Fredrik Arvidsson och driver verkstaden hemma i Aneby, här i Småland. Det

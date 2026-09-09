@@ -5,13 +5,13 @@ import { ShieldAlert, Ban, MessageCircleHeart } from "lucide-react";
 export const Route = createFileRoute("/retur")({
   head: () => ({
     meta: [
-      { title: "Retur & reklamation – Lins & Lager" },
+      { title: "Retur & reklamation – TaggaDet" },
       {
         name: "description",
         content:
-          "Eftersom alla produkter är personligt tillverkade gäller inget öppet köp – men full reklamationsrätt vid fel. Läs villkoren.",
+          "Personligt tillverkade produkter omfattas inte av ångerrätten – men full reklamationsrätt gäller alltid. Läs villkoren.",
       },
-      { property: "og:title", content: "Retur & reklamation – Lins & Lager" },
+      { property: "og:title", content: "Retur & reklamation – TaggaDet" },
       {
         property: "og:description",
         content:
@@ -61,7 +61,8 @@ function ReturnsPage() {
               ditt motiv. Enligt 2 kap. 11 § lagen (2005:59) om distansavtal och avtal utanför
               affärslokaler gäller <strong>inte ångerrätten</strong> för varor som har tillverkats
               enligt konsumentens anvisningar eller som annars har fått en tydlig personlig prägel.
-              Därför kan jag tyvärr inte ta emot returer eller erbjuda öppet köp.
+              Därför kan jag för personligt tillverkade varor tyvärr inte ta emot returer eller
+              erbjuda öppet köp.
             </p>
           </div>
         </div>
@@ -84,7 +85,7 @@ function ReturnsPage() {
                 hej@linsochlager.se
               </a>{" "}
               inom rimlig tid (senast 2 månader efter att du upptäckt felet) med ditt ordernummer,
-              en beskrivning av felet och gärna ett foto. Vi återkommer inom 2 arbetsdagar.
+              en beskrivning av felet och gärna ett foto. Jag återkommer inom 2 arbetsdagar.
             </p>
           </div>
         </div>
@@ -110,7 +111,7 @@ function ReturnsPage() {
         <Link to="/frakt-leverans" className="text-primary-deep underline">
           frakt & leveranstid
         </Link>{" "}
-        och vår{" "}
+        och min{" "}
         <Link to="/garanti" className="text-primary-deep underline">
           garanti
         </Link>{" "}

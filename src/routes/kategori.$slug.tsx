@@ -8,7 +8,10 @@ import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
 import { Button } from "@/components/ui/button";
-import { fetchProducts } from "@/lib/shopify";
+import { CategoryHero } from "@/components/category/CategoryHero";
+import { RelatedCategoryCards } from "@/components/category/RelatedCategoryCards";
+import { ServicePricingSection } from "@/components/category/ServicePricingSection";
+import { fetchProducts, FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 import { getCategory } from "@/lib/categories";
 import { FOTOGRAFERING_URL, SITE_URL } from "@/lib/siteUrls";
 
@@ -20,23 +23,30 @@ export const Route = createFileRoute("/kategori/$slug")({
   loader: async ({ params, context }) => {
     const category = getCategory(params.slug);
     if (!category) throw notFound();
-    await context.queryClient.ensureQueryData({
-      queryKey: ["products", "tag", category.tag],
-      queryFn: () => fetchProducts(50, `tag:${category.tag}`),
-    });
+    try {
+      await context.queryClient.ensureQueryData({
+        queryKey: ["products", "tag", category.tag],
+        queryFn: () => fetchProducts(50, `tag:${category.tag}`),
+      });
+    } catch (error) {
+      // Transient Storefront-fel i SSR: låt sidan rendera med skeleton i
+      // stället för att dö till roten — klientens useQuery plockar upp
+      // samma queryKey och visar isError-grenen vid bestående fel.
+      console.error("Kategori-loader: kunde inte värma produktcachen", error);
+    }
     return { category };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
         meta: [
-          { title: "Kategorin hittades inte – Lins & Lager" },
+          { title: "Kategorin hittades inte – TaggaDet" },
           { name: "robots", content: "noindex" },
         ],
       };
     }
     const { title, description, slug } = loaderData.category;
-    const pageTitle = `${title} – Lins & Lager`;
+    const pageTitle = `${title} – TaggaDet`;
     // BreadcrumbList skrivs av Breadcrumbs-komponenten (absoluta URL:er) –
     // ett block per sida räcker, två blir motströmmande för crawlers.
     const jsonLd = [
@@ -74,7 +84,7 @@ function CategoryNotFound() {
     <div className="mx-auto max-w-3xl px-5 py-24 text-center">
       <h1 className="font-serif text-4xl font-bold tracking-tight">Kategorin finns inte</h1>
       <p className="mt-3 text-muted-foreground">
-        Kika i sortimentet så hittar vi rätt present ihop.
+        Kika i sortimentet så hittar jag rätt present tillsammans med dig.
       </p>
       <Link to="/" className="mt-6 inline-block font-semibold text-primary-deep hover:underline">
         Till startsidan
@@ -95,46 +105,27 @@ function CategoryPage() {
   });
 
   const filters = useProductFilters(products, [category.tag]);
+  // Tjänstekategorier (pricing-block i kategorikartan) har inga färdiga
+  // produkter – deras sida byggs av about-text + prislista i stället.
+  const isService = Boolean(category.pricing?.[0]);
 
   return (
     <>
       <CategoryIconRow activeSlug={category.slug} />
-      <div className="mx-auto max-w-6xl px-5 py-14">
+      <CategoryHero category={category}>
         <Breadcrumbs
           items={[{ label: "Sortiment", to: "/sortiment" }, { label: category.title }]}
         />
+      </CategoryHero>
 
-        <p className="mt-6 font-script text-2xl text-primary-deep">{category.kicker}</p>
-
-        <h1 className="mt-1 font-serif text-4xl font-bold tracking-tight md:text-5xl">
-          {category.title}
-        </h1>
-        <p className="mt-3 line-clamp-2 max-w-2xl text-lg text-muted-foreground md:line-clamp-none">
-          {category.description}
-        </p>
-
-        {category.subcategories && category.subcategories.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-2">
-            {category.subcategories.map((sub) => (
-              <Link
-                key={sub.slug}
-                to="/kategori/$slug"
-                params={{ slug: sub.slug }}
-                className="rounded-full bg-cream px-4 py-2 text-sm font-medium transition-colors hover:text-primary-deep"
-              >
-                {sub.label}
-              </Link>
-            ))}
-          </div>
-        )}
-
+      <div className="mx-auto max-w-6xl px-5 py-14 md:py-16">
         {/* Ett kompakt trust-band – dolt på mobil (headerns rad säger samma
             sak) så första produktradan syns inom en skärmshöjd. */}
-        <div className="mt-6 hidden flex-wrap items-center gap-x-5 gap-y-2 rounded-2xl bg-cream p-4 text-sm sm:flex">
+        <div className="hidden flex-wrap items-center gap-x-5 gap-y-2 rounded-2xl border border-border/60 bg-card p-4 text-sm shadow-soft sm:flex">
           {[
             "Tillverkas här hemma efter din beställning",
             "Digital skiss på gravyren innan jag börjar",
-            "Fri frakt inom Sverige över 800 kr",
+            `Fri frakt inom Sverige över ${FREE_SHIPPING_LIMIT} kr`,
           ].map((t) => (
             <span key={t} className="flex items-center gap-2">
               <Check className="h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
@@ -143,47 +134,83 @@ function CategoryPage() {
           ))}
         </div>
 
-        {isPending ? (
-          <ProductGridSkeleton count={8} />
-        ) : isError ? (
-          <p className="py-16 text-center text-muted-foreground">
-            Kunde inte hämta produkterna just nu. Försök gärna igen om en stund.
-          </p>
-        ) : products.length === 0 ? (
-          <div className="mt-10 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-            <p className="font-serif text-xl font-bold">Fler produkter är på gång hit</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Jag tillverkar efter önskemål – hör av dig så skissar jag något personligt till just
-              ditt tillfälle.
+        {/* Tjänstekategorier: berättelse + prislista i samma hierarki
+            som en produktsida (bild/text vänster, pris höger). */}
+        {isService && <ServicePricingSection category={category} />}
+
+        <section
+          className={isService ? "mt-16 md:mt-20" : "mt-12"}
+          aria-labelledby={isService ? undefined : "utbud-heading"}
+        >
+          {!isService && (
+            <>
+              <p className="font-script text-2xl text-primary-deep">från verkstaden</p>
+              <h2 id="utbud-heading" className="mt-1 font-serif text-3xl font-bold tracking-tight">
+                Välj bland det jag gör
+              </h2>
+            </>
+          )}
+
+          {isPending ? (
+            <ProductGridSkeleton count={8} />
+          ) : isError ? (
+            <p className="py-16 text-center text-muted-foreground">
+              Kunde inte hämta produkterna just nu. Försök gärna igen om en stund.
             </p>
-            <Button asChild className="mt-6 rounded-full px-6">
-              <Link to="/kontakt">Fråga mig direkt</Link>
-            </Button>
-          </div>
-        ) : (
-          <>
-            <ProductFilters {...filters} total={products.length} />
-            {filters.filtered.length === 0 ? (
-              <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-                <p className="font-serif text-xl font-bold">Inget matchade ditt filter</p>
+          ) : products.length === 0 ? (
+            isService ? (
+              /* Tom-läget för tjänstekategorier: det är inte en produkt som
+                 saknas – tjänsten säljs via kontakt. */
+              <div className="rounded-3xl border-2 border-dashed border-border bg-cream p-10 text-center md:p-12">
+                <p className="font-serif text-xl font-bold">Gravyr i det du redan äger</p>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Rensa filtret – eller{" "}
-                  <Link to="/kontakt" className="font-semibold text-primary-deep hover:underline">
-                    skriv till mig
-                  </Link>
-                  , jag gör gärna något helt eget åt dig.
+                  Du lämnar in dina saker hos mig i Aneby – eller bokar in mig på plats. Skriv vad
+                  du vill ha märkt och hur många det gäller, så svarar jag med en skiss och ett pris
+                  att godkänna innan lasern startar.
                 </p>
+                <Button asChild className="mt-6 rounded-full px-6">
+                  <Link to="/kontakt">Fråga mig direkt</Link>
+                </Button>
               </div>
             ) : (
-              <ProductGrid products={filters.filtered} resetKey={category.slug} />
-            )}
-          </>
-        )}
+              <div className="rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
+                <p className="font-serif text-xl font-bold">Fler produkter är på gång hit</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Jag tillverkar efter önskemål – hör av dig så skissar jag något personligt till
+                  just ditt tillfälle.
+                </p>
+                <Button asChild className="mt-6 rounded-full px-6">
+                  <Link to="/kontakt">Fråga mig direkt</Link>
+                </Button>
+              </div>
+            )
+          ) : (
+            <>
+              <ProductFilters {...filters} total={products.length} />
+              {filters.filtered.length === 0 ? (
+                <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
+                  <p className="font-serif text-xl font-bold">Inget matchade ditt filter</p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Rensa filtret – eller{" "}
+                    <Link to="/kontakt" className="font-semibold text-primary-deep hover:underline">
+                      skriv till mig
+                    </Link>
+                    , jag gör gärna något helt eget åt dig.
+                  </p>
+                </div>
+              ) : (
+                <ProductGrid products={filters.filtered} resetKey={category.slug} />
+              )}
+            </>
+          )}
+        </section>
 
-        <RecentlyViewed />
+        {/* Intern länkflod: related-kategorierna som kort, data-driven
+            (sektionen renderas inte när related saknas). */}
+        <RelatedCategoryCards slugs={category.related ?? []} currentSlug={category.slug} />
 
         {category.slug === "jul" && (
-          <section className="mt-16 rounded-3xl bg-ink p-8 text-ink-foreground md:p-10">
+          <section className="mt-16 rounded-3xl bg-ink p-8 text-ink-foreground md:mt-20 md:p-10">
             <p className="font-script text-2xl text-gold">julklappsguiden</p>
             <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight">
               Vem ska du överraska i år?
@@ -217,30 +244,17 @@ function CategoryPage() {
           </section>
         )}
 
-        <section className="mt-16 rounded-3xl bg-cream p-8">
-          <h2 className="font-serif text-2xl font-bold">Om {category.title.toLowerCase()}</h2>
-          <p className="mt-3 max-w-3xl text-muted-foreground">
-            {category.about ??
-              `Här samlar jag det jag just nu gör inom ${category.title.toLowerCase()}. Allt tillverkas för hand i verkstaden i Småland, efter din beställning. Hittar du inte precis det du söker skissar jag gärna något helt eget – skriv några rader om vem presenten är till, så föreslår jag ett upplägg.`}
-          </p>
-          {category.related && category.related.length > 0 && (
-            <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
-              <span className="text-muted-foreground">Passar också till:</span>
-              {category.related.map((slug) => {
-                const rel = getCategory(slug);
-                if (!rel) return null;
-                return (
-                  <Link
-                    key={slug}
-                    to="/kategori/$slug"
-                    params={{ slug }}
-                    className="rounded-full bg-cream px-4 py-1.5 font-medium transition-colors hover:text-primary-deep"
-                  >
-                    {rel.title}
-                  </Link>
-                );
-              })}
-            </div>
+        <section className="mt-16 rounded-3xl bg-cream p-8 md:mt-20 md:p-10">
+          <h2 className="font-serif text-2xl font-bold">
+            {isService ? "Bra att veta" : `Om ${category.title.toLowerCase()}`}
+          </h2>
+          {/* Tjänstekategorier har redan sin about-text i tjänste-sektionen
+              ovan – undvik samma text två gånger på samma sida. */}
+          {!isService && (
+            <p className="mt-3 max-w-3xl text-muted-foreground">
+              {category.about ??
+                `Här samlar jag det jag just nu gör inom ${category.title.toLowerCase()}. Allt tillverkas för hand i verkstaden i Småland, efter din beställning. Hittar du inte precis det du söker skissar jag gärna något helt eget – skriv några rader om vem presenten är till, så föreslår jag ett upplägg.`}
+            </p>
           )}
           <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
             <Link to="/vanliga-fragor" className="text-primary-deep hover:underline">
@@ -265,6 +279,8 @@ function CategoryPage() {
             </Link>
           </div>
         </section>
+
+        <RecentlyViewed />
       </div>
     </>
   );

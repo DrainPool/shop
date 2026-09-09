@@ -1,11 +1,29 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Check, Clock, Heart, Share2, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Clock,
+  Heart,
+  Share2,
+  ShieldCheck,
+  Sparkles,
+  Truck,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
-import { ProductCustomizer } from "@/components/ProductCustomizer";
+// Personaliseringen (formuläret, förslagen, kassa-logiken) behövs inte förrän
+// kunden scrollat ner – dela upp den i ett eget chunk som laddas lazy.
+// Ref-diven runt om står kvar utanför Suspensen så IntersectionObserver-
+// vakten (som döljer den fasta mobilraden) får ett element direkt.
+const ProductCustomizer = lazy(() =>
+  import("@/components/ProductCustomizer").then((m) => ({ default: m.ProductCustomizer })),
+);
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { ProductGallery, type GalleryBadge } from "@/components/product/ProductGallery";
+import { SpecBand } from "@/components/product/SpecBand";
 import { RecentlyViewed, useTrackRecentlyViewed } from "@/components/RecentlyViewed";
 import { WishlistHeart } from "@/components/WishlistHeart";
 import { PaymentLogos } from "@/components/PaymentLogos";
@@ -34,13 +52,13 @@ export const Route = createFileRoute("/produkt/$handle")({
     if (!loaderData) {
       return {
         meta: [
-          { title: "Produkten hittades inte – Lins & Lager" },
+          { title: "Produkten hittades inte – TaggaDet" },
           { name: "robots", content: "noindex" },
         ],
       };
     }
     const node = loaderData.product.node;
-    const title = `${node.title} – Lins & Lager`;
+    const title = `${node.title} – TaggaDet`;
     const description = (
       node.description || `${node.title} – personligt hantverk, graverat för hand på beställning.`
     ).slice(0, 158);
@@ -54,7 +72,7 @@ export const Route = createFileRoute("/produkt/$handle")({
       name: node.title,
       description: node.description,
       image: node.images.edges.map((e) => e.node.url),
-      brand: { "@type": "Brand", name: "Lins & Lager" },
+      brand: { "@type": "Brand", name: "TaggaDet" },
       offers: {
         "@type": "Offer",
         url,
@@ -116,7 +134,10 @@ function DeliveryEstimate() {
       new Intl.DateTimeFormat("sv-SE", { day: "numeric", month: "long" }).format(delivery),
     );
   }, []);
-  if (!dateText) return null;
+  // Reservera radens höjd medan datumet räknas ut på klienten – annars
+  // knuffas allt under sammanfattningen ner ett stycke när texten dyker
+  // upp efter mount (layout-shift/CLS).
+  if (!dateText) return <span className="mt-1 block min-h-6" aria-hidden="true" />;
   return (
     <span className="mt-1 block text-muted-foreground">
       Beställer du idag är den hos dig ca den {dateText}.
@@ -156,7 +177,6 @@ function ShareButton({ title }: { title: string }) {
 function ProductPage() {
   const { handle } = Route.useParams();
   const { product } = Route.useLoaderData();
-  const [activeImage, setActiveImage] = useState(0);
 
   // Göm den fasta mobil-radern medan gravyrsektionen syns – annars
   // skymmer den formuläret och sammanfattningen den leder till.
@@ -185,35 +205,32 @@ function ProductPage() {
 
   const node = product.node;
   const images = node.images.edges.map((e) => e.node);
-  const image = images[activeImage] || images[0];
   const minPrice = node.priceRange.minVariantPrice;
   const tags = node.tags || [];
   const freeShipping = parseFloat(minPrice.amount) >= FREE_SHIPPING_LIMIT;
   const { price, compare, onSale, currency, discountPercent } = getPricing(product);
   const variants = node.variants?.edges ?? [];
   const inStock = variants.length === 0 || variants.some((v) => v.node.availableForSale);
+  // "Från"-prefix när varianterna har olika pris – annars är priset entydigt
+  // och prefixet bara stör.
+  const fromPrice = new Set(variants.map((v) => v.node.price.amount)).size > 1;
 
   const typeCategory = productTypes.find((t) => tags.includes(t.tag));
   const spec = typeCategory ? PRODUCT_SPECS[typeCategory.tag] : undefined;
 
-  // Köpnära frågor – samma mekanism som vanliga-fragor-sidan
-  const braAttVeta: FaqItem[] = [
-    ...(spec
-      ? [
-          {
-            q: "Material & mått",
-            a: (
-              <>
-                <p>{spec.material}</p>
-                <p className="mt-2">
-                  Exakta mått för just den här varianten står i produktbeskrivningen – skriv till
-                  mig om du undrar över något, så mäter jag efter.
-                </p>
-              </>
-            ),
-          },
-        ]
+  // Badges på huvudbilden – säljcopy styrd av taggarna, inte bilddata.
+  const badges: GalleryBadge[] = [
+    ...(tags.includes("bastsaljare")
+      ? [{ label: "Mest älskad just nu", tone: "primary" as const }]
       : []),
+    ...(tags.includes("nyhet") ? [{ label: "Nyhet i verkstaden", tone: "gold" as const }] : []),
+    ...(freeShipping ? [{ label: "Fri frakt ingår", tone: "ink" as const }] : []),
+  ];
+
+  // Köpnära frågor – samma mekanism som vanliga-fragor-sidan.
+  // Material och skötsel ligger i SpecBand ovanför när produkttypen
+  // har en spec – FAQ:n fyller i det som saknas i stället för att upprepa.
+  const braAttVeta: FaqItem[] = [
     {
       q: "Så tillverkas den",
       a: "Allt görs här i verkstaden efter din beställning. Du får en digital skiss på gravyren innan jag börjar, och jag hör av mig om något i texten ser konstigt ut.",
@@ -234,12 +251,14 @@ function ProductPage() {
         </>
       ),
     },
-    {
-      q: "Skötselråd",
-      a: spec
-        ? spec.skotsel
-        : "Trä torkas av för hand och oljas då och då. Smycken tål vardag men mår bäst utan parfym och klor. Läder blir vackrare med åren.",
-    },
+    ...(spec
+      ? []
+      : [
+          {
+            q: "Skötselråd",
+            a: "Trä torkas av för hand och oljas då och då. Smycken tål vardag men mår bäst utan parfym och klor. Läder blir vackrare med åren.",
+          },
+        ]),
   ];
 
   return (
@@ -258,63 +277,21 @@ function ProductPage() {
         <ArrowLeft className="h-4 w-4" /> Tillbaka till sortimentet
       </Link>
 
-      <div className="grid gap-10 md:grid-cols-2">
-        <div>
-          <div className="relative overflow-hidden rounded-2xl bg-muted shadow-soft">
-            <div className="absolute top-4 left-4 z-10 flex flex-col items-start gap-2">
-              {tags.includes("bastsaljare") && (
-                <span className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                  Mest älskad just nu
-                </span>
-              )}
-              {tags.includes("nyhet") && (
-                <span className="rounded-full bg-gold px-3 py-1 text-xs font-semibold text-ink">
-                  Nyhet i verkstaden
-                </span>
-              )}
-              {freeShipping && (
-                <span className="rounded-full bg-ink/85 px-3 py-1 text-xs font-semibold text-ink-foreground">
-                  Fri frakt ingår
-                </span>
-              )}
-            </div>
-            {image ? (
-              <img
-                src={image.url}
-                alt={image.altText || node.title}
-                className="aspect-square h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex aspect-square items-center justify-center text-muted-foreground">
-                Bild kommer snart
-              </div>
-            )}
-          </div>
-
-          {images.length > 1 && (
-            <div className="mt-4 flex gap-3">
-              {images.map((img, i) => (
-                <button
-                  key={img.url}
-                  type="button"
-                  onClick={() => setActiveImage(i)}
-                  aria-label={`Visa bild ${i + 1} av ${node.title}`}
-                  aria-pressed={i === activeImage}
-                  className={`h-20 w-20 overflow-hidden rounded-xl border-2 transition-colors ${
-                    i === activeImage ? "border-primary" : "border-border hover:border-primary/50"
-                  }`}
-                >
-                  <img src={img.url} alt="" loading="lazy" className="h-full w-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
+      <div className="grid gap-10 md:grid-cols-2 md:gap-12">
+        {/* Galleriet följer med när köpkolumnen scrollar (sticky inom
+            gridytan – self-start behövs för att sticky överhuvudtaget
+            ska kunna glida i raden). */}
+        <div className="md:sticky md:top-24 md:self-start">
+          <ProductGallery images={images} title={node.title} badges={badges} />
         </div>
 
         <div>
-          <h1 className="font-serif text-4xl leading-tight font-semibold">{node.title}</h1>
+          <h1 className="font-serif text-3xl leading-tight font-bold tracking-tight text-balance md:text-4xl">
+            {node.title}
+          </h1>
           <div className="mt-4 flex flex-wrap items-baseline gap-3">
-            <p className="text-2xl font-semibold tabular-nums text-primary-deep">
+            <p className="font-serif text-3xl font-bold tabular-nums text-primary-deep">
+              {fromPrice && "Från "}
               {formatPrice(price, currency)}
             </p>
             {onSale && (
@@ -383,15 +360,29 @@ function ProductPage() {
             </p>
           </div>
 
-          <p className="mt-6 whitespace-pre-line text-muted-foreground">{node.description}</p>
+          <p className="mt-6 whitespace-pre-line leading-relaxed text-muted-foreground">
+            {node.description}
+          </p>
+
+          {/* Material & skötsel från PRODUCT_SPECS via produkttypens
+              tagg – synligt i stället för gömt i en dragspel. */}
+          {spec && <SpecBand spec={spec} />}
 
           {/* scroll-mt-28: sticky headern (~70 px) täcker annars sektionens
               topp när den fasta mobilraden hoppar hit. */}
           <div id="personalisering" ref={personaliseringRef} className="scroll-mt-28">
-            <ProductCustomizer product={product} />
+            <Suspense
+              fallback={
+                /* Minsta höjd ≈ formulärets – annars hoppar layouten när
+                   chunken landar (CLS i mobilradens dolda/visade läge). */
+                <div className="mt-8 min-h-72 animate-pulse rounded-2xl border border-border bg-card/60" />
+              }
+            >
+              <ProductCustomizer product={product} />
+            </Suspense>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          <div className="mt-8 grid grid-flow-dense gap-3 sm:grid-cols-3">
             {(
               [
                 {
@@ -440,7 +431,7 @@ function ProductPage() {
         </div>
       </div>
 
-      <div className="mt-14 grid gap-10 md:grid-cols-2">
+      <div className="mt-20 grid gap-10 md:grid-cols-2">
         <div>
           <h2 className="font-serif text-2xl font-bold">Bra att veta</h2>
           <FaqAccordion items={braAttVeta} />
@@ -477,6 +468,7 @@ function ProductPage() {
               <span className="block truncate text-sm font-medium">{node.title}</span>
               <span className="flex items-baseline gap-2">
                 <span className="text-sm font-semibold tabular-nums text-primary-deep">
+                  {fromPrice && "Från "}
                   {formatPrice(price, currency)}
                 </span>
                 {onSale && (
@@ -514,10 +506,26 @@ function RelatedProducts({ tags, handle }: { tags: string[]; handle: string }) {
 
   return (
     <section className="mt-20 border-t border-border pt-12">
-      <p className="font-script text-2xl text-primary-deep">mer i samma stil</p>
-      <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight">
-        {typeTag ? typeTag.title : "Liknande presenter"}
-      </h2>
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <div>
+          <p className="font-script text-2xl text-primary-deep">mer i samma stil</p>
+          <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight">
+            {typeTag ? typeTag.title : "Liknande presenter"}
+          </h2>
+        </div>
+        {/* CTA tillbaka till kategorin – det interna flödet ska inte
+            behöva gå via headern. */}
+        {typeTag && (
+          <Link
+            to="/kategori/$slug"
+            params={{ slug: typeTag.slug }}
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary-deep hover:underline"
+          >
+            Se hela kategorin
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        )}
+      </div>
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {related.map((p) => (
           <ProductCard key={p.node.id} product={p} />

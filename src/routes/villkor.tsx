@@ -10,21 +10,22 @@ import {
   PenLine,
   Scale,
 } from "lucide-react";
+import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 
 export const Route = createFileRoute("/villkor")({
   head: () => ({
     meta: [
-      { title: "Allmänna villkor – Lins & Lager" },
+      { title: "Allmänna villkor – TaggaDet" },
       {
         name: "description",
         content:
-          "Villkor för köp hos Lins & Lager: beställning och skiss, priser och betalning, leveranstid, ångerrätt för personligt tillverkade varor och reklamationsrätt.",
+          "Villkor för köp hos TaggaDet: beställning och skiss, priser och betalning, leveranstid, reklamationsrätt och att ångerrätten inte gäller personligt tillverkade varor.",
       },
-      { property: "og:title", content: "Allmänna villkor – Lins & Lager" },
+      { property: "og:title", content: "Allmänna villkor – TaggaDet" },
       {
         property: "og:description",
         content:
-          "Villkor för köp hos Lins & Lager: skiss, betalning, leverans, ångerrätt och reklamation.",
+          "Villkor för köp hos TaggaDet: skiss, betalning, leverans, ångerrätt och reklamation.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -37,7 +38,7 @@ const sections: { title: string; body: ReactNode[] }[] = [
   {
     title: "Allmänt",
     body: [
-      "Dessa villkor gäller när du beställer varor från Lins & Lager (enskild firma, org.nummer 870624-2453, Aneby, Sverige). Genom att slutföra ett köp i webshoppen godkänner du villkoren nedan. Beställningar lägger du i webshopen; för skräddarsydda uppdrag kan vi även komma överens via e-post.",
+      "Dessa villkor gäller när du beställer varor från TaggaDet (enskild firma, org.nummer 870624-2453, Aneby, Sverige). Genom att slutföra ett köp i webshoppen godkänner du villkoren nedan. Beställningar lägger du i webshopen; för skräddarsydda uppdrag kan vi även komma överens via e-post.",
     ],
   },
   {
@@ -50,14 +51,14 @@ const sections: { title: string; body: ReactNode[] }[] = [
   {
     title: "Priser & betalning",
     body: [
-      "Alla priser anges i svenska kronor inklusive moms. Eventuella fraktkostnader visas i kassan innan du fullföljer köpet – fri frakt vid beställning över 800 kr.",
-      "Betalning sker tryggt i Shopifys kassa med kort, Klarna och Swish beroende på vad som är aktivt i butiken vid köptillfället. Vi reserverar oss för att en produkt har blivit slutsåld och prisändringar eller felskrivningar kan förekomma – då kontaktar vi dig alltid innan vi levererar.",
+      `Alla priser anges i svenska kronor inklusive moms. Eventuella fraktkostnader visas i kassan innan du fullföljer köpet – fri frakt vid beställning över ${FREE_SHIPPING_LIMIT} kr.`,
+      "Betalning sker tryggt i Shopifys kassa med kort och Klarna beroende på vad som är aktivt i butiken vid köptillfället. Vi reserverar oss för att en produkt har blivit slutsåld och prisändringar eller felskrivningar kan förekomma – då kontaktar jag dig alltid innan jag levererar.",
     ],
   },
   {
     title: "Tillverkning & leverans",
     body: [
-      "Ordertid: beställningar som läggs innan söndag 23:59 tillverkas och skickas under följande vecka. Ange gärna ett önskad leveransdatum om du beställer till ett bestämt tillfälle – anstränger mig alltid att hinna, men kontakta mig först om datumet är nära förestående.",
+      "Ordertid: beställningar som läggs innan söndag 23:59 tillverkas och skickas under följande vecka. Ange gärna ett önskat leveransdatum om du beställer till ett bestämt tillfälle – jag anstränger mig alltid att hinna, men kontakta mig först om datumet är nära förestående.",
       "Leverans sker med spårbar frakt inom Sverige. Läs mer om leveranstider på sidan ",
       <Link to="/frakt-leverans" className="text-primary-deep underline">
         Frakt &amp; leverans
@@ -69,13 +70,13 @@ const sections: { title: string; body: ReactNode[] }[] = [
     title: "Ångerrätt",
     body: [
       "Varor som tillverkas, graveras eller annars anpassas särskilt efter dina önskemål omfattas inte av ångerrätten. Enligt 2 kap. 11 § lagen (2005:59) om distansavtal och avtal utanför affärslokaler gäller inte ångerrätten för varor som har tillverkats enligt konsumentens anvisningar eller som annars har fått en tydlig personlig prägel. Det gäller samtliga produkter med personlig gravyr, tryck eller annat eget önskemål.",
-      "Har du beställt en produkt utan personlig anpassning gäller 14 dagars öppet köp från det att du mottagit varan. Varan ska då vara oanvänd och i originalförpackning. Kontakta mig via e-post innan du returnerar.",
+      "Har du beställt en produkt utan personlig anpassning gäller 14 dagars ångerrätt från det att du fick varan. Varan ska då vara oanvänd och i originalförpackning. Kontakta mig via e-post innan du returnerar.",
     ],
   },
   {
     title: "Reklamation",
     body: [
-      "Enligt konsumentköplagen har du rätt att reklamera fel på varan i tre år från köpet. Skulle något skadas under transport eller inte motsvara den godkända skissen – hör av dig inom rimlig tid, gärna med foton, så löser vi det: ny tillverkning, lagning eller återbetalning beroende på vad som passar dig bäst.",
+      "Enligt konsumentköplagen har du rätt att reklamera fel på varan i tre år från köpet. Skulle något skadas under transport eller inte motsvara den godkända skissen – hör av dig inom rimlig tid, gärna med foton, så löser jag det: ny tillverkning, lagning eller återbetalning beroende på vad som passar dig bäst.",
     ],
   },
   {

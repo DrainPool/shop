@@ -64,7 +64,8 @@ export function SearchOverlay() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="h-9 w-9 gap-2 rounded-full px-3 md:w-auto"
+          // h-11 w-11 på mobil: 44 px tryckyta (tummens minimimått)
+          className="h-11 w-11 gap-2 rounded-full px-3 md:h-9 md:w-auto"
           aria-label="Sök i butiken"
         >
           <Search className="h-5 w-5" />
@@ -105,7 +106,8 @@ export function SearchOverlay() {
                       key={p}
                       type="button"
                       onClick={() => setTerm(p)}
-                      className="rounded-full border border-border px-3 py-1.5 text-sm transition-colors hover:border-primary"
+                      // min-h-11: 44 px tryckyta på mobil (md:min-h-9 på dator)
+                      className="min-h-11 rounded-full border border-border px-3 py-1.5 text-sm transition-colors hover:border-primary md:min-h-9"
                     >
                       {p}
                     </button>
@@ -121,7 +123,7 @@ export function SearchOverlay() {
                       to="/kategori/$slug"
                       params={{ slug: c.slug }}
                       onClick={() => setSearchOpen(false)}
-                      className="rounded-full bg-cream px-3 py-1.5 text-sm hover:text-primary-deep"
+                      className="flex min-h-11 items-center rounded-full bg-cream px-3 py-1.5 text-sm hover:text-primary-deep md:min-h-9"
                     >
                       {c.short}
                     </Link>
@@ -145,6 +147,19 @@ export function SearchOverlay() {
               >
                 Skriv till mig så gör jag något eget åt dig
               </Link>
+              {/* Noll produkter men en matchande produkttyp? Visa den gyllene
+                  kategorilänken ändå – den är ofta den bästa vägen vidare. */}
+              {matchedCategory && (
+                <Link
+                  to="/kategori/$slug"
+                  params={{ slug: matchedCategory.slug }}
+                  onClick={() => setSearchOpen(false)}
+                  className="mt-3 flex items-center justify-between gap-2 rounded-full border border-gold/50 bg-gold/15 px-4 py-2 font-semibold text-foreground transition-colors hover:bg-gold/25"
+                >
+                  Gå till {matchedCategory.short || matchedCategory.title}
+                  <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                </Link>
+              )}
             </div>
           ) : (
             <>

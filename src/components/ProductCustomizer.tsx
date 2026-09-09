@@ -17,6 +17,7 @@ import { PaymentLogos } from "@/components/PaymentLogos";
 import { useCartStore, type CartAttribute } from "@/stores/cartStore";
 import { useUiStore } from "@/stores/uiStore";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
+import { cn } from "@/lib/utils";
 
 const MATERIALS = [
   "Ek",
@@ -291,6 +292,9 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
                 variant={selected?.id === v.id ? "default" : "outline"}
                 size="sm"
                 disabled={!v.availableForSale}
+                aria-pressed={selected?.id === v.id}
+                // h-11 på mobil: 44 px tryckyta (tummens minimimått)
+                className="h-11 transition-[color,background-color,transform] duration-200 active:scale-[0.97] motion-reduce:active:scale-100 md:h-8"
                 onClick={() => setVariantId(v.id)}
               >
                 {v.title} · {formatPrice(v.price.amount, v.price.currencyCode)}
@@ -320,10 +324,23 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
               aria-describedby="line1-count"
               onChange={(e) => setLine1(e.target.value)}
             />
-            <p id="line1-count" className="text-xs text-muted-foreground" aria-live="polite">
+            <p
+              id="line1-count"
+              className={cn(
+                "text-xs",
+                line1.length >= MAX_TEXT
+                  ? "font-medium text-primary-deep"
+                  : "text-muted-foreground",
+              )}
+            >
               {line1.length}/{MAX_TEXT} tecken
-              {line1.length >= MAX_TEXT ? " – max antal nått" : ""}
+              {line1.length >= MAX_TEXT ? " – max antal nått på raden" : ""}
             </p>
+            {/* Meddelas bara när gränsen nås – räknaren som tickar på varje
+                tecken skulle annars prata ihop skärmläsaren. */}
+            <span role="status" aria-live="polite" className="sr-only">
+              {line1.length >= MAX_TEXT ? `Rad 1 har nått max antal tecken (${MAX_TEXT}).` : ""}
+            </span>
           </div>
 
           <div className="space-y-2">
@@ -333,8 +350,24 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
               value={line2}
               maxLength={MAX_TEXT}
               placeholder="T.ex. 12 juni 2026"
+              aria-describedby="line2-count"
               onChange={(e) => setLine2(e.target.value)}
             />
+            <p
+              id="line2-count"
+              className={cn(
+                "text-xs",
+                line2.length >= MAX_TEXT
+                  ? "font-medium text-primary-deep"
+                  : "text-muted-foreground",
+              )}
+            >
+              {line2.length}/{MAX_TEXT} tecken
+              {line2.length >= MAX_TEXT ? " – max antal nått på raden" : ""}
+            </p>
+            <span role="status" aria-live="polite" className="sr-only">
+              {line2.length >= MAX_TEXT ? `Rad 2 har nått max antal tecken (${MAX_TEXT}).` : ""}
+            </span>
           </div>
 
           <div className="rounded-xl bg-cream/70 p-3">
@@ -342,17 +375,21 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
               type="button"
               onClick={() => setShowSuggestions((v) => !v)}
               aria-expanded={showSuggestions}
-              className="flex items-center gap-1 text-sm font-medium text-primary-deep hover:underline"
+              aria-controls="text-forslag"
+              // -mx-1/px-1 + min-h-11: större tryckyta utan att texten flyttar sig
+              className="-mx-1 flex min-h-11 cursor-pointer items-center gap-1 rounded-lg px-1 text-sm font-medium text-primary-deep transition-colors duration-300 hover:underline md:min-h-9"
             >
               Behöver du inspiration? Låna en text
               <ChevronDown
-                className={`h-4 w-4 transition-transform ${showSuggestions ? "rotate-180" : ""}`}
+                className={`h-4 w-4 transition-transform duration-300 motion-reduce:transition-none ${
+                  showSuggestions ? "rotate-180" : ""
+                }`}
                 aria-hidden="true"
               />
             </button>
             {showSuggestions && (
-              <>
-                <div className="mt-3 flex flex-wrap gap-2">
+              <div id="text-forslag" className="mt-3">
+                <div className="flex flex-wrap gap-2">
                   {suggestions.map((s) => (
                     <button
                       key={s.l1}
@@ -361,7 +398,8 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
                         setLine1(s.l1);
                         if (s.l2 !== undefined) setLine2(s.l2);
                       }}
-                      className="rounded-full border border-border bg-background px-3 py-1.5 text-sm transition-colors hover:border-primary"
+                      // min-h-11: 44 px tryckyta på mobil (md:min-h-9 på dator)
+                      className="min-h-11 cursor-pointer rounded-full border border-border bg-background px-3 py-1.5 text-sm transition-[color,border-color,transform] duration-200 hover:border-primary active:scale-95 motion-reduce:active:scale-100 md:min-h-9"
                     >
                       {s.l1}
                       {s.l2 ? ` · ${s.l2}` : ""}
@@ -371,7 +409,7 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
                 <p className="mt-2 text-xs text-muted-foreground">
                   Klicka för att låna – ändra fritt efteråt, det är bara ett förslag.
                 </p>
-              </>
+              </div>
             )}
             {isNyckelring && (
               <p className="mt-2 text-xs text-muted-foreground">
@@ -450,8 +488,12 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
               maxLength={250}
               rows={3}
               placeholder="Berätta om tillfället, önskad symbol eller leveransdatum."
+              aria-describedby="note-count"
               onChange={(e) => setNote(e.target.value)}
             />
+            <p id="note-count" className="text-xs text-muted-foreground">
+              {note.length}/250 tecken
+            </p>
           </div>
         </div>
       </div>
@@ -497,13 +539,14 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
         </p>
 
         <Button
-          className="mt-4 w-full rounded-full"
+          className="mt-4 w-full rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.98] motion-reduce:active:scale-100"
           size="lg"
           onClick={handleAddToCart}
           disabled={pending || !selected?.availableForSale}
+          aria-busy={pending}
         >
           {pending ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
             <>
               <Check className="mr-2 h-4 w-4" /> Lägg i varukorgen

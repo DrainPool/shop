@@ -34,13 +34,35 @@ export function useCutdown() {
 
 export function CutoffCountdown({ className = "" }: { className?: string }) {
   const t = useCutdown();
-  if (!t) return null;
+  // Reservera nedräkningens plats tills klockan räknats ut på klienten –
+  // annars hoppar meningen ihop och sedan isär när texten landar (CLS).
+  if (!t)
+    return (
+      <>
+        <span className={`inline-block min-w-20 ${className}`} aria-hidden="true" />
+        {/* Fast reservtext medan klockan räknas ut – meningen ska gå att
+            läsa även i SSR-html och utan JS. */}
+        <span className="sr-only">söndag 23:59</span>
+      </>
+    );
   const pad = (n: number) => String(n).padStart(2, "0");
+  // Uppslukbart "4 d 02:17" döljs för skärmläsare och ersätts av tydliga ord.
+  const long =
+    t.days > 0
+      ? `${t.days} ${t.days === 1 ? "dag" : "dagar"}, ${t.hours} ${
+          t.hours === 1 ? "timme" : "timmar"
+        } och ${t.minutes} ${t.minutes === 1 ? "minut" : "minuter"}`
+      : `${t.hours} ${t.hours === 1 ? "timme" : "timmar"} och ${t.minutes} ${
+          t.minutes === 1 ? "minut" : "minuter"
+        }`;
   return (
-    <span className={`font-semibold tabular-nums ${className}`}>
-      {t.days > 0 ? `${t.days} d ` : ""}
-      {pad(t.hours)}:{pad(t.minutes)}
-    </span>
+    <>
+      <span className={`font-semibold tabular-nums ${className}`} aria-hidden="true">
+        {t.days > 0 ? `${t.days} d ` : ""}
+        {pad(t.hours)}:{pad(t.minutes)}
+      </span>
+      <span className="sr-only">{long}</span>
+    </>
   );
 }
 
@@ -52,7 +74,7 @@ export function FomoBanner({ floating = false }: { floating?: boolean }) {
       }
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-5 py-2.5 text-center text-sm">
-        <Clock className="h-4 w-4 shrink-0 text-primary-deep" />
+        <Clock className="h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
         <p className="text-foreground">
           Jag tillverkar allt själv och tar in ett begränsat antal beställningar per vecka. Lägg din
           order inom <CutoffCountdown className="text-primary-deep" /> så hinner den med i veckans

@@ -22,6 +22,20 @@ export function CategoryIconRow({ activeSlug }: { activeSlug?: string }) {
     return () => window.removeEventListener("resize", update);
   }, []);
 
+  // På kategorisidor: skrolla fram den aktiva ikonen så den inte hamnar
+  // utanför skärmen på mobil (raden är horisontellt scrollbar där).
+  useEffect(() => {
+    if (!activeSlug) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    el.querySelector('[aria-current="page"]')?.scrollIntoView({
+      inline: "center",
+      block: "nearest",
+    });
+    const update = () => setCanScroll(el.scrollWidth > el.clientWidth + 1);
+    update();
+  }, [activeSlug]);
+
   return (
     <nav aria-label="Produkttyper" className="relative border-b border-border/70 bg-background">
       <ul
@@ -53,12 +67,15 @@ export function CategoryIconRow({ activeSlug }: { activeSlug?: string }) {
                       loading="lazy"
                       decoding="async"
                       className={cn(
-                        "h-10 w-10 object-contain transition-opacity",
+                        "h-10 w-10 object-contain transition-[opacity,transform] duration-300 ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:transform-none",
                         active ? "opacity-100" : "opacity-80",
                       )}
                     />
                   ) : (
-                    <Car className="h-7 w-7 text-primary-deep/80" aria-hidden="true" />
+                    <Car
+                      className="h-7 w-7 text-primary-deep/80 transition-transform duration-300 ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:transform-none"
+                      aria-hidden="true"
+                    />
                   )}
                 </span>
                 <span

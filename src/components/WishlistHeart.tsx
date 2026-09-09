@@ -37,7 +37,7 @@ export function WishlistHeart({
           saved ? `Ta bort ${item.title} från önskelistan` : `Spara ${item.title} i önskelistan`
         }
         className={cn(
-          "inline-flex items-center gap-2 rounded-full border-2 px-4 py-2.5 text-sm font-semibold transition-colors",
+          "inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-2 px-4 py-2.5 text-sm font-semibold transition-[color,border-color,background-color,transform] duration-200 active:scale-[0.97] motion-reduce:active:scale-100",
           saved
             ? "border-primary bg-primary/10 text-primary-deep"
             : "border-border text-foreground hover:border-primary/50",
@@ -61,7 +61,8 @@ export function WishlistHeart({
         saved ? `Ta bort ${item.title} från önskelistan` : `Spara ${item.title} i önskelistan`
       }
       className={cn(
-        "flex h-9 w-9 items-center justify-center rounded-full bg-background/90 shadow-soft backdrop-blur transition-all hover:scale-110",
+        // h-11 w-11: 44 px tryckyta på mobil (md:h-9 md:w-9 på dator)
+        "flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-background/90 shadow-soft backdrop-blur transition-[color,transform] duration-300 ease-out hover:scale-110 active:scale-90 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100 md:h-9 md:w-9",
         saved ? "text-primary-deep" : "text-muted-foreground hover:text-primary-deep",
       )}
     >

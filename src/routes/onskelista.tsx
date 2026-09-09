@@ -9,11 +9,11 @@ import { useWishlist } from "@/lib/wishlist";
 export const Route = createFileRoute("/onskelista")({
   head: () => ({
     meta: [
-      { title: "Min önskelista – Lins & Lager" },
+      { title: "Min önskelista – TaggaDet" },
       {
         name: "description",
         content:
-          "Dina sparade favoriter hos Lins & Lager – samla presentidéer och maila listan till dig själv.",
+          "Dina sparade favoriter hos TaggaDet – samla presentidéer och maila listan till dig själv.",
       },
       // Personlig sida baserad på localStorage – ska inte indexeras
       { name: "robots", content: "noindex" },
@@ -33,7 +33,7 @@ function WishlistPage() {
 
   // Maila listan till sig själv: titlar + länkar som kropptext
   const mailLink = hasItems
-    ? `mailto:?subject=${encodeURIComponent("Min önskelista hos Lins & Lager")}&body=${encodeURIComponent(
+    ? `mailto:?subject=${encodeURIComponent("Min önskelista hos TaggaDet")}&body=${encodeURIComponent(
         items.map((p) => `• ${p.title}\nhttps://linsochlager.net/produkt/${p.handle}`).join("\n\n"),
       )}`
     : null;

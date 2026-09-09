@@ -223,7 +223,10 @@ interface CartStore {
   addItem: (
     item: Omit<CartItem, "lineId" | "lineKey" | "attributes"> & { attributes?: CartAttribute[] },
   ) => Promise<boolean>;
-  updateQuantity: (lineKey: string, quantity: number) => Promise<void>;
+  /** Ändrar antal med delta (+1/-1) — målantalet räknas ut i storen mot
+   * aktuellt state, inte mot render-closuren (annars tappar snabba
+   * dubbelklick i Shopify-läget ett steg medan nätverksanropet väntar). */
+  updateQuantity: (lineKey: string, delta: number) => Promise<void>;
   removeItem: (lineKey: string) => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
@@ -326,14 +329,15 @@ export const useCartStore = create<CartStore>()(
         }
       },
 
-      updateQuantity: async (lineKey, quantity) => {
-        if (quantity <= 0) {
-          await get().removeItem(lineKey);
-          return;
-        }
+      updateQuantity: async (lineKey, delta) => {
         const { items, cartId, clearCart } = get();
         const item = items.find((i) => i.lineKey === lineKey);
         if (!item) return;
+        const quantity = Math.max(0, item.quantity + delta);
+        if (quantity === 0) {
+          await get().removeItem(lineKey);
+          return;
+        }
         // Raden saknar Shopify-lineId – uppdatera lokalt istället för att
         // fastna (en tyst no-op här låser varukorgen).
         if (!item.lineId || !cartId) {
@@ -353,6 +357,12 @@ export const useCartStore = create<CartStore>()(
               items: currentItems.map((i) => (i.lineKey === lineKey ? { ...i, quantity } : i)),
             });
           } else if (result.cartNotFound) {
+            // Shopify-glömt varukorgen: säg vad som hände innan den rensas –
+            // annars försvinner gravyrtexterna tyst för besökaren.
+            toast.info("Varukorgen hade upphört hos Shopify", {
+              description: "Den rensades – lägg till produkterna igen, så blir det en ny.",
+              position: "top-center",
+            });
             clearCart();
           }
         } catch (error) {
@@ -389,6 +399,10 @@ export const useCartStore = create<CartStore>()(
             if (newItems.length === 0) clearCart();
             else set({ items: newItems });
           } else if (result.cartNotFound) {
+            toast.info("Varukorgen hade upphört hos Shopify", {
+              description: "Den rensades – lägg till produkterna igen, så blir det en ny.",
+              position: "top-center",
+            });
             clearCart();
           }
         } catch (error) {
@@ -429,6 +443,11 @@ export const useCartStore = create<CartStore>()(
       version: 2,
       migrate: () => ({ items: [], cartId: null, checkoutUrl: null }) as any,
       storage: createJSONStorage(() => localStorage),
+      // Rehydrera inte förrän AppShell monterats (__root.tsx anropar
+      // persist.rehydrate() i en useEffect) – annars läser persist
+      // localStorage synkront vid modulladdning och första klientrender
+      // matchar inte SSR-html:en (varukorgs-badge-mismatch).
+      skipHydration: true,
       partialize: (state) => ({
         items: state.items,
         cartId: state.cartId,

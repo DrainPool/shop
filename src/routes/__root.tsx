@@ -15,6 +15,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Toaster } from "@/components/ui/sonner";
 import { useCartSync } from "@/hooks/useCartSync";
+import { useCartStore } from "@/stores/cartStore";
 import { SITE_URL } from "@/lib/siteUrls";
 import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 
@@ -26,7 +27,7 @@ import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Lins & Lager",
+  name: "TaggaDet",
   url: SITE_URL,
   logo: `${SITE_URL}/favicon.ico`,
   email: "hej@linsochlager.se",
@@ -92,7 +93,7 @@ function NotFoundComponent() {
           >
             hej@linsochlager.se
           </a>{" "}
-          så hittar vi det ihop.
+          så hittar jag det åt dig.
         </p>
       </div>
     </div>
@@ -140,33 +141,50 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lins & Lager – personligt hantverk" },
+      { title: "TaggaDet – personligt hantverk" },
       {
         name: "description",
         content:
           "Handgjorda och personliga presenter: smycken, gravyr, 3D-utskrifter, foto och stickers till bröllop, dop och företag.",
       },
-      { name: "author", content: "Lins & Lager" },
+      { name: "author", content: "TaggaDet" },
       // Google Search Console-verifiering (frallan, sep 2026)
       { name: "google-site-verification", content: "7378177556809660516" },
-      { property: "og:title", content: "Lins & Lager – personligt hantverk" },
+      { property: "og:title", content: "TaggaDet – personligt hantverk" },
       {
         property: "og:description",
         content:
           "Handgjorda och personliga presenter: smycken, gravyr, 3D-utskrifter, foto och stickers.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Lins & Lager" },
+      { property: "og:site_name", content: "TaggaDet" },
       { property: "og:locale", content: "sv_SE" },
       { property: "og:image", content: "https://linsochlager.net/og-default.jpg" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Verkstaden hos Lins & Lager – graverade detaljer" },
+      { property: "og:image:alt", content: "Verkstaden hos TaggaDet – graverade detaljer" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: "https://linsochlager.net/og-default.jpg" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      // Preload av brödtextens och rubrikernas fontfiler – annars upptäcks
+      // de först när styles.css hunnit ladda och tolkas, vilket skjuter upp
+      // LCP. crossOrigin krävs för woff2 (annars hämtas filen dubelt).
+      {
+        rel: "preload",
+        href: "/fonts/inter-latin.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: "/fonts/fraunces-latin.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       // Fonterna är självhostade (se @font-face i styles.css) – inga
       // Google-länkar kvar, ingen tredjepartsförfrågan vid sidladdning.
       // Preconnect mot Shopify-domänen bara i riktigt läge (demo läser
@@ -231,6 +249,18 @@ function RootComponent() {
 
 function AppShell() {
   useCartSync();
+
+  // Varukorgen persistar med skipHydration – SSR-html och första klientrender
+  // matchar (ingen badge-mismatch), sedan rehydreras den här efter montering.
+  // Kommer localStorage från demoläget (demo-cart-…) städas den bort direkt i
+  // riktigt läge, annars skickas kunden mot demo.checkout.invalid i kassan.
+  useEffect(() => {
+    const { cartId, clearCart } = useCartStore.getState();
+    void import("@/lib/demoProducts").then(({ isDemoMode }) => {
+      if (!isDemoMode() && cartId?.startsWith("demo-")) clearCart();
+    });
+    void useCartStore.persist.rehydrate();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col">

@@ -1,5 +1,3 @@
-import { toast } from "sonner";
-
 export const SHOPIFY_API_VERSION = "2025-07";
 export const SHOPIFY_STORE_PERMANENT_DOMAIN = "sweet-savvy-shop-qfxf9-bktz9kkn.myshopify.com";
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
@@ -35,6 +33,18 @@ export interface ShopifyProduct {
 }
 
 export async function storefrontApiRequest(query: string, variables: any = {}) {
+  // Faila med en tydlig orsak i stället för att skicka platshållar-tokenen
+  // och låta alla produktvyer dö tyst. (Demo-läget anropar aldrig hit, men
+  // vägspärren står här så att ingen ny konsument glömmer den.)
+  if (!SHOPIFY_STOREFRONT_TOKEN || SHOPIFY_STOREFRONT_TOKEN === "DIN_SHOPIFY_STOREFRONT_TOKEN") {
+    const { isDemoMode } = await import("@/lib/demoProducts");
+    if (!isDemoMode()) {
+      throw new Error(
+        "VITE_SHOPIFY_STOREFRONT_TOKEN saknas – kör med VITE_DEMO_MODE=1 eller sätt tokenen i .env",
+      );
+    }
+  }
+
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: "POST",
     headers: {
@@ -44,12 +54,13 @@ export async function storefrontApiRequest(query: string, variables: any = {}) {
     body: JSON.stringify({ query, variables }),
   });
 
+  // 402 = butiken saknar aktiv Shopify-plan. Kasta i stället för att
+  // returnera undefined – en tyst retur förvandlas till vilseledande
+  // "produkten finns inte"-vyer i stället för ett synligt fel.
   if (response.status === 402) {
-    toast.error("Shopify: Betalning krävs", {
-      description:
-        "Shopify-API:et kräver en aktiv Shopify-plan. Uppgradera butiken på admin.shopify.com.",
-    });
-    return;
+    throw new Error(
+      "Shopify-API:et svarade 402 (betalning krävs) – butiken saknar en aktiv Shopify-plan.",
+    );
   }
 
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);

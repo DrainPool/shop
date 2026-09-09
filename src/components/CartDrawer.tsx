@@ -20,14 +20,23 @@ import { WishlistRow } from "@/components/WishlistRow";
 import { useCartStore } from "@/stores/cartStore";
 import { useUiStore } from "@/stores/uiStore";
 import { isDemoMode } from "@/lib/demoProducts";
-import { FREE_SHIPPING_LIMIT, formatPrice } from "@/lib/shopify";
+import { FREE_SHIPPING_LIMIT, formatPrice, SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
+import type { CartItem } from "@/stores/cartStore";
 
 export function CartDrawer() {
   // Öppet-läge ligger i uiStore så toastens "Öppna varukorgen" kan nå den
   const isOpen = useUiStore((s) => s.cartOpen);
   const setCartOpen = useUiStore((s) => s.setCartOpen);
-  const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } =
-    useCartStore();
+  const {
+    items,
+    isLoading,
+    isSyncing,
+    updateQuantity,
+    removeItem,
+    addItem,
+    getCheckoutUrl,
+    syncCart,
+  } = useCartStore();
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
@@ -68,19 +77,77 @@ export function CartDrawer() {
     }
     const checkoutUrl = getCheckoutUrl();
     if (checkoutUrl) {
+      // Värna mot en persistad demo-kassa (demo.checkout.invalid) som kan
+      // ligga kvar i localStorage från demoläget – aldrig skicka kunden dit.
+      let host: string | null = null;
+      try {
+        host = new URL(checkoutUrl).hostname;
+      } catch {
+        host = null;
+      }
+      const shopHost = host?.endsWith(".myshopify.com") || host === SHOPIFY_STORE_PERMANENT_DOMAIN;
+      if (!shopHost) {
+        toast.info("Kassan är avstängd i demoläget", {
+          description:
+            "Butiken körs just nu med exempelprodukter. När riktiga produkter finns i Shopify kopplas kassan på automatiskt.",
+          position: "top-center",
+        });
+        return;
+      }
       // Samma flik: kunden ska inte komma tillbaka till en varukorg som
       // ser oköpt ut (window.open lämnade drawern öppen bakom kassan).
       window.location.href = checkoutUrl;
+    } else {
+      toast.error("Kassan kunde inte öppnas", {
+        description: "Prova igen, eller skriv till mig så hjälper jag dig.",
+        position: "top-center",
+      });
+    }
+  };
+
+  // Ta bort en rad och erbjud ångra – ett misstag raderar annars hela den
+  // färdigkonfigurerade graveringen utan återvändo.
+  const handleRemove = async (item: CartItem) => {
+    await removeItem(item.lineKey);
+    // Visa ångra-toasten bara om raden verkligen försvann – misslyckades
+    // Shopify-anropet finns den kvar och fel-toasten har redan visats.
+    if (!useCartStore.getState().items.some((i) => i.lineKey === item.lineKey)) {
+      toast.success("Borttagen från varukorgen", {
+        description: item.product.node.title,
+        position: "bottom-right",
+        action: {
+          label: "Ångra",
+          onClick: () => {
+            void addItem({
+              product: item.product,
+              variantId: item.variantId,
+              variantTitle: item.variantTitle,
+              price: item.price,
+              quantity: item.quantity,
+              selectedOptions: item.selectedOptions,
+              attributes: item.attributes,
+            });
+          },
+        },
+      });
     }
   };
 
   return (
     <Sheet open={isOpen} onOpenChange={setCartOpen}>
+      {/* Skärmläsare får antalet meddelat när det ändras – siffran i
+          badge-rutan syns bara visuellt (aria-label täcker knappen). */}
+      <span role="status" aria-live="polite" className="sr-only">
+        {totalItems === 0
+          ? "Varukorgen är tom"
+          : `${totalItems} ${totalItems === 1 ? "vara" : "varor"} i varukorgen`}
+      </span>
       <SheetTrigger asChild>
         <Button
           variant="outline"
           size="icon"
-          className="relative rounded-full"
+          // h-11 w-11 på mobil: 44 px tryckyta (tummens minimimått)
+          className="relative h-11 w-11 rounded-full md:h-9 md:w-9"
           aria-label={
             totalItems > 0
               ? `Öppna varukorgen, ${totalItems} ${totalItems === 1 ? "vara" : "varor"}`
@@ -112,7 +179,7 @@ export function CartDrawer() {
         <div className="flex min-h-0 flex-1 flex-col px-4 pt-4">
           {items.length === 0 ? (
             <div className="flex flex-1 flex-col justify-center gap-4 text-center">
-              <ShoppingBag className="mx-auto h-12 w-12 text-muted-foreground" />
+              <ShoppingBag className="mx-auto h-12 w-12 text-muted-foreground" aria-hidden="true" />
               <p className="text-muted-foreground">Här dyker dina utvalda favoriter upp.</p>
               <div className="flex flex-wrap justify-center gap-2">
                 {[
@@ -127,7 +194,7 @@ export function CartDrawer() {
                     to="/kategori/$slug"
                     params={{ slug: c.slug }}
                     onClick={() => setCartOpen(false)}
-                    className="rounded-full bg-cream px-4 py-2 text-sm font-medium hover:text-primary-deep"
+                    className="min-h-11 rounded-full bg-cream px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-primary-deep md:min-h-9 md:py-1.5"
                   >
                     {c.label}
                   </Link>
@@ -146,7 +213,10 @@ export function CartDrawer() {
                         {item.product.node.images?.edges?.[0]?.node && (
                           <img
                             src={item.product.node.images.edges[0].node.url}
-                            alt={item.product.node.title}
+                            alt={
+                              item.product.node.images.edges[0].node.altText ||
+                              item.product.node.title
+                            }
                             loading="lazy"
                             decoding="async"
                             className="h-full w-full object-cover"
@@ -154,7 +224,16 @@ export function CartDrawer() {
                         )}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="truncate font-medium">{item.product.node.title}</h3>
+                        <h3 className="truncate font-medium">
+                          <Link
+                            to="/produkt/$handle"
+                            params={{ handle: item.product.node.handle }}
+                            onClick={() => setCartOpen(false)}
+                            className="transition-colors duration-300 hover:text-primary-deep"
+                          >
+                            {item.product.node.title}
+                          </Link>
+                        </h3>
                         <p className="text-sm text-muted-foreground">
                           {item.selectedOptions.map((o) => o.value).join(" • ")}
                         </p>
@@ -169,38 +248,49 @@ export function CartDrawer() {
                           </ul>
                         )}
                         <p className="font-semibold tabular-nums">
-                          {formatPrice(item.price.amount, item.price.currencyCode)}
+                          {item.quantity > 1 && (
+                            <span className="font-normal text-muted-foreground">
+                              {item.quantity} ×{" "}
+                              {formatPrice(item.price.amount, item.price.currencyCode)}{" "}
+                            </span>
+                          )}
+                          {formatPrice(
+                            parseFloat(item.price.amount) * item.quantity,
+                            item.price.currencyCode,
+                          )}
                         </p>
                       </div>
                       <div className="flex flex-shrink-0 flex-col items-end gap-3">
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-11 w-11 md:h-9 md:w-9"
-                          onClick={() => removeItem(item.lineKey)}
+                          className="h-11 w-11 transition-[color,background-color,transform] duration-200 hover:text-destructive active:scale-95 motion-reduce:active:scale-100 md:h-9 md:w-9"
+                          onClick={() => handleRemove(item)}
                           aria-label={`Ta bort ${item.product.node.title} från varukorgen`}
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="h-4 w-4" aria-hidden="true" />
                         </Button>
                         <div className="flex items-center gap-1">
                           <Button
                             variant="outline"
                             size="icon"
-                            className="h-11 w-11 md:h-9 md:w-9"
-                            onClick={() => updateQuantity(item.lineKey, item.quantity - 1)}
+                            className="h-11 w-11 transition-[color,background-color,transform] duration-200 active:scale-95 motion-reduce:active:scale-100 md:h-9 md:w-9"
+                            onClick={() => updateQuantity(item.lineKey, -1)}
                             aria-label={`Minska antal ${item.product.node.title} till ${item.quantity - 1}`}
                           >
-                            <Minus className="h-4 w-4" />
+                            <Minus className="h-4 w-4" aria-hidden="true" />
                           </Button>
-                          <span className="w-8 text-center text-sm">{item.quantity}</span>
+                          <span className="w-8 text-center text-sm tabular-nums">
+                            {item.quantity}
+                          </span>
                           <Button
                             variant="outline"
                             size="icon"
-                            className="h-11 w-11 md:h-9 md:w-9"
-                            onClick={() => updateQuantity(item.lineKey, item.quantity + 1)}
+                            className="h-11 w-11 transition-[color,background-color,transform] duration-200 active:scale-95 motion-reduce:active:scale-100 md:h-9 md:w-9"
+                            onClick={() => updateQuantity(item.lineKey, 1)}
                             aria-label={`Öka antal ${item.product.node.title} till ${item.quantity + 1}`}
                           >
-                            <Plus className="h-4 w-4" />
+                            <Plus className="h-4 w-4" aria-hidden="true" />
                           </Button>
                         </div>
                       </div>
@@ -226,6 +316,11 @@ export function CartDrawer() {
                   <Progress
                     className="mt-2 h-2"
                     value={Math.min(100, (totalPrice / FREE_SHIPPING_LIMIT) * 100)}
+                    aria-label={
+                      totalPrice >= FREE_SHIPPING_LIMIT
+                        ? "Fri frakt uppnått"
+                        : "Framsteg mot fri frakt"
+                    }
                   />
                 </div>
                 <div className="flex items-center justify-between">
@@ -243,7 +338,7 @@ export function CartDrawer() {
 
                 <Button
                   onClick={handleCheckout}
-                  className="w-full rounded-full"
+                  className="w-full rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.98] motion-reduce:active:scale-100"
                   size="lg"
                   disabled={items.length === 0 || isLoading || isSyncing}
                 >
@@ -251,7 +346,7 @@ export function CartDrawer() {
                     <LiquidLoader size="sm" variant="light" label="Förbereder kassan" />
                   ) : (
                     <>
-                      <ExternalLink className="mr-2 h-4 w-4" />
+                      <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
                       Till kassan
                     </>
                   )}

@@ -2,8 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
+import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 
-const TITLE = "Vanliga frågor om gravyr, leverans och personliga presenter | Lins & Lager";
+const TITLE = "Vanliga frågor om gravyr, leverans och personliga presenter | TaggaDet";
 const DESCRIPTION =
   "Svar på de vanligaste frågorna: leveranstid, material, digital skiss, gravyr, returer på personliga varor och hur du beställer till bröllop, dop och företag.";
 
@@ -27,17 +28,17 @@ const FAQ: FaqEntry[] = [
     link: { label: "Läs om frakt och leverans", to: "/frakt-leverans" },
   },
   {
-    q: "Får jag se hur graveringen blir innan ni tillverkar?",
+    q: "Får jag se hur graveringen blir innan den tillverkas?",
     a: "Ja, alltid. Innan jag börjar tillverka skickar jag en digital skiss på gravyren som du godkänner – det gäller alla beställningar, från en enskild nyckelring till hela bröllopsserien. Dubbelkolla gärna stavning och versaler redan i beställningen, så går det snabbare från skiss till färdig present.",
   },
   {
     q: "Kan jag lämna tillbaka en personlig produkt?",
-    a: "Nej – personligt tillverkade varor omfattas inte av ångerrätt eller öppet köp, eftersom de görs unikt till dig. Reklamationsrätten gäller alltid: blir något fel på varan eller mot din beställning rightar jag till det.",
+    a: "Nej – personligt tillverkade varor omfattas inte av ångerrätt eller öppet köp, eftersom de görs unikt till dig. Reklamationsrätten gäller alltid: blir något fel på varan eller mot din beställning rättar jag till det.",
     link: { label: "Läs om retur och garanti", to: "/retur" },
   },
   {
-    q: "Säljer ni paket till hela bröllopet?",
-    a: "Ja, det är det vanligaste sättet att beställa: graverade tostglas till toasten, glas- eller flaskeetiketter till gästerna och gåvor till brudparet – allt i samma stil med era namn och ert datum. Berätta om antal gäster och datum så får du ett paketpris med digital skiss innan jag börjar.",
+    q: "Säljer du paket till hela bröllopet?",
+    a: "Ja, det är det vanligaste sättet att beställa: graverade toastglas till toasten, glas- och flasketiketter till gästerna och gåvor till brudparet – allt i samma stil med era namn och ert datum. Berätta om antal gäster och datum så får du ett paketpris med digital skiss innan jag börjar.",
   },
   {
     q: "Han har redan allt – vad ska jag ge honom?",
@@ -45,7 +46,7 @@ const FAQ: FaqEntry[] = [
   },
   {
     q: "Kan jag få paketet skickat som present direkt till mottagaren?",
-    a: "Ja. Skriv mottagarens adress som leveransadress och att det är en present i beställningen – så packar jag det presentklart. Vill du ha en graverad hälsning med i paketet löser vi det också.",
+    a: "Ja. Skriv mottagarens adress som leveransadress och att det är en present i beställningen – så packar jag det presentklart. Vill du ha en graverad hälsning med i paketet löser jag det också.",
   },
   {
     q: "Kan jag beställa något som inte finns i butiken?",
@@ -56,7 +57,7 @@ const FAQ: FaqEntry[] = [
     a: "Ja. Allt packas presentklart – smycken i presentask och övrigt i omsorgsfullt emballage, klart att ge bort direkt. Vill du ha en handskriven hälsning eller graverad text med i paketet skriver du det i beställningen; på presentleveranser hålls prislappar borta.",
   },
   {
-    q: "Kan ni gravera på föremål jag redan har?",
+    q: "Kan du gravera på föremål jag redan har?",
     a: "Ofta – det beror på materialet. Trä, läder, glas och de flesta metaller går bra, medan vissa ytbehandlingar och lacker är svårare. Skicka en bild och en beskrivning så säger jag ärligt vad som är möjligt innan du skickar in något.",
   },
   {
@@ -64,7 +65,7 @@ const FAQ: FaqEntry[] = [
     a: "Ja – skriv reg-numret i beställningen så graverar jag det i bilskyltens stil. Observera att dekorativa skyltar bara får användas som dekoration (till exempel i garaget), inte på bilen i trafik – de är inte godkända av Transportstyrelsen.",
   },
   {
-    q: "Hinner ni klart innan jul eller farsdagen?",
+    q: "Hinner du klart innan jul eller farsdagen?",
     a: "Allt tillverkas efter beställning, normalt på 3–7 arbetsdagar plus frakt – ju tidigare du beställer desto säkrare. Skriv att presenten ska vara framme till jul, så prioriterar jag den och svarar ärligt om jag hinner.",
     categoryLink: { label: "Se julklapparna", slug: "jul" },
   },
@@ -73,22 +74,22 @@ const FAQ: FaqEntry[] = [
     a: "Massiv ek och björk, äkta läder, rostfritt stål, silver, glas, keramik och 3D-utskrifter i PLA/PETG. Berätta hur produkten ska användas så rekommenderar jag material som håller.",
   },
   {
-    q: "Gör ni företagsbeställningar och större serier?",
+    q: "Gör du företagsbeställningar och större serier?",
     a: "Ja – namnbrickor, presenter till kunder och profilprodukter. Från tio enheter får du offert med staffelpris, och du kan få faktura.",
     link: { label: "Läs om företagsbeställningar", to: "/foretag" },
   },
   {
-    q: "Kan ni fotografera också?",
+    q: "Kan du fotografera också?",
     a: "Ja. Jag fotograferar bröllop, dop, familj och produkter – och bilden kan bli fototavla, smycke eller graverad detalj i samma flöde.",
     externalLink: { label: "Läs om fotografering", href: FOTOGRAFERING_URL },
   },
   {
     q: "Hur betalar jag?",
-    a: "Kassan hanteras säkert av Shopify. Där kan du betala med kort, Klarna och Swish beroende på vad som är aktivt i butiken vid köptillfället.",
+    a: "Kassan hanteras säkert av Shopify. Där kan du betala med kort och Klarna beroende på vad som är aktivt i butiken vid köptillfället.",
   },
   {
     q: "Vad kostar frakten?",
-    a: "Frakten räknas ut i kassan utifrån vikt och leveranssätt. Vid köp över 800 kr bjuder jag på frakten inom Sverige.",
+    a: `Frakten räknas ut i kassan utifrån vikt och leveranssätt. Vid köp över ${FREE_SHIPPING_LIMIT} kr bjuder jag på frakten inom Sverige.`,
   },
 ];
 

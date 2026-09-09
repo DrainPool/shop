@@ -5,17 +5,17 @@ import { Cookie, Lock, Mail, Truck, UserCheck } from "lucide-react";
 export const Route = createFileRoute("/integritetspolicy")({
   head: () => ({
     meta: [
-      { title: "Integritetspolicy – Lins & Lager" },
+      { title: "Integritetspolicy – TaggaDet" },
       {
         name: "description",
         content:
-          "Hur Lins & Lager behandlar dina personuppgifter: vilka uppgifter som samlas in, varför, hur länge de sparas och dina rättigheter enligt GDPR.",
+          "Hur TaggaDet behandlar dina personuppgifter: vilka uppgifter som samlas in, varför, hur länge de sparas och dina rättigheter enligt GDPR.",
       },
-      { property: "og:title", content: "Integritetspolicy – Lins & Lager" },
+      { property: "og:title", content: "Integritetspolicy – TaggaDet" },
       {
         property: "og:description",
         content:
-          "Hur dina personuppgifter behandlas när du handlar hos Lins & Lager – kortfattat och begripligt.",
+          "Hur dina personuppgifter behandlas när du handlar hos TaggaDet – kortfattat och begripligt.",
       },
       { property: "og:type", content: "website" },
     ],

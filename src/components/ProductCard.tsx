@@ -5,23 +5,29 @@ import { QuickView } from "@/components/QuickView";
 import { WishlistHeart } from "@/components/WishlistHeart";
 import { formatPrice, getPricing, type ShopifyProduct } from "@/lib/shopify";
 
-// Korta, varma craft-rader som varierar per produkttyp så korten inte upprepar samma text.
+// Korta, varma craft-rader som varierar per produkttyp så korten inte upprepar
+// samma text. Nycklarna är de faktiska taggarna i categories.ts (singular för
+// produkttyper) plus occasion-taggarna — annars matchar inget och raderna dör.
 const CRAFT_LINES: Record<string, string> = {
-  gravering: "Handgraverad med omsorg",
+  gravyr: "Handgraverad med omsorg",
   smycken: "Varje detalj handgjord",
   brollop: "Till din dag – varaktigt vackert",
   dop: "En gåva att sparas livet ut",
   foretag: "Proffsigt och personligt",
-  fototavlor: "Dina minnen, vackert inramade",
-  nyckelringar: "En liten påminnelse att bära med dig",
-  muggar: "Gjord för morgonbeställningen",
+  foto: "Dina minnen, vackert inramade",
+  nyckelring: "En liten påminnelse att bära med dig",
+  mugg: "Gjord för morgonbeställningen",
   glas: "Formad för stunden",
-  kepsar: "Profil med personlig prägel",
-  tshirts: "Tryckt på beställning",
-  hoodies: "Mjuk och personlig",
-  tumblers: "Håller värmen – och minnet",
+  keps: "Profil med personlig prägel",
+  tshirt: "Tryckt på beställning",
+  hoodie: "Mjuk och personlig",
+  tumbler: "Håller värmen – och minnet",
   stickers: "Färgstark och din egen",
-  skarbrador: "Skuren för ditt kök",
+  skarbrada: "Skuren för ditt kök",
+  lader: "Åldras vackert med gravyren",
+  "3d": "Skriven lager för lager",
+  tra: "Massivt trä, graverat för hand",
+  presentkort: "Mottagaren väljer själv",
   namnbrickor: "Ditt namn, snyggt satt",
   barn: "Söt och trygg – till de små",
 };
@@ -36,7 +42,15 @@ function craftLine(tags: string[] | undefined): string {
   return "Handgjord i min verkstad";
 }
 
-export function ProductCard({ product }: { product: ShopifyProduct }) {
+export function ProductCard({
+  product,
+  priority = false,
+}: {
+  product: ShopifyProduct;
+  /** true för de första korten i ett rutnät – de ligger överst i viewporten
+   * vid SSR och ska inte vänta på lazy-laddning (LCP-kandidater). */
+  priority?: boolean;
+}) {
   const node = product.node;
   const image = node.images?.edges?.[0]?.node;
   const hasOptions = (node.variants?.edges?.length ?? 0) > 1;
@@ -49,8 +63,21 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
   // (gravyrtext, digital skiss) är butikens kärnvärde och ska aldrig kringgås.
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift">
+    <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-lift motion-reduce:transition-none motion-reduce:hover:translate-y-0">
       <QuickView product={product} />
+      {/* Önskelistehjärtat ligger som syskon till (inte inuti) bildlänken —
+          knapp i länk är ogiltig HTML och stör tangentbord/skärmläsare. */}
+      <div className="absolute top-3 right-3 z-10">
+        <WishlistHeart
+          item={{
+            handle: node.handle,
+            title: node.title,
+            image: image?.url,
+            price: node.priceRange.minVariantPrice.amount,
+            currency: node.priceRange.minVariantPrice.currencyCode,
+          }}
+        />
+      </div>
       <Link
         to="/produkt/$handle"
         params={{ handle: node.handle }}
@@ -85,24 +112,18 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
             </>
           )}
         </div>
-        <div className="absolute top-3 right-3 z-10">
-          <WishlistHeart
-            item={{
-              handle: node.handle,
-              title: node.title,
-              image: image?.url,
-              price: node.priceRange.minVariantPrice.amount,
-              currency: node.priceRange.minVariantPrice.currencyCode,
-            }}
-          />
-        </div>
         {image ? (
           <img
             src={image.url}
             alt={image.altText || node.title}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
+            // Demo-bilderna är 700×700 – width/height reserverar platsen
+            // och hjälper webbläsaren prioritera hämtningen.
+            width={700}
+            height={700}
             decoding="async"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">
@@ -113,7 +134,7 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
 
       <div className="flex flex-1 flex-col gap-2 p-5">
         <Link to="/produkt/$handle" params={{ handle: node.handle }}>
-          <h3 className="font-serif text-xl leading-tight font-semibold hover:text-primary-deep">
+          <h3 className="font-serif text-xl leading-tight font-semibold transition-colors duration-300 hover:text-primary-deep">
             {node.title}
           </h3>
         </Link>
@@ -135,11 +156,20 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
             )}
           </span>
           {soldOut ? (
-            <Button asChild size="sm" variant="secondary" className="rounded-full">
+            <Button
+              asChild
+              size="sm"
+              variant="secondary"
+              className="rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.97] motion-reduce:active:scale-100"
+            >
               <Link to="/kontakt">Fråga om nytt</Link>
             </Button>
           ) : (
-            <Button asChild size="sm" className="rounded-full">
+            <Button
+              asChild
+              size="sm"
+              className="rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.97] motion-reduce:active:scale-100"
+            >
               <Link to="/produkt/$handle" params={{ handle: node.handle }}>
                 Personalisera
               </Link>

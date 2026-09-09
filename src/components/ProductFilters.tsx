@@ -26,6 +26,10 @@ const TAG_LABELS: Record<string, string> = {
   barn: "Barn",
   foretag: "Företag",
   farsdag: "Farsdag",
+  fodelsedag: "Födelsedag",
+  jul: "Julen",
+  bil: "Bil",
+  presentkort: "Presentkort",
   halloween: "Halloween",
   student: "Student",
   morsdag: "Mors dag",
@@ -158,6 +162,7 @@ export function ProductFilters(props: FiltersProps) {
             type="button"
             variant={open ? "default" : "secondary"}
             size="sm"
+            className="h-11 md:h-9"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="filter-panel"
@@ -177,7 +182,7 @@ export function ProductFilters(props: FiltersProps) {
             <button
               type="button"
               onClick={props.clear}
-              className="inline-flex items-center gap-1 py-2 text-sm font-medium text-primary-deep hover:underline"
+              className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary-deep hover:underline md:min-h-9"
             >
               <X className="h-3.5 w-3.5" /> Rensa
             </button>
@@ -210,7 +215,7 @@ export function ProductFilters(props: FiltersProps) {
               key={tag}
               type="button"
               onClick={() => props.toggleTag(tag)}
-              className="inline-flex items-center gap-1 rounded-full bg-cream px-3 py-1 text-xs font-medium hover:text-primary-deep"
+              className="inline-flex min-h-11 items-center gap-1 rounded-full bg-cream px-3 text-xs font-medium hover:text-primary-deep md:min-h-9"
             >
               {TAG_LABELS[tag] || tag}
               <X className="h-3 w-3" aria-hidden="true" />
@@ -221,7 +226,7 @@ export function ProductFilters(props: FiltersProps) {
             <button
               type="button"
               onClick={() => props.setBucket(props.bucket as string)}
-              className="inline-flex items-center gap-1 rounded-full bg-cream px-3 py-1 text-xs font-medium hover:text-primary-deep"
+              className="inline-flex min-h-11 items-center gap-1 rounded-full bg-cream px-3 text-xs font-medium hover:text-primary-deep md:min-h-9"
             >
               {PRICE_BUCKETS.find((b) => b.id === props.bucket)?.label}
               <X className="h-3 w-3" aria-hidden="true" />
@@ -231,66 +236,67 @@ export function ProductFilters(props: FiltersProps) {
         </div>
       )}
 
-      {open && (
-        <div
-          id="filter-panel"
-          className="mt-5 grid gap-6 border-t border-border pt-5 sm:grid-cols-3"
-        >
-          {(
-            [
-              ["Produkttyp", props.availableTags.filter((t) => TYPE_TAGS.includes(t.tag))],
-              ["Passar till", props.availableTags.filter((t) => !TYPE_TAGS.includes(t.tag))],
-            ] as const
-          ).map(([groupTitle, tags]) =>
-            tags.length === 0 ? null : (
-              <div key={groupTitle}>
-                <p className="text-sm font-semibold">{groupTitle}</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {tags.map((t) => (
-                    <button
-                      key={t.tag}
-                      type="button"
-                      onClick={() => props.toggleTag(t.tag)}
-                      aria-pressed={props.activeTags.includes(t.tag)}
-                      className={cn(
-                        // min-h-11: 44 px tryckyta – tummens minimimått
-                        "min-h-11 rounded-full border px-3 py-1.5 text-sm transition-colors",
-                        props.activeTags.includes(t.tag)
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border bg-background hover:border-primary",
-                      )}
-                    >
-                      {t.label} <span className="opacity-60">({t.count})</span>
-                    </button>
-                  ))}
-                </div>
+      {/* Panelen renderas alltid (aria-controls pekar på id:t) och döljs
+          med hidden – i stället för att monteras bort i stängt läge. */}
+      <div
+        id="filter-panel"
+        hidden={!open}
+        className="mt-5 grid gap-6 border-t border-border pt-5 sm:grid-cols-3"
+      >
+        {(
+          [
+            ["Produkttyp", props.availableTags.filter((t) => TYPE_TAGS.includes(t.tag))],
+            ["Passar till", props.availableTags.filter((t) => !TYPE_TAGS.includes(t.tag))],
+          ] as const
+        ).map(([groupTitle, tags]) =>
+          tags.length === 0 ? null : (
+            <div key={groupTitle}>
+              <p className="text-sm font-semibold">{groupTitle}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {tags.map((t) => (
+                  <button
+                    key={t.tag}
+                    type="button"
+                    onClick={() => props.toggleTag(t.tag)}
+                    aria-pressed={props.activeTags.includes(t.tag)}
+                    className={cn(
+                      // min-h-11: 44 px tryckyta – tummens minimimått
+                      "min-h-11 rounded-full border px-3 py-1.5 text-sm transition-colors",
+                      props.activeTags.includes(t.tag)
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-background hover:border-primary",
+                    )}
+                  >
+                    {t.label} <span className="opacity-60">({t.count})</span>
+                  </button>
+                ))}
               </div>
-            ),
-          )}
-
-          <div>
-            <p className="text-sm font-semibold">Prisläge</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {PRICE_BUCKETS.map((b) => (
-                <button
-                  key={b.id}
-                  type="button"
-                  onClick={() => props.setBucket(b.id)}
-                  aria-pressed={props.bucket === b.id}
-                  className={cn(
-                    "min-h-11 rounded-full border px-3 py-1.5 text-sm transition-colors",
-                    props.bucket === b.id
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border bg-background hover:border-primary",
-                  )}
-                >
-                  {b.label}
-                </button>
-              ))}
             </div>
+          ),
+        )}
+
+        <div>
+          <p className="text-sm font-semibold">Prisläge</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {PRICE_BUCKETS.map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                onClick={() => props.setBucket(b.id)}
+                aria-pressed={props.bucket === b.id}
+                className={cn(
+                  "min-h-11 rounded-full border px-3 py-1.5 text-sm transition-colors",
+                  props.bucket === b.id
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-background hover:border-primary",
+                )}
+              >
+                {b.label}
+              </button>
+            ))}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

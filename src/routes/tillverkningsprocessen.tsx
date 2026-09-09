@@ -14,18 +14,19 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 import katGravyr from "@/assets/kat-gravyr.jpg";
 
 export const Route = createFileRoute("/tillverkningsprocessen")({
   head: () => ({
     meta: [
-      { title: "Tillverkningsprocessen – Lins & Lager" },
+      { title: "Tillverkningsprocessen – TaggaDet" },
       {
         name: "description",
         content:
-          "Så tillverkas din personliga present hos Lins & Lager: digital skiss, handgravyr i verkstaden och presentklar leverans. Följ varje steg från idé till gåva.",
+          "Så tillverkas din personliga present hos TaggaDet: digital skiss, handgravyr i verkstaden och presentklar leverans. Följ varje steg från idé till gåva.",
       },
-      { property: "og:title", content: "Tillverkningsprocessen – Lins & Lager" },
+      { property: "og:title", content: "Tillverkningsprocessen – TaggaDet" },
       {
         property: "og:description",
         content:
@@ -75,7 +76,7 @@ const phases: Phase[] = [
   },
   {
     n: "Fas 2",
-    title: "Vi skapar din produkt",
+    title: "Jag skapar din produkt",
     intro: "Här sker hantverket – för hand, i min verkstad i Småland.",
     steps: [
       {
@@ -108,12 +109,12 @@ const phases: Phase[] = [
       {
         icon: Truck,
         title: "Spårbar leverans",
-        body: "Du får spårningsnummer så fort paketet är på väg. Fri frakt över 800 kr.",
+        body: `Du får spårningsnummer så fort paketet är på väg. Fri frakt över ${FREE_SHIPPING_LIMIT} kr.`,
       },
       {
         icon: Heart,
         title: "Ögonblicket",
-        body: "Nu är det upp till mottagaren – det är därför vi gör det här.",
+        body: "Nu är det upp till mottagaren – det är därför jag gör det här.",
       },
     ],
   },
@@ -129,8 +130,8 @@ function ProcessPage() {
         Tillverkningsprocessen
       </h1>
       <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-        Varje produkt hos Lins &amp; Lager tillverkas för hand efter din beställning. Här följer du
-        resan genom verkstaden – från din beställning till att presenten packas och skickas hem.
+        Varje produkt hos TaggaDet tillverkas för hand efter din beställning. Här följer du resan
+        genom verkstaden – från din beställning till att presenten packas och skickas hem.
       </p>
 
       <img

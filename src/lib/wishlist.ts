@@ -36,9 +36,13 @@ function write(items: WishItem[]) {
  * RecentlyViewed). Överlever sidladdning, synkas mellan flikar.
  */
 export function useWishlist() {
-  const [items, setItems] = useState<WishItem[]>(() => read());
+  // Läs localStorage först efter montering – annars matchar inte första
+  // klientrender SSR-html:en (tomma hjärtan) för återkommande besökare
+  // som har något sparat. Samma mönster som RecentlyViewed.
+  const [items, setItems] = useState<WishItem[]>([]);
 
   useEffect(() => {
+    setItems(read());
     const onStorage = (e: StorageEvent) => {
       if (e.key === STORAGE_KEY) setItems(read());
     };

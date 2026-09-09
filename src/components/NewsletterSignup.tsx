@@ -6,6 +6,12 @@ import { cn } from "@/lib/utils";
 
 const CONTACT_EMAIL = "hej@linsochlager.se";
 
+/** Enkel pragmatisk e-postkontroll – inte en RFC-monsterregel, men fångar
+ * stavfel som saknar @ eller domän så närmast fältet som möjligt. */
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
 /**
  * E-postinsamling utan backend: formuläret öppnar ett förifyllt mejl.
  * När Cloud/nyhetsbrevstjänst kopplas på byts submit-logiken ut.
@@ -13,13 +19,21 @@ const CONTACT_EMAIL = "hej@linsochlager.se";
 export function NewsletterSignup({ className }: { className?: string }) {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    const trimmed = email.trim();
+    if (!isValidEmail(trimmed)) {
+      setError(
+        "Kolla adressen – den ser inte riktigt komplett ut (den behöver både @ och en domän, t.ex. din@epost.se).",
+      );
+      return;
+    }
+    setError(null);
     const subject = encodeURIComponent("Jag vill ha nyhetsbrevet");
     const body = encodeURIComponent(
-      `Hej! Lägg gärna till mig i nyhetsbrevet.\n\nE-post: ${email}\n`,
+      `Hej! Lägg gärna till mig i nyhetsbrevet.\n\nE-post: ${trimmed}\n`,
     );
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setSent(true);
@@ -27,17 +41,18 @@ export function NewsletterSignup({ className }: { className?: string }) {
 
   return (
     <div className={cn("rounded-3xl bg-cream p-7", className)}>
-      <p className="flex items-center gap-2 font-serif text-xl font-bold">
+      {/* h2 – sektionstiteln ska nås via rubriknavigering, inte bara visuellt */}
+      <h2 className="flex items-center gap-2 font-serif text-xl font-bold">
         <Mail className="h-5 w-5 text-primary-deep" aria-hidden="true" />
         Nyheter, tips och släpp först
-      </p>
+      </h2>
       <p className="mt-2 text-sm text-muted-foreground">
         Några mejl om året – nya produkter, säsongens presenttips och när tillverkningen börjar bli
         fullbokad inför jul. Ingen spam, avsluta när du vill.
       </p>
 
       {sent ? (
-        <div className="mt-4 text-sm">
+        <div className="mt-4 text-sm" role="status">
           <p className="font-semibold text-primary-deep">
             Tack! Skicka mejlet som öppnades så lägger jag till dig.
           </p>
@@ -47,7 +62,7 @@ export function NewsletterSignup({ className }: { className?: string }) {
             Öppnades inget mejl? Skicka ett vanligt mejl till{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="font-medium text-primary-deep hover:underline"
+              className="font-medium text-primary-deep transition-colors duration-300 hover:underline"
             >
               {CONTACT_EMAIL}
             </a>{" "}
@@ -55,20 +70,43 @@ export function NewsletterSignup({ className }: { className?: string }) {
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2 sm:flex-row">
-          <label htmlFor="newsletter-email" className="sr-only">
+        // noValidate + egen feltext: webbläsarens egna bubblor hamnar långt
+        // från fältet och ser annorlunda ut – här syns felet precis under.
+        <form onSubmit={handleSubmit} noValidate className="mt-4 flex flex-col gap-2">
+          <label htmlFor="newsletter-email" className="text-sm font-medium">
             Din e-postadress
           </label>
-          <Input
-            id="newsletter-email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="din@epost.se"
-            className="bg-background"
-          />
-          <Button type="submit">Håll mig uppdaterad</Button>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Input
+              id="newsletter-email"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (error) setError(null);
+              }}
+              placeholder="din@epost.se"
+              aria-invalid={error ? true : undefined}
+              aria-describedby={error ? "newsletter-email-error" : undefined}
+              className="bg-background"
+            />
+            <Button
+              type="submit"
+              className="rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.97] motion-reduce:active:scale-100"
+            >
+              Håll mig uppdaterad
+            </Button>
+          </div>
+          {error && (
+            <p
+              id="newsletter-email-error"
+              role="alert"
+              className="text-sm font-medium text-destructive"
+            >
+              {error}
+            </p>
+          )}
         </form>
       )}
     </div>

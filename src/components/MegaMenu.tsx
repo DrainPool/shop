@@ -18,7 +18,7 @@ const GROUPS: Group[] = [
   {
     label: "Gravyr i trä & glas",
     slugs: ["skarbrador", "glas"],
-    note: "Massiv ek och sandblästrat glas med djup gravyr. Populärt till farsdag och jakt.",
+    note: "Massiv ek och lasergraverat glas med skarp gravyr. Populärt till farsdag och jakt.",
   },
   {
     label: "Dryck & Prylar",
@@ -31,9 +31,9 @@ const GROUPS: Group[] = [
     note: "Tryck och broderi från ett plagg och uppåt – till laget och företaget.",
   },
   {
-    label: "Till bilen & Garaget",
-    slugs: ["bil"],
-    note: "Nyckelring med reg.nr, garageskylt och graverade prylar till bilentusiasten.",
+    label: "Till bilen & Banan",
+    slugs: ["bil", "golfklubbar"],
+    note: "Nyckelring med reg.nr och garageskylt — plus lasergravyr på golfklubborna.",
   },
   {
     label: "Foto & 3D",
@@ -89,7 +89,8 @@ export function MegaMenu() {
           "inline-flex items-center gap-1 text-sm font-semibold transition-colors hover:text-primary-deep",
           open && "text-primary-deep",
         )}
-        aria-haspopup="true"
+        // Bara aria-expanded: aria-haspopup="true" utlovar en ARIA-meny
+        // (pilnavigering) som panelen inte har – den är en vanlig dropdown.
         aria-expanded={open}
       >
         Sortiment{" "}

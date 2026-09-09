@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-"Lins & Lager" — a Swedish e-commerce site (engraved/personalized gifts) built as a headless Shopify storefront. All user-facing copy, comments, and commit messages are in **Swedish**. The owner goes by "frallan"; the repo path is `shop`, planning docs live in `.hermes/plans/` (launch plan, QA reports, sales-copy research) — read the current launch plan before doing larger feature work.
+"TaggaDet" (döptes om från "Lins & Lager", sep 2026) — a Swedish e-commerce site (engraved/personalized gifts) built as a headless Shopify storefront. The shop is standalone but linked to linsochlager.net (frallan's photo site, separate repo); domain, e-mail (hej@linsochlager.se) and Plausible still use linsochlager until a TaggaDet domain exists. All user-facing copy, comments, and commit messages are in **Swedish**. The owner goes by "frallan"; the repo path is `shop`, planning docs live in `.hermes/plans/` (launch plan, QA reports, sales-copy research) — read the current launch plan before doing larger feature work.
 
 ## Commands
 
@@ -22,7 +22,7 @@ npx tsc --noEmit   # type check
 npm run build      # must pass
 ```
 
-plus manual visual verification. Commits/pushes only happen when frallan explicitly says so.
+plus manual visual verification. For live verification, `vite preview` serves 500 in this repo (the build is a nitro SSR server, not static files) — run `npx vite dev` on a free port instead. Commits/pushes only happen when frallan explicitly says so.
 
 Dependencies are managed with bun (`bunfig.toml` supply-chain guard: package versions younger than 24h are rejected; `@lovable.dev/*` packages are exempt). `bun.lock` and `package-lock.json` both exist — regenerate the lockfile if it gets out of sync.
 
@@ -51,9 +51,9 @@ Every consumer checks `isDemoMode()` and branches — if you add a new Shopify-t
 
 **Cart** — `src/stores/cartStore.ts` (zustand + `persist` to localStorage) owns the full cart lifecycle: cart create/lines add/update/remove via Storefront cart mutations, with line attributes carrying engraving/customization text. `buildLineKey()` dedupes lines by variant + attributes. `src/hooks/useCartSync.ts` re-syncs the cart with Shopify on mount/visibility-change. `src/stores/uiStore.ts` holds ephemeral cross-component UI state (cart drawer / search open).
 
-**Categories** — `src/lib/categories.ts` is the single source of truth. Categories are **tag-based**: each category has a `tag` that filters products fetched from Shopify; category pages (`kategori.$slug.tsx`) match products by tag. New categories/occasions (jul, födelsedag, etc.) are added here. Product icons for the category icon row live in `src/assets/ikon-*.png`.
+**Categories** — `src/lib/categories.ts` is the single source of truth, in two groups: `productTypes` (primary nav, rendered as the icon row) and `occasions` (jul, födelsedag, etc. — secondary nav); `categories` is the two merged. Categories are **tag-based**: each category has a `tag` that filters products fetched from Shopify; category pages (`kategori.$slug.tsx`) match products by tag. Optional fields beyond title/kicker/description: `about` (long copy), `short` (icon-row label), `subcategories`/`related` (internal link flow), `pricing` (price-list blocks). Category icons live in `src/assets/ikon-*` (png or svg), imported and set via the `icon` field — a category without one gets a lucide fallback in `CategoryIconRow`. **Service categories** (e.g. `golfklubbor` — laser engraving on the customer's own clubs) have no products at all: the category page renders their `pricing` block (`PricingBlock.tsx`) instead of a product grid. Those service prices are data in `categories.ts` by design (services aren't Shopify products) — the no-hardcoded-prices convention below applies to product copy, not these blocks.
 
-**Other libs** — `src/lib/wishlist.ts` (localStorage wishlist, heart buttons on cards/product pages), `src/lib/productSpecs.ts` (type-level material/care copy keyed by product tag — honesty principle: no invented dimensions per product; exact measurements live in each product description), `src/lib/error-capture.ts` + `error-page.ts` (SSR error handling wired through `src/server.ts`), `src/lib/galleryManifest.json` (customer gallery images).
+**Other libs** — `src/lib/wishlist.ts` (localStorage wishlist, heart buttons on cards/product pages), `src/lib/productSpecs.ts` (type-level material/care copy keyed by product tag — honesty principle: no invented dimensions per product; exact measurements live in each product description), `src/lib/siteUrls.ts` (the only place for cross-site URLs — `FOTOGRAFERING_URL` feeds all "Boka fotografering" links and the `/fotografering` redirect route to frallan's photo site; change URLs here, nowhere else), `src/lib/error-capture.ts` + `error-page.ts` + `lovable-error-reporting.ts` (SSR error handling wired through `src/server.ts`), `src/lib/galleryManifest.json` (customer gallery images).
 
 ## Conventions
 

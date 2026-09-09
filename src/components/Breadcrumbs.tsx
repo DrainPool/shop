@@ -44,7 +44,9 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
           <span key={item.label} className="flex items-center gap-1">
             <ChevronRight className="h-3.5 w-3.5 opacity-60" aria-hidden="true" />
             {last ? (
-              <span className="font-medium text-foreground">{item.label}</span>
+              <span className="font-medium text-foreground" aria-current="page">
+                {item.label}
+              </span>
             ) : item.slug ? (
               <Link
                 to="/kategori/$slug"

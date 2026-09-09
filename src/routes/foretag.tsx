@@ -28,17 +28,17 @@ const OFFERT_MAILTO = `mailto:hej@linsochlager.se?subject=${encodeURIComponent(
 export const Route = createFileRoute("/foretag")({
   head: () => ({
     meta: [
-      { title: "Företagsgåvor & profilprodukter – Lins & Lager" },
+      { title: "Företagsgåvor & profilprodukter – TaggaDet" },
       {
         name: "description",
         content:
           "Personliga företagsgåvor: graverade namnbrickor, kundgåvor med er logga, dash-plaketter och klasspriser för bilträffar. Paketpris till arrangören – offert inom 24 timmar.",
       },
-      { property: "og:title", content: "Företagsgåvor & profilprodukter – Lins & Lager" },
+      { property: "og:title", content: "Företagsgåvor & profilprodukter – TaggaDet" },
       {
         property: "og:description",
         content:
-          "Graverade namnbrickor, kundgåvor, bilträff-paket med plaketter och troféer. Små serier, personligt hantverk, offert inom 24 timmar.",
+          "Graverade namnbrickor, kundgåvor, bilträff-paket med plaketter och troféer – och lasergravyr på golfklubbor ute på banan. Små serier, offert inom 24 timmar.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -81,6 +81,23 @@ const offerings = [
   {
     title: "Bilträffar & klubbar",
     text: "Dash-plaketter till deltagarna, klasspriser med gravyr och klubbdekaler – paketpris till arrangören.",
+  },
+  {
+    title: "Golf-event & tävlingar",
+    text: (
+      <>
+        Jag kommer ut till banan med lasern –{" "}
+        <Link
+          to="/kategori/$slug"
+          params={{ slug: "golfklubbar" }}
+          className="text-primary-deep underline underline-offset-2"
+        >
+          golfklubbor graverade på plats
+        </Link>{" "}
+        under medlemsdagar, företagsevent och tävlingar. Kundgåvor och tävlingspriser med er
+        logotyp, märkta medan ronden pågår.
+      </>
+    ),
   },
   {
     title: "Mäss- & eventmaterial",
@@ -145,7 +162,7 @@ function BusinessPage() {
           </div>
           <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
             <Percent className="h-4 w-4 text-primary-deep" aria-hidden="true" />
-            Stämvolym 10–150 st · faktura · offert inom 24 timmar
+            Volym 10–150 st · faktura · offert inom 24 timmar
           </p>
         </div>
         <img
@@ -179,19 +196,19 @@ function BusinessPage() {
         </h2>
         <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
           Plaketter till alla deltagare, priser till vinnarna och dekaler till klubben. Du väljer
-          motiv – jag skissar, graverar och levererar i tid till donnet.
+          motiv – jag skissar, graverar och levererar i tid till träffen.
         </p>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {[
             {
               icon: Flag,
               title: "Dash-plaketter i bulk",
-              text: "En plakett till varje deltagare med träffens namn, år och klass. Paket från ca 690 kr för 25 st.",
+              text: "En plakett till varje deltagare med träffens namn, år och klass – paketpris enligt offerten.",
             },
             {
               icon: Trophy,
               title: "Klasspriser & troféer",
-              text: "Bäst i klass, Publikens val, Best in Show – graverade priser med biltema, 149–499 kr/st.",
+              text: "Bäst i klass, Publikens val, Best in Show – graverade priser med biltema, pris enligt offerten.",
             },
             {
               icon: Sticker,
@@ -276,7 +293,7 @@ function BusinessPage() {
           <div>
             <p className="font-script text-2xl text-gold">tryggt för inköpare</p>
             <h2 className="mt-2 font-serif text-3xl font-bold tracking-tight md:text-4xl">
-              Därför företag väljer Lins & Lager
+              Därför företag väljer TaggaDet
             </h2>
             <ul className="mt-6 space-y-3 text-sm opacity-90">
               {benefits.map((b) => (

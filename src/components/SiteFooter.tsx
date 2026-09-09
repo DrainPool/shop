@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Heart, Mail, Truck, Sparkles } from "lucide-react";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PaymentLogos } from "@/components/PaymentLogos";
+import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
 
 /** Tape-variant av 21st.dev "Footer Taped Design" (radu, id 4448) — dekortejp i sepia. */
@@ -24,7 +25,11 @@ function Tape({ className }: { className?: string }) {
 }
 
 const promises = [
-  { icon: Truck, title: "Fri frakt över 800 kr", text: "Spårbar leverans inom Sverige." },
+  {
+    icon: Truck,
+    title: `Fri frakt över ${FREE_SHIPPING_LIMIT} kr`,
+    text: "Spårbar leverans inom Sverige.",
+  },
   { icon: Sparkles, title: "Skapas efter din order", text: "Digital skiss innan tillverkning." },
   { icon: Heart, title: "Handgjort i Småland", text: "Små serier, stor omtanke." },
 ];
@@ -56,7 +61,7 @@ export function SiteFooter() {
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-3">
           <div>
             <p className="flex items-center gap-2 font-serif text-2xl font-semibold">
-              Lins &amp; Lager <Heart className="h-5 w-5 fill-gold text-gold" aria-hidden="true" />
+              TaggaDet <Heart className="h-5 w-5 fill-gold text-gold" aria-hidden="true" />
             </p>
             <p className="mt-3 max-w-xs text-sm opacity-80">
               Personliga smycken, gravyr, 3D-utskrifter och foto – tillverkat för hand i Småland med
@@ -132,7 +137,7 @@ export function SiteFooter() {
             </h2>
             <p>
               Skriv några rader om tillfället, namnen och känslan du vill fånga – du får ett förslag
-              med skiss innan vi börjar tillverka.
+              med skiss innan jag börjar tillverka.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link
@@ -155,7 +160,7 @@ export function SiteFooter() {
           <PaymentLogos />
         </div>
         <div className="border-t border-ink-foreground/15 py-5 text-center text-xs opacity-70">
-          © {new Date().getFullYear()} Lins &amp; Lager. Alla rättigheter förbehållna.
+          © {new Date().getFullYear()} TaggaDet. Alla rättigheter förbehållna.
         </div>
       </div>
     </footer>
