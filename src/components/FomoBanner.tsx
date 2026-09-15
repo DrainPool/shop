@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Clock } from "lucide-react";
+import { nextCutoff } from "@/lib/productSpecs";
 
 /**
  * Räknar ner till dagens tillverkningsstopp (vardagar kl 14:00 lokal tid).
@@ -9,18 +10,8 @@ import { Clock } from "lucide-react";
  * Kort fönster (timmar/minuter) i stället för dagar: det är ärligare mot
  * hur verkstaden faktiskt jobbar och känns inte som en påhittad kampanj.
  */
-const CUTOFF_HOUR = 14;
-
-function nextCutoff(now: Date) {
-  const cutoff = new Date(now);
-  cutoff.setHours(CUTOFF_HOUR, 0, 0, 0);
-  // Passerat dagens stopp, eller helg? Hoppa till nästa vardag.
-  while (cutoff.getTime() <= now.getTime() || cutoff.getDay() === 0 || cutoff.getDay() === 6) {
-    cutoff.setDate(cutoff.getDate() + 1);
-    cutoff.setHours(CUTOFF_HOUR, 0, 0, 0);
-  }
-  return cutoff;
-}
+// CUTOFF_HOUR och nextCutoff bor i lib/productSpecs.ts (samma källa som
+// leverans-ETA:n på produktsidan) och importeras överst i filen.
 
 type Countdown = { hours: number; minutes: number; today: boolean };
 

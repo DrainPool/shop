@@ -31,7 +31,7 @@ import { PaymentLogos } from "@/components/PaymentLogos";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
 import { ReviewSection } from "@/components/ReviewSection";
 import { productTypes } from "@/lib/categories";
-import { addWorkdays, PRODUCT_SPECS } from "@/lib/productSpecs";
+import { addWorkdays, nextCutoff, PRODUCT_SPECS } from "@/lib/productSpecs";
 import {
   fetchProductByHandle,
   fetchProducts,
@@ -165,13 +165,18 @@ function klippMetaBeskrivning(beskrivning: string): string {
 /**
  * "Beställer du idag är den hos dig ca {datum}" – räknas ut på klienten
  * (ogiltigt på servern, och vi vill inte riskera SSR-mismatch).
- * 7 arbetsdagar tillverkning + 3 dagar spårbar frakt.
+ *
+ * Räkningen startar vid nästa tillverkningsstopp (vardagar 14:00, samma
+ * nextCutoff som FomoBanner-nedräkningen): beställer du efter dagens stopp
+ * börjar tillverkningen nästa vardag – inte "idag" som den gamla beräkningen
+ * påstod. Sedan garantitaken per fas: 7 arbetsdagar tillverkning + 4
+ * arbetsdagar frakt = 11 arbetsdagar, exakt taket som /frakt-leverans
+ * anger ("räkna med 5–11 arbetsdagar").
  */
 function DeliveryEstimate() {
   const [dateText, setDateText] = useState<string | null>(null);
   useEffect(() => {
-    const delivery = addWorkdays(new Date(), 7);
-    delivery.setDate(delivery.getDate() + 3);
+    const delivery = addWorkdays(addWorkdays(nextCutoff(new Date()), 7), 4);
     setDateText(
       new Intl.DateTimeFormat("sv-SE", { day: "numeric", month: "long" }).format(delivery),
     );
@@ -432,7 +437,7 @@ function ProductPage() {
                 {
                   icon: Truck,
                   title: "Skickas med PostNord",
-                  text: "2–4 dagar i Sverige, alternativen visas i kassan",
+                  text: "2–4 arbetsdagar i Sverige, alternativen visas i kassan",
                 },
                 {
                   icon: ShieldCheck,

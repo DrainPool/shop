@@ -34,6 +34,23 @@ export function SearchOverlay() {
     return () => clearTimeout(t);
   }, [term]);
 
+  // SearchAction i root-layoutens JSON-LD lovar att /?s=<term> öppnar söket
+  // med termen förifylld – Googles sitelinks-sökruta landar på den URL:en.
+  // Utan den här effekten hamnade besökaren på en tom startsida (död
+  // landning). Parametern konsumeras en gång: URL:en städas så att en
+  // refresh inte öppnar dialogen igen.
+  useEffect(() => {
+    const term = new URLSearchParams(window.location.search).get("s")?.trim();
+    if (term) {
+      setTerm(term);
+      setDebounced(term);
+      setSearchOpen(true);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("s");
+      window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+    }
+  }, [setSearchOpen]);
+
   const { data: results = [], isFetching } = useQuery({
     queryKey: ["search", debounced],
     queryFn: () => searchProducts(debounced, 8),

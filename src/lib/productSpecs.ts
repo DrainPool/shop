@@ -97,3 +97,24 @@ export function addWorkdays(from: Date, days: number): Date {
   }
   return d;
 }
+
+/**
+ * Tillverkningsstoppet: vardagar kl 14:00 lokal tid. Beställningar innan
+ * stoppet är "med i dagens tillverkning" (FomoBanner-nedräkningen lovar
+ * detsamma) – efter stoppet börjar batchen nästa vardag. Konstanten och
+ * nästa-stopp-beräkningen bor här så att leverans-ETA:n på produktsidan
+ * och nedräkningen i headern räknar från samma källa.
+ */
+export const CUTOFF_HOUR = 14;
+
+/** Nästa tillverkningsstopp efter `now` (passerat stopp/helg hoppas över). */
+export function nextCutoff(now: Date): Date {
+  const cutoff = new Date(now);
+  cutoff.setHours(CUTOFF_HOUR, 0, 0, 0);
+  // Passerat dagens stopp, eller helg? Hoppa till nästa vardag.
+  while (cutoff.getTime() <= now.getTime() || cutoff.getDay() === 0 || cutoff.getDay() === 6) {
+    cutoff.setDate(cutoff.getDate() + 1);
+    cutoff.setHours(CUTOFF_HOUR, 0, 0, 0);
+  }
+  return cutoff;
+}
