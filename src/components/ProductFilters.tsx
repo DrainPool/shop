@@ -43,9 +43,6 @@ const TAG_LABELS: Record<string, string> = {
   nyhet: "Nyhet",
   nyckelring: "Nyckelring",
   glas: "Glas",
-  keps: "Keps",
-  tshirt: "T-shirt",
-  hoodie: "Hoodie",
   mugg: "Mugg",
   tumbler: "Tumbler",
   skarbrada: "Skärbräda",
@@ -55,9 +52,6 @@ const TAG_LABELS: Record<string, string> = {
 const TYPE_TAGS = [
   "nyckelring",
   "glas",
-  "keps",
-  "tshirt",
-  "hoodie",
   "mugg",
   "tumbler",
   "smycken",
@@ -167,7 +161,7 @@ export function ProductFilters(props: FiltersProps) {
             aria-expanded={open}
             aria-controls="filter-panel"
           >
-            <SlidersHorizontal className="mr-2 h-4 w-4" />
+            <SlidersHorizontal className="mr-2 h-4 w-4" aria-hidden="true" />
             Filtrera
             {props.activeCount > 0 && (
               <span className="ml-2 rounded-full bg-gold px-2 text-xs text-ink">
@@ -184,7 +178,7 @@ export function ProductFilters(props: FiltersProps) {
               onClick={props.clear}
               className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary-deep hover:underline md:min-h-9"
             >
-              <X className="h-3.5 w-3.5" /> Rensa
+              <X className="h-3.5 w-3.5" aria-hidden="true" /> Rensa
             </button>
           )}
         </div>

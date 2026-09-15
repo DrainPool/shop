@@ -40,7 +40,7 @@ export function CategoryIconRow({ activeSlug }: { activeSlug?: string }) {
     <nav aria-label="Produkttyper" className="relative border-b border-border/70 bg-background">
       <ul
         ref={scrollRef}
-        className="mx-auto flex max-w-6xl snap-x justify-start gap-1 overflow-x-auto px-5 py-6 sm:gap-2"
+        className="mx-auto flex max-w-7xl snap-x justify-start gap-1 overflow-x-auto px-5 py-4 sm:gap-2"
       >
         {productTypes.map((c) => {
           const active = c.slug === activeSlug;

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
+import { Kicker } from "@/components/Kicker";
 // Personaliseringen (formuläret, förslagen, kassa-logiken) behövs inte förrän
 // kunden scrollat ner – dela upp den i ett eget chunk som laddas lazy.
 // Ref-diven runt om står kvar utanför Suspensen så IntersectionObserver-
@@ -28,6 +29,7 @@ import { RecentlyViewed, useTrackRecentlyViewed } from "@/components/RecentlyVie
 import { WishlistHeart } from "@/components/WishlistHeart";
 import { PaymentLogos } from "@/components/PaymentLogos";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
+import { ReviewSection } from "@/components/ReviewSection";
 import { productTypes } from "@/lib/categories";
 import { addWorkdays, PRODUCT_SPECS } from "@/lib/productSpecs";
 import {
@@ -59,18 +61,29 @@ export const Route = createFileRoute("/produkt/$handle")({
     }
     const node = loaderData.product.node;
     const title = `${node.title} – TaggaDet`;
-    const description = (
-      node.description || `${node.title} – personligt hantverk, graverat för hand på beställning.`
-    ).slice(0, 158);
+    const description = klippMetaBeskrivning(
+      node.description ||
+        `${node.title} – personligt hantverk, graverat i verkstaden på beställning.`,
+    );
     const url = `${SITE_URL}/produkt/${node.handle}`;
     const { price, currency } = getPricing(loaderData.product);
     const variants = node.variants?.edges ?? [];
     const inStock = variants.length === 0 || variants.some((v) => v.node.availableForSale);
+    // priceValidUntil ska vara ett framtida datum vid SSR – därför
+    // beräknas det här (per anrop), inte vid modul-laddning.
+    const priceValidUntil = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10);
+    // Butiksfrågan (PRODUCT_FIELDS i shopify.ts) hämtar ingen sku – läs
+    // den ändå försiktigt ifall fältet läggs till, fall tillbaka på
+    // handlen som unik artikelidentifikator.
+    const sku = (variants[0]?.node as { sku?: string } | undefined)?.sku || node.handle;
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "Product",
       name: node.title,
       description: node.description,
+      sku,
       image: node.images.edges.map((e) => e.node.url),
       brand: { "@type": "Brand", name: "TaggaDet" },
       offers: {
@@ -78,6 +91,8 @@ export const Route = createFileRoute("/produkt/$handle")({
         url,
         price: price.toFixed(2),
         priceCurrency: currency,
+        priceValidUntil,
+        itemCondition: "https://schema.org/NewCondition",
         availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       },
     };
@@ -109,7 +124,7 @@ export const Route = createFileRoute("/produkt/$handle")({
 function ProductNotFound() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-24 text-center">
-      <h1 className="font-serif text-3xl font-bold">Produkten hittades inte</h1>
+      <h1 className="font-serif text-3xl">Produkten hittades inte</h1>
       <p className="mt-3 text-muted-foreground">
         Den här produkten finns inte längre i sortimentet.
       </p>
@@ -118,6 +133,33 @@ function ProductNotFound() {
       </Button>
     </div>
   );
+}
+
+/**
+ * Meta-beskrivning för produktsidan. Shopify-beskrivningar kan innehålla
+ * HTML – taggar strippas först (radbrytande taggar byts mot mellanslag så
+ * meningarna inte går ihop). Klipper sedan vid senaste meningsgränsen
+ * (punkt/utropstecken/frågetecken) före ~160 tecken – aldrig mitt i en
+ * mening. Saknas meningsgräns klipps vid senaste mellanslag + ellips.
+ */
+function klippMetaBeskrivning(beskrivning: string): string {
+  const text = beskrivning
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (text.length <= 160) return text;
+  const klipp = text.slice(0, 160);
+  const meningsgräns = Math.max(
+    klipp.lastIndexOf(". "),
+    klipp.lastIndexOf("! "),
+    klipp.lastIndexOf("? "),
+  );
+  // +1: ta med skiljetecknet. 40 tecken: alltför tidig gräns ger en
+  // bisarr kort beskrivning – hellre ett avklippt ord än en strimma.
+  if (meningsgräns >= 40) return klipp.slice(0, meningsgräns + 1).trim();
+  const mellanslag = klipp.lastIndexOf(" ");
+  return `${(mellanslag > 0 ? klipp.slice(0, mellanslag) : klipp).trimEnd()}…`;
 }
 
 /**
@@ -262,7 +304,7 @@ function ProductPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-12 pb-28 md:pb-12">
+    <div className="mx-auto max-w-7xl px-5 py-10 pb-28 md:pb-10">
       <Breadcrumbs
         items={[
           { label: "Sortiment", to: "/sortiment" },
@@ -274,7 +316,7 @@ function ProductPage() {
         to="/sortiment"
         className="mt-4 mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary-deep"
       >
-        <ArrowLeft className="h-4 w-4" /> Tillbaka till sortimentet
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Tillbaka till sortimentet
       </Link>
 
       <div className="grid gap-10 md:grid-cols-2 md:gap-12">
@@ -286,11 +328,11 @@ function ProductPage() {
         </div>
 
         <div>
-          <h1 className="font-serif text-3xl leading-tight font-bold tracking-tight text-balance md:text-4xl">
+          <h1 className="font-serif text-3xl leading-tight tracking-tight text-balance md:text-4xl">
             {node.title}
           </h1>
           <div className="mt-4 flex flex-wrap items-baseline gap-3">
-            <p className="font-serif text-3xl font-bold tabular-nums text-primary-deep">
+            <p className="font-serif text-3xl tabular-nums text-primary-deep">
               {fromPrice && "Från "}
               {formatPrice(price, currency)}
             </p>
@@ -308,7 +350,7 @@ function ProductPage() {
           <p className="mt-2 text-sm font-medium">
             {inStock ? (
               <span className="text-primary-deep">
-                Plats kvar i veckans tillverkning – tillverkas efter din beställning
+                Plats finns i veckans tillverkning – tillverkas efter din beställning
               </span>
             ) : (
               <span className="text-muted-foreground">
@@ -343,19 +385,21 @@ function ProductPage() {
                 : `Presentklar förpackning ingår – fri frakt över ${FREE_SHIPPING_LIMIT} kr`,
             ].map((point) => (
               <li key={point} className="flex items-start gap-2">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary-deep" />
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
                 <span>{point}</span>
               </li>
             ))}
           </ul>
 
-          {/* Ingen nedrakning har – FomoBanner i headern visar redan
-              veckans cutoff; dubbel FOMO i samma vy kanns som hard säljpress. */}
-          <div className="mt-6 flex items-start gap-3 rounded-xl bg-cream p-4 text-sm">
+          {/* Ingen nedräkning här – FomoBanner i headern visar redan
+              veckans cutoff; dubbel FOMO i samma vy känns som hård säljpress. */}
+          {/* Krämpanelerna i kroppen håller samma radie (2xl) – platt
+              informationsyta, .card-shop:s hover-lift är bara för kort. */}
+          <div className="mt-6 flex items-start gap-3 rounded-2xl bg-cream p-4 text-sm">
             <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
             <p>
               Jag tar in ett begränsat antal beställningar per vecka – beställer du idag börjar jag
-              med din redan denna vecka, klar och skickad inom 3–7 arbetsdagar.
+              på din redan denna vecka, klar och skickad inom 3–7 arbetsdagar.
               <DeliveryEstimate />
             </p>
           </div>
@@ -399,7 +443,7 @@ function ProductPage() {
                 { icon: Heart, title: "Personlig kontakt", text: "Du pratar alltid med mig" },
               ] satisfies { icon: typeof Truck; title: string; text: string; to?: "/garanti" }[]
             ).map((b) => (
-              <div key={b.title} className="rounded-xl bg-cream p-4 text-sm">
+              <div key={b.title} className="rounded-2xl bg-cream p-4 text-sm">
                 <b.icon className="h-4 w-4 text-primary-deep" />
                 <p className="mt-2 font-medium text-foreground">
                   {b.to ? (
@@ -415,9 +459,9 @@ function ProductPage() {
             ))}
           </div>
 
-          <div className="mt-6 rounded-xl bg-cream p-5 text-sm text-muted-foreground">
+          <div className="mt-6 rounded-2xl bg-cream p-5 text-sm text-muted-foreground">
             <p className="flex items-center gap-2 font-medium text-foreground">
-              <Sparkles className="h-4 w-4 text-gold" /> Personlig touch ingår
+              <Sparkles className="h-4 w-4 text-gold" aria-hidden="true" /> Personlig touch ingår
             </p>
             <p className="mt-2">
               Namn, datum eller en liten hälsning – fyll i din text ovan, så hör jag av mig med en
@@ -431,16 +475,16 @@ function ProductPage() {
         </div>
       </div>
 
-      <div className="mt-20 grid gap-10 md:grid-cols-2">
+      <div className="mt-14 grid gap-10 md:grid-cols-2">
         <div>
-          <h2 className="font-serif text-2xl font-bold">Bra att veta</h2>
+          <h2 className="font-serif text-2xl">Bra att veta</h2>
           <FaqAccordion items={braAttVeta} />
           <PaymentLogos className="mt-6" />
         </div>
         {/* Sociala bevis växer fram med de första riktiga beställningarna –
             tills dess visas hantverket här i stället för tomma stjärnor. */}
         <div className="rounded-2xl bg-cream p-6">
-          <h2 className="font-serif text-2xl font-bold">Så går det till</h2>
+          <h2 className="font-serif text-2xl">Så går det till</h2>
           <p className="mt-3 text-sm text-muted-foreground">
             Din present graveras för hand här i verkstaden, och du får en digital skiss att godkänna
             innan jag sätter igång. Inga överraskningar, inga dolda val – och jag har skapat
@@ -454,6 +498,11 @@ function ProductPage() {
           </Link>
         </div>
       </div>
+
+      {/* Omdömesmodulen – ärlighetsramen gäller: bara riktiga omdömen
+          visas; tom-läget bjuder in den första kundrösten i stället för
+          att hitta på social proof (konkurrenternas svaghet, inte vår). */}
+      <ReviewSection />
 
       <RelatedProducts tags={product.node.tags || []} handle={handle} />
 
@@ -505,11 +554,11 @@ function RelatedProducts({ tags, handle }: { tags: string[]; handle: string }) {
   if (related.length === 0) return null;
 
   return (
-    <section className="mt-20 border-t border-border pt-12">
+    <section className="mt-14 border-t border-border pt-10">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <div>
-          <p className="font-script text-2xl text-primary-deep">mer i samma stil</p>
-          <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight">
+          <Kicker>mer i samma stil</Kicker>
+          <h2 className="mt-1 font-serif text-3xl tracking-tight">
             {typeTag ? typeTag.title : "Liknande presenter"}
           </h2>
         </div>
@@ -526,7 +575,7 @@ function RelatedProducts({ tags, handle }: { tags: string[]; handle: string }) {
           </Link>
         )}
       </div>
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {related.map((p) => (
           <ProductCard key={p.node.id} product={p} />
         ))}

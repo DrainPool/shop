@@ -12,6 +12,13 @@ import { SITE_URL } from "@/lib/siteUrls";
  * sitemapen ändå med det statiska innehållet.
  */
 
+/**
+ * Fast lastmod-datum (denna uppdateringsomgång, sep 2026). Shopify-typen
+ * (ShopifyProduct) saknar updatedAt-fält, så produkterna får samma fasta
+ * datum – inget påhittat per produkt.
+ */
+const LASTMOD = "2026-09-09";
+
 const STATIC_PAGES: { path: string; priority: string; changefreq?: string }[] = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
   { path: "/sortiment", priority: "0.9", changefreq: "weekly" },
@@ -48,11 +55,17 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const entries: { loc: string; priority: string; changefreq?: string | undefined }[] = [];
+        const entries: {
+          loc: string;
+          lastmod?: string | undefined;
+          priority: string;
+          changefreq?: string | undefined;
+        }[] = [];
 
         for (const p of STATIC_PAGES) {
           entries.push({
             loc: `${SITE_URL}${p.path}`,
+            lastmod: LASTMOD,
             priority: p.priority,
             changefreq: p.changefreq,
           });
@@ -60,7 +73,11 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         // Produkttyperna är navigationsbasen, tillfällena säsongssidor
         for (const c of productTypes) {
-          entries.push({ loc: `${SITE_URL}/kategori/${c.slug}`, priority: "0.8" });
+          entries.push({
+            loc: `${SITE_URL}/kategori/${c.slug}`,
+            lastmod: LASTMOD,
+            priority: "0.8",
+          });
         }
         for (const o of occasions) {
           const priority = HIGH_PRIORITY_OCCASIONS.has(o.slug)
@@ -68,14 +85,18 @@ export const Route = createFileRoute("/sitemap.xml")({
             : LOW_PRIORITY_OCCASIONS.has(o.slug)
               ? "0.4"
               : "0.7";
-          entries.push({ loc: `${SITE_URL}/kategori/${o.slug}`, priority });
+          entries.push({ loc: `${SITE_URL}/kategori/${o.slug}`, lastmod: LASTMOD, priority });
         }
 
         // Produktsidorna – hämtas live i båda lägena (demo/Shopify)
         try {
           const products = await fetchProducts(250);
           for (const p of products) {
-            entries.push({ loc: `${SITE_URL}/produkt/${p.node.handle}`, priority: "0.6" });
+            entries.push({
+              loc: `${SITE_URL}/produkt/${p.node.handle}`,
+              lastmod: LASTMOD,
+              priority: "0.6",
+            });
           }
         } catch {
           // Nätverksfel/token saknas – sitemapen serveras utan produktrader
@@ -88,6 +109,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             .map(
               (e) =>
                 `  <url><loc>${esc(e.loc)}</loc>` +
+                (e.lastmod ? `<lastmod>${e.lastmod}</lastmod>` : "") +
                 (e.changefreq ? `<changefreq>${e.changefreq}</changefreq>` : "") +
                 `<priority>${e.priority}</priority></url>`,
             )

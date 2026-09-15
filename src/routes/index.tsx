@@ -7,7 +7,7 @@ import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { GiftBundles } from "@/components/GiftBundles";
 import { TrustedMarquee } from "@/components/TrustedMarquee";
 import { TrustFaq } from "@/components/TrustFaq";
-import { IdeaBand } from "@/components/IdeaBand";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { HomeHero } from "@/components/home/HomeHero";
 import { CategoryBento } from "@/components/home/CategoryBento";
 import { ProcessSection } from "@/components/home/ProcessSection";
@@ -16,6 +16,7 @@ import { FinalCta } from "@/components/home/FinalCta";
 
 import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -69,24 +70,51 @@ function Index() {
       {/* ATTENTION – cinematisk hero med fullbreddsbild och mörk radial-wash */}
       <HomeHero />
 
+      {/* Bandet "Foto & hantverk till livets tillfällen" – flyttat hit
+          från sidans botten (frallans önskan: högre upp) */}
+      <TrustedMarquee />
+
       {/* Primär navigation: produkttyps-ikoner (renderas som den är) */}
       <CategoryIconRow />
 
       {/* INTEREST – tillfällen i tätslutande bento (ersätter gamla tillfällesrutnätet) */}
       <CategoryBento />
 
+      {/* Om produkterna inte kunde hämtas: säg det i stället för att visa
+          en tyst tom butik. (Körs bara när båda listorna ovan är tomma.) */}
+      {bestsellers.length === 0 && news.length === 0 && (isError || products.length === 0) && (
+        <section className="mx-auto max-w-6xl px-5 pb-8">
+          {isError ? (
+            <p className="py-10 text-center text-muted-foreground">
+              Kunde inte hämta produkterna just nu. Försök gärna igen om en stund.
+            </p>
+          ) : (
+            <div className="rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
+              <p className="font-serif text-xl">Butiken fylls på just nu</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Sortimentet växer för varje vecka. Har du redan en presentidé? Skriv till mig – jag
+                gör gärna något helt eget.
+              </p>
+              <Button asChild className="mt-6 rounded-full px-6">
+                <Link to="/kontakt">Hör av dig med din idé</Link>
+              </Button>
+            </div>
+          )}
+        </section>
+      )}
+
       {(bestsellers.length > 0 || news.length > 0) && (
-        <section className="bg-cream py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-5">
+        <section id="butiken" className="scroll-mt-28 bg-cream py-12 md:py-16">
+          <div className="mx-auto max-w-7xl px-5">
             {/* Två lättrörliga produktvyer sida-vid-sida – vardera 2×2.
                 Renderar halva fullbredd om bara den ena listan har produkter. */}
-            <div className="grid gap-12 lg:grid-cols-2">
+            <div className="grid gap-10 lg:grid-cols-2">
               {bestsellers.length > 0 && (
                 <div>
                   <div className="flex flex-wrap items-end justify-between gap-3">
                     <div>
-                      <p className="font-script text-2xl text-primary-deep">de som beställs mest</p>
-                      <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight">
+                      <Kicker>de som beställs mest</Kicker>
+                      <h2 className="mt-1 font-serif text-3xl tracking-tight">
                         Mest älskade just nu
                       </h2>
                     </div>
@@ -112,12 +140,8 @@ function Index() {
                 <div>
                   <div className="flex flex-wrap items-end justify-between gap-3">
                     <div>
-                      <p className="font-script text-2xl text-primary-deep">
-                        färskt från arbetsbänken
-                      </p>
-                      <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight">
-                        Nytt i verkstaden
-                      </h2>
+                      <Kicker>färskt från arbetsbänken</Kicker>
+                      <h2 className="mt-1 font-serif text-3xl tracking-tight">Nytt i verkstaden</h2>
                     </div>
                     <Button asChild variant="outline" size="sm" className="rounded-full px-5">
                       <Link to="/kategori/$slug" params={{ slug: "nyheter" }}>
@@ -137,76 +161,35 @@ function Index() {
                 </div>
               )}
             </div>
+
+            {/* Hela sortimentet är en klick bort – den tidigare separat-
+                visade produktlistan var samma produkter en gång till. */}
+            <div className="mt-10 text-center">
+              <Button asChild size="lg" className="rounded-full px-8">
+                <Link to="/sortiment">
+                  Se hela sortimentet <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </section>
       )}
 
-      <section id="butiken" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-20 md:py-28">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="font-script text-2xl text-primary-deep">hela sortimentet</p>
-            <h2 className="mt-1 font-serif text-4xl font-bold tracking-tight">Allt jag gör</h2>
-            <p className="mt-2 max-w-xl text-muted-foreground">
-              Varje produkt kan personaliseras med namn, datum eller din egen hälsning – och du får
-              alltid en skiss innan jag graverar.
-            </p>
-          </div>
-          <Button asChild variant="outline" size="sm" className="rounded-full px-5">
-            <Link to="/sortiment">
-              Visa allt <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-            </Link>
-          </Button>
-        </div>
-
-        {isError ? (
-          <p className="py-16 text-center text-muted-foreground">
-            Kunde inte hämta produkterna just nu. Försök gärna igen om en stund.
-          </p>
-        ) : products.length === 0 ? (
-          <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-            <p className="font-serif text-xl font-bold">Butiken fylls på just nu</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Sortimentet växer för varje vecka. Har du redan en presentidé? Skriv till mig – jag
-              gör gärna något helt eget.
-            </p>
-            <Button asChild className="mt-6 rounded-full px-6">
-              <Link to="/kontakt">Hör av dig med din idé</Link>
-            </Button>
-          </div>
-        ) : (
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {products.slice(0, 8).map((p, i) => (
-              <ProductCard key={p.node.id} product={p} priority={i < 4} />
-            ))}
-          </div>
-        )}
-
-        {products.length > 8 && (
-          <div className="mt-10 text-center">
-            <Button asChild size="lg" className="rounded-full px-7">
-              <Link to="/sortiment">
-                Se hela sortimentet <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
-              </Link>
-            </Button>
-          </div>
-        )}
-      </section>
-
       {/* DESIRE – mörkt processkapitel: från din rad till presentklart paket */}
       <ProcessSection />
 
-      {/* Desire del 2 – presentpaket klara att ge bort */}
+      {/* Desire del 2 – presentpaket + egna designer/foto (IdeaBand ingår) */}
       <GiftBundles />
 
       {/* Desire del 3 – om mig + kundvägg (socialt bevis) */}
       <StorySection />
 
-      {/* Fånga den som inte hittar rätta presenten (renderas som den är) */}
-      <IdeaBand />
-
-      <TrustedMarquee />
-
       <TrustFaq />
+
+      {/* Nyhetsbrevet – flyttat från sidfoten till en egen sektion före CTA:n */}
+      <section className="mx-auto max-w-2xl px-5 pb-16">
+        <NewsletterSignup />
+      </section>
 
       {/* ACTION – avslutande mörkt CTA-kapitel */}
       <FinalCta />

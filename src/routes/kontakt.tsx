@@ -1,6 +1,8 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Clock, Heart, Mail, MapPin, MessageCircleQuestion } from "lucide-react";
+import { SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
 
 const faq = [
   {
@@ -12,7 +14,7 @@ const faq = [
     a: "Ja! Beskriv din idé – material, motiv och tillfälle. Du får ett förslag med digital skiss och pris innan du bestämmer dig.",
   },
   {
-    q: "Jag har fel stavat i min beställning – vad gör jag?",
+    q: "Jag har stavat fel i min beställning – vad gör jag?",
     a: "Skriv direkt! Om tillverkningen inte påbörjats ändrar jag gratis. Har du godkänt skissen och jag börjat gravera kan jag tyvärr inte ändra – men hör ändå av dig, jag hittar ofta en lösning.",
   },
 ];
@@ -20,13 +22,14 @@ const faq = [
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
     meta: [
-      { title: "Kontakt – TaggaDet" },
+      { title: "Kontakt | TaggaDet" },
+      { rel: "canonical", href: `${SITE_URL}/kontakt` },
       {
         name: "description",
         content:
-          "Kontakta TaggaDet i Aneby: e-post, svarstider, företagsuppgifter. Frågor om beställning, skisser eller egna presentidéer – hör av dig!",
+          "Kontakta TaggaDet i Aneby: e-post, svarstider och företagsuppgifter. Frågor om beställning, skisser eller egna presentidéer – hör av dig.",
       },
-      { property: "og:title", content: "Kontakt – TaggaDet" },
+      { property: "og:title", content: "Kontakt | TaggaDet" },
       {
         property: "og:description",
         content: "Kontakta TaggaDet – svar inom 24 timmar vardagar. E-post, adress och svarstider.",
@@ -56,17 +59,17 @@ function ContactPage() {
     <div className="mx-auto max-w-4xl px-5 py-14">
       <Breadcrumbs items={[{ label: "Kontakt" }]} />
 
-      <p className="mt-8 font-script text-3xl text-primary-deep">jag finns bara ett mejl bort</p>
-      <h1 className="mt-3 font-serif text-4xl font-bold tracking-tight md:text-5xl">Kontakt</h1>
+      <Kicker className="mt-8">jag finns bara ett mejl bort</Kicker>
+      <h1 className="mt-3 font-serif text-4xl tracking-tight md:text-5xl">Kontakt</h1>
       <p className="mt-4 max-w-xl text-lg text-muted-foreground">
         Fråga om en beställning, bolla en presentidé eller bara säga hej – jag svarar personligen,
         aldrig ett callcenter.
       </p>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        <div className="rounded-3xl border border-border bg-card p-8 shadow-soft">
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
+        <div className="card-shop p-8">
           <Mail className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-          <h2 className="mt-4 font-serif text-2xl font-bold">E-post</h2>
+          <h2 className="mt-4 font-serif text-2xl">E-post</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Snabbast svar – och bäst för skisser och bilder.
           </p>
@@ -78,9 +81,9 @@ function ContactPage() {
           </a>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card p-8 shadow-soft">
+        <div className="card-shop p-8">
           <Clock className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-          <h2 className="mt-4 font-serif text-2xl font-bold">Svarstider</h2>
+          <h2 className="mt-4 font-serif text-2xl">Svarstider</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Vardagar: svar inom 24 timmar
             <br />
@@ -98,9 +101,9 @@ function ContactPage() {
           </p>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card p-8 shadow-soft">
+        <div className="card-shop p-8">
           <MapPin className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-          <h2 className="mt-4 font-serif text-2xl font-bold">Verkstaden</h2>
+          <h2 className="mt-4 font-serif text-2xl">Verkstaden</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             TaggaDet, Aneby i Småland
             <br />
@@ -110,9 +113,9 @@ function ContactPage() {
           </p>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card p-8 shadow-soft">
+        <div className="card-shop p-8">
           <MessageCircleQuestion className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-          <h2 className="mt-4 font-serif text-2xl font-bold">Snabbast hjälp</h2>
+          <h2 className="mt-4 font-serif text-2xl">Snabbast hjälp</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             <Link to="/vanliga-fragor" className="text-primary-deep hover:underline">
               Vanliga frågor
@@ -137,15 +140,15 @@ function ContactPage() {
         </div>
       </div>
 
-      <section className="mt-14">
-        <h2 className="font-serif text-3xl font-bold tracking-tight">Vanliga frågor</h2>
-        <div className="mt-6 space-y-4">
+      <section className="mt-10">
+        <h2 className="font-serif text-3xl tracking-tight">Vanliga frågor</h2>
+        <div className="mt-5 space-y-4">
           {faq.map((f) => (
             <details
               key={f.q}
               className="group rounded-2xl border border-border bg-card shadow-soft"
             >
-              <summary className="cursor-pointer list-none p-6 font-serif text-lg font-bold">
+              <summary className="cursor-pointer list-none p-6 font-serif text-lg">
                 {f.q}
                 <span className="float-right text-primary-deep transition-transform group-open:rotate-45">
                   +
@@ -157,17 +160,15 @@ function ContactPage() {
         </div>
       </section>
 
-      <section className="mt-14 rounded-3xl bg-cream p-10 text-center">
-        <Heart className="mx-auto h-6 w-6 text-primary-deep" aria-hidden="true" />
-        <h2 className="mt-3 font-serif text-2xl font-bold tracking-tight">
-          Redan klar över din idé?
-        </h2>
-        <p className="mx-auto mt-2 max-w-lg text-muted-foreground">
+      <section className="mt-10 rounded-3xl bg-cream p-8 md:p-10">
+        <Heart className="h-6 w-6 text-primary-deep" aria-hidden="true" />
+        <h2 className="mt-3 font-serif text-2xl tracking-tight">Redan klar över din idé?</h2>
+        <p className="mt-2 max-w-lg text-muted-foreground">
           Skicka den direkt så startar jag med en skiss – du får förslaget innan något graveras.
         </p>
         <a
           href="mailto:hej@linsochlager.se?subject=Min%20presentid%C3%A9"
-          className="mt-6 inline-block rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          className="mt-5 inline-block rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           Skriv till mig
         </a>

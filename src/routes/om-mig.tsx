@@ -4,6 +4,7 @@ import { Gift, Hammer, Mail, PencilRuler } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE_URL } from "@/lib/siteUrls";
 import storyImage from "@/assets/story-hands.jpg";
+import { Kicker } from "@/components/Kicker";
 
 // Person-schema – riktiga uppgifter från frallan (sep 2026)
 const PERSON_JSON_LD = {
@@ -23,14 +24,14 @@ const PERSON_JSON_LD = {
 export const Route = createFileRoute("/om-mig")({
   head: () => ({
     meta: [
-      { title: "Om mig – TaggaDet" },
+      { title: "Verkstaden i Aneby – möt Fredrik | TaggaDet" },
       { rel: "canonical", href: `${SITE_URL}/om-mig` },
       {
         name: "description",
         content:
           "Möt Fredrik Arvidsson i Aneby – verkstaden bakom TaggaDet: handgjorda personliga presenter med gravyr, 3D-utskrift och foto, tillverkade i Småland sedan 2016.",
       },
-      { property: "og:title", content: "Om mig – TaggaDet" },
+      { property: "og:title", content: "Verkstaden i Aneby – möt Fredrik | TaggaDet" },
       {
         property: "og:description",
         content:
@@ -69,13 +70,13 @@ const workflow = [
 
 function AboutPage() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-14">
+    <div className="mx-auto max-w-7xl px-5 py-12">
       <Breadcrumbs items={[{ label: "Om mig" }]} />
 
       <div className="mt-8 grid items-center gap-12 md:grid-cols-2">
         <div>
-          <p className="font-script text-3xl text-primary-deep">hej, och välkommen in!</p>
-          <h1 className="mt-3 font-serif text-5xl leading-[1.05] font-bold tracking-tight md:text-6xl">
+          <Kicker>hej, och välkommen in!</Kicker>
+          <h1 className="mt-3 font-serif text-5xl leading-[1.05] tracking-tight md:text-6xl">
             Bakom TaggaDet står jag
           </h1>
           <p className="mt-7 max-w-md text-lg text-muted-foreground">
@@ -84,17 +85,17 @@ function AboutPage() {
             ofta hamnade i en låda. Jag ville göra minnen som går att hålla i, varje dag.
           </p>
           <p className="mt-4 max-w-md text-lg text-muted-foreground">
-            Därför kom gravyren till, sedan 3D-printern och Cricut-maskinen. Idag tillverkar jag
+            Därför kom gravyren, och sedan 3D-printern och Cricut-maskinen. Idag tillverkar jag
             smycken, skärbrädor, namnbrickor, foto och stickers till samma familjer, företag och
             tillfällen – med namn, datum och en massa kärlek.
           </p>
           <p className="mt-4 max-w-md text-lg text-muted-foreground">
             Varje beställning tillverkas för hand när den kommer in. Därför tar jag in ett begränsat
-            antal per vecka – kvalitet går alltid före kvantitet.
+            antal per vecka – varje beställning får tid den förtjänar.
           </p>
           <Button asChild size="lg" className="mt-8 rounded-full px-7 text-base">
             <a href="mailto:hej@linsochlager.se?subject=Min presentid%C3%A9">
-              <Mail className="mr-2 h-4 w-4" /> Skriv till mig
+              <Mail className="mr-2 h-4 w-4" aria-hidden="true" /> Skriv till mig
             </a>
           </Button>
         </div>
@@ -108,16 +109,16 @@ function AboutPage() {
         />
       </div>
 
-      <section className="mt-20">
-        <p className="font-script text-2xl text-primary-deep">så jobbar jag</p>
-        <h2 className="mt-1 font-serif text-4xl font-bold tracking-tight">Från idé till present</h2>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+      <section className="mt-14">
+        <Kicker>så jobbar jag</Kicker>
+        <h2 className="mt-1 font-serif text-4xl tracking-tight">Från idé till present</h2>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
           {workflow.map((w) => (
-            <div key={w.title} className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+            <div key={w.title} className="card-shop p-7">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-cream">
                 <w.icon className="h-5 w-5 text-primary-deep" />
               </span>
-              <h3 className="mt-4 font-serif text-xl font-bold">{w.title}</h3>
+              <h3 className="mt-4 font-serif text-xl">{w.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{w.text}</p>
             </div>
           ))}
@@ -134,18 +135,18 @@ function AboutPage() {
         </p>
       </section>
 
-      <section className="mt-20 rounded-3xl bg-cream p-10 text-center md:p-14">
-        <h2 className="font-serif text-3xl font-bold tracking-tight md:text-4xl">
+      <section className="mt-14 rounded-3xl bg-cream p-8 md:p-12">
+        <h2 className="font-serif text-3xl tracking-tight md:text-4xl">
           Har du en presentidé i åtanke?
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+        <p className="mt-3 max-w-xl text-muted-foreground">
           Skriv några rader om tillfället, namnen och känslan du vill fånga – du får ett förslag med
           skiss innan vi börjar tillverka.
         </p>
-        <div className="mt-7 flex flex-wrap justify-center gap-3">
+        <div className="mt-6 flex flex-wrap gap-3">
           <Button asChild size="lg" className="rounded-full px-7 text-base">
             <a href="mailto:hej@linsochlager.se?subject=Min presentid%C3%A9">
-              <Mail className="mr-2 h-4 w-4" /> Skriv till mig
+              <Mail className="mr-2 h-4 w-4" aria-hidden="true" /> Skriv till mig
             </a>
           </Button>
           <Button

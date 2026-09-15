@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TaggaDet — logotypkoncept</title>
+    <!--
+      Fristående förhandsgranskning. Öppna filen direkt i webbläsaren.
+      Laddar den riktiga självhostade Marcellus-filen så ordmärket visas i
+      verklig form (inte en fallback-serif). Sökvägen pekar upp till repots
+      public/fonts/ — därför fungerar sidan bara på sin plats i repot.
+    -->
+    <style>
+      @font-face {
+        font-family: "Marcellus";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url("../../../public/fonts/marcellus-latin.woff2") format("woff2");
+      }
+      /* Work Sans är bara satt i vikt 400 här. Butiken använder fler vikter, men
+         förhandsgranskningen visar bara ordmärket i Marcellus och brödtext i 400 —
+         att ladda fler vore att visa något annat än det som granskas. */
+      @font-face {
+        font-family: "Work Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url("../../../public/fonts/worksans-latin.woff2") format("woff2");
+      }
+
+      /* Samma värden som :root i src/styles.css — paletten är låst. */
+      :root {
+        --paper: oklch(0.967 0.008 85);
+        --ink: oklch(0.18 0.012 30);
+        --card: oklch(0.975 0.006 85);
+        --sepia: oklch(0.62 0.09 80);
+        --sepia-deep: oklch(0.47 0.08 78);
+        --gold: oklch(0.72 0.1 80);
+        --cream: oklch(0.95 0.01 85);
+        --muted: oklch(0.43 0.015 75);
+        --border: oklch(0.9 0.008 80);
+        --serif: "Marcellus", Georgia, serif;
+        --sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0 24px 80px;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        line-height: 1.5;
+      }
+      .wrap {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      header.top {
+        padding: 56px 0 8px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 8px;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-size: 2.25rem;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        margin: 0 0 8px;
+      }
+      .lede {
+        color: var(--muted);
+        max-width: 62ch;
+        margin: 0 0 24px;
+      }
+      .rule-note {
+        font-size: 0.8125rem;
+        color: var(--muted);
+        background: var(--cream);
+        border-left: 2px solid var(--sepia-deep);
+        padding: 10px 14px;
+        margin: 0 0 32px;
+      }
+
+      /* ---- konceptkort ---- */
+      .concept {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 1.4rem;
+        padding: 28px 28px 32px;
+        margin-bottom: 28px;
+      }
+      .concept > h2 {
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: 1.5rem;
+        margin: 0 0 4px;
+      }
+      .concept > .why {
+        color: var(--muted);
+        font-size: 0.9375rem;
+        margin: 0 0 24px;
+        max-width: 62ch;
+      }
+      .rowlabel {
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--muted);
+        margin: 0 0 8px;
+      }
+
+      /* ---- 64 px mot papper och mot mörkt ---- */
+      .stages {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 26px;
+      }
+      .stage {
+        flex: 1 1 200px;
+        border-radius: 1rem;
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+      }
+      .stage.paper {
+        background: var(--paper);
+        border: 1px solid var(--border);
+        color: var(--sepia-deep);
+      }
+      .stage.dark {
+        background: var(--ink);
+        color: var(--gold);
+      }
+      .stage.cream {
+        background: var(--cream);
+        color: var(--sepia);
+      }
+
+      /* ---- 16 px-sanningens prov ---- */
+      .favbar {
+        display: flex;
+        align-items: flex-end;
+        gap: 28px;
+        flex-wrap: wrap;
+        padding-top: 4px;
+      }
+      .fav {
+        text-align: center;
+      }
+      .fav .tabchip {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: #dee1e6;
+        border-radius: 8px 8px 0 0;
+        padding: 7px 12px 8px;
+        font-size: 12px;
+        color: #1f1f1f;
+        font-family: system-ui, sans-serif;
+      }
+      .fav .tabchip .real {
+        width: 16px;
+        height: 16px;
+        display: block;
+      }
+      /* Den förstorade rutan är ett äkta raster: märket rastas i 16/32 px i en
+         canvas och förstoras sedan utan utjämning. En vektor ritad i 64 px hade
+         sett felfri ut även för ett märke som dör i fliken. */
+      .fav .mag {
+        display: inline-block;
+        padding: 6px;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        margin-bottom: 6px;
+        min-width: 60px;
+        min-height: 60px;
+        line-height: 0;
+      }
+      .fav .mag canvas {
+        display: block;
+        image-rendering: pixelated;
+        margin: 0 auto;
+      }
+      .fav .mag .pending {
+        display: block;
+        width: 60px;
+        height: 60px;
+        font-size: 0.625rem;
+        line-height: 1.2;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        letter-spacing: 0;
+        padding: 4px;
+      }
+      .fav .cap {
+        font-size: 0.6875rem;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+      }
+
+      /* ---- ordmärkes-lockup ---- */
+      .lockups {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        align-items: flex-start;
+        border-top: 1px solid var(--border);
+        padding-top: 24px;
+      }
+      .lockup {
+        display: flex;
+        align-items: baseline;
+        gap: 1px;
+        font-family: var(--serif);
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
+      }
+      .lockup.center {
+        align-items: center;
+        gap: 8px;
+      }
+      .lockup .mark {
+        width: 22px;
+        height: 22px;
+        display: block;
+        color: var(--sepia-deep);
+      }
+      .lockup.center .mark {
+        color: var(--gold);
+      }
+      .lockup .heart {
+        width: 20px;
+        height: 20px;
+        display: block;
+        color: var(--sepia-deep);
+        fill: var(--sepia);
+        align-self: center;
+      }
+      .lockup.center .heart {
+        color: var(--gold);
+        fill: var(--gold);
+      }
+      .lockup .name {
+        font-weight: 400; /* Marcellus finns bara i 400 — viktklasser vore död vikt */
+      }
+      .lockcap {
+        font-size: 0.6875rem;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+        margin-top: 10px;
+      }
+      .old {
+        opacity: 0.72;
+      }
+      .old .name {
+        font-weight: 600; /* så ser det ut i dag — men renderas i 400, se noten */
+      }
+
+      .todo {
+        margin: 0;
+        padding-left: 22px;
+        font-size: 0.9375rem;
+        color: var(--muted);
+        max-width: 66ch;
+      }
+      .todo li {
+        margin-bottom: 12px;
+      }
+      .todo li:last-child {
+        margin-bottom: 0;
+      }
+
+      footer.foot {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        font-size: 0.8125rem;
+        color: var(--muted);
+      }
+
+      /* ---- närbildsläge (preview.html#closeup) — bara rasterprovorna, stora ---- */
+      #closeup {
+        display: none;
+      }
+      body.closeup .wrap {
+        display: none;
+      }
+      body.closeup #closeup {
+        display: block;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 22px 24px 40px;
+      }
+      #closeup h1 {
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+      }
+      #closeup .note {
+        font-size: 0.8125rem;
+        color: var(--muted);
+        max-width: 74ch;
+        margin: 0 0 14px;
+      }
+      #closeup .crow {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 14px 0;
+        border-top: 1px solid var(--border);
+      }
+      #closeup .crow > .cname {
+        font-family: var(--serif);
+        font-size: 1.15rem;
+        flex: 0 0 104px;
+        padding-top: 30px;
+      }
+      #closeup .cbox {
+        flex: 0 0 auto;
+        text-align: center;
+      }
+      #closeup .cbox canvas {
+        display: block;
+        image-rendering: pixelated;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--paper);
+      }
+      #closeup .cbox.smooth canvas {
+        image-rendering: auto;
+      }
+      #closeup .cbox .cl {
+        font-size: 0.625rem;
+        color: var(--muted);
+        margin-top: 5px;
+        letter-spacing: 0.02em;
+      }
+      code {
+        font-size: 0.8125rem;
+        background: var(--cream);
+        padding: 1px 5px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ==== Märkena som symboler, så currentColor styr färgen överallt ==== -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <!-- A. Tagg — avskuret hörn + stansat hål, tom insida (reviderad, se koncept-a-tagg.svg) -->
+        <symbol id="mark-a" viewBox="4 4 40 40">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M19 7 L36 7 Q41 7 41 12 L41 36 Q41 41 36 41 L12 41 Q7 41 7 36 L7 19 Z
+               M20.2 16 A4.2 4.2 0 1 0 20.2 24.4 A4.2 4.2 0 1 0 20.2 16 Z"
+          />
+        </symbol>
+        <!-- B. Puns — grov ring med geometriskt T i öppningen (reviderad, se koncept-b-puns.svg) -->
+        <symbol id="mark-b" viewBox="4 4 40 40">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M24 7 A17 17 0 1 0 24 41 A17 17 0 1 0 24 7 Z
+               M24 12.5 A11.5 11.5 0 1 0 24 35.5 A11.5 11.5 0 1 0 24 12.5 Z
+               M18 18.5 L30 18.5 L30 23.5 L26.5 23.5 L26.5 31 L21.5 31 L21.5 23.5 L18 23.5 Z"
+          />
+        </symbol>
+        <!-- C. Tagg-T — taggen med T i negativ yta (grövre T efter 16 px-testet) -->
+        <symbol id="mark-c" viewBox="4 4 40 40">
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M19 7 L36 7 Q41 7 41 12 L41 36 Q41 41 36 41 L12 41 Q7 41 7 36 L7 19 Z
+               M17 17.5 L31 17.5 L31 23 L26.5 23 L26.5 32 L21.5 32 L21.5 23 L17 23 Z"
+          />
+        </symbol>
+        <!-- Nuvarande ornament: lucide Heart, så jämförelsen blir rättvis -->
+        <symbol id="lucide-heart" viewBox="0 0 24 24">
+          <path
+            d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+          />
+        </symbol>
+      </defs>
+    </svg>
+
+    <div class="wrap">
+      <header class="top">
+        <h1>Logotypkoncept för TaggaDet</h1>
+        <p class="lede">
+          Tre märken, byggda som solida former med negativ yta. Det är så ett märke klarar 16 px —
+          en tunn kontur smetar ihop i flikens storlek. Alla använder <code>currentColor</code>, så
+          färgen sätts av omgivningen och följer med till mörkt läge.
+        </p>
+        <p class="rule-note">
+          <strong>Viktigt om ordmärket:</strong> Marcellus finns bara i vikt 400. Den nuvarande
+          headern sätter <code>font-semibold</code> på ordmärket, vilket är död vikt — det renderas
+          i 400 ändå. Raden längst ner visar hur det faktiskt ser ut i dag, och varför hjärtat
+          föreslås flytta till enbart önskelistan.
+        </p>
+        <p class="rule-note">
+          <strong>Om 16 px-rutan:</strong> de förstorade rutorna är ett <em>äkta</em> raster —
+          märket rastas i 16, 32 och 48 px och förstoras sedan, så att pixlarna syns. En vektor
+          ritad i 64 px hade sett felfri ut även för ett märke som dör i fliken, och då vore testet
+          värdelöst. Länken <code>#closeup</code> längst ner visar proven i stor skala.
+        </p>
+      </header>
+
+      <!-- ============ KONCEPT A ============ -->
+      <section class="concept">
+        <h2>A. Tagg</h2>
+        <p class="why">
+          Namnet betyder "tagg", och flaggskeppsprodukterna <em>är</em> taggar — pet tags,
+          nyckelringar, gravyrbrickor. Insidan är tom med flit: det är butikens löfte i en form,
+          utrymmet där din text ska graveras. Geometrin är rättad efter 16 px-testet: första
+          versionen hade ett hål som flöt ihop med det avskurna hörnet, eftersom hålet låg 0,7 px
+          från skärningen. Hålet är nu större och skärningen en ren 45°-vinkel.
+        </p>
+
+        <p class="rowlabel">64 px — mot papper, mot mörkt, mot cream</p>
+        <div class="stages">
+          <div class="stage paper">
+            <svg class="m" width="64" height="64"><use href="#mark-a" /></svg>
+          </div>
+          <div class="stage dark">
+            <svg class="m" width="64" height="64"><use href="#mark-a" /></svg>
+          </div>
+          <div class="stage cream">
+            <svg class="m" width="64" height="64"><use href="#mark-a" /></svg>
+          </div>
+        </div>
+
+        <p class="rowlabel">16 px — sanningens prov</p>
+        <div class="favbar" data-mark="mark-a">
+          <div class="fav">
+            <span class="tabchip"
+              ><svg class="real" style="color: var(--sepia-deep)"><use href="#mark-a" /></svg
+              >TaggaDet</span
+            >
+            <div class="cap">i fliken, verklig storlek</div>
+          </div>
+          <div class="fav">
+            <div class="mag" data-size="16" data-scale="4"></div>
+            <div class="cap">16 px-raster, förstorat 4×</div>
+          </div>
+          <div class="fav">
+            <div class="mag" data-size="32" data-scale="3"></div>
+            <div class="cap">32 px-raster, förstorat 3×</div>
+          </div>
+        </div>
+
+        <div class="lockups" style="margin-top: 26px">
+          <div>
+            <div class="lockup">
+              <svg class="mark"><use href="#mark-a" /></svg><span class="name">TaggaDet</span>
+            </div>
+            <div class="lockcap">HEADER-lockup (items-baseline, gap-1)</div>
+          </div>
+          <div>
+            <div class="lockup center">
+              <svg class="mark"><use href="#mark-a" /></svg><span class="name">TaggaDet</span>
+            </div>
+            <div class="lockcap">FOOTER-lockup (items-center, gap-2, guld)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ KONCEPT B ============ -->
+      <section class="concept">
+        <h2>B. Puns</h2>
+        <p class="why">
+          En gravörs stämpel: en grov ring med ett geometriskt T i öppningen. T:et är ritat av
+          streck och inte en typsnittsglyf, så märket är inte beroende av att Marcellus hunnit
+          laddas. Första versionen var en fylld skiva med en hårfin ring — 0,4 px i 16 px — som blev
+          en suddig halo runt skivan i stället för en ring. Skivan är borta och ringen grov.
+          <strong>Starkast av de tre i litet format.</strong>
+        </p>
+
+        <p class="rowlabel">64 px — mot papper, mot mörkt, mot cream</p>
+        <div class="stages">
+          <div class="stage paper">
+            <svg width="64" height="64"><use href="#mark-b" /></svg>
+          </div>
+          <div class="stage dark">
+            <svg width="64" height="64"><use href="#mark-b" /></svg>
+          </div>
+          <div class="stage cream">
+            <svg width="64" height="64"><use href="#mark-b" /></svg>
+          </div>
+        </div>
+
+        <p class="rowlabel">16 px — sanningens prov</p>
+        <div class="favbar" data-mark="mark-b">
+          <div class="fav">
+            <span class="tabchip"
+              ><svg class="real" style="color: var(--sepia-deep)"><use href="#mark-b" /></svg
+              >TaggaDet</span
+            >
+            <div class="cap">i fliken, verklig storlek</div>
+          </div>
+          <div class="fav">
+            <div class="mag" data-size="16" data-scale="4"></div>
+            <div class="cap">16 px-raster, förstorat 4×</div>
+          </div>
+          <div class="fav">
+            <div class="mag" data-size="32" data-scale="3"></div>
+            <div class="cap">32 px-raster, förstorat 3×</div>
+          </div>
+        </div>
+
+        <div class="lockups" style="margin-top: 26px">
+          <div>
+            <div class="lockup">
+              <svg class="mark"><use href="#mark-b" /></svg><span class="name">TaggaDet</span>
+            </div>
+            <div class="lockcap">HEADER-lockup</div>
+          </div>
+          <div>
+            <div class="lockup center">
+              <svg class="mark"><use href="#mark-b" /></svg><span class="name">TaggaDet</span>
+            </div>
+            <div class="lockcap">FOOTER-lockup</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ KONCEPT C ============ -->
+      <section class="concept">
+        <h2>C. Tagg-T</h2>
+        <p class="why">
+          Samma tagg som A, men det stansade hålet är utbytt mot ett T i negativ yta. Märket säger
+          både namnet och produkten i en form. T:et var först 1,1 px tjockt i 16 px och smetade ihop
+          till en gröt; det är nu 1,8 px och läses. Det är den grövsta form som ryms — blir den
+          tunnare dör den i fliken.
+        </p>
+
+        <p class="rowlabel">64 px — mot papper, mot mörkt, mot cream</p>
+        <div class="stages">
+          <div class="stage paper">
+            <svg width="64" height="64"><use href="#mark-c" /></svg>
+          </div>
+          <div class="stage dark">
+            <svg width="64" height="64"><use href="#mark-c" /></svg>
+          </div>
+          <div class="stage cream">
+            <svg width="64" height="64"><use href="#mark-c" /></svg>
+          </div>
+        </div>
+
+        <p class="rowlabel">16 px — sanningens prov</p>
+        <div class="favbar" data-mark="mark-c">
+          <div class="fav">
+            <span class="tabchip"
+              ><svg class="real" style="color: var(--sepia-deep)"><use href="#mark-c" /></svg
+              >TaggaDet</span
+            >
+            <div class="cap">i fliken, verklig storlek</div>
+          </div>
+          <div class="fav">
+            <div class="mag" data-size="16" data-scale="4"></div>
+            <div class="cap">16 px-raster, förstorat 4×</div>
+          </div>
+          <div class="fav">
+            <div class="mag" data-size="32" data-scale="3"></div>
+            <div class="cap">32 px-raster, förstorat 3×</div>
+          </div>
+        </div>
+
+        <div class="lockups" style="margin-top: 26px">
+          <div>
+            <div class="lockup">
+              <svg class="mark"><use href="#mark-c" /></svg><span class="name">TaggaDet</span>
+            </div>
+            <div class="lockcap">HEADER-lockup</div>
+          </div>
+          <div>
+            <div class="lockup center">
+              <svg class="mark"><use href="#mark-c" /></svg><span class="name">TaggaDet</span>
+            </div>
+            <div class="lockcap">FOOTER-lockup</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LÄGET I DAG ============ -->
+      <section class="concept" style="background: var(--cream)">
+        <h2>Så ser det ut i dag</h2>
+        <p class="why">
+          Ingen logotyp — ordmärket är Marcellus-text med ett lucide-hjärta bredvid. Hjärtat bär
+          redan två betydelser: varumärke <em>och</em> önskelista. Det är därför märket föreslås ta
+          över ornamentplatsen.
+        </p>
+        <div class="lockups" style="border-top: 0; padding-top: 0">
+          <div class="old">
+            <div class="lockup">
+              <span class="name">TaggaDet</span>
+              <svg class="heart"><use href="#lucide-heart" /></svg>
+            </div>
+            <div class="lockcap">HEADER i dag — hjärtat fyllt i sepia</div>
+          </div>
+          <div class="old">
+            <div class="lockup center">
+              <span class="name">TaggaDet</span>
+              <svg class="heart"><use href="#lucide-heart" /></svg>
+            </div>
+            <div class="lockcap">FOOTER i dag — hjärtat i guld</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="concept" style="background: var(--cream)">
+        <h2>Innan märket kopplas in</h2>
+        <p class="why">Tre saker som proven ovan avgjorde, och som styr hur märket byggs in:</p>
+        <ol class="todo">
+          <li>
+            <strong>Flikfilen kan inte använda <code>currentColor</code>.</strong> I en fristående
+            SVG som laddas via <code>&lt;img&gt;</code> — vilket är precis vad en favicon är — löser
+            <code>currentColor</code> till <em>svart</em>, inte till butikens sepia. Värre: svart
+            försvinner på en mörk flikrad. <code>public/favicon.svg</code> får därför explicit
+            fyllning plus en <code>prefers-color-scheme: dark</code>-variant.
+          </li>
+          <li>
+            <strong>React-komponenten kan däremot använda <code>currentColor</code>.</strong> Där
+            sitter märket i sidan och ärver textfärgen, precis som <code>Tape</code> i
+            <code>TrustPromises.tsx</code>. Det är samma streckdata, olika färgväg.
+          </li>
+          <li>
+            <strong>Delningsbilden byggs separat.</strong> 1200×630 som HTML, skärmdumpad i exakt
+            storlek: märke, ordmärke och raden
+            <em>lasergravyr &amp; personliga presenter, gjorda för hand i Småland</em>.
+          </li>
+        </ol>
+      </section>
+
+      <footer class="foot">
+        Välj ett koncept (eller be om en omgång till). Geometrin bor i
+        <code>koncept-a-tagg.svg</code>, <code>koncept-b-puns.svg</code> och
+        <code>koncept-c-tagg-t.svg</code> — det valda blir
+        <code>src/components/BrandMark.tsx</code> och kopplas in i header, footer, flik och
+        delningsbild. <br /><br />
+        Vill du se 16 px-testet i stor skala: lägg till <code>#closeup</code> i adressfältet
+        (<code>preview.html#closeup</code>).
+      </footer>
+    </div>
+
+    <!-- Fylls av skriptet; bara synlig i #closeup-läget. -->
+    <div id="closeup"></div>
+
+    <script>
+      /*
+        Fyller de förstorade rutorna med ett ÄKTA raster.
+
+        Märket rastas i 16/32/48 px i en canvas — samma nedsampling som
+        webbläsaren gör av en favicon — och förstoras sedan. En vektor ritad i
+        64 px hade sett felfri ut även för ett märke som dör i fliken.
+
+        Streckdatan läses från <symbol> ovan, så geometrin finns bara på ett
+        ställe i filen. JS av: markeringarna syns fortfarande i verklig storlek i
+        fliken ovanför — bara förstoringen uteblir.
+      */
+      (function () {
+        var color = getComputedStyle(document.documentElement)
+          .getPropertyValue("--sepia-deep")
+          .trim();
+
+        /* Rasterar märket i exakt `size` px och lämnar tillbaka den lilla duken. */
+        function rasterize(d, size) {
+          var svg =
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 4 40 40" width="' +
+            size +
+            '" height="' +
+            size +
+            '"><path fill="' +
+            color +
+            '" fill-rule="evenodd" d="' +
+            d +
+            '"/></svg>';
+          return new Promise(function (resolve, reject) {
+            var img = new Image();
+            img.onload = function () {
+              var small = document.createElement("canvas");
+              small.width = size;
+              small.height = size;
+              small.getContext("2d").drawImage(img, 0, 0, size, size);
+              resolve(small);
+            };
+            img.onerror = reject;
+            img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+          });
+        }
+
+        function magnify(small, scale, smooth) {
+          var big = document.createElement("canvas");
+          big.width = small.width * scale;
+          big.height = small.height * scale;
+          var bc = big.getContext("2d");
+          bc.imageSmoothingEnabled = !!smooth;
+          if (smooth && "imageSmoothingQuality" in bc) bc.imageSmoothingQuality = "high";
+          bc.drawImage(small, 0, 0, big.width, big.height);
+          return big;
+        }
+
+        /* --- 1. smårutorna i varje konceptkort --- */
+        var bars = Array.prototype.slice.call(document.querySelectorAll(".favbar[data-mark]"));
+
+        var marks = [];
+        bars.forEach(function (bar) {
+          var symbol = document.getElementById(bar.getAttribute("data-mark"));
+          if (!symbol) return;
+          var el = symbol.querySelector("path");
+          if (!el) return;
+          var d = el.getAttribute("d").replace(/\s+/g, " ").trim();
+          var h2 = bar.closest(".concept") && bar.closest(".concept").querySelector("h2");
+          marks.push({ id: bar.getAttribute("data-mark"), d: d, name: h2 ? h2.textContent : "" });
+
+          Array.prototype.forEach.call(bar.querySelectorAll(".mag"), function (box) {
+            var size = parseInt(box.getAttribute("data-size"), 10);
+            var scale = parseInt(box.getAttribute("data-scale"), 10);
+            box.innerHTML = '<span class="pending">rasteriserar…</span>';
+            rasterize(d, size)
+              .then(function (small) {
+                box.innerHTML = "";
+                box.appendChild(magnify(small, scale, false));
+              })
+              .catch(function () {
+                box.innerHTML =
+                  '<span class="pending">kunde inte rastas — bedöm formen i fliken i stället</span>';
+              });
+          });
+        });
+
+        /* --- 2. närbildsläget (#closeup) --- */
+        if (location.hash !== "#closeup") return;
+
+        var host = document.getElementById("closeup");
+        if (!host || !marks.length) return;
+        document.body.classList.add("closeup");
+
+        var h1 = document.createElement("h1");
+        h1.textContent = "16 px-testet i närbild";
+        var note = document.createElement("p");
+        note.className = "note";
+        note.innerHTML =
+          "Samma märke rastat i olika storlekar. <strong>Hårt</strong> = pixlarna syns som de " +
+          "är (så här ser fliken ut på en skärm utan utjämning). <strong>Mjukt</strong> = samma " +
+          "raster utjämnat, vilket ligger närmare hur ögat läser det i en flik. Ett märke " +
+          "godkänns bara om formen går att känna igen i 16 px-kolumnen.";
+        host.appendChild(h1);
+        host.appendChild(note);
+
+        var VIEWS = [
+          { size: 16, scale: 6, smooth: false, label: "16 px · 6× hårt" },
+          { size: 16, scale: 6, smooth: true, label: "16 px · 6× mjukt" },
+          { size: 32, scale: 3, smooth: false, label: "32 px · 3×" },
+          { size: 48, scale: 2, smooth: false, label: "48 px · 2×" },
+        ];
+
+        marks.forEach(function (mark) {
+          var row = document.createElement("div");
+          row.className = "crow";
+          var name = document.createElement("div");
+          name.className = "cname";
+          name.textContent = mark.name;
+          row.appendChild(name);
+
+          VIEWS.forEach(function (v) {
+            var box = document.createElement("div");
+            box.className = "cbox" + (v.smooth ? " smooth" : "");
+            var lab = document.createElement("div");
+            lab.className = "cl";
+            lab.textContent = v.label;
+            rasterize(mark.d, v.size)
+              .then(function (small) {
+                box.insertBefore(magnify(small, v.scale, v.smooth), lab);
+              })
+              .catch(function () {
+                var err = document.createElement("div");
+                err.className = "cl";
+                err.textContent = "kunde inte rastas";
+                box.insertBefore(err, lab);
+              });
+            box.appendChild(lab);
+            row.appendChild(box);
+          });
+
+          host.appendChild(row);
+        });
+      })();
+    </script>
+  </body>
+</html>

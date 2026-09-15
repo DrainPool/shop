@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { CreditCard, Heart, Menu, Package, Paintbrush } from "lucide-react";
+import { CreditCard, Heart, Menu } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,17 +15,15 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { CutoffInline } from "@/components/FomoBanner";
 import { MegaMenu } from "@/components/MegaMenu";
 import { SearchOverlay } from "@/components/SearchOverlay";
+import { Wordmark } from "@/components/Wordmark";
 import { occasions } from "@/lib/categories";
-import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
 import { useWishlist } from "@/lib/wishlist";
 import { useUiStore } from "@/stores/uiStore";
 
-const trustItems = [
-  { icon: Package, text: `Fri frakt över ${FREE_SHIPPING_LIMIT} kr` },
-  { icon: Paintbrush, text: "Tillverkas efter din beställning" },
-  { icon: CreditCard, text: "Trygg betalning med kort & Klarna" },
-];
+// Frakt/tillverkning löper nu i löfte-raden under menyn (TrustPromises) —
+// här behålls bara det som inte upprepas: betaltryggheten + nedräkningen.
+const trustItems = [{ icon: CreditCard, text: "Trygg betalning med kort & Klarna" }];
 
 // Sidor vars syfte är att stilla oro – där ska ingen nedräkning ticka
 const COUNTDOWN_FREE_PATHS = ["/retur", "/garanti", "/vanliga-fragor"];
@@ -152,14 +150,9 @@ export function SiteHeader() {
       {/* Trygghet + nedräkning i samma mörka rad – toppen ska inte äta
           hela första skärmen. */}
       <div className="bg-ink text-ink-foreground">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-5 py-2.5 text-xs font-medium sm:text-sm">
-          {trustItems.map((item, i) => (
-            // Tre rader trust-text blir för trångt på mobil – visa hela raden
-            // först från sm och uppåt (den första punkten får synas ensam).
-            <span
-              key={item.text}
-              className={`flex items-center gap-1.5 ${i > 0 ? "hidden sm:flex" : ""}`}
-            >
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-5 py-2.5 text-xs font-medium sm:text-sm">
+          {trustItems.map((item) => (
+            <span key={item.text} className="flex items-center gap-1.5">
               <item.icon className="h-4 w-4 text-gold" aria-hidden="true" />
               {item.text}
             </span>
@@ -169,10 +162,9 @@ export function SiteHeader() {
       </div>
 
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
-          <Link to="/" className="flex items-baseline gap-1">
-            <span className="font-serif text-2xl font-semibold tracking-tight">TaggaDet</span>
-            <Heart className="h-5 w-5 fill-primary text-primary-deep" aria-hidden="true" />
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
+          <Link to="/" aria-label="TaggaDet – till startsidan">
+            <Wordmark />
           </Link>
 
           <nav className="hidden items-center gap-6 text-sm font-semibold lg:flex">
@@ -201,7 +193,7 @@ export function SiteHeader() {
                   className="h-11 w-11 rounded-full md:h-9 md:w-9 lg:hidden"
                   aria-label="Öppna menyn"
                 >
-                  <Menu className="h-5 w-5" />
+                  <Menu className="h-5 w-5" aria-hidden="true" />
                 </Button>
               </SheetTrigger>
               {/* overflow-y-auto: menyn (länkar + tillfällen) blir högre än
@@ -224,9 +216,7 @@ export function SiteHeader() {
 
                 {/* Tillfällen – samma urval som dator-megamenyns "Passar till" */}
                 <nav className="mt-2 border-t border-border/60 px-4 pt-4" aria-label="Passar till">
-                  <p className="px-3 font-serif text-sm font-bold text-muted-foreground">
-                    Passar till
-                  </p>
+                  <p className="px-3 font-serif text-sm text-muted-foreground">Passar till</p>
                   <ul className="mt-2 grid grid-cols-2 gap-1">
                     {occasions.map((o) => (
                       <li key={o.slug}>
@@ -257,7 +247,6 @@ export function SiteHeader() {
           </div>
         </div>
       </header>
-
     </>
   );
 }

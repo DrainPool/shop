@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <title>Skiktprov — vinner .card-shop över utilities?</title>
+    <!--
+      Mäter computed style på riktiga element, i stället för att resonera om
+      lager och källordning. Behövs när en klass i styles.css ska kombineras
+      med Tailwind-utilities och det är oklart vem som vinner.
+
+      SÅ HÄR KÖRS DEN (från repo-roten)
+
+        npm run build
+        CSS=$(basename .output/public/assets/styles-*.css)
+        sed "s|__CSS__|$CSS|" design-system/taggadet/skiktprov.html \
+          > .output/public/skiktprov.html
+        # läs sedan .output/public/skiktprov.html i webbläsaren, eller:
+        "/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" \
+          --headless=new --disable-gpu --dump-dom \
+          --virtual-time-budget=3000 \
+          "file:///C:/Users/frall/shop/.output/public/skiktprov.html"
+
+      CSS-filens namn är hashat och byts vid varje bygge, därav __CSS__-
+      platshållaren. Den kan inte slås upp med fetch härifrån: fetch mot
+      file:// är blockerat, och <link> är det enda som fungerar.
+
+      UPPMÄTT 2026-09-15 (Tailwind 4.3.3, efter 3b-svepet):
+
+        card-shop + rounded-2xl   → 26,4 px   (.card-shop vinner)
+        rounded-2xl ensam         → 22,4 px
+        card-shop + rounded-none  → 26,4 px   (rounded-none kan INTE stänga av)
+        card-shop + shadow-none   → --shadow-soft ligger kvar
+        font-serif + font-bold    → vikt 400  (död vikten är bekräftad)
+
+      Slutsatsen: .card-shop ligger i @layer utilities men efter Tailwinds
+      utilities i källordningen, och vinner därför. Radie- och skugg-klasser
+      på ett .card-shop-element är verkningslösa — ta bort dem, eller låt dem
+      ligga (de gör ingen skada, men de ljuger om vad som styr).
+    -->
+    <style>
+      body {
+        font: 12px/1.5 ui-monospace, monospace;
+        padding: 16px;
+        margin: 0;
+      }
+      .prov {
+        padding: 6px 10px;
+        margin: 5px 0;
+      }
+      h1 {
+        font: 600 14px system-ui;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Skiktprov — computed style på riktiga element</h1>
+    <pre id="ut">väntar</pre>
+
+    <div class="prov card-shop rounded-2xl" id="a"></div>
+    <div class="prov rounded-2xl" id="b"></div>
+    <div class="prov card-shop" id="c"></div>
+    <div class="prov card-shop rounded-none" id="d"></div>
+    <div class="prov card-shop shadow-none" id="e"></div>
+    <div class="prov font-serif font-bold" id="f"></div>
+    <div class="prov font-serif" id="g"></div>
+
+    <script>
+      // __CSS__ byts mot det hashade filnamnet av kommandot i filhuvudet.
+      var lank = document.createElement("link");
+      lank.rel = "stylesheet";
+      lank.href = "./assets/__CSS__";
+      lank.onload = mat;
+      lank.onerror = function () {
+        document.getElementById("ut").textContent =
+          "Kunde inte ladda ./assets/__CSS__ — kör sed-kommandot i filhuvudet.";
+      };
+      document.head.appendChild(lank);
+      // Fallback om onload inte hinner: mät ändå efter en stund.
+      setTimeout(mat, 700);
+
+      var körd = false;
+      function mat() {
+        if (körd || !document.styleSheets.length) return;
+        körd = true;
+        function las(id) {
+          var s = getComputedStyle(document.getElementById(id));
+          return (
+            "radie=" +
+            s.borderTopLeftRadius.padEnd(9) +
+            " skugga=" +
+            (s.boxShadow === "none" ? "ingen" : "satt").padEnd(6) +
+            " vikt=" +
+            s.fontWeight.padEnd(5) +
+            " " +
+            s.fontFamily.split(",")[0]
+          );
+        }
+        var namn = {
+          a: "card-shop + rounded-2xl",
+          b: "rounded-2xl ensam      ",
+          c: "card-shop              ",
+          d: "card-shop + rounded-none",
+          e: "card-shop + shadow-none ",
+          f: "font-serif + font-bold  ",
+          g: "font-serif              ",
+        };
+        var rader = [];
+        for (var id in namn) rader.push(namn[id] + " → " + las(id));
+        document.getElementById("ut").textContent = rader.join("\n");
+      }
+    </script>
+  </body>
+</html>

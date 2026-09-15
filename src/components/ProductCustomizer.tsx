@@ -60,9 +60,6 @@ const MATERIALS_BY_TAG: Record<string, string[]> = {
   glas: [],
   mugg: [],
   tumbler: ["Rostfritt stål"],
-  keps: [],
-  tshirt: [],
-  hoodie: [],
   skarbrada: ["Ek", "Björk", "Valnöt"],
   lader: ["Läder – naturbrun", "Läder – svart"],
   stickers: ["Vinyl (sticker)"],
@@ -119,28 +116,6 @@ const TEXT_SUGGESTIONS: Record<string, { l1: string; l2?: string }[]> = {
     { l1: "Elin" },
     { l1: "Team 2026" },
     { l1: "Naturmänniskan" },
-  ],
-  keps: [
-    { l1: "Golfkungen" },
-    { l1: "Pappa" },
-    { l1: "Team E" },
-    { l1: "MVP" },
-    { l1: "Äventyraren" },
-    { l1: "Fiskaren" },
-  ],
-  tshirt: [
-    { l1: "Team Larsson" },
-    { l1: "Bästefarmor" },
-    { l1: "Familjen K" },
-    { l1: "Segrarna" },
-    { l1: "Träning 2026" },
-  ],
-  hoodie: [
-    { l1: "Team Larsson" },
-    { l1: "Världens bästa moster" },
-    { l1: "Familjen K" },
-    { l1: "Fred & skratt" },
-    { l1: "Löparklubben" },
   ],
   skarbrada: [
     { l1: "Köket" },
@@ -304,8 +279,8 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
         </div>
       )}
 
-      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
-        <h2 className="flex items-center gap-2 font-serif text-xl font-semibold">
+      <div className="card-shop p-5">
+        <h2 className="flex items-center gap-2 font-serif text-xl">
           <Sparkles className="h-4 w-4 text-gold" aria-hidden="true" /> Personlig anpassning
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -458,7 +433,7 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
           {/* Live-förhandsvisning – ger en aning om hur stilen påverkar
               texten; exakt skiss skickas alltid i mejlet före gravyr. */}
           <div className="rounded-xl border border-gold/40 bg-cream/70 p-4 text-center">
-            <p className="text-xs font-medium text-muted-foreground">Så kan din gravyr te sig</p>
+            <p className="text-xs font-medium text-muted-foreground">Så kan din gravyr bli</p>
             <p
               className="mt-2 text-2xl break-words text-ink"
               style={FONT_STACKS[font] ?? undefined}
@@ -499,7 +474,7 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
       </div>
 
       <div className="rounded-2xl bg-cream p-5">
-        <h3 className="font-serif text-lg font-semibold">Din sammanfattning</h3>
+        <h3 className="font-serif text-lg">Din sammanfattning</h3>
         <dl className="mt-3 space-y-2 text-sm">
           <div className="flex justify-between gap-4">
             <dt className="text-muted-foreground">Produkt</dt>
@@ -549,7 +524,7 @@ export function ProductCustomizer({ product }: { product: ShopifyProduct }) {
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
             <>
-              <Check className="mr-2 h-4 w-4" /> Lägg i varukorgen
+              <Check className="mr-2 h-4 w-4" aria-hidden="true" /> Lägg i varukorgen
             </>
           )}
         </Button>

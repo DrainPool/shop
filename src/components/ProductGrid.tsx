@@ -35,12 +35,12 @@ export function ProductGrid({
 
   return (
     <>
-      {/* Två kolumner redan på mobil – enkelkolumn sväljer en halv skärm
-          per kort och döljer sortimentskänslan på Google-träffar. */}
+      {/* Två kolumner redan på mobil, tre på mellanstora skärmar och fyra
+          på desktop – tätare rutnät ger kortare sidor och bättre överblick. */}
       <div
         ref={gridRef}
         tabIndex={-1}
-        className="mt-8 grid grid-cols-2 gap-4 focus:outline-none sm:gap-6 lg:grid-cols-4"
+        className="mt-6 grid grid-cols-2 gap-3 focus:outline-none sm:gap-4 md:grid-cols-3 lg:grid-cols-4"
       >
         {shown.map((p, i) => (
           // De fyra första korten syns direkt i viewporten vid SSR –
@@ -53,8 +53,9 @@ export function ProductGrid({
         Visar {Math.min(visible, products.length)} av {products.length} produkter
       </p>
       {visible < products.length && (
-        <div className="mt-10 text-center">
-          <Button variant="outline" size="lg" className="rounded-full px-8" onClick={loadMore}>
+        <div className="mt-8 text-center">
+          {/* Basen ger redan rounded-full – bara extra luft behövs. */}
+          <Button variant="outline" size="lg" className="px-8" onClick={loadMore}>
             Visa fler ({products.length - visible} kvar)
           </Button>
         </div>

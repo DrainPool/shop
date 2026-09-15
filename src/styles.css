@@ -5,71 +5,54 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Självhostade fonter (fraunces/inter/caveat i public/fonts) – inga
+ * Självhostade fonter (marcellus/worksans i public/fonts) – inga
  * förfrågningar till Google i besökarens webbläsare (GDPR: ingen
- * tredjeparts IP-läcka). Filerna är variabla woff2 från Google Fonts,
- * OFL-licensierade, nedladdade 2026-09-07. latin-ext täcker åäö.
- * Viktintervallen motsvarar det designsystemet använder (styles ovan).
+ * tredjeparts IP-läcka). woff2 från Google Fonts, OFL-licensierade,
+ * nedladdade 2026-09-09. latin-ext täcker åäö.
+ *
+ * Marcellus (rubriker) är en serif byggd på romerska inskrifter –
+ * typsnittet av graverade stenar, därför passar butikens hantverk.
+ * Work Sans (bröd) är en varm grotesk. Handstilsfonten är borttagen:
+ * de sneda accentraderna lästes billiga i stället för hantverkat.
  */
 @font-face {
-  font-family: "Inter";
+  font-family: "Marcellus";
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
   font-display: swap;
-  src: url("/fonts/inter-latin-ext.woff2") format("woff2");
+  src: url("/fonts/marcellus-latin-ext.woff2") format("woff2");
   unicode-range:
     U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
     U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
     U+A720-A7FF;
 }
 @font-face {
-  font-family: "Inter";
+  font-family: "Marcellus";
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
   font-display: swap;
-  src: url("/fonts/inter-latin.woff2") format("woff2");
+  src: url("/fonts/marcellus-latin.woff2") format("woff2");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
     U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Fraunces";
+  font-family: "Work Sans";
   font-style: normal;
-  font-weight: 600 700;
+  font-weight: 400 700;
   font-display: swap;
-  src: url("/fonts/fraunces-latin-ext.woff2") format("woff2");
+  src: url("/fonts/worksans-latin-ext.woff2") format("woff2");
   unicode-range:
     U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
     U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
     U+A720-A7FF;
 }
 @font-face {
-  font-family: "Fraunces";
+  font-family: "Work Sans";
   font-style: normal;
-  font-weight: 600 700;
+  font-weight: 400 700;
   font-display: swap;
-  src: url("/fonts/fraunces-latin.woff2") format("woff2");
-  unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
-    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Caveat";
-  font-style: normal;
-  font-weight: 500 700;
-  font-display: swap;
-  src: url("/fonts/caveat-latin-ext.woff2") format("woff2");
-  unicode-range:
-    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
-    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-    U+A720-A7FF;
-}
-@font-face {
-  font-family: "Caveat";
-  font-style: normal;
-  font-weight: 500 700;
-  font-display: swap;
-  src: url("/fonts/caveat-latin.woff2") format("woff2");
+  src: url("/fonts/worksans-latin.woff2") format("woff2");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
     U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
@@ -90,9 +73,13 @@
  */
 
 @theme inline {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Fraunces", "Cormorant Garamond", Georgia, serif;
-  --font-script: "Caveat", cursive;
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Marcellus", Georgia, serif;
+  /* --font-script är borttagen. Den pekade på Marcellus (ingen skrift-font)
+     och kolliderade dessutom med den oskiktade .font-script-regeln längre
+     ner, som definierade samma klass. Accentraderna heter nu
+     .font-inscription — se kommentaren vid klassen. */
+  --ease-soft: var(--ease-soft-curve);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -151,6 +138,16 @@
 
 :root {
   --radius: 0.9rem;
+  /* Rörelse. Tailwind 4 har ingen --duration-*-namnrymd (duration-* tar bara
+     bara tal), så tiderna lever som CSS-variabler och konsumeras av
+     projektets egna klasser (.card-shop, .hero-rise, .marquee-track).
+     Värdena är de som markupen redan dominerande använder: duration-300 (20
+     träffar) och duration-200 (9). Se MASTER.md för skalan per roll. */
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+  /* Kurvan som HomeHero redan använde i sitt inline-<style>-block. */
+  --ease-soft-curve: cubic-bezier(0.22, 1, 0.36, 1);
   /* Färgskala = samma som linsochlagernet (v2-paletten):
      ink #141010, paper #F8F5F0, sepia #C8A96E, muted #8A8178, rule #E2DDD8 */
   --background: oklch(0.967 0.008 85); /* #F8F5F0 paper */
@@ -246,6 +243,15 @@
   --cream: oklch(0.26 0.018 50); /* "cream-band" blir varm panel */
   --ink: oklch(0.22 0.014 40); /* mörk sektion, precis som i ljus-läge */
   --ink-foreground: oklch(0.95 0.01 85);
+  /* Megameny-färgerna följer med hit enligt regeln ovan — de saknades
+     tidigare, vilket gjorde att menyn behöll ljus-lägets värden. Samma
+     kulörer, uppljusade för mörk botten så de klarar 4.5:1. */
+  --menu-rose: oklch(0.7 0.11 15);
+  --menu-wood: oklch(0.7 0.09 62);
+  --menu-teal: oklch(0.68 0.06 185);
+  --menu-steel: oklch(0.68 0.05 245);
+  --menu-forest: oklch(0.66 0.06 145);
+  --menu-plum: oklch(0.68 0.08 325);
 }
 
 @layer base {
@@ -263,6 +269,37 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+/*
+ * Accent-raderna (kicker-etiketterna) hette tidigare .font-script, vilket
+ * var ett vilseledande namn: de har aldrig varit skrift utan romerska
+ * inskrifter — versaler med bred spärrning i Marcellus, dvs. samma uttryck
+ * som en graverad platta. Namnet byttes så att ingen framtida läsare
+ * "lagar" det genom att peka klassen på en skrift-font igen; handstils-
+ * fonten (Caveat) togs bort medvetet och ska inte tillbaka.
+ *
+ * Oskiktad regel => slår ut eventuella utility-klasser för samma
+ * egenskaper men rör inte storleks- och färgklasserna, som sätts per
+ * användning.
+ */
+.font-inscription {
+  font-family: var(--font-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  word-spacing: 0.08em;
+}
+
+/*
+ * Marcellus finns endast i vikt 400 (det är inskrifts-typsnittet i sig).
+ * Utan denna regel syntetiserar webbläsaren en fet stil som ser utsmetad
+ * ut – med regeln renderas alla serif-rubriker i den äkta vikten, som
+ * huggna bokstäver. Storlekar och radavstånd styrs som tidigare av
+ * storleks-klasserna per användning.
+ */
+.font-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
 }
 
 @layer utilities {
@@ -329,5 +366,124 @@
     .liquid-loader-blob::after {
       animation: none !important;
     }
+  }
+
+  /* --- Butikens enhetliga kortspec. Ersätter de fem olika
+         kortborder-stilar som fanns utspridda i komponenterna;
+         .card-shop är den enda kortytan framöver. --- */
+  .card-shop {
+    border-radius: var(--radius-3xl);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-card);
+    box-shadow: var(--shadow-soft);
+    /* Bara de egenskaper som faktiskt ändras i :hover/:active nedan.
+       transition:all animerade även layoutpåverkande egenskaper. */
+    transition:
+      transform var(--duration-base) var(--ease-soft),
+      border-color var(--duration-base) var(--ease-soft),
+      box-shadow var(--duration-base) var(--ease-soft);
+  }
+
+  .card-shop:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in oklab, var(--color-gold) 50%, transparent);
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* Taktil tryck-feedback: kortet som hålls nere släpper tillbaka
+     höjningen (lånad mikrointeraktion från 21st.dev Product Reveal Card,
+     översatt till ren CSS i stället för framer-motion). */
+  .card-shop:active {
+    transform: translateY(-1px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-shop {
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* --- hero-rise: entré för hero-texten. Låg tidigare i ett inline-
+         <style>-block i HomeHero; flyttad hit enligt samma princip som
+         .card-shop/.hero-wash nedan. Ren CSS (inte JS) så animationen
+         spelar redan i SSR-html:en. --- */
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(26px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .hero-rise {
+    animation: hero-rise 0.9s var(--ease-soft) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-rise {
+      animation: none;
+    }
+  }
+
+  /* --- marquee-track: sömlös slinga i TrustedMarquee. Låg tidigare i ett
+         inline-<style>-block; flyttad hit av samma skäl. Listan dupliceras
+         i markupen och animationen flyttar -50% för att slingan ska sluta
+         sig utan synligt hopp. --- */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 3rem;
+    animation: marquee-scroll 32s linear infinite;
+  }
+
+  .marquee-wrap:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+
+  /* --- radial-wash från HomeHero, nu som klass med token-färger
+         (var(--ink) följer mörkt läge automatiskt) i stället för
+         inline-stil i komponenten. --- */
+  .hero-wash {
+    background: radial-gradient(
+      ellipse 85% 70% at 50% 46%,
+      color-mix(in oklab, var(--color-ink) 85%, transparent),
+      color-mix(in oklab, var(--color-ink) 45%, transparent) 68%,
+      color-mix(in oklab, var(--color-ink) 78%, transparent) 100%
+    );
+  }
+
+  /* --- dekorativ guldradial från FinalCta (aldrig textbotten),
+         nu som klass med token-färg. --- */
+  .cta-glow {
+    background: radial-gradient(
+      ellipse 65% 55% at 50% 0%,
+      color-mix(in oklab, var(--color-gold) 16%, transparent),
+      transparent 70%
+    );
+  }
+
+  /* --- guld-accent i text: en enda källa i stället för spridda
+         text-gold/text-[oklch(...)]-klasser. --- */
+  .gold-accent {
+    color: var(--color-gold);
   }
 }

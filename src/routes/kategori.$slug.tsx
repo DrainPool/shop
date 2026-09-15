@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Check, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductGridSkeleton } from "@/components/ProductCardSkeleton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -11,9 +11,10 @@ import { Button } from "@/components/ui/button";
 import { CategoryHero } from "@/components/category/CategoryHero";
 import { RelatedCategoryCards } from "@/components/category/RelatedCategoryCards";
 import { ServicePricingSection } from "@/components/category/ServicePricingSection";
-import { fetchProducts, FREE_SHIPPING_LIMIT } from "@/lib/shopify";
+import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 import { getCategory } from "@/lib/categories";
 import { FOTOGRAFERING_URL, SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/kategori/$slug")({
   component: CategoryPage,
@@ -23,8 +24,11 @@ export const Route = createFileRoute("/kategori/$slug")({
   loader: async ({ params, context }) => {
     const category = getCategory(params.slug);
     if (!category) throw notFound();
+    let products: ShopifyProduct[] = [];
     try {
-      await context.queryClient.ensureQueryData({
+      // ensureQueryData löser ut själva datan – spara den så att head()
+      // kan bygga ItemList-JSON-LD av samma produkter som värmts upp.
+      products = await context.queryClient.ensureQueryData({
         queryKey: ["products", "tag", category.tag],
         queryFn: () => fetchProducts(50, `tag:${category.tag}`),
       });
@@ -34,7 +38,9 @@ export const Route = createFileRoute("/kategori/$slug")({
       // samma queryKey och visar isError-grenen vid bestående fel.
       console.error("Kategori-loader: kunde inte värma produktcachen", error);
     }
-    return { category };
+    // Produkterna i loaderData är bara till för head()s ItemList –
+    // sidan själv renderar fortfarande via useQuery (samma queryKey).
+    return { category, products };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
@@ -49,7 +55,7 @@ export const Route = createFileRoute("/kategori/$slug")({
     const pageTitle = `${title} – TaggaDet`;
     // BreadcrumbList skrivs av Breadcrumbs-komponenten (absoluta URL:er) –
     // ett block per sida räcker, två blir motströmmande för crawlers.
-    const jsonLd = [
+    const jsonLd: object[] = [
       {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -58,6 +64,21 @@ export const Route = createFileRoute("/kategori/$slug")({
         url: `${SITE_URL}/kategori/${slug}`,
       },
     ];
+    // ItemList av de produkter som faktiskt renderas i rutnätet. Tomt
+    // resultat (tjänstekategori, avpublicerade produkter eller misslyckad
+    // uppvärmning) → ingen ItemList alls, aldrig en tom lista för robots.
+    if (loaderData.products?.length) {
+      jsonLd.push({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        itemListElement: loaderData.products.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: p.node.title,
+          url: `${SITE_URL}/produkt/${p.node.handle}`,
+        })),
+      });
+    }
     return {
       meta: [
         { title: pageTitle },
@@ -82,9 +103,9 @@ export const Route = createFileRoute("/kategori/$slug")({
 function CategoryNotFound() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-24 text-center">
-      <h1 className="font-serif text-4xl font-bold tracking-tight">Kategorin finns inte</h1>
+      <h1 className="font-serif text-4xl tracking-tight">Kategorin finns inte</h1>
       <p className="mt-3 text-muted-foreground">
-        Kika i sortimentet så hittar jag rätt present tillsammans med dig.
+        Kika i sortimentet – tillsammans hittar vi rätt present.
       </p>
       <Link to="/" className="mt-6 inline-block font-semibold text-primary-deep hover:underline">
         Till startsidan
@@ -118,34 +139,22 @@ function CategoryPage() {
         />
       </CategoryHero>
 
-      <div className="mx-auto max-w-6xl px-5 py-14 md:py-16">
-        {/* Ett kompakt trust-band – dolt på mobil (headerns rad säger samma
-            sak) så första produktradan syns inom en skärmshöjd. */}
-        <div className="hidden flex-wrap items-center gap-x-5 gap-y-2 rounded-2xl border border-border/60 bg-card p-4 text-sm shadow-soft sm:flex">
-          {[
-            "Tillverkas här hemma efter din beställning",
-            "Digital skiss på gravyren innan jag börjar",
-            `Fri frakt inom Sverige över ${FREE_SHIPPING_LIMIT} kr`,
-          ].map((t) => (
-            <span key={t} className="flex items-center gap-2">
-              <Check className="h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
-              {t}
-            </span>
-          ))}
-        </div>
+      <div className="mx-auto max-w-7xl px-5 py-10 md:py-12">
+        {/* Butikens löften syns redan i den globala löfte-raden under
+            menyn – inget band här som upprepar samma rader en gång till. */}
 
         {/* Tjänstekategorier: berättelse + prislista i samma hierarki
             som en produktsida (bild/text vänster, pris höger). */}
         {isService && <ServicePricingSection category={category} />}
 
         <section
-          className={isService ? "mt-16 md:mt-20" : "mt-12"}
+          className={isService ? "mt-12 md:mt-14" : "mt-10"}
           aria-labelledby={isService ? undefined : "utbud-heading"}
         >
           {!isService && (
             <>
-              <p className="font-script text-2xl text-primary-deep">från verkstaden</p>
-              <h2 id="utbud-heading" className="mt-1 font-serif text-3xl font-bold tracking-tight">
+              <Kicker>från verkstaden</Kicker>
+              <h2 id="utbud-heading" className="mt-1 font-serif text-3xl tracking-tight">
                 Välj bland det jag gör
               </h2>
             </>
@@ -162,25 +171,27 @@ function CategoryPage() {
               /* Tom-läget för tjänstekategorier: det är inte en produkt som
                  saknas – tjänsten säljs via kontakt. */
               <div className="rounded-3xl border-2 border-dashed border-border bg-cream p-10 text-center md:p-12">
-                <p className="font-serif text-xl font-bold">Gravyr i det du redan äger</p>
+                <p className="font-serif text-xl">Gravyr i det du redan äger</p>
                 <p className="mt-2 text-sm text-muted-foreground">
                   Du lämnar in dina saker hos mig i Aneby – eller bokar in mig på plats. Skriv vad
                   du vill ha märkt och hur många det gäller, så svarar jag med en skiss och ett pris
                   att godkänna innan lasern startar.
                 </p>
+                {/* Tjänstekategorin säljs via skissen – CTA:n får säga det,
+                    inte samma formulering som överallt annars. */}
                 <Button asChild className="mt-6 rounded-full px-6">
-                  <Link to="/kontakt">Fråga mig direkt</Link>
+                  <Link to="/kontakt">Be om en skiss</Link>
                 </Button>
               </div>
             ) : (
               <div className="rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-                <p className="font-serif text-xl font-bold">Fler produkter är på gång hit</p>
+                <p className="font-serif text-xl">Fler produkter är på gång hit</p>
                 <p className="mt-2 text-sm text-muted-foreground">
                   Jag tillverkar efter önskemål – hör av dig så skissar jag något personligt till
                   just ditt tillfälle.
                 </p>
                 <Button asChild className="mt-6 rounded-full px-6">
-                  <Link to="/kontakt">Fråga mig direkt</Link>
+                  <Link to="/kontakt">Skriv din text till mig</Link>
                 </Button>
               </div>
             )
@@ -189,7 +200,7 @@ function CategoryPage() {
               <ProductFilters {...filters} total={products.length} />
               {filters.filtered.length === 0 ? (
                 <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-                  <p className="font-serif text-xl font-bold">Inget matchade ditt filter</p>
+                  <p className="font-serif text-xl">Inget matchade ditt filter</p>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Rensa filtret – eller{" "}
                     <Link to="/kontakt" className="font-semibold text-primary-deep hover:underline">
@@ -210,11 +221,9 @@ function CategoryPage() {
         <RelatedCategoryCards slugs={category.related ?? []} currentSlug={category.slug} />
 
         {category.slug === "jul" && (
-          <section className="mt-16 rounded-3xl bg-ink p-8 text-ink-foreground md:mt-20 md:p-10">
-            <p className="font-script text-2xl text-gold">julklappsguiden</p>
-            <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight">
-              Vem ska du överraska i år?
-            </h2>
+          <section className="mt-12 rounded-3xl bg-ink p-8 text-ink-foreground md:mt-14 md:p-10">
+            <p className="font-inscription text-sm text-gold md:text-base">julklappsguiden</p>
+            <h2 className="mt-1 font-serif text-3xl tracking-tight">Vem ska du överraska i år?</h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {[
                 {
@@ -223,7 +232,7 @@ function CategoryPage() {
                 },
                 {
                   t: "Barn & ungdomar",
-                  d: "Namnskylt till barnrummet, nyckelring med första reg-numret eller dopring som följer genom livet.",
+                  d: "Namnskylt till barnrummet, nyckelring med första reg-numret eller dopring som följer dig genom livet.",
                 },
                 {
                   t: "Kollegor & värdar",
@@ -231,7 +240,7 @@ function CategoryPage() {
                 },
               ].map((g) => (
                 <div key={g.t} className="rounded-2xl bg-ink-foreground/5 p-5">
-                  <h3 className="font-serif text-lg font-bold">{g.t}</h3>
+                  <h3 className="font-serif text-lg">{g.t}</h3>
                   <p className="mt-1.5 text-sm opacity-80">{g.d}</p>
                 </div>
               ))}
@@ -244,8 +253,8 @@ function CategoryPage() {
           </section>
         )}
 
-        <section className="mt-16 rounded-3xl bg-cream p-8 md:mt-20 md:p-10">
-          <h2 className="font-serif text-2xl font-bold">
+        <section className="mt-12 rounded-3xl bg-cream p-8 md:mt-14 md:p-10">
+          <h2 className="font-serif text-2xl">
             {isService ? "Bra att veta" : `Om ${category.title.toLowerCase()}`}
           </h2>
           {/* Tjänstekategorier har redan sin about-text i tjänste-sektionen
@@ -253,7 +262,7 @@ function CategoryPage() {
           {!isService && (
             <p className="mt-3 max-w-3xl text-muted-foreground">
               {category.about ??
-                `Här samlar jag det jag just nu gör inom ${category.title.toLowerCase()}. Allt tillverkas för hand i verkstaden i Småland, efter din beställning. Hittar du inte precis det du söker skissar jag gärna något helt eget – skriv några rader om vem presenten är till, så föreslår jag ett upplägg.`}
+                `Här samlar jag det jag för tillfället gör inom ${category.title.toLowerCase()}. Allt tillverkas för hand i verkstaden i Småland, efter din beställning. Hittar du inte precis det du söker skissar jag gärna något helt eget – skriv några rader om vem presenten är till, så föreslår jag ett upplägg.`}
             </p>
           )}
           <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">

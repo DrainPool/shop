@@ -1,5 +1,6 @@
 import { PricingBlock } from "@/components/PricingBlock";
 import type { Category } from "@/lib/categories";
+import { Kicker } from "@/components/Kicker";
 
 /**
  * Tjänstekategorier (t.ex. lasergravyr på golfklubbor) har ingen
@@ -28,8 +29,8 @@ export function ServicePricingSection({ category }: { category: Category }) {
       className="grid gap-10 lg:grid-cols-[3fr_2fr] lg:items-start lg:gap-12"
     >
       <div>
-        <p className="font-script text-2xl text-primary-deep">så går det till</p>
-        <h2 id="tjanst-heading" className="mt-1 font-serif text-3xl font-bold tracking-tight">
+        <Kicker>så går det till</Kicker>
+        <h2 id="tjanst-heading" className="mt-1 font-serif text-3xl tracking-tight">
           Om tjänsten
         </h2>
         <div className="mt-5 space-y-4 text-muted-foreground">

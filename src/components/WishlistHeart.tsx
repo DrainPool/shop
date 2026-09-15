@@ -61,8 +61,9 @@ export function WishlistHeart({
         saved ? `Ta bort ${item.title} från önskelistan` : `Spara ${item.title} i önskelistan`
       }
       className={cn(
-        // h-11 w-11: 44 px tryckyta på mobil (md:h-9 md:w-9 på dator)
-        "flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-background/90 shadow-soft backdrop-blur transition-[color,transform] duration-300 ease-out hover:scale-110 active:scale-90 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100 md:h-9 md:w-9",
+        // h-11 w-11: 44 px tryckyta på mobil (md:h-9 md:w-9 på dator).
+        // Hover-löftet: lätt skalning plus samma shadow-lift som korten.
+        "flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-background/90 shadow-soft backdrop-blur transition-[color,transform,box-shadow] duration-300 ease-out hover:scale-110 hover:shadow-lift active:scale-90 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100 md:h-9 md:w-9",
         saved ? "text-primary-deep" : "text-muted-foreground hover:text-primary-deep",
       )}
     >

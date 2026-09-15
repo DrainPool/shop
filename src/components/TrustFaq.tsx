@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Gift, ShieldCheck, Truck } from "lucide-react";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
 import { Button } from "@/components/ui/button";
+import { Kicker } from "@/components/Kicker";
 
 /**
  * "Trygghet + FAQ" – sista sektionen på startsidan, direkt efter
@@ -95,12 +96,12 @@ const HOME_FAQ: FaqItem[] = [
 
 export function TrustFaq() {
   return (
-    <section id="faq" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-16">
+    <section id="faq" className="mx-auto max-w-7xl scroll-mt-28 px-5 py-12">
       <div className="grid gap-10 lg:grid-cols-[2fr_3fr]">
         {/* Vänster: intro + trygghetskort + CTA */}
         <div>
-          <p className="font-script text-2xl text-primary-deep">du kan fråga mig vad som helst</p>
-          <h2 className="mt-1 font-serif text-4xl font-bold tracking-tight">
+          <Kicker>du kan fråga mig vad som helst</Kicker>
+          <h2 className="mt-1 font-serif text-4xl tracking-tight">
             De flesta undrar innan de beställer
           </h2>
           <p className="mt-4 text-muted-foreground">
@@ -112,10 +113,13 @@ export function TrustFaq() {
 
           <div className="mt-8 space-y-4">
             {TRUST_CARDS.map((card) => (
-              <div key={card.title} className="rounded-2xl bg-cream p-5">
-                <div className="flex items-center gap-2">
-                  <card.icon className="h-5 w-5 text-primary-deep" aria-hidden="true" />
-                  <h3 className="font-serif text-lg font-bold">{card.title}</h3>
+              <div key={card.title} className="card-shop p-5">
+                <div className="flex items-center gap-3">
+                  {/* Ikonen i samma cream-cirkel som övriga kort – enhetlig kortgrammatik */}
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cream">
+                    <card.icon className="h-5 w-5 text-primary-deep" aria-hidden="true" />
+                  </span>
+                  <h3 className="font-serif text-lg">{card.title}</h3>
                 </div>
                 <p className="mt-1.5 text-sm text-muted-foreground">{card.text}</p>
                 {card.to && card.linkLabel && (

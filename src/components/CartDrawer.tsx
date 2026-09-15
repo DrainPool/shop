@@ -147,7 +147,7 @@ export function CartDrawer() {
           variant="outline"
           size="icon"
           // h-11 w-11 på mobil: 44 px tryckyta (tummens minimimått)
-          className="relative h-11 w-11 rounded-full md:h-9 md:w-9"
+          className="relative h-11 w-11 md:h-9 md:w-9"
           aria-label={
             totalItems > 0
               ? `Öppna varukorgen, ${totalItems} ${totalItems === 1 ? "vara" : "varor"}`
@@ -194,7 +194,9 @@ export function CartDrawer() {
                     to="/kategori/$slug"
                     params={{ slug: c.slug }}
                     onClick={() => setCartOpen(false)}
-                    className="min-h-11 rounded-full bg-cream px-4 py-2 text-sm font-medium transition-colors duration-300 hover:text-primary-deep md:min-h-9 md:py-1.5"
+                    // Samma borderspråk som sökoverlayns chips: ram som tänds
+                    // vid hover i stället för bara en färgändring.
+                    className="min-h-11 rounded-full border border-border bg-cream px-4 py-2 text-sm font-medium transition-colors duration-300 hover:border-primary md:min-h-9 md:py-1.5"
                   >
                     {c.label}
                   </Link>
@@ -208,8 +210,8 @@ export function CartDrawer() {
               <div className="min-h-0 flex-1 overflow-y-auto pr-2">
                 <div className="space-y-4">
                   {items.map((item) => (
-                    <div key={item.lineKey} className="flex gap-4 rounded-lg bg-cream/60 p-3">
-                      <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-muted">
+                    <div key={item.lineKey} className="flex gap-4 rounded-2xl bg-cream/60 p-3">
+                      <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-muted">
                         {item.product.node.images?.edges?.[0]?.node && (
                           <img
                             src={item.product.node.images.edges[0].node.url}
@@ -325,7 +327,7 @@ export function CartDrawer() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-semibold">Summa</span>
-                  <span className="font-serif text-2xl font-semibold tabular-nums">
+                  <span className="font-serif text-2xl tabular-nums">
                     {formatPrice(totalPrice, currency)}
                   </span>
                 </div>
@@ -338,7 +340,7 @@ export function CartDrawer() {
 
                 <Button
                   onClick={handleCheckout}
-                  className="w-full rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.98] motion-reduce:active:scale-100"
+                  className="w-full transition-[color,background-color,transform] duration-200 active:scale-[0.98] motion-reduce:active:scale-100"
                   size="lg"
                   disabled={items.length === 0 || isLoading || isSyncing}
                 >

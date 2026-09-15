@@ -42,9 +42,9 @@ export function NewsletterSignup({ className }: { className?: string }) {
   return (
     <div className={cn("rounded-3xl bg-cream p-7", className)}>
       {/* h2 – sektionstiteln ska nås via rubriknavigering, inte bara visuellt */}
-      <h2 className="flex items-center gap-2 font-serif text-xl font-bold">
+      <h2 className="flex items-center gap-2 font-serif text-xl">
         <Mail className="h-5 w-5 text-primary-deep" aria-hidden="true" />
-        Nyheter, tips och släpp först
+        Nyheter och presenttips först
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
         Några mejl om året – nya produkter, säsongens presenttips och när tillverkningen börjar bli
@@ -95,7 +95,7 @@ export function NewsletterSignup({ className }: { className?: string }) {
               type="submit"
               className="rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.97] motion-reduce:active:scale-100"
             >
-              Håll mig uppdaterad
+              Anmäl mig
             </Button>
           </div>
           {error && (

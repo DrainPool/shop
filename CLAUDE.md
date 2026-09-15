@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-"TaggaDet" (döptes om från "Lins & Lager", sep 2026) — a Swedish e-commerce site (engraved/personalized gifts) built as a headless Shopify storefront. The shop is standalone but linked to linsochlager.net (frallan's photo site, separate repo); domain, e-mail (hej@linsochlager.se) and Plausible still use linsochlager until a TaggaDet domain exists. All user-facing copy, comments, and commit messages are in **Swedish**. The owner goes by "frallan"; the repo path is `shop`, planning docs live in `.hermes/plans/` (launch plan, QA reports, sales-copy research) — read the current launch plan before doing larger feature work.
+"TaggaDet" (döptes om från "Lins & Lager", sep 2026) — a Swedish e-commerce site (engraved/personalized gifts) built as a headless Shopify storefront. The shop is standalone but linked to linsochlager.net (frallan's photo site, separate repo); domain, e-mail (hej@linsochlager.se) and Plausible still use linsochlager until a TaggaDet domain exists. All user-facing copy, comments, and commit messages are in **Swedish**. The owner goes by "frallan"; the repo path is `shop`, research docs live in `.hermes/plans/` (currently konkurrentgranskningar — competitor reviews) — read the latest docs there before doing larger feature work.
 
 ## Commands
 
@@ -41,7 +41,7 @@ TanStack Start (SSR) + React 19 + Tailwind CSS 4 + zustand + Radix/shadcn (`src/
 **Product data — two modes, keyed by `VITE_DEMO_MODE=1` in `.env`:**
 
 - **Shopify mode** (default): `src/lib/shopify.ts` talks to the Shopify Storefront API (GraphQL). The store currently has no active plan or products, so live calls fail — that's why demo mode exists.
-- **Demo mode**: `src/lib/demoProducts.ts` provides 12 fictional products that mock `fetchProducts`/`fetchProductByHandle` (prices follow the competitive research in `.hermes/plans/`). Product images are AI-generated, served from `public/images/products/` (`{kategori}_{plats}_{hash}.webp` naming; `public/images/products/_v1_backup/` holds old versions).
+- **Demo mode**: `src/lib/demoProducts.ts` provides 38 fictional products that mock `fetchProducts`/`fetchProductByHandle`/`fetchSearch`. Product images are AI-generated, served from `public/images/products/` (`{kategori}_{plats}_{hash}.webp` naming; `public/images/products/_v1_backup/` holds old versions).
 
 Every consumer checks `isDemoMode()` and branches — if you add a new Shopify-touching code path, it needs its own demo-mode branch (this pattern exists in `src/stores/cartStore.ts` for cart mutations, added to silence 401 errors in demo).
 
@@ -57,7 +57,8 @@ Every consumer checks `isDemoMode()` and branches — if you add a new Shopify-t
 
 ## Conventions
 
-- Prices are never hardcoded in copy (they change); product references are fine. Formatting goes through `formatPrice()` in `shopify.ts` (sv-SE, no decimals).
+- **Design systemet är nedskrivet i `design-system/taggadet/MASTER.md`** — läs den innan du bygger eller ändrar en sida, och lägg sid-specifika avvikelser i `design-system/taggadet/pages/<sida>.md`. Tokens bor i `src/styles.css`; MASTER beskriver vad de är till för, vad som är förbjudet och vilka efterslänt som är kända. Färgpaletten är låst (sepia-v2, delad med linsochlager.net).
+- Prices are never hardcoded in copy (they change); product references are fine. Formatting goes through `formatPrice()` in `shopify.ts` (sv-SE, no decimals). GiftBundles (presentpaket) follows the same honesty rule: bundles link to real category pages, no invented package prices — final price is set in the quote or later as a real Shopify bundle product.
 - Sales copy is first-person ("jag"), warm, sepia-toned — competitive-copy insights are documented in `.hermes/plans/saljgranskning-*.md`.
 - SEO structures in place: JSON-LD (BreadcrumbList + CollectionPage) on category pages, sitemap, OG meta — keep them intact when editing routes.
 - ESLint uses prettier (`eslint-plugin-prettier`); run `npm run format` before committing to avoid lint noise.

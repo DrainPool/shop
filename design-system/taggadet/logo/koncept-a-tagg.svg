@@ -1,0 +1,26 @@
+<!--
+  Koncept A — Tagg.
+  En hängande tagg med avskuret övre vänsterhörn och stansat hål. Insidan är
+  tom: det är butikens löfte i en form — utrymmet där DIN text ska graveras.
+
+  Geometrin är reviderad efter 16 px-testet i preview.html. Första versionen
+  hade två fel som bara syntes i litet format:
+    · skärningen var inte 45° (14 enheter vågrätt mot 17 lodrätt), så taggen
+      såg sned ut
+    · hålet låg 2,15 enheter från skärlinjen — 0,72 px i 16 px — och flöt ihop
+      med hörnet till en grötig flik i stället för att läsas som ett hål
+  Nu: ren 45°-skärning (19,7)→(7,19), hål i (20,2 20,2) med radie 4,2. Hålet är
+  8,4 enheter tvärs (2,9 px i 16 px) och har 6 enheter material mot skärningen
+  (2,0 px). Båda detaljerna överlever nedsamplingen.
+
+  Solid form med negativ yta (fill-rule="evenodd").
+  currentColor → färgen sätts av omgivningen.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 4 40 40" role="img" aria-label="TaggaDet">
+  <path
+    fill="currentColor"
+    fill-rule="evenodd"
+    d="M19 7 L36 7 Q41 7 41 12 L41 36 Q41 41 36 41 L12 41 Q7 41 7 36 L7 19 Z
+       M20.2 16 A4.2 4.2 0 1 0 20.2 24.4 A4.2 4.2 0 1 0 20.2 16 Z"
+  />
+</svg>

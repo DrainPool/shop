@@ -1,25 +1,18 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/home/Reveal";
 
 /**
  * Action-steget: avslutande mörkt kapitel som bokmärke till heron – kontrast-
- * riktigt, med en tydlig primär CTA till kontakt och en sekundär till
- * sortimentet. Guld-tonen i toppen är dekorativ radial, aldrig textbotten.
+ * riktigt, med en enda stor pill-CTA. Guld-glowen i toppen (.cta-glow) är
+ * dekorativ radial, aldrig textbotten, och en tunn guld-lina markerar
+ * övergången in i kapitlet.
  */
 export function FinalCta() {
   return (
-    <section className="relative overflow-hidden bg-ink py-24 text-ink-foreground md:py-36">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 65% 55% at 50% 0%, oklch(0.72 0.1 80 / 0.16), transparent 70%)",
-        }}
-      />
+    <section className="relative overflow-hidden border-t border-gold/20 bg-ink py-16 text-ink-foreground md:py-24">
+      <div aria-hidden="true" className="cta-glow absolute inset-0" />
       {/* Mjuk övergång ner mot pappret och footern – samma fadespråk som
           heron och processkapitlet, de mörka kapitlen klipps aldrig hårt. */}
       <div
@@ -29,8 +22,8 @@ export function FinalCta() {
 
       <div className="relative mx-auto max-w-3xl px-5 text-center">
         <Reveal>
-          <p className="font-script text-2xl text-gold md:text-3xl">börja med en rad</p>
-          <h2 className="mt-2 font-serif text-4xl font-bold tracking-tight md:text-6xl">
+          <p className="font-inscription text-sm text-gold md:text-base">börja med en rad</p>
+          <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-6xl">
             Vad vill du gravera in?
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-foreground/85">
@@ -38,20 +31,9 @@ export function FinalCta() {
             skiss och ett förslag. Det som finns i butiken är bara en början.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Button asChild size="lg" className="h-12 rounded-full px-8 text-base font-semibold">
+          <div className="mt-10">
+            <Button asChild size="lg">
               <Link to="/kontakt">Skicka din graveringsidé</Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="h-12 rounded-full border-ink-foreground/50 bg-transparent px-8 text-base font-semibold text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground"
-            >
-              <Link to="/sortiment">
-                Utforska kategorier
-                <ArrowRight className="ml-1 h-5 w-5" aria-hidden="true" />
-              </Link>
             </Button>
           </div>
 

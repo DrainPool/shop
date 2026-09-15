@@ -2,17 +2,20 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Package, Clock, Truck, MapPin } from "lucide-react";
 import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
+import { SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/frakt-leverans")({
   head: () => ({
     meta: [
-      { title: "Frakt & leveranstid – TaggaDet" },
+      { title: "Frakt & leveranstid | TaggaDet" },
+      { rel: "canonical", href: `${SITE_URL}/frakt-leverans` },
       {
         name: "description",
         content:
           "Så levererar jag dina personliga produkter: fraktkostnader, tillverkningstid och leveransalternativ hos TaggaDet.",
       },
-      { property: "og:title", content: "Frakt & leveranstid – TaggaDet" },
+      { property: "og:title", content: "Frakt & leveranstid | TaggaDet" },
       {
         property: "og:description",
         content: "Fraktkostnader, tillverkningstid och leveransalternativ hos TaggaDet.",
@@ -28,8 +31,8 @@ function ShippingPage() {
   return (
     <article className="mx-auto max-w-3xl px-5 py-16">
       <Breadcrumbs items={[{ label: "Frakt & leveranstid" }]} />
-      <p className="mt-6 font-script text-2xl text-primary-deep">Bra att veta</p>
-      <h1 className="mt-2 font-serif text-4xl font-semibold">Frakt & leveranstid</h1>
+      <Kicker className="mt-6">Bra att veta</Kicker>
+      <h1 className="mt-2 font-serif text-4xl">Frakt & leveranstid</h1>
       <p className="mt-4 text-muted-foreground">
         Allt hos TaggaDet tillverkas för hand efter din beställning. Därför består leveranstiden
         alltid av två delar: <strong>tillverkningstid</strong> + <strong>frakttid</strong>.
@@ -38,7 +41,7 @@ function ShippingPage() {
       <div className="mt-10 grid gap-5 sm:grid-cols-2">
         <section className="rounded-2xl border border-border bg-card p-6">
           <Truck className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-          <h2 className="mt-3 font-serif text-xl font-semibold">Frakt</h2>
+          <h2 className="mt-3 font-serif text-xl">Frakt</h2>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>• Fri frakt på beställningar över {FREE_SHIPPING_LIMIT} kr</li>
             <li>• Brev och spårbar paketleverans via PostNord</li>
@@ -48,7 +51,7 @@ function ShippingPage() {
 
         <section className="rounded-2xl border border-border bg-card p-6">
           <Clock className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-          <h2 className="mt-3 font-serif text-xl font-semibold">Leveranstid</h2>
+          <h2 className="mt-3 font-serif text-xl">Leveranstid</h2>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>• Tillverkning: 3–7 arbetsdagar</li>
             <li>• Frakt inom Sverige: 2–4 arbetsdagar</li>
@@ -59,7 +62,7 @@ function ShippingPage() {
 
         <section className="rounded-2xl border border-border bg-card p-6">
           <Package className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-          <h2 className="mt-3 font-serif text-xl font-semibold">Emballage</h2>
+          <h2 className="mt-3 font-serif text-xl">Emballage</h2>
           <p className="mt-3 text-sm text-muted-foreground">
             Varje beställning packas omsorgsfullt – smycken i presentask, gravyrer och 3D-utskrifter
             i skyddande emballage. Klart att ge bort direkt.
@@ -68,7 +71,7 @@ function ShippingPage() {
 
         <section className="rounded-2xl border border-border bg-card p-6">
           <MapPin className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-          <h2 className="mt-3 font-serif text-xl font-semibold">Leveransområde</h2>
+          <h2 className="mt-3 font-serif text-xl">Leveransområde</h2>
           <p className="mt-3 text-sm text-muted-foreground">
             Jag levererar i hela Sverige. Vid beställning fyller du i din fraktadress direkt i
             kassan och ser exakt fraktkostnad innan du betalar.

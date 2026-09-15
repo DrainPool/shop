@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUiStore } from "@/stores/uiStore";
 import { productTypes } from "@/lib/categories";
+import { badgeTone } from "@/lib/badgeTone";
 import { formatPrice, searchProducts } from "@/lib/shopify";
 
 const POPULAR = ["nyckelring", "smycken", "skärbräda", "mugg", "gravyr"];
@@ -68,7 +69,7 @@ export function SearchOverlay() {
           className="h-11 w-11 gap-2 rounded-full px-3 md:h-9 md:w-auto"
           aria-label="Sök i butiken"
         >
-          <Search className="h-5 w-5" />
+          <Search className="h-5 w-5" aria-hidden="true" />
           <kbd className="hidden pointer-events-none rounded-full bg-cream px-2 py-0.5 text-xs font-medium text-muted-foreground md:inline">
             ⌘K
           </kbd>
@@ -84,7 +85,10 @@ export function SearchOverlay() {
         </DialogHeader>
 
         <div className="relative">
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search
+            className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            aria-hidden="true"
+          />
           <Input
             autoFocus
             value={term}
@@ -123,7 +127,8 @@ export function SearchOverlay() {
                       to="/kategori/$slug"
                       params={{ slug: c.slug }}
                       onClick={() => setSearchOpen(false)}
-                      className="flex min-h-11 items-center rounded-full bg-cream px-3 py-1.5 text-sm hover:text-primary-deep md:min-h-9"
+                      // En chipstil i hela vyn: ram + tänd ram vid hover.
+                      className="flex min-h-11 items-center rounded-full border border-border px-3 py-1.5 text-sm transition-colors hover:border-primary md:min-h-9"
                     >
                       {c.short}
                     </Link>
@@ -154,7 +159,7 @@ export function SearchOverlay() {
                   to="/kategori/$slug"
                   params={{ slug: matchedCategory.slug }}
                   onClick={() => setSearchOpen(false)}
-                  className="mt-3 flex items-center justify-between gap-2 rounded-full border border-gold/50 bg-gold/15 px-4 py-2 font-semibold text-foreground transition-colors hover:bg-gold/25"
+                  className={`mt-3 flex items-center justify-between gap-2 rounded-full px-4 py-2 font-semibold transition-colors hover:bg-gold/25 ${badgeTone.gold}`}
                 >
                   Gå till {matchedCategory.short || matchedCategory.title}
                   <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -168,7 +173,7 @@ export function SearchOverlay() {
                   to="/kategori/$slug"
                   params={{ slug: matchedCategory.slug }}
                   onClick={() => setSearchOpen(false)}
-                  className="flex items-center justify-between gap-2 rounded-full border border-gold/50 bg-gold/15 px-4 py-2 text-sm font-semibold transition-colors hover:bg-gold/25"
+                  className={`flex items-center justify-between gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors hover:bg-gold/25 ${badgeTone.gold}`}
                 >
                   Gå till {matchedCategory.short || matchedCategory.title}
                   <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />

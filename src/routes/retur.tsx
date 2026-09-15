@@ -1,17 +1,20 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ShieldAlert, Ban, MessageCircleHeart } from "lucide-react";
+import { SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/retur")({
   head: () => ({
     meta: [
-      { title: "Retur & reklamation – TaggaDet" },
+      { title: "Retur & reklamation | TaggaDet" },
+      { rel: "canonical", href: `${SITE_URL}/retur` },
       {
         name: "description",
         content:
           "Personligt tillverkade produkter omfattas inte av ångerrätten – men full reklamationsrätt gäller alltid. Läs villkoren.",
       },
-      { property: "og:title", content: "Retur & reklamation – TaggaDet" },
+      { property: "og:title", content: "Retur & reklamation | TaggaDet" },
       {
         property: "og:description",
         content:
@@ -28,8 +31,8 @@ function ReturnsPage() {
   return (
     <article className="mx-auto max-w-3xl px-5 py-16">
       <Breadcrumbs items={[{ label: "Retur & reklamation" }]} />
-      <p className="mt-6 font-script text-2xl text-primary-deep">Mina villkor</p>
-      <h1 className="mt-2 font-serif text-4xl font-semibold">Retur & reklamation</h1>
+      <Kicker className="mt-6">Mina villkor</Kicker>
+      <h1 className="mt-2 font-serif text-4xl">Retur & reklamation</h1>
 
       <section className="mt-8 rounded-2xl border border-primary/40 bg-primary/5 p-6">
         <div className="flex items-start gap-3">
@@ -38,12 +41,12 @@ function ReturnsPage() {
             aria-hidden="true"
           />
           <div>
-            <h2 className="font-serif text-xl font-semibold">Ditt bästa skydd: skissen</h2>
+            <h2 className="font-serif text-xl">Ditt bästa skydd: skissen</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Innan jag tillverkar något graverat skickar jag alltid en digital skiss på exakt hur
-              texten och layouten kommer att se ut – och ingenting börjar förrän du sagt ja. Det är
-              ditt största skydd: stavfel, datum och layout hinner du upptäcka medan det fortfarande
-              är gratis att ändra.
+              texten och layouten kommer att se ut – och ingenting graveras förrän du sagt ja. Det
+              är ditt största skydd: stavfel, datum och layout hinner du upptäcka medan det
+              fortfarande är gratis att ändra.
             </p>
           </div>
         </div>
@@ -53,9 +56,7 @@ function ReturnsPage() {
         <div className="flex items-start gap-3">
           <Ban className="mt-1 h-6 w-6 shrink-0 text-primary-deep" aria-hidden="true" />
           <div>
-            <h2 className="font-serif text-xl font-semibold">
-              Inga returer på personliga produkter
-            </h2>
+            <h2 className="font-serif text-xl">Inga returer på personliga produkter</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Alla produkter tillverkas specifikt för dig – med ditt namn, din text, ditt foto eller
               ditt motiv. Enligt 2 kap. 11 § lagen (2005:59) om distansavtal och avtal utanför
@@ -72,7 +73,7 @@ function ReturnsPage() {
         <div className="flex items-start gap-3">
           <ShieldAlert className="mt-1 h-6 w-6 shrink-0 text-primary-deep" aria-hidden="true" />
           <div>
-            <h2 className="font-serif text-xl font-semibold">Reklamationsrätt – alltid</h2>
+            <h2 className="font-serif text-xl">Reklamationsrätt – alltid</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Skulle det vara något fel på din produkt – till exempel fel gravyr mot vad du angav,
               transportskada eller tillverkningsfel – har du alltid rätt att reklamera enligt
@@ -96,7 +97,7 @@ function ReturnsPage() {
             aria-hidden="true"
           />
           <div>
-            <h2 className="font-serif text-xl font-semibold">Skrivfel efter beställningen?</h2>
+            <h2 className="font-serif text-xl">Skrivfel efter beställningen?</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Upptäcker du ett stavfel efter att du beställt? Hör av dig så fort som möjligt – har
               jag inte börjat tillverka än kan jag nästan alltid ändra, helt gratis. Och i skissen

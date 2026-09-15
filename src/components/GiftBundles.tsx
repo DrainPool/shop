@@ -1,10 +1,23 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Gift, PackageCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Gift, PackageCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/home/Reveal";
+import { IdeaBand } from "@/components/IdeaBand";
+import { Kicker } from "@/components/Kicker";
 
 /**
  * Presentpaket – höjer snittordern genom att föreslå kombinationer
  * i stället för en ensam liten produkt.
+ *
+ * Hyllkänsla: tre täta kort i en rad (max-w-7xl), en gemensam
+ * vänsterställd rubrikrad, målgruppsordet som font-inscription-etikett med
+ * guld-understreck som drar fram vid hover, och innehållet som en
+ * "innehållsförteckning" (guld-tick + hairline-rader i stället för
+ * punktlista). Hover "packar upp" paketet: .card-shop lyfter kortet medan
+ * lista och knappar glider in ett par pixlar.
+ *
+ * IdeaBand (egna designer + foto-cross-sell) renderas som en avslutande
+ * del i samma kapitel – färre, större sektioner på startsidan.
  *
  * ÄRLIGHETS-RAM: inga påhittade fasta paketpriser. Varje paket pekar på
  * riktiga kategorier i butiken; slutpriset sätter jag i offerten (eller
@@ -49,50 +62,76 @@ const BUNDLES: Bundle[] = [
 
 export function GiftBundles() {
   return (
-    <section className="mx-auto max-w-6xl px-5 py-14">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="font-script text-2xl text-primary-deep">enklare att ge bort flera</p>
-          <h2 className="mt-1 font-serif text-4xl font-bold tracking-tight">Presentpaket</h2>
-          <p className="mt-2 max-w-xl text-muted-foreground">
-            Ska du överraska ordentligt blir det oftast finare – och billigare – att ta flera saker i
-            samma beställning. Jag håller ihop typsnitt och gravyr så allt hör ihop, och packar det
-            som ett paket.
+    <section className="mx-auto max-w-7xl px-5 py-14">
+      {/* En gemensam rubrikrad, vänsterställd: kicker + rubrik till vänster,
+          ingressen som egen kolumn till höger (samma rhythm som ProcessSection). */}
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <Reveal>
+          <Kicker>paket som hör ihop</Kicker>
+          <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">Presentpaket</h2>
+        </Reveal>
+        <Reveal delay={120}>
+          <p className="max-w-md text-muted-foreground lg:pb-1">
+            Ska du överraska ordentligt blir det finare – och ofta snålsammare – att ge flera saker
+            i samma stil. Jag håller typsnitt och gravyr från första till sista detaljen, packar
+            allt som ett paket och hör av mig med ett samlat pris innan jag sätter igång.
           </p>
-        </div>
+        </Reveal>
       </div>
 
-      <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {BUNDLES.map((b) => (
-          <div
-            key={b.title}
-            className="flex flex-col rounded-3xl border-2 border-ink/10 bg-card p-6 shadow-soft transition-all hover:-translate-y-1 hover:border-ink/25 hover:shadow-lift"
-          >
-            <b.icon className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-            <p className="mt-3 font-script text-xl text-primary-deep">{b.kicker}</p>
-            <h3 className="mt-1 font-serif text-2xl font-bold">{b.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{b.text}</p>
-            <ul className="mt-4 space-y-1.5 text-sm">
-              {b.includes.map((i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  {i}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-6 flex flex-wrap gap-2 pt-2">
-              <Button asChild size="sm" className="rounded-full px-5">
-                <Link to="/kategori/$slug" params={{ slug: b.slug }}>
-                  Se produkterna <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-                </Link>
-              </Button>
-              <Button asChild size="sm" variant="outline" className="rounded-full px-5">
-                <Link to="/kontakt">Be om paketpris</Link>
-              </Button>
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {BUNDLES.map((b, i) => (
+          <Reveal key={b.title} delay={i * 100} className="h-full">
+            <div className="card-shop group flex h-full flex-col p-5">
+              {/* Ikonen i samma cream-cirkel som CategoryCard – enhetlig kortgrammatik */}
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-cream">
+                <b.icon
+                  className="h-5 w-5 text-primary-deep motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-rotate-6"
+                  aria-hidden="true"
+                />
+              </span>
+              {/* Målgruppsordet som graverad etikett – guld-understrecket drar
+                  fram när paketet hoveras (statisk under motion-reduce). */}
+              <p className="mt-3 font-inscription text-[11px] text-primary-deep">
+                <span className="relative inline-block">
+                  {b.kicker}
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-gold transition-transform duration-300 group-hover:scale-x-100 motion-reduce:scale-x-100"
+                  />
+                </span>
+              </p>
+              <h3 className="mt-2 font-serif text-2xl">{b.title}</h3>
+              <p className="mt-1.5 text-sm text-muted-foreground">{b.text}</p>
+              {/* Innehållsförteckning: tick + hairline-rader i stället för punktlista */}
+              <ul className="mt-4 text-sm motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:translate-x-0.5">
+                {b.includes.map((item, j) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-2.5 border-t border-border/70 py-2 first:border-t-0 first:pt-0"
+                  >
+                    <Check className="h-3.5 w-3.5 shrink-0 text-primary-deep" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-auto flex flex-wrap gap-2 pt-5 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:translate-x-0.5">
+                <Button asChild size="sm" className="rounded-full px-4">
+                  <Link to="/kategori/$slug" params={{ slug: b.slug }}>
+                    Se produkterna <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="rounded-full px-4">
+                  <Link to="/kontakt">Be om paketpris</Link>
+                </Button>
+              </div>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
+
+      {/* Samma kapitel, nästa steg: egna designer + foto-cross-sell */}
+      <IdeaBand />
     </section>
   );
 }

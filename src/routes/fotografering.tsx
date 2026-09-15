@@ -31,7 +31,7 @@ function RedirectPage() {
 
   return (
     <div className="mx-auto max-w-xl px-5 py-24 text-center">
-      <h1 className="font-serif text-3xl font-bold tracking-tight">Fotografering</h1>
+      <h1 className="font-serif text-3xl tracking-tight">Fotografering</h1>
       <p className="mt-3 text-muted-foreground">
         Allt om fotografering – bröllop, dop, familj och produktbilder – finns på min fotografiska
         sajt.

@@ -12,8 +12,10 @@ import {
   Trophy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SITE_URL } from "@/lib/siteUrls";
 import katForetag from "@/assets/till-foretag-2.jpg";
 import katGravyr from "@/assets/kat-gravyr.jpg";
+import { Kicker } from "@/components/Kicker";
 
 /**
  * Offert-mailet startar ifyllt med exakt de fält sidan ber om –
@@ -28,13 +30,14 @@ const OFFERT_MAILTO = `mailto:hej@linsochlager.se?subject=${encodeURIComponent(
 export const Route = createFileRoute("/foretag")({
   head: () => ({
     meta: [
-      { title: "Företagsgåvor & profilprodukter – TaggaDet" },
+      { title: "Företagsgåvor & profilprodukter | TaggaDet" },
+      { rel: "canonical", href: `${SITE_URL}/foretag` },
       {
         name: "description",
         content:
           "Personliga företagsgåvor: graverade namnbrickor, kundgåvor med er logga, dash-plaketter och klasspriser för bilträffar. Paketpris till arrangören – offert inom 24 timmar.",
       },
-      { property: "og:title", content: "Företagsgåvor & profilprodukter – TaggaDet" },
+      { property: "og:title", content: "Företagsgåvor & profilprodukter | TaggaDet" },
       {
         property: "og:description",
         content:
@@ -53,7 +56,7 @@ const offerings = [
   },
   {
     title: "Kund- & medarbetargåvor",
-    text: "Personliga tack-gåvor med mottagarens namn – minnets gåva slår presentkortet, varje gång.",
+    text: "Personliga tack-gåvor med mottagarens namn – en gåva som slår presentkortet, varje gång.",
   },
   {
     title: "Profilprodukter med er logga",
@@ -66,7 +69,7 @@ const offerings = [
         >
           Muggar
         </Link>
-        , tumblers, kepsar och{" "}
+        , tumblers och{" "}
         <Link
           to="/kategori/$slug"
           params={{ slug: "stickers" }}
@@ -128,13 +131,13 @@ const benefits = [
 
 function BusinessPage() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-14">
+    <div className="mx-auto max-w-7xl px-5 py-12">
       <Breadcrumbs items={[{ label: "För företag" }]} />
 
       <div className="mt-8 grid items-center gap-12 md:grid-cols-2">
         <div>
-          <p className="font-script text-3xl text-primary-deep">personligt på jobbet också</p>
-          <h1 className="mt-3 font-serif text-5xl leading-[1.05] font-bold tracking-tight md:text-6xl">
+          <Kicker>personligt på jobbet också</Kicker>
+          <h1 className="mt-3 font-serif text-5xl leading-[1.05] tracking-tight md:text-6xl">
             Företagsgåvor som verkligen{" "}
             <span className="relative inline-block text-primary-deep">
               betyder något
@@ -148,7 +151,7 @@ function BusinessPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-full px-7 text-base">
               <a href={OFFERT_MAILTO}>
-                <Mail className="mr-2 h-5 w-5" /> Be om offert
+                <Mail className="mr-2 h-5 w-5" aria-hidden="true" /> Be om offert
               </a>
             </Button>
             <Button
@@ -175,30 +178,30 @@ function BusinessPage() {
         />
       </div>
 
-      <section className="mt-20">
-        <p className="font-script text-2xl text-primary-deep">det här kan jag göra</p>
-        <h2 className="mt-1 font-serif text-4xl font-bold tracking-tight">Vad behöver ert team?</h2>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="mt-14">
+        <Kicker>det här kan jag göra</Kicker>
+        <h2 className="mt-1 font-serif text-4xl tracking-tight">Vad behöver ert team?</h2>
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {offerings.map((o) => (
-            <div key={o.title} className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+            <div key={o.title} className="card-shop p-7">
               <Sparkles className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-              <h2 className="mt-4 font-serif text-xl font-bold">{o.title}</h2>
+              <h2 className="mt-4 font-serif text-xl">{o.title}</h2>
               <p className="mt-2 text-sm text-muted-foreground">{o.text}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="mt-20">
-        <p className="font-script text-2xl text-primary-deep">för arrangören</p>
-        <h2 className="mt-1 font-serif text-4xl font-bold tracking-tight">
+      <section className="mt-14">
+        <Kicker>för arrangören</Kicker>
+        <h2 className="mt-1 font-serif text-4xl tracking-tight">
           Bilträff-paketet – allt till träffen i en beställning
         </h2>
         <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
           Plaketter till alla deltagare, priser till vinnarna och dekaler till klubben. Du väljer
           motiv – jag skissar, graverar och levererar i tid till träffen.
         </p>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
           {[
             {
               icon: Flag,
@@ -216,9 +219,9 @@ function BusinessPage() {
               text: "Klubbmärket som dekal och graverad nyckelring – populärt i försäljning på plats. Från 10 st.",
             },
           ].map((p) => (
-            <div key={p.title} className="rounded-3xl border border-border bg-card p-7 shadow-soft">
+            <div key={p.title} className="card-shop p-7">
               <p.icon className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-              <h3 className="mt-4 font-serif text-xl font-bold">{p.title}</h3>
+              <h3 className="mt-4 font-serif text-xl">{p.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{p.text}</p>
             </div>
           ))}
@@ -229,7 +232,7 @@ function BusinessPage() {
         </p>
       </section>
 
-      <section className="mt-20 grid items-center gap-12 md:grid-cols-2">
+      <section className="mt-14 grid items-center gap-10 md:grid-cols-2">
         <img
           src={katGravyr}
           alt="Handgraverad ekbricka i verkstaden"
@@ -239,18 +242,16 @@ function BusinessPage() {
           className="rotate-1 rounded-3xl border-4 border-ink shadow-lift"
         />
         <div>
-          <p className="font-script text-2xl text-primary-deep">så enkelt går det till</p>
-          <h2 className="mt-1 font-serif text-4xl font-bold tracking-tight">
-            Från förfrågan till leverans
-          </h2>
+          <Kicker>så enkelt går det till</Kicker>
+          <h2 className="mt-1 font-serif text-4xl tracking-tight">Från förfrågan till leverans</h2>
           <ol className="mt-8 space-y-6">
             {process.map((s) => (
               <li key={s.n} className="flex gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary font-serif text-lg font-bold text-primary-foreground">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary font-serif text-lg text-primary-foreground">
                   {s.n}
                 </span>
                 <div>
-                  <h3 className="font-serif text-lg font-bold">{s.title}</h3>
+                  <h3 className="font-serif text-lg">{s.title}</h3>
                   <p className="mt-1 text-sm text-muted-foreground">{s.text}</p>
                 </div>
               </li>
@@ -259,9 +260,9 @@ function BusinessPage() {
         </div>
       </section>
 
-      <section className="mt-20 rounded-3xl border border-border bg-card p-10 md:p-12">
-        <p className="font-script text-2xl text-primary-deep">staffelpriser</p>
-        <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight md:text-4xl">
+      <section className="mt-14 rounded-3xl border border-border bg-card p-10 md:p-12">
+        <Kicker>staffelpriser</Kicker>
+        <h2 className="mt-1 font-serif text-3xl tracking-tight md:text-4xl">
           Ju fler, desto vänligare pris
         </h2>
         <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
@@ -270,13 +271,13 @@ function BusinessPage() {
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { n: "10+ st", d: "Profilprodukter & gåvor — startnivån" },
-            { n: "25+ st", d: "Bilträff-plaketter — paketpris till arrangören" },
-            { n: "50+ st", d: "Personal- & kundgåvor — staffelrabatt nivå 2" },
-            { n: "100+ st", d: "Större serier — skräddarsytt paket + faktura 30 d" },
+            { n: "10+ st", d: "Profilprodukter & gåvor – startnivån" },
+            { n: "25+ st", d: "Bilträff-plaketter – paketpris till arrangören" },
+            { n: "50+ st", d: "Personal- & kundgåvor – staffelrabatt nivå 2" },
+            { n: "100+ st", d: "Större serier – skräddarsytt paket + faktura 30 d" },
           ].map((s) => (
             <div key={s.n} className="rounded-2xl bg-cream p-5">
-              <p className="font-serif text-2xl font-bold text-primary-deep">{s.n}</p>
+              <p className="font-serif text-2xl text-primary-deep">{s.n}</p>
               <p className="mt-1.5 text-sm text-muted-foreground">{s.d}</p>
             </div>
           ))}
@@ -288,11 +289,11 @@ function BusinessPage() {
         </p>
       </section>
 
-      <section className="mt-20 rounded-3xl bg-ink p-10 text-ink-foreground md:p-14">
+      <section className="mt-14 rounded-3xl bg-ink p-10 text-ink-foreground md:p-12">
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div>
-            <p className="font-script text-2xl text-gold">tryggt för inköpare</p>
-            <h2 className="mt-2 font-serif text-3xl font-bold tracking-tight md:text-4xl">
+            <p className="font-inscription text-sm text-gold md:text-base">tryggt för inköpare</p>
+            <h2 className="mt-2 font-serif text-3xl tracking-tight md:text-4xl">
               Därför företag väljer TaggaDet
             </h2>
             <ul className="mt-6 space-y-3 text-sm opacity-90">
@@ -305,14 +306,14 @@ function BusinessPage() {
             </ul>
           </div>
           <div className="rounded-2xl bg-ink-foreground/5 p-8">
-            <h3 className="font-serif text-2xl font-bold">Begär offert</h3>
+            <h3 className="font-serif text-2xl">Begär offert</h3>
             <p className="mt-3 text-sm opacity-80">
               Skriv antal, budget och tillfälle – du får svar med prisförslag och skiss inom 24
               timmar på vardagar.
             </p>
             <Button asChild size="lg" className="mt-6 w-full rounded-full">
               <a href={OFFERT_MAILTO}>
-                <Mail className="mr-2 h-4 w-4" /> hej@linsochlager.se
+                <Mail className="mr-2 h-4 w-4" aria-hidden="true" /> hej@linsochlager.se
               </a>
             </Button>
             <p className="mt-3 text-center text-xs opacity-60">

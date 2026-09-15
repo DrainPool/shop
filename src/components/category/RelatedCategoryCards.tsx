@@ -1,6 +1,7 @@
 import { getCategory } from "@/lib/categories";
 import { CategoryCard } from "./CategoryCard";
 import { Reveal } from "./Reveal";
+import { Kicker } from "@/components/Kicker";
 
 /**
  * "Passar också till" – kategorins related-fält som visuella kort i
@@ -26,14 +27,15 @@ export function RelatedCategoryCards({
   if (related.length === 0) return null;
 
   return (
-    <section className="mt-16 md:mt-20" aria-labelledby="relaterade-heading">
+    <section className="mt-12 md:mt-14" aria-labelledby="relaterade-heading">
       <Reveal>
-        <p className="font-script text-2xl text-primary-deep">fortsätt titta</p>
-        <h2 id="relaterade-heading" className="mt-1 font-serif text-3xl font-bold tracking-tight">
+        <Kicker>fortsätt titta</Kicker>
+        {/* Marcellus bär rubriken själv – ingen extra vikt behövs */}
+        <h2 id="relaterade-heading" className="mt-1 font-serif text-3xl tracking-tight">
           Passar också till
         </h2>
       </Reveal>
-      <div className="mt-8 grid grid-flow-dense gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid grid-flow-dense gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {related.map((c, i) => (
           <Reveal key={c.slug} className="h-full" delay={(i % 3) * 60}>
             <CategoryCard category={c} compact />

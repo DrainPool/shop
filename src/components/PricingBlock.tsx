@@ -10,7 +10,7 @@ export function PricingBlock({ block }: { block: PricingBlockType }) {
 
   return (
     <div className="mt-8 rounded-2xl border border-primary/25 bg-cream p-6 shadow-soft">
-      {block.title && <p className="font-script text-xl text-primary-deep">{block.title}</p>}
+      {block.title && <p className="font-inscription text-xs text-primary-deep">{block.title}</p>}
 
       <div className="mt-5 space-y-1">
         {block.rows.map((row, i) => {
@@ -23,14 +23,16 @@ export function PricingBlock({ block }: { block: PricingBlockType }) {
               key={i}
               className={cn(
                 "flex items-baseline justify-between rounded-xl px-4 py-3",
-                isContact ? "bg-gold/15 text-primary-deep" : "bg-white/40 text-muted-foreground",
+                // bg-card/70 i stället för off-token-vitt: bränner inte i mörkt läge
+                isContact ? "bg-gold/15 text-primary-deep" : "bg-card/70 text-muted-foreground",
               )}
             >
               <span className="font-medium">{row.label}</span>
               <span
                 className={cn(
-                  "font-serif text-lg font-bold tracking-tight",
-                  isContact ? "text-gold" : "text-foreground",
+                  "font-serif text-lg tracking-tight",
+                  // primary-deep i stället för gold på ljus guld-yta: bättre kontrast
+                  isContact ? "text-primary-deep" : "text-foreground",
                 )}
               >
                 {row.price}

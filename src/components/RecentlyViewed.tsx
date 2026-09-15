@@ -56,8 +56,8 @@ export function RecentlyViewed({
   if (items.length === 0) return null;
 
   return (
-    <section className="mt-16 border-t border-border pt-10">
-      <h2 className="font-serif text-2xl font-bold">{title}</h2>
+    <section className="mt-10 border-t border-border pt-8">
+      <h2 className="font-serif text-2xl">{title}</h2>
       <ul className="mt-5 flex snap-x gap-4 overflow-x-auto pb-2">
         {items.map((p) => (
           <li key={p.handle} className="w-40 shrink-0 snap-start">

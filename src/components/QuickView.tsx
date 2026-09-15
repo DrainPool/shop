@@ -60,7 +60,8 @@ export function QuickView({ product }: { product: ShopifyProduct }) {
           </div>
           <div className="flex flex-col">
             <p className="flex items-baseline gap-2">
-              <span className="font-serif text-2xl font-semibold text-primary-deep">
+              {/* Marcellus är 400-only – ingen viktklass på font-serif. */}
+              <span className="font-serif text-2xl text-primary-deep">
                 {/* "Från" när varianterna skiljer i pris – samma princip som på produktkortet */}
                 {hasOptions ? "Från " : ""}
                 {formatPrice(price, currency)}
@@ -74,10 +75,8 @@ export function QuickView({ product }: { product: ShopifyProduct }) {
             <p className="text-xs text-muted-foreground">Personaliseringen ingår i priset</p>
             <p className="mt-3 line-clamp-6 text-sm text-muted-foreground">{node.description}</p>
             <div className="mt-auto space-y-2 pt-5">
-              <Button
-                asChild
-                className="w-full rounded-full transition-[color,background-color,transform] duration-200 active:scale-[0.98] motion-reduce:active:scale-100"
-              >
+              {/* Knappbasen (rounded-full + shadow-soft) räcker. */}
+              <Button asChild className="w-full">
                 <Link to="/produkt/$handle" params={{ handle: node.handle }}>
                   {hasOptions ? "Välj variant" : "Personalisera"}
                 </Link>

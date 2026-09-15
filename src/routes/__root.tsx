@@ -13,11 +13,13 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { TrustPromises } from "@/components/TrustPromises";
 import { Toaster } from "@/components/ui/sonner";
 import { useCartSync } from "@/hooks/useCartSync";
 import { useCartStore } from "@/stores/cartStore";
 import { SITE_URL } from "@/lib/siteUrls";
 import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
+import { Kicker } from "@/components/Kicker";
 
 /**
  * Organisations-schema för Google – sitter på alla sidor via root-layouten.
@@ -29,7 +31,12 @@ const ORGANIZATION_JSON_LD = {
   "@type": "Organization",
   name: "TaggaDet",
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon.ico`,
+  // Google vill ha en kvadratisk rasterbild, minst 112×112, med opagen botten
+  // för organisationslogotypen. apple-touch-icon.png är precis det (180×180,
+  // pappersbotten) och är samma märke som favicon.svg. Den pekade tidigare på
+  // /favicon.ico – scaffold-ikonen från Initial release, alltså inte TaggaDets
+  // märke alls.
+  logo: `${SITE_URL}/apple-touch-icon.png`,
   email: "hej@linsochlager.se",
   description:
     "Handgjorda personliga presenter med gravyr, 3D-utskrifter, foto och stickers – tillverkade i Småland sedan 2016.",
@@ -44,18 +51,54 @@ const ORGANIZATION_JSON_LD = {
   },
 };
 
+/**
+ * WebSite-schema med SearchAction – berättar för Google att siten har
+ * intern sökning, så ett "sök på sajten"-fältet kan dyka upp direkt i
+ * sökresultatet. Query-parametern ?s= matchar sökflows på klientsidan.
+ */
+const WEBSITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "TaggaDet",
+  url: SITE_URL,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/?s={search_term_string}` },
+    "query-input": "required name=search_term_string",
+  },
+};
+
 // Plausible – frallans egen instans (analyt.linsochlager.net), cookiefritt
 // och GDPR-vänligt. Laddas bara i produktionsbygget så dev-besök inte
 // skräpar ner statistiken.
 const PLAUSIBLE_SCRIPT = "https://analyt.linsochlager.net/js/script.js";
 const PLAUSIBLE_DOMAIN = "linsochlager.net";
 
+/**
+ * Delningsbilden. Ligger som konstant i stället för som två likadana
+ * hårdkodade strängar (og:image och twitter:image hade exakt samma värde och
+ * kunde glida isär utan att någon märkte det).
+ *
+ * Filen är og-default.png och inte .jpg: den byggs genom att design-system/
+ * taggadet/logo/og-default.html skärmdumpas, och webbläsaren kan bara skriva
+ * PNG. Att döpa en PNG till .jpg vore att ljuga om innehållet.
+ *
+ * Måtten nedan är filens verkliga mått — de stämmer nu, vilket de inte gjorde
+ * förut: den gamla og-default.jpg var 1600×1104 medan metat påstod 1200×630.
+ *
+ * Alt-texten beskriver vad bilden faktiskt visar. Den förra beskrev en
+ * verkstadsbild som inte längre är delningsbild.
+ */
+const OG_IMAGE = `${SITE_URL}/og-default.png`;
+const OG_IMAGE_ALT =
+  "TaggaDet – märket och raden ”lasergravyr & personliga presenter, gjorda för hand i Småland”";
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-background px-4 py-16">
       <div className="max-w-md text-center">
-        <p className="font-script text-3xl text-primary-deep">åh nej</p>
-        <h1 className="mt-1 font-serif text-6xl font-bold tracking-tight text-foreground">404</h1>
+        <Kicker>åh nej</Kicker>
+        <h1 className="mt-1 font-serif text-6xl tracking-tight text-foreground">404</h1>
         <h2 className="mt-3 text-xl font-semibold text-foreground">Sidan hittades inte</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           Sidan du letar efter finns inte eller har flyttats. Här är några vända vägar vidare:
@@ -159,12 +202,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "TaggaDet" },
       { property: "og:locale", content: "sv_SE" },
-      { property: "og:image", content: "https://linsochlager.net/og-default.jpg" },
+      { property: "og:image", content: OG_IMAGE },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Verkstaden hos TaggaDet – graverade detaljer" },
+      { property: "og:image:alt", content: OG_IMAGE_ALT },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://linsochlager.net/og-default.jpg" },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -173,14 +216,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // LCP. crossOrigin krävs för woff2 (annars hämtas filen dubelt).
       {
         rel: "preload",
-        href: "/fonts/inter-latin.woff2",
+        href: "/fonts/worksans-latin.woff2",
         as: "font",
         type: "font/woff2",
         crossOrigin: "anonymous",
       },
       {
         rel: "preload",
-        href: "/fonts/fraunces-latin.woff2",
+        href: "/fonts/marcellus-latin.woff2",
         as: "font",
         type: "font/woff2",
         crossOrigin: "anonymous",
@@ -197,12 +240,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               href: `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`,
             },
           ]),
+      // Flikikonen i tre lager. SVG först: den är skarp i varje storlek och
+      // växlar själv färg med systemtemat (se public/favicon.svg). PNG-32 som
+      // komplement till webbläsare utan SVG-faviconstöd, och apple-touch-icon
+      // för hemskärmen. favicon.ico ligger kvar sist som sista utväg – den är
+      // scaffold-ikonen från Initial release och kan inte ersättas i ICO-format
+      // utan ett bildverktyg, vilket repot inte har. Den förfalskas inte.
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify(ORGANIZATION_JSON_LD),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(WEBSITE_JSON_LD),
       },
       // Plausible (frallans egen instans) laddas bara i produktion –
       // besök på dev-servern ska inte hamna i statistiken.
@@ -271,6 +327,8 @@ function AppShell() {
         Hoppa till innehållet
       </a>
       <SiteHeader />
+      {/* Butikens löften direkt under menyn — syns innan första scrollen */}
+      <TrustPromises />
       <main id="main" className="flex-1">
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />

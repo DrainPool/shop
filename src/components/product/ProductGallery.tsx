@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { badgeTone } from "@/lib/badgeTone";
 
 export interface GalleryBadge {
   label: string;
@@ -11,19 +12,13 @@ export interface GalleryImage {
   altText: string | null;
 }
 
-const badgeTone: Record<GalleryBadge["tone"], string> = {
-  primary: "bg-primary text-primary-foreground",
-  gold: "bg-gold text-ink",
-  ink: "bg-ink/85 text-ink-foreground",
-};
-
 /**
  * Produktsidans bildsektion: huvudbild med badges + miniatyrsrad.
  * Bilder och alt-texter kommer rakt från Shopify-noden; badges räknas
  * ut i rutefilen (taggarna är säljcopy, inte bilddata).
  *
- * Miniatyrerna får mjuk hover-skala (grupp + overflow-hidden) –
- * motion-reduce stänger av transformen helt.
+ * Huvudbilden får mjuk hover-zoom och miniatyrerna mjuk hover-skala
+ * (grupp + overflow-hidden) – motion-reduce stänger av transformerna helt.
  */
 export function ProductGallery({
   images,
@@ -39,7 +34,9 @@ export function ProductGallery({
 
   return (
     <div>
-      <div className="relative overflow-hidden rounded-2xl bg-muted shadow-soft">
+      {/* Grupp-here styr huvudbildens mjuka zoom – galleriet behåller
+          rounded-2xl enligt designgrunden (kortet är 3xl, galleriet 2xl). */}
+      <div className="group relative overflow-hidden rounded-2xl bg-muted shadow-soft">
         {badges.length > 0 && (
           <div className="absolute top-4 left-4 z-10 flex flex-col items-start gap-2">
             {badges.map((badge) => (
@@ -68,7 +65,7 @@ export function ProductGallery({
             // högprioriterat, men avkoda utan att blockera renderingen.
             fetchPriority="high"
             decoding="async"
-            className="aspect-square h-full w-full object-cover"
+            className="aspect-square h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         ) : (
           <div className="flex aspect-square items-center justify-center text-muted-foreground">
@@ -78,7 +75,9 @@ export function ProductGallery({
       </div>
 
       {images.length > 1 && (
-        <div className="mt-4 flex gap-3">
+        // Scroll-snap: med många bilder skrollar raden vågrätt och varje
+        // miniatyr snäpper till i startläget i stället för att fastna mitt emellan.
+        <div className="mt-4 flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
           {images.map((img, i) => (
             <button
               key={img.url}
@@ -87,8 +86,10 @@ export function ProductGallery({
               aria-label={`Visa bild ${i + 1} av ${title}`}
               aria-pressed={i === active}
               className={cn(
-                "group h-20 w-20 overflow-hidden rounded-xl border-2 transition-colors",
-                i === active ? "border-primary" : "border-border hover:border-primary/50",
+                "group h-20 w-20 shrink-0 snap-start overflow-hidden rounded-xl transition-shadow",
+                i === active
+                  ? "ring-1 ring-primary-deep"
+                  : "ring-1 ring-border hover:ring-primary/50",
               )}
             >
               <img

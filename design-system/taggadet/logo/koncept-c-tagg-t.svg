@@ -1,0 +1,25 @@
+<!--
+  Koncept C — Tagg-T (sammansmältning).
+  Samma tagg som koncept A, men det stansade hålet är utbytt mot ett T i
+  negativ yta. Märket säger både namnet och produkten i en form.
+
+  T:et är ritat grovt med flit. Första versionen hade 3,2 enheter tjocka streck
+  — 1,07 px i 16 px — och smetade ihop till en gröt. Nu är strecken 5,5 enheter
+  (1,8 px i 16 px) och T:et är 14×14,5 enheter i en kropp på 34. Det är den
+  grövsta form som ryms; blir den tunnare dör den i fliken.
+
+  Kvarstående risk: vid 16 px ska både skärningen och T:et läsas i samma lilla
+  ruta. Det är mycket begärt. Konceptet mäts därför hårdast i
+  förhandsgranskningen — se preview.html#closeup.
+
+  Solid form med negativ yta (fill-rule="evenodd").
+  currentColor → färgen sätts av omgivningen.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 4 40 40" role="img" aria-label="TaggaDet">
+  <path
+    fill="currentColor"
+    fill-rule="evenodd"
+    d="M19 7 L36 7 Q41 7 41 12 L41 36 Q41 41 36 41 L12 41 Q7 41 7 36 L7 19 Z
+       M17 17.5 L31 17.5 L31 23 L26.5 23 L26.5 32 L21.5 32 L21.5 23 L17 23 Z"
+  />
+</svg>

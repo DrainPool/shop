@@ -4,6 +4,9 @@ import { Heart } from "lucide-react";
  * Skrollande "trusted by"-band enligt planen (ersätter marquee-logo-scroller).
  * Visar tillfällen/produkttyper i dämpade sepia-toner.
  *
+ * Slingan (.marquee-track) ligger i src/styles.css tillsammans med övriga
+ * rörelsetokens, inte i ett inline-<style>-block här.
+ *
  * VILL DU HA RIKTIGA FÖRETAGSHÄR? Lägg bara in namnen i ITEMS nedan
  * (t.ex. "Nordanå Konferens", "Tranås Bröllopsstudio") så skrollar de
  * som textlogotyper. Ändra inget annat.
@@ -31,29 +34,10 @@ export function TrustedMarquee() {
       aria-label="Tillfällen och produkter"
       className="overflow-hidden border-y border-border/70 bg-cream py-6"
     >
-      <p className="mb-5 text-center font-serif text-lg font-semibold text-muted-foreground">
+      <p className="mb-5 text-center font-serif text-lg text-muted-foreground">
         Foto &amp; hantverk till livets tillfällen –{" "}
         <span className="text-primary-deep">sedan 2016</span>
       </p>
-
-      <style>{`
-        .marquee-track {
-          display: flex;
-          width: max-content;
-          gap: 3rem;
-          animation: marquee-scroll 32s linear infinite;
-        }
-        .marquee-wrap:hover .marquee-track {
-          animation-play-state: paused;
-        }
-        @keyframes marquee-scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .marquee-track { animation: none; }
-        }
-      `}</style>
 
       <div className="marquee-wrap overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <div className="marquee-track" aria-hidden="true">

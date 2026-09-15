@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/home/Reveal";
 import { CustomerShowcase } from "@/components/CustomerShowcase";
 import storyHands from "@/assets/story-hands.jpg";
+import { Kicker } from "@/components/Kicker";
 
 /**
  * Desire-steget, del 2: om-frallan + socialt bevis. Varm förstapersonscopy
@@ -15,13 +16,11 @@ import storyHands from "@/assets/story-hands.jpg";
  */
 export function StorySection() {
   return (
-    <section className="mx-auto max-w-6xl px-5 py-24 md:py-36">
+    <section className="mx-auto max-w-7xl px-5 py-16 md:py-20">
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <Reveal>
-          <p className="font-script text-2xl text-primary-deep md:text-3xl">
-            allt började med kameran
-          </p>
-          <h2 className="mt-2 font-serif text-4xl font-bold tracking-tight md:text-5xl">
+          <Kicker>allt började med kameran</Kicker>
+          <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">
             Hej – jag heter Fredrik, och jag står bakom varje gravyr
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
@@ -64,7 +63,7 @@ export function StorySection() {
       </div>
 
       {/* Socialt bevis: kundväggen (fylls med riktiga bidrag allteftersom) */}
-      <Reveal className="mt-24 border-t border-border pt-14">
+      <Reveal className="mt-16 border-t border-border pt-10">
         <CustomerShowcase />
       </Reveal>
     </section>

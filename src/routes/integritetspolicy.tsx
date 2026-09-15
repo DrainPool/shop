@@ -1,23 +1,27 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Cookie, Lock, Mail, Truck, UserCheck } from "lucide-react";
+import { SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/integritetspolicy")({
   head: () => ({
     meta: [
-      { title: "Integritetspolicy – TaggaDet" },
+      { title: "Integritetspolicy | TaggaDet" },
+      { rel: "canonical", href: `${SITE_URL}/integritetspolicy` },
       {
         name: "description",
         content:
           "Hur TaggaDet behandlar dina personuppgifter: vilka uppgifter som samlas in, varför, hur länge de sparas och dina rättigheter enligt GDPR.",
       },
-      { property: "og:title", content: "Integritetspolicy – TaggaDet" },
+      { property: "og:title", content: "Integritetspolicy | TaggaDet" },
       {
         property: "og:description",
         content:
           "Hur dina personuppgifter behandlas när du handlar hos TaggaDet – kortfattat och begripligt.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: PrivacyPage,
@@ -27,20 +31,20 @@ const sections = [
   {
     title: "Sammanfattning först",
     body: [
-      "Jag behandlar bara de uppgifter som behövs för att du ska kunna beställa, och jag skickar aldrig nyhetsbrev eller delar dina uppgifter med tredje part för marknadsföring. Betalningen hanteras helt av Klarna och Shopify — jag ser aldrig ditt kortnummer.",
+      "Jag behandlar bara de uppgifter som behövs för att du ska kunna beställa, och jag skickar aldrig nyhetsbrev eller delar dina uppgifter med tredje part för marknadsföring. Betalningen hanteras helt av Klarna och Shopify – jag ser aldrig ditt kortnummer.",
     ],
   },
   {
     title: "Vilka uppgifter samlas in?",
     body: [
-      "Vid beställning: namn, leveransadress, e-post, telefonnummer och dina personliga texter till gravyren (t.ex. namn och datum) — det behövs för att kunna tillverka och leverera din produkt.",
+      "Vid beställning: namn, leveransadress, e-post, telefonnummer och dina personliga texter till gravyren (t.ex. namn och datum) – det behövs för att kunna tillverka och leverera din produkt.",
       "Vid kontakt via e-post: de uppgifter du själv väljer att skicka i meddelandet.",
     ],
   },
   {
     title: "Varför (rättslig grund)",
     body: [
-      "Uppgifterna används för att uppfylla köpeavtalet med dig — tillverka, packa och leverera din beställning, samt för bokföring enligt bokföringslagen (redovisningskrav). Detta kallas 'avtalsuppfyllelse' respektive 'rättslig förpliktelse' i GDPR.",
+      "Uppgifterna används för att uppfylla köpeavtalet med dig – tillverka, packa och leverera din beställning, samt för bokföring enligt bokföringslagen (redovisningskrav). Detta kallas 'avtalsuppfyllelse' respektive 'rättslig förpliktelse' i GDPR.",
       "Om du skickar bilder eller historier som jag får i uppdrag att gravera gör jag detta enligt ditt samtycke; uppgifterna används bara för din beställning.",
     ],
   },
@@ -54,14 +58,14 @@ const sections = [
   {
     title: "Hur länge sparas uppgifterna?",
     body: [
-      "Orderuppgifter sparas i 7 år enligt bokföringslagen. Dina gravyrtexter och din godkända skiss sparas med beställningen — detta för att du ska kunna beställa samma produkt igen eller reklamera med underlag. E-postkorrespondens sparas tills ärendet är avslutat.",
+      "Orderuppgifter sparas i 7 år enligt bokföringslagen. Dina gravyrtexter och din godkända skiss sparas med beställningen – detta för att du ska kunna beställa samma produkt igen eller reklamera med underlag. E-postkorrespondens sparas tills ärendet är avslutat.",
     ],
   },
   {
     title: "Dina rättigheter",
     body: [
-      "Du har rätt att få veta vilka uppgifter jag har om dig (registerutdrag), begära rättelse av felaktiga uppgifter och begära radering av uppgifter jag inte har laglig skyldighet att spara. Kontakta mig på e-post nedan — jag svarar alltid inom 30 dagar, oftast mycket snabbare.",
-      "Om du är missnöjd med min behandling av dina personuppgifter kan du klagomälra till Integritetsskyddsmyndigheten (IMY), imy.se.",
+      "Du har rätt att få veta vilka uppgifter jag har om dig (registerutdrag), begära rättelse av felaktiga uppgifter och begära radering av uppgifter jag inte har laglig skyldighet att spara. Kontakta mig på e-post nedan – jag svarar alltid inom 30 dagar, oftast mycket snabbare.",
+      "Om du är missnöjd med min behandling av dina personuppgifter kan du vända dig till Integritetsskyddsmyndigheten (IMY), imy.se.",
     ],
   },
   {
@@ -77,10 +81,8 @@ function PrivacyPage() {
     <div className="mx-auto max-w-3xl px-5 py-14">
       <Breadcrumbs items={[{ label: "Integritetspolicy" }]} />
 
-      <p className="mt-8 font-script text-3xl text-primary-deep">dina uppgifter är skyddade</p>
-      <h1 className="mt-3 font-serif text-4xl font-bold tracking-tight md:text-5xl">
-        Integritetspolicy
-      </h1>
+      <Kicker className="mt-8">dina uppgifter är skyddade</Kicker>
+      <h1 className="mt-3 font-serif text-4xl tracking-tight md:text-5xl">Integritetspolicy</h1>
       <p className="mt-4 text-lg text-muted-foreground">
         Senast uppdaterad: augusti 2026. Kort, begripligt och utan juridik-jargong.
       </p>
@@ -92,7 +94,7 @@ function PrivacyPage() {
             className="group rounded-2xl border border-border bg-card shadow-soft"
             open={s.title.startsWith("Sammanfattning")}
           >
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 font-serif text-xl font-bold">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 font-serif text-xl">
               {s.title}
               <span className="text-primary-deep transition-transform group-open:rotate-45">+</span>
             </summary>
@@ -110,7 +112,7 @@ function PrivacyPage() {
       <section className="mt-12 rounded-3xl bg-cream p-8 text-center">
         <Mail className="mx-auto h-6 w-6 text-primary-deep" aria-hidden="true" />
         <p className="mt-3 text-muted-foreground">
-          Frågor om dina uppgifter? Skriv till mig — jag ansvarar för dem.
+          Frågor om dina uppgifter? Skriv till mig – jag ansvarar för dem.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <a

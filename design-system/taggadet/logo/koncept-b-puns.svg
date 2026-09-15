@@ -1,0 +1,30 @@
+<!--
+  Koncept B — Puns (gravörsstämpel).
+  En gravörs stämpel: ett grovt ringsegment med ett geometriskt T inuti. T:et är
+  ritat av streck, inte en typsnittsglyf, så märket är inte beroende av att
+  Marcellus hunnit laddas.
+
+  Geometrin är reviderad efter 16 px-testet i preview.html. Första versionen var
+  en fylld skiva med en hårfin ring (1,2 enheter = 0,4 px i 16 px) och ett T.
+  Ringen kunde inte bäras av nedsamplingen — den blev en suddig halo runt
+  skivan i stället för en ring. Nu är skivan borta och ringen grov: 5,5 enheter
+  (2,2 px i 16 px), med T:et fritt inne i öppningen.
+
+  viewBox är 40 enheter för att konsten (34 enheter) ska fylla sin ruta. Med
+  den ursprungliga 48-enhetersboxen gick 2,3 px av fliken åt till tom marginal.
+
+  Solid form med negativ yta (fill-rule="evenodd"): yttre cirkeln fyller, inre
+  cirkeln stansar ut öppningen — men stansar också tillbaka T:et, som därför
+  står kvar som en solid glyf.
+
+  currentColor → färgen sätts av omgivningen.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 4 40 40" role="img" aria-label="TaggaDet">
+  <path
+    fill="currentColor"
+    fill-rule="evenodd"
+    d="M24 7 A17 17 0 1 0 24 41 A17 17 0 1 0 24 7 Z
+       M24 12.5 A11.5 11.5 0 1 0 24 35.5 A11.5 11.5 0 1 0 24 12.5 Z
+       M18 18.5 L30 18.5 L30 23.5 L26.5 23.5 L26.5 31 L21.5 31 L21.5 23.5 L18 23.5 Z"
+  />
+</svg>

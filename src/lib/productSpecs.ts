@@ -39,20 +39,8 @@ export const PRODUCT_SPECS: Record<string, ProductSpec> = {
       "Rostfritt stål med dubbelväggig isolering – gravyr eller lasermarkering direkt på metallen.",
     skotsel: "Handdisk rekommenderas; skölj ur direkt efter mjölk eller kaffe.",
   },
-  keps: {
-    material: "Bomullsbroscherad keps med broderat eller graverat märke.",
-    skotsel: "Diska för hand i ljummet vatten; torka på huvudet så formen behålls.",
-  },
-  tshirt: {
-    material: "Mjuk bomullstrikå med hållbart tryck som trycks först när du beställt.",
-    skotsel: "Tvätta ut- och in på 40 grader; stryk på insidan om strykning behövs.",
-  },
-  hoodie: {
-    material: "Tung, borstad bomullsblandning med tryck på beställning.",
-    skotsel: "Tvätta på 40 grader och skaka ut plagget direkt ur maskinen.",
-  },
   skarbrada: {
-    material: "Massivt trä från svenska bördar, oljad med livsmedelsgodkänd olja.",
+    material: "Massivt trä från svenska skogar, oljad med livsmedelsgodkänd olja.",
     skotsel: "Skölj i ljummet vatten och olja in då och då – aldrig i diskmaskinen.",
   },
   lader: {
@@ -85,7 +73,7 @@ export const PRODUCT_SPECS: Record<string, ProductSpec> = {
     material:
       "Mässing eller aluminium märkt med fiberlaser, eller namnskylt i oljad ek graverad med diodlaser.",
     skotsel:
-      "Metallen väderkas inte; ek-skylten håller sig finast om den oljas in när den börjar se torr ut.",
+      "Metallen tål väder och vind; ek-skylten håller sig finast om den oljas in när den börjar se torr ut.",
   },
   askar: {
     material: "Plywood eller massivt trä, med locket graverat direkt i materialet.",

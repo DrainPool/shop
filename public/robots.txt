@@ -1,16 +1,7 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
+# TaggaDet – alla sidor får indexeras utom API-rutter och önskelistan
+# (önskelistan är personlig och har noindex-metataggen i stället).
 User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: https://linsochlager.net/sitemap.xml

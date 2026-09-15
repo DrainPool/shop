@@ -42,7 +42,7 @@ export function ReviewSection({ reviews = [] }: { reviews?: Review[] }) {
 
   return (
     <section className="mt-12 border-t border-border pt-8" aria-labelledby={headingId}>
-      <h2 id={headingId} className="font-serif text-2xl font-bold">
+      <h2 id={headingId} className="font-serif text-2xl">
         Omdömen
       </h2>
 
@@ -59,7 +59,7 @@ export function ReviewSection({ reviews = [] }: { reviews?: Review[] }) {
             av mig?
           </p>
           <a
-            href="mailto:hej@linsochlager.se?subject=Ber%C3%A4tta%20vad%20jag%20fick"
+            href="mailto:hej@linsochlager.se?subject=Ber%C3%A4tta%20vad%20du%20fick"
             className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-primary-deep transition-colors duration-300 hover:underline md:min-h-9"
           >
             <MessageSquareHeart className="h-4 w-4" aria-hidden="true" />
@@ -76,7 +76,7 @@ export function ReviewSection({ reviews = [] }: { reviews?: Review[] }) {
           </p>
           <ul className="mt-5 space-y-4">
             {reviews.map((r) => (
-              <li key={r.id} className="rounded-2xl border border-border bg-card p-5">
+              <li key={r.id} className="card-shop p-5">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                   <p className="font-semibold">{r.name}</p>
                   {r.date && <p className="text-xs text-muted-foreground">{r.date}</p>}

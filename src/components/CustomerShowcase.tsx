@@ -1,4 +1,5 @@
 import { Camera, Instagram, Mail } from "lucide-react";
+import { Kicker } from "@/components/Kicker";
 
 /**
  * UGC-vägg ("user generated content") – riktiga kundbilder med kundens
@@ -38,10 +39,8 @@ const SUBMISSIONS: Submission[] = [
 export function CustomerShowcase() {
   return (
     <div>
-      <p className="font-script text-2xl text-primary-deep">
-        verkliga presenter, från riktiga människor
-      </p>
-      <h2 className="mt-1 font-serif text-3xl font-bold tracking-tight">Din bild kan hamna här</h2>
+      <Kicker>verkliga presenter från riktiga människor</Kicker>
+      <h2 className="mt-1 font-serif text-3xl tracking-tight">Din bild kan hamna här</h2>
       <p className="mt-3 text-muted-foreground">
         När presenten packats upp tar den ett eget liv – och här sätter jag upp bilderna som kommer
         in, tillsammans med några rader om presenten.
@@ -50,10 +49,7 @@ export function CustomerShowcase() {
       {SUBMISSIONS.length > 0 ? (
         <div className="mt-8 grid gap-5 sm:grid-cols-2">
           {SUBMISSIONS.map((s) => (
-            <figure
-              key={`${s.name}-${s.image}`}
-              className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft"
-            >
+            <figure key={`${s.name}-${s.image}`} className="overflow-hidden card-shop">
               <img
                 src={s.image}
                 alt={`Present från ${s.name}`}
@@ -106,8 +102,8 @@ export function CustomerShowcase() {
         </a>
       </div>
       <p className="mt-4 text-sm text-muted-foreground">
-        Butiken är ny och väggen tom ännu – här sätter jag upp det första allteftersom era bilder
-        kommer in. Inga påhittade inlägg, bara riktiga presenter.
+        Butiken är ny och väggen ännu tom – här sätter jag upp de första bilderna allteftersom era
+        inlägg kommer in. Inga påhittade inlägg, bara riktiga presenter.
       </p>
     </div>
   );

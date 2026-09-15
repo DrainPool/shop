@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { WishlistRow } from "@/components/WishlistRow";
 import { useWishlist } from "@/lib/wishlist";
+import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/onskelista")({
   head: () => ({
@@ -41,8 +42,8 @@ function WishlistPage() {
   return (
     <article className="mx-auto max-w-3xl px-5 py-16">
       <Breadcrumbs items={[{ label: "Min önskelista" }]} />
-      <p className="mt-6 font-script text-2xl text-primary-deep">Sparat i hjärtat</p>
-      <h1 className="mt-2 font-serif text-4xl font-semibold">Min önskelista</h1>
+      <Kicker className="mt-6">Sparat i hjärtat</Kicker>
+      <h1 className="mt-2 font-serif text-4xl">Min önskelista</h1>
 
       {!hasItems ? (
         <div className="mt-8 flex flex-col items-center gap-4 rounded-3xl border border-border bg-card p-10 text-center">
@@ -62,7 +63,7 @@ function WishlistPage() {
           <div className="flex flex-wrap gap-3">
             <Button asChild>
               <a href={mailLink ?? "#"}>
-                <Mail className="mr-2 h-4 w-4" />
+                <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
                 Maila min lista till mig själv
               </a>
             </Button>

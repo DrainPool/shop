@@ -1,0 +1,40 @@
+<!--
+  TaggaDet — flikikonen. Koncept B ("Puns"): grov ring med ett geometriskt T.
+  Samma streckdata som src/components/BrandMark.tsx.
+
+  TVÅ SAKER SOM SKILJER DENNA FIL FRÅN REACT-KOMPONENTEN:
+
+  1. Ingen currentColor. I en fristående SVG som laddas via <img> — vilket är
+     precis vad en favicon är — löser currentColor till SVART, inte till
+     butikens sepia. Det upptäcktes när koncepten provades som lösa filer.
+
+  2. Explicit fyllning i stället, med en prefers-color-scheme-variant. Utan den
+     blir märket svart och försvinner helt på en mörk flikrad. Färgerna är
+     palettens egna värden, uppmätta ur oklch-tokens i src/styles.css genom att
+     låta webbläsaren räkna om dem (inte gissade):
+       ljust läge  = --primary-deep, oklch(0.47 0.08 78)  ->  #735520
+       mörkt läge  = --primary-deep i .dark, oklch(0.78 0.09 82)  ->  #D4B273
+     Den mörka varianten är alltså inte en påhittad ljusare färg, utan samma
+     roll som paletten redan definierat för mörk botten.
+
+  Måtten är desamma som i BrandMark.tsx och är mätta mot 16 px-provet i
+  preview.html#closeup — ändra dem inte utan att köra om det.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 4 40 40" role="img" aria-label="TaggaDet">
+  <style>
+    path {
+      fill: #735520;
+    }
+    @media (prefers-color-scheme: dark) {
+      path {
+        fill: #d4b273;
+      }
+    }
+  </style>
+  <path
+    fill-rule="evenodd"
+    d="M24 7 A17 17 0 1 0 24 41 A17 17 0 1 0 24 7 Z
+       M24 12.5 A11.5 11.5 0 1 0 24 35.5 A11.5 11.5 0 1 0 24 12.5 Z
+       M18 18.5 L30 18.5 L30 23.5 L26.5 23.5 L26.5 31 L21.5 31 L21.5 23.5 L18 23.5 Z"
+  />
+</svg>

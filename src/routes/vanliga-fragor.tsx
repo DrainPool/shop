@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { FaqAccordion } from "@/components/FaqAccordion";
-import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
+import { FOTOGRAFERING_URL, SITE_URL } from "@/lib/siteUrls";
 import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
+import { Kicker } from "@/components/Kicker";
 
 const TITLE = "Vanliga frågor om gravyr, leverans och personliga presenter | TaggaDet";
 const DESCRIPTION =
@@ -85,7 +86,7 @@ const FAQ: FaqEntry[] = [
   },
   {
     q: "Hur betalar jag?",
-    a: "Kassan hanteras säkert av Shopify. Där kan du betala med kort och Klarna beroende på vad som är aktivt i butiken vid köptillfället.",
+    a: "Kassan hanteras säkert av Shopify. Där betalar du med kort och Klarna, beroende på vad som är aktivt i butiken vid köptillfället.",
   },
   {
     q: "Vad kostar frakten?",
@@ -102,10 +103,10 @@ export const Route = createFileRoute("/vanliga-fragor")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/vanliga-fragor" },
+      { property: "og:url", content: `${SITE_URL}/vanliga-fragor` },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/vanliga-fragor" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/vanliga-fragor` }],
     scripts: [
       {
         type: "application/ld+json",
@@ -127,8 +128,8 @@ function FaqPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-16">
       <Breadcrumbs items={[{ label: "Vanliga frågor" }]} />
-      <p className="mt-6 font-script text-2xl text-primary-deep">Fråga på</p>
-      <h1 className="mt-1 font-serif text-4xl font-bold tracking-tight">Vanliga frågor</h1>
+      <Kicker className="mt-6">Fråga på</Kicker>
+      <h1 className="mt-1 font-serif text-4xl tracking-tight">Vanliga frågor</h1>
       <p className="mt-3 text-muted-foreground">
         Hittar du inte svaret? Skriv till mig – du får svar av samma person som tillverkar din
         produkt.
@@ -175,7 +176,7 @@ function FaqPage() {
       />
 
       <div className="mt-10 rounded-3xl bg-cream p-8">
-        <p className="font-serif text-xl font-bold">Fortfarande osäker?</p>
+        <p className="font-serif text-xl">Fortfarande osäker?</p>
         <p className="mt-2 text-muted-foreground">
           Berätta vad du vill ge bort så föreslår jag material, text och leveransupplägg.
         </p>

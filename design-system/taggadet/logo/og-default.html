@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <title>TaggaDet — delningsbild 1200×630</title>
+    <!--
+      Delningsbilden (og:image). Byggs som HTML och skärmdumpas i exakt storlek,
+      av samma skäl som flikikonerna: repot har ingen bildrasteriserare och inga
+      nya beroenden får läggas till.
+
+        E="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+        "$E" --headless=new --disable-gpu --hide-scrollbars \
+          --screenshot=public/og-default.png --window-size=1200,630 \
+          "file:///C:/Users/frall/shop/design-system/taggadet/logo/og-default.html"
+
+      Filen blir PNG och inte JPG: Edge kan bara skriva PNG med --screenshot, och
+      att döpa en PNG till .jpg vore att ljuga om innehållet. __root.tsx pekar
+      därför på og-default.png.
+
+      Texten är butikens egen rad, ordagrant samma som i
+      src/components/home/HomeHero.tsx:77 — den är hämtad, inte påhittad.
+      Kickerstilen är den kanoniska: Marcellus, versaler, 0,2 em spärrning, i
+      primary-deep eftersom botten är papper (guld på papper klarar inte
+      kontrasten; butiken gör samma val på sina ljusa ytor).
+
+      Bredd och höjd sätts explicit på body. --window-size styr skärmdumppens
+      mått men layout-viewporten kan vara en annan, och då hamnar centrerat
+      innehåll utanför den klippta ytan. Det misstaget gav tomma ikoner en gång.
+
+      Färgerna är palettens, uppmätta ur oklch-tokens i src/styles.css:
+        papper        --background       oklch(0.967 0.008 85)  ->  #F6F4EE
+        mörk sepia    --primary-deep     oklch(0.47 0.08 78)   ->  #735520
+        guld          --gold             oklch(0.72 0.1 80)    ->  #C59E58
+    -->
+    <style>
+      @font-face {
+        font-family: "Marcellus";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url("../../../public/fonts/marcellus-latin.woff2") format("woff2");
+      }
+      /* Work Sans är onödigt här — all text på bilden är Marcellus. */
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        background: #f6f4ee;
+        color: #17100e;
+        font-family: "Marcellus", Georgia, serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .mark {
+        width: 128px;
+        height: 128px;
+        color: #735520;
+      }
+      h1 {
+        margin: 26px 0 0;
+        font-size: 100px;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .rule {
+        width: 96px;
+        height: 2px;
+        background: #c59e58;
+        margin: 30px 0 0;
+      }
+      p {
+        margin: 26px 0 0;
+        font-size: 21px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        word-spacing: 0.08em;
+        color: #735520;
+      }
+    </style>
+  </head>
+  <body>
+    <svg class="mark" viewBox="4 4 40 40" role="img" aria-label="TaggaDet">
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M24 7 A17 17 0 1 0 24 41 A17 17 0 1 0 24 7 Z
+           M24 12.5 A11.5 11.5 0 1 0 24 35.5 A11.5 11.5 0 1 0 24 12.5 Z
+           M18 18.5 L30 18.5 L30 23.5 L26.5 23.5 L26.5 31 L21.5 31 L21.5 23.5 L18 23.5 Z"
+      />
+    </svg>
+    <h1>TaggaDet</h1>
+    <div class="rule"></div>
+    <p>lasergravyr &amp; personliga presenter, gjorda för hand i Småland</p>
+  </body>
+</html>

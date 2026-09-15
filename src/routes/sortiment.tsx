@@ -5,6 +5,7 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
+import { TrustedMarquee } from "@/components/TrustedMarquee";
 import { IdeaBand } from "@/components/IdeaBand";
 import { CategoryCard } from "@/components/category/CategoryCard";
 import { Reveal } from "@/components/category/Reveal";
@@ -14,6 +15,25 @@ import { useUiStore } from "@/stores/uiStore";
 import { occasions, productTypes } from "@/lib/categories";
 import { fetchProducts } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
+
+const SORTIMENT_TITLE = "Alla personliga presenter med gravyr – hela sortimentet | TaggaDet";
+
+/**
+ * ItemList-schema för de kategorikort som faktiskt renderas på sidan
+ * (produkttyper + tillfällen) – ger Google en komplett katalogbild utan
+ * att något påhittas: samma kategorier, samma ordning som på sidan.
+ */
+const CATEGORY_ITEM_LIST_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: [...productTypes, ...occasions].map((category, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: category.title,
+    url: `${SITE_URL}/kategori/${category.slug}`,
+  })),
+};
 
 export const Route = createFileRoute("/sortiment")({
   component: SortimentPage,
@@ -32,14 +52,14 @@ export const Route = createFileRoute("/sortiment")({
   },
   head: () => ({
     meta: [
-      { title: "Hela sortimentet – TaggaDet" },
+      { title: SORTIMENT_TITLE },
       { rel: "canonical", href: `${SITE_URL}/sortiment` },
       {
         name: "description",
         content:
-          "Alla handgjorda presenter på ett ställe: smycken, gravyr i trä och läder, skärbrädor, muggar, stickers, fototavlor och 3D-utskrifter. Filtrera och hitta din present.",
+          "Alla handgjorda presenter: smycken, gravyr i trä och läder, skärbrädor, muggar, stickers, fototavlor och 3D-utskrifter. Filtrera och hitta din present.",
       },
-      { property: "og:title", content: "Hela sortimentet – TaggaDet" },
+      { property: "og:title", content: SORTIMENT_TITLE },
       {
         property: "og:description",
         content:
@@ -47,6 +67,12 @@ export const Route = createFileRoute("/sortiment")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(CATEGORY_ITEM_LIST_JSON_LD),
+      },
     ],
   }),
 });
@@ -63,14 +89,16 @@ function SortimentPage() {
 
   return (
     <>
+      {/* Bandet direkt under menyn — samma atmosfär som på startsidan */}
+      <TrustedMarquee />
       <CategoryIconRow />
       {/* Hero-kapitel: säljer bredden och visar två vägar in – sök
           (primär) eller skrolla till utbudet (sekundär). */}
       <header className="border-b border-border/60 bg-cream">
-        <div className="mx-auto max-w-6xl px-5 pt-6 pb-16 md:pt-8 md:pb-20">
+        <div className="mx-auto max-w-7xl px-5 pt-6 pb-10 md:pt-8 md:pb-12">
           <Breadcrumbs items={[{ label: "Hela sortimentet" }]} />
-          <p className="mt-8 font-script text-2xl text-primary-deep md:mt-10">hela sortimentet</p>
-          <h1 className="mt-1 font-serif text-4xl font-bold tracking-tight text-balance md:text-5xl">
+          <Kicker className="mt-8 md:mt-10">hela sortimentet</Kicker>
+          <h1 className="mt-1 font-serif text-4xl tracking-tight text-balance md:text-5xl">
             Allt jag gör
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
@@ -96,16 +124,13 @@ function SortimentPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-6xl px-5 py-16 md:py-20">
+      <div className="mx-auto max-w-7xl px-5 py-10 md:py-12">
         {/* Kapitel: produkttyper – datadrivet från kategorikartan, så nya
             kategorier syns här utan att sidan behöver röras. */}
         <section aria-labelledby="produkttyper-heading">
           <Reveal>
-            <p className="font-script text-2xl text-primary-deep">vad vill du gravera på?</p>
-            <h2
-              id="produkttyper-heading"
-              className="mt-1 font-serif text-3xl font-bold tracking-tight"
-            >
+            <Kicker>vad vill du gravera på?</Kicker>
+            <h2 id="produkttyper-heading" className="mt-1 font-serif text-3xl tracking-tight">
               Välj utifrån sak
             </h2>
             <p className="mt-2 max-w-2xl text-muted-foreground">
@@ -123,13 +148,10 @@ function SortimentPage() {
         </section>
 
         {/* Kapitel: tillfällen – kompaktare kort, fortfarande datadrivet. */}
-        <section className="mt-20" aria-labelledby="tillfallen-heading">
+        <section className="mt-14" aria-labelledby="tillfallen-heading">
           <Reveal>
-            <p className="font-script text-2xl text-primary-deep">eller utifrån tillfälle</p>
-            <h2
-              id="tillfallen-heading"
-              className="mt-1 font-serif text-3xl font-bold tracking-tight"
-            >
+            <Kicker>eller utifrån tillfälle</Kicker>
+            <h2 id="tillfallen-heading" className="mt-1 font-serif text-3xl tracking-tight">
               Fira något
             </h2>
             <p className="mt-2 max-w-2xl text-muted-foreground">
@@ -149,11 +171,11 @@ function SortimentPage() {
         {/* Kapitel: hela utbudet med filter – sidans kärna. */}
         <section
           id="sortiment"
-          className="mt-20 scroll-mt-24 border-t border-border pt-12"
+          className="mt-14 scroll-mt-24 border-t border-border pt-10"
           aria-labelledby="utbud-heading"
         >
-          <p className="font-script text-2xl text-primary-deep">allt på en plats</p>
-          <h2 id="utbud-heading" className="mt-1 font-serif text-3xl font-bold tracking-tight">
+          <Kicker>allt på en plats</Kicker>
+          <h2 id="utbud-heading" className="mt-1 font-serif text-3xl tracking-tight">
             Hela utbudet
           </h2>
 
@@ -168,7 +190,7 @@ function SortimentPage() {
             </p>
           ) : products.length === 0 ? (
             <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-              <p className="font-serif text-xl font-bold">Inga produkter ännu</p>
+              <p className="font-serif text-xl">Inga produkter ännu</p>
               <p className="mt-2 text-sm text-muted-foreground">
                 Här visas dina produkter så fort de finns i butiken.
               </p>
@@ -178,7 +200,7 @@ function SortimentPage() {
               <ProductFilters {...filters} total={products.length} />
               {filters.filtered.length === 0 ? (
                 <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-                  <p className="font-serif text-xl font-bold">Inget matchade ditt filter</p>
+                  <p className="font-serif text-xl">Inget matchade ditt filter</p>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Rensa filtret – eller{" "}
                     <Link to="/kontakt" className="font-semibold text-primary-deep hover:underline">

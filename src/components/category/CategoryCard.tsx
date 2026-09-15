@@ -26,7 +26,9 @@ export function CategoryCard({
       to="/kategori/$slug"
       params={{ slug: category.slug }}
       className={cn(
-        "group overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-soft transition-[box-shadow,transform,border-color] duration-500 ease-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-lift motion-reduce:transition-none motion-reduce:transform-none",
+        // .card-shop äger kant, skugga och hover (inkl. motion-reduce) —
+        // inga egna border-/hover-patchar här längre
+        "card-shop group overflow-hidden p-5",
         compact
           ? "flex min-h-11 flex-col items-start justify-center gap-1 p-4"
           : "flex h-full flex-col gap-4",
@@ -53,10 +55,10 @@ export function CategoryCard({
         </span>
       )}
       <span className="flex min-w-0 flex-1 flex-col">
-        <span className="font-script text-lg leading-none text-primary-deep">
+        <span className="font-inscription text-xs leading-none text-primary-deep">
           {category.kicker}
         </span>
-        <span className="mt-1.5 font-serif text-lg font-bold tracking-tight text-foreground">
+        <span className="mt-1.5 font-serif text-lg tracking-tight text-foreground">
           {category.short ?? category.title}
         </span>
         {!compact && (

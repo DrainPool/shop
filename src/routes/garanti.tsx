@@ -1,17 +1,20 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, Gem, Wrench } from "lucide-react";
+import { SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/garanti")({
   head: () => ({
     meta: [
-      { title: "Garanti – TaggaDet" },
+      { title: "Garanti | TaggaDet" },
+      { rel: "canonical", href: `${SITE_URL}/garanti` },
       {
         name: "description",
         content:
           "Kvalitetsgaranti på alla handgjorda produkter från TaggaDet – material, gravyr och utförande.",
       },
-      { property: "og:title", content: "Garanti – TaggaDet" },
+      { property: "og:title", content: "Garanti | TaggaDet" },
       {
         property: "og:description",
         content:
@@ -28,11 +31,11 @@ function WarrantyPage() {
   return (
     <article className="mx-auto max-w-3xl px-5 py-16">
       <Breadcrumbs items={[{ label: "Garanti" }]} />
-      <p className="mt-6 font-script text-2xl text-primary-deep">Mitt löfte</p>
-      <h1 className="mt-2 font-serif text-4xl font-semibold">Garanti</h1>
+      <Kicker className="mt-6">Mitt löfte</Kicker>
+      <h1 className="mt-2 font-serif text-4xl">Garanti</h1>
       <p className="mt-4 text-muted-foreground">
         Varje produkt som lämnar verkstaden kontrolleras för hand innan den packas. Står jag inte
-        bakom den – skickar jag inte den.
+        bakom den, skickar jag den inte.
       </p>
 
       <div className="mt-10 space-y-6">
@@ -40,7 +43,7 @@ function WarrantyPage() {
           <div className="flex items-start gap-3">
             <BadgeCheck className="mt-1 h-6 w-6 shrink-0 text-primary-deep" aria-hidden="true" />
             <div>
-              <h2 className="font-serif text-xl font-semibold">2 års garanti på utförande</h2>
+              <h2 className="font-serif text-xl">2 års garanti på utförande</h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Jag garanterar att gravyrer, 3D-utskrifter och montering håller för normal
                 användning i minst 2 år. Lossnar en gravyrplåt, spricker en 3D-utskrift vid normal
@@ -54,7 +57,7 @@ function WarrantyPage() {
           <div className="flex items-start gap-3">
             <Gem className="mt-1 h-6 w-6 shrink-0 text-primary-deep" aria-hidden="true" />
             <div>
-              <h2 className="font-serif text-xl font-semibold">Materialgaranti</h2>
+              <h2 className="font-serif text-xl">Materialgaranti</h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Jag använder noga utvalda material – äkta trä, vegetabiliskt garvat läder, rostfritt
                 stål och silver. Trä och läder är naturmaterial och kan variera i ådring och nyans;
@@ -69,9 +72,9 @@ function WarrantyPage() {
           <div className="flex items-start gap-3">
             <Wrench className="mt-1 h-6 w-6 shrink-0 text-primary-deep" aria-hidden="true" />
             <div>
-              <h2 className="font-serif text-xl font-semibold">Vad garantin inte täcker</h2>
+              <h2 className="font-serif text-xl">Vad garantin inte täcker</h2>
               <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                <li>• Normalt slitage (repor, patina på läder, avmattning)</li>
+                <li>• Normalt slitage (repor, patina på läder, blekning)</li>
                 <li>• Skador orsakade av felaktig skötsel eller olyckshändelse</li>
                 <li>• Textfel som står kvar i den skiss du godkänt</li>
                 <li>• Produktens naturliga åldring</li>
@@ -98,7 +101,7 @@ function WarrantyPage() {
       </p>
 
       <div className="mt-10 rounded-3xl bg-cream p-8 text-center">
-        <p className="font-serif text-xl font-bold">Redo att ge bort något som håller?</p>
+        <p className="font-serif text-xl">Redo att ge bort något som håller?</p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <Link
             to="/sortiment"

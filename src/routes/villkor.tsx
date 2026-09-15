@@ -11,17 +11,20 @@ import {
   Scale,
 } from "lucide-react";
 import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
+import { SITE_URL } from "@/lib/siteUrls";
+import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/villkor")({
   head: () => ({
     meta: [
-      { title: "Allmänna villkor – TaggaDet" },
+      { title: "Allmänna villkor | TaggaDet" },
+      { rel: "canonical", href: `${SITE_URL}/villkor` },
       {
         name: "description",
         content:
           "Villkor för köp hos TaggaDet: beställning och skiss, priser och betalning, leveranstid, reklamationsrätt och att ångerrätten inte gäller personligt tillverkade varor.",
       },
-      { property: "og:title", content: "Allmänna villkor – TaggaDet" },
+      { property: "og:title", content: "Allmänna villkor | TaggaDet" },
       {
         property: "og:description",
         content:
@@ -45,20 +48,20 @@ const sections: { title: string; body: ReactNode[] }[] = [
     title: "Beställning & digital skiss",
     body: [
       "Alla produkter tillverkas för hand efter dina önskemål. Innan tillverkningen börjar får du alltid en digital skiss att godkänna. Kontrollera därför stavning, datum och detaljer noga i skissen och i din beställning – du ansvarar för att texterna du anger är korrekta.",
-      "Efter din godkännande av skissen påbörjas tillverkningen, och produkten kan därefter inte ändras.",
+      "Efter ditt godkännande av skissen påbörjas tillverkningen, och produkten kan därefter inte ändras.",
     ],
   },
   {
     title: "Priser & betalning",
     body: [
       `Alla priser anges i svenska kronor inklusive moms. Eventuella fraktkostnader visas i kassan innan du fullföljer köpet – fri frakt vid beställning över ${FREE_SHIPPING_LIMIT} kr.`,
-      "Betalning sker tryggt i Shopifys kassa med kort och Klarna beroende på vad som är aktivt i butiken vid köptillfället. Vi reserverar oss för att en produkt har blivit slutsåld och prisändringar eller felskrivningar kan förekomma – då kontaktar jag dig alltid innan jag levererar.",
+      "Betalning sker tryggt i Shopifys kassa med kort och Klarna beroende på vad som är aktivt i butiken vid köptillfället. Jag reserverar mig för att en produkt kan vara slutsåld och för att prisändringar eller felskrivningar kan förekomma – då kontaktar jag dig alltid innan jag levererar.",
     ],
   },
   {
     title: "Tillverkning & leverans",
     body: [
-      "Ordertid: beställningar som läggs innan söndag 23:59 tillverkas och skickas under följande vecka. Ange gärna ett önskat leveransdatum om du beställer till ett bestämt tillfälle – jag anstränger mig alltid att hinna, men kontakta mig först om datumet är nära förestående.",
+      "Ordertid: beställningar som läggs innan söndag 23:59 tillverkas och skickas under följande vecka. Ange gärna ett önskat leveransdatum om du beställer till ett bestämt tillfälle – jag gör mitt bästa för att hinna, men kontakta mig först om datumet är nära förestående.",
       "Leverans sker med spårbar frakt inom Sverige. Läs mer om leveranstider på sidan ",
       <Link to="/frakt-leverans" className="text-primary-deep underline">
         Frakt &amp; leverans
@@ -76,13 +79,13 @@ const sections: { title: string; body: ReactNode[] }[] = [
   {
     title: "Reklamation",
     body: [
-      "Enligt konsumentköplagen har du rätt att reklamera fel på varan i tre år från köpet. Skulle något skadas under transport eller inte motsvara den godkända skissen – hör av dig inom rimlig tid, gärna med foton, så löser jag det: ny tillverkning, lagning eller återbetalning beroende på vad som passar dig bäst.",
+      "Enligt konsumentköplagen har du rätt att reklamera fel på varan i tre år från köpet. Skulle varan skadas under transporten eller inte motsvara den godkända skissen – hör av dig inom rimlig tid, gärna med foton, så löser jag det: ny tillverkning, lagning eller återbetalning beroende på vad som passar dig bäst.",
     ],
   },
   {
     title: "Tvist",
     body: [
-      "Vi följer Konsumentverkets rekommendationer och försöker alltid lösa eventuella tvister i samförstånd. Kan vi inte komma överens kan du ta tvisten till Allmänna reklamationsnämnden (ARN).",
+      "Jag följer Konsumentverkets rekommendationer och försöker alltid lösa eventuella tvister i samförstånd. Kan vi inte komma överens kan du ta tvisten till Allmänna reklamationsnämnden (ARN).",
     ],
   },
 ];
@@ -92,10 +95,8 @@ function TermsPage() {
     <div className="mx-auto max-w-3xl px-5 py-14">
       <Breadcrumbs items={[{ label: "Allmänna villkor" }]} />
 
-      <p className="mt-8 font-script text-3xl text-primary-deep">ärliga &amp; tydliga villkor</p>
-      <h1 className="mt-3 font-serif text-4xl font-bold tracking-tight md:text-5xl">
-        Allmänna villkor
-      </h1>
+      <Kicker className="mt-8">ärliga &amp; tydliga villkor</Kicker>
+      <h1 className="mt-3 font-serif text-4xl tracking-tight md:text-5xl">Allmänna villkor</h1>
       <p className="mt-4 text-lg text-muted-foreground">
         Senast uppdaterad: augusti 2026. Kort sagt: du får alltid godkänna en skiss innan jag
         tillverkar, och jag håller vad jag lovar.
@@ -103,11 +104,8 @@ function TermsPage() {
 
       <div className="mt-10 space-y-8">
         {sections.map((s) => (
-          <section
-            key={s.title}
-            className="rounded-3xl border border-border bg-card p-7 shadow-soft"
-          >
-            <h2 className="font-serif text-2xl font-bold">{s.title}</h2>
+          <section key={s.title} className="card-shop p-7">
+            <h2 className="font-serif text-2xl">{s.title}</h2>
             {s.body.map((p, i) => (
               <p key={i} className="mt-3 leading-relaxed text-muted-foreground">
                 {p}

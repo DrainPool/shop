@@ -5,7 +5,7 @@ import { occasions, productTypes } from "@/lib/categories";
 
 import { cn } from "@/lib/utils";
 
-type Group = { label: string; slugs: string[]; note: string; tint: TintKey };
+type Group = { label: string; slugs: string[]; note: string; tint: TintKey; span?: string };
 
 // Färgkod per grupp — hela klasssträngarna står här (literal) så att
 // Tailwind hittar dem vid kompilering.
@@ -59,9 +59,15 @@ const GROUPS: Group[] = [
   },
   {
     label: "Gravyr i trä & glas",
-    slugs: ["skarbrador", "glas"],
-    note: "Massiv ek och lasergraverat glas med skarp gravyr. Populärt till farsdag och jakt.",
+    slugs: ["skarbrador", "glas", "glasunderlagg"],
+    note: "Massiv ek, lasergraverat glas och underlägg med skarp gravyr. Populärt till farsdag och jakt.",
     tint: "wood",
+  },
+  {
+    label: "Till hemmet",
+    slugs: ["skyltar", "askar"],
+    note: "Namnskyltar i mässing och ek – och presentaskar för det som är värt att spara.",
+    tint: "plum",
   },
   {
     label: "Dryck & Prylar",
@@ -70,15 +76,37 @@ const GROUPS: Group[] = [
     tint: "teal",
   },
   {
-    label: "Kläder & Profil",
-    slugs: ["t-shirt", "hoodies", "kepsar"],
-    note: "Tryck och broderi från ett plagg och uppåt – till laget och företaget.",
+    label: "Till bilen",
+    slugs: ["bil"],
+    note: "Nyckelring med reg.nummer och garageskylt i egen design.",
+    tint: "forest",
+  },
+  {
+    // Egen grupp för golfen (frallan, sep 2026) — tjänsten ska inte gömma
+    // sig under bilen, den säljer på egen hand mot banan och klubbskåpet.
+    label: "Golfklubbor",
+    slugs: ["golfklubbar"],
+    note: "Lasergravyr på dina egna klubbor – namn, initialer eller klubbens logga.",
     tint: "steel",
   },
   {
-    label: "Till bilen & Banan",
-    slugs: ["bil", "golfklubbar"],
-    note: "Nyckelring med reg.nr och garageskylt — plus lasergravyr på golfklubborna.",
+    // Produktsidan av golfen, skild från klubbtjänsten ovan.
+    label: "Idrott & Golfpresent",
+    slugs: ["idrottspriser", "golfpresenter"],
+    note: "Pokaler och plaketter till prisbordet – och presenter till den som redan har allt.",
+    tint: "gold",
+  },
+  {
+    label: "Till husdjuren",
+    slugs: ["husdjur"],
+    note: "Pet tags i stål och mässing som överlever regnet, badet och skogen.",
+    tint: "rose",
+  },
+  {
+    // Tjänst som golfklubborna: gravyr på kundens egna saker, egna kort.
+    label: "Dina egna föremål",
+    slugs: ["gravyr-egna-foremal"],
+    note: "Du lämnar in det du redan äger – nycklar, fickknivar, verktyg – jag graverar.",
     tint: "forest",
   },
   {
@@ -90,7 +118,8 @@ const GROUPS: Group[] = [
 ];
 
 // Kurerat urval till megamenyn (mobilmenyn listar alla tillfällen
-// automatiskt) — säsongssidorna först, sedan de stora tillfällena.
+// automatiskt) — säsongssidorna först, sedan de stora tillfällena,
+// sist söksidorna och presentkortet.
 const OCCASION_SLUGS = [
   "jul",
   "halloween",
@@ -99,11 +128,17 @@ const OCCASION_SLUGS = [
   "dop",
   "konfirmation",
   "fodelsedag",
+  "student",
   "arsdag",
   "foretag",
   "pension",
   "farsdag",
+  "morsdag",
   "barn",
+  "nytt-hem",
+  "presentkort",
+  "bastsaljare",
+  "nyheter",
 ];
 
 function findType(slug: string) {
@@ -161,16 +196,10 @@ export function MegaMenu() {
             return (
               <div
                 key={g.label}
-                className={cn(
-                  "rounded-2xl border p-4 transition-colors",
-                  t.card,
-                )}
+                className={cn("rounded-2xl border p-4 transition-colors", t.card, g.span)}
               >
-                <p className="flex items-center gap-2 font-serif text-base font-bold">
-                  <span
-                    className={cn("h-2.5 w-2.5 rounded-full", t.dot)}
-                    aria-hidden="true"
-                  />
+                <p className="flex items-center gap-2 font-serif text-base">
+                  <span className={cn("h-2.5 w-2.5 rounded-full", t.dot)} aria-hidden="true" />
                   {g.label}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">{g.note}</p>
@@ -201,11 +230,8 @@ export function MegaMenu() {
               TINTS.gold.card,
             )}
           >
-            <p className="flex items-center gap-2 font-serif text-base font-bold">
-              <span
-                className={cn("h-2.5 w-2.5 rounded-full", TINTS.gold.dot)}
-                aria-hidden="true"
-              />
+            <p className="flex items-center gap-2 font-serif text-base">
+              <span className={cn("h-2.5 w-2.5 rounded-full", TINTS.gold.dot)} aria-hidden="true" />
               Passar till
             </p>
             <ul className="mt-3 grid grid-cols-2 gap-1.5 text-sm sm:grid-cols-4 lg:grid-cols-6">

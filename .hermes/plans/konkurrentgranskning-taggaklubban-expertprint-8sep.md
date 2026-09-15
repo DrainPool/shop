@@ -21,13 +21,13 @@ Alla priser i dokumentet är **jämförelsedata från källorna** — inget av d
 
 **Priser (källa: `taggaklubban-priser.md`):**
 
-| Tjänst                        | Pris         |
-| ----------------------------- | ------------ |
-| En klubba                     | 595 kr       |
-| Två klubbor                   | 995 kr       |
-| Tre klubbor                   | 1 295 kr     |
-| Helt klubbset                 | Kontakta oss |
-| Express medan du väntar       | 495 kr       |
+| Tjänst                  | Pris         |
+| ----------------------- | ------------ |
+| En klubba               | 595 kr       |
+| Två klubbor             | 995 kr       |
+| Tre klubbor             | 1 295 kr     |
+| Helt klubbset           | Kontakta oss |
+| Express medan du väntar | 495 kr       |
 
 **USP.** Det mobila eventupplägget är deras enda verkliga differentiering — att graverat på plats vid första tee under medlemsdagen är något en butik utan mobila enheter inte kan kopiera lika enkelt. Teknikargumentet ("påverkar varken svingvikt eller balans", "tål extrema väderförhållanden och hårda slag") är dessutom korrekt och värt att låna i sak, inte i ordalydelse.
 
@@ -40,7 +40,7 @@ Alla priser i dokumentet är **jämförelsedata från källorna** — inget av d
 - **Slarv i copy:** "veckstad" (för verkstad), dubbla mellanslag, tre olika formulärknappar i rad. Tunna textsidor; sidan "Om" är två stycken.
 - **Enbens-tunn SEO:** hela sajten handlar om golfklubbor. Äger de sökorden "lasergravyr golfklubbor" kan de vinna där — men de täcker inget av allt annat gravyr efterfrågas på (presenter, skyltar, smycken). En Google-sökning på "gravyr Stockholm" ger dem ingen plats.
 
-**Slutsats.** Taggaklubban är en *tjänstekonkurrent i en enda nisch* och ett bevis på att golfgravyr är ett betalande segment (595 kr för en klubba är en hälsosam tjänstemarginal). De är dock lätta att slå på: inget köpflöde, inga riktiga bilder, mall-omdömen, och ingen produktkatalog alls. TaggaDets golfklubbs-sida (`src/lib/categories.ts`, slug `golfklubbor`) ligger redan utsatt med priser ~5 % under (565/945/1 230/470) och ett starkare flöde (skiss först, express, mobil graverat på banan, Aneby-inlämning).
+**Slutsats.** Taggaklubban är en _tjänstekonkurrent i en enda nisch_ och ett bevis på att golfgravyr är ett betalande segment (595 kr för en klubba är en hälsosam tjänstemarginal). De är dock lätta att slå på: inget köpflöde, inga riktiga bilder, mall-omdömen, och ingen produktkatalog alls. TaggaDets golfklubbs-sida (`src/lib/categories.ts`, slug `golfklubbor`) ligger redan utsatt med priser ~5 % under (565/945/1 230/470) och ett starkare flöde (skiss först, express, mobil graverat på banan, Aneby-inlämning).
 
 ### 1.2 Expertprint (expertprint.se, Vallentuna)
 
@@ -48,27 +48,27 @@ Alla priser i dokumentet är **jämförelsedata från källorna** — inget av d
 
 **Prisexempel (källa: `expertprint-shop.md`, `-champangeglas.md`):**
 
-| Produkt                              | Pris     |
-| ------------------------------------ | -------- |
-| Aluminiumskylt industri              | 90 kr    |
-| Glasstatyett "Runsten"               | 85 kr    |
-| Diana – stående glasskylt med gravyr | 165 kr   |
-| Driver/Wedge/Putter (koppar)         | 198 kr   |
-| Whiskeyglas rund botten med gravyr   | 199 kr   |
-| Glasplakett utan sockel              | 199 kr   |
-| Aluminiumtavlor                      | 199 kr   |
-| Fickplunta med UV-tryck               | 275 kr   |
-| Graverad dörrskylt i mässing         | 399 kr   |
-| Carmen – glasstatyett                | 435 kr   |
+| Produkt                                               | Pris   |
+| ----------------------------------------------------- | ------ |
+| Aluminiumskylt industri                               | 90 kr  |
+| Glasstatyett "Runsten"                                | 85 kr  |
+| Diana – stående glasskylt med gravyr                  | 165 kr |
+| Driver/Wedge/Putter (koppar)                          | 198 kr |
+| Whiskeyglas rund botten med gravyr                    | 199 kr |
+| Glasplakett utan sockel                               | 199 kr |
+| Aluminiumtavlor                                       | 199 kr |
+| Fickplunta med UV-tryck                               | 275 kr |
+| Graverad dörrskylt i mässing                          | 399 kr |
+| Carmen – glasstatyett                                 | 435 kr |
 | Öl-/vin-/whisky-/champagneglas-set (2 st, med gravyr) | 499 kr |
-| Golfboxen (present med golfbollar)   | 795 kr   |
-| Golfbollstryck                       | 835 kr   |
+| Golfboxen (present med golfbollar)                    | 795 kr |
+| Golfbollstryck                                        | 835 kr |
 
 **USP.** Bredd och lokalt fotfäste: fysisk adress i Vallentuna, personlig telefon på sidan ("Telefon: Filip: 0708802556"), 14 dagars returpolicy, och en imponerande mängd lokala landningssidor (`gravyr-stockholm`, `gravyr-vallentuna`, `gravyr-taby`, `gravyr-norrtalje` osv. i `expertprint-map.json`) som sannolikt rankar på geo-sökningar i Stockholmsområdet. Idrottspriser (11 produkter — pokaler, glasstatyetter, utskurna siffror) är en kategori TaggaDet i dag saknar helt.
 
 **Brister.**
 
-- **Personliseringen är ett mejl:** champagneglas-sidans viktigaste stycke lyder *"Önskas gravyr? Efter din beställning – glöm inte att skicka den text/bild/logo du vill ha graverad till info@expertprint.se. Skriv gärna ditt ordernummer."* Hela personliseringsupplevelsen — det som är hela poängen med en graverad gåva — ligger utanför köpflödet och bygger på att kunden kommer ihåg att mejla. TaggaDets ProductCustomizer (text inmatad i kassflödet, sparas som line attributes) slår detta med råge.
+- **Personliseringen är ett mejl:** champagneglas-sidans viktigaste stycke lyder _"Önskas gravyr? Efter din beställning – glöm inte att skicka den text/bild/logo du vill ha graverad till info@expertprint.se. Skriv gärna ditt ordernummer."_ Hela personliseringsupplevelsen — det som är hela poängen med en graverad gåva — ligger utanför köpflödet och bygger på att kunden kommer ihåg att mejla. TaggaDets ProductCustomizer (text inmatad i kassflödet, sparas som line attributes) slår detta med råge.
 - **Inga fungerande köpknappar:** varje produktkort visar "Kontakta oss"-knapp i stället för lägg-i-varukorg i crawl-datan — butiken är mer katalog än butik.
 - **Noll social proof:** "0 customer reviews" på produktsidor, "Det finns inga recensioner än" på samtliga produkter.
 - **Trasigt specialbeställningsflöde:** formuläret på specialbeställningssidan visar "Aktivera JavaScript i din webbläsare för att fylla i formuläret" — den enda vägen in för skräddarsydda beställningar är defekt.
@@ -76,7 +76,7 @@ Alla priser i dokumentet är **jämförelsedata från källorna** — inget av d
 - **Inkonsekvent teknik:** en del produkter är UV-tryck (fickplunta), inte gravyr — kunden vet inte alltid vad den får. "Ingen reklam"-skyltar och parkeringsskyltar är lågmarginal-standardvara som drar ner varumärket mot byggmarknad.
 - **Splittrad berättelse:** B2B-maskinskyltar och B2C-bröllopsglas i samma butik ger ingen känsla av hantverk och ingen person bakom (utom "Filip" i telefonlistan). Ingen förstaperson, ingen process, inga processbilder.
 
-**Slutsats.** Expertprint är en *katalog-konkurrent med bred sortiment men trasigt flöde*. De bevisar att det finns efterfrågan och prisnivåer på glas, idrottspriser, namnskyltar och golfpresenter — men deras svagaste punkter (personliseringsflödet, social proof, berättelsen) är exakt TaggaDets starkaste.
+**Slutsats.** Expertprint är en _katalog-konkurrent med bred sortiment men trasigt flöde_. De bevisar att det finns efterfrågan och prisnivåer på glas, idrottspriser, namnskyltar och golfpresenter — men deras svagaste punkter (personliseringsflödet, social proof, berättelsen) är exakt TaggaDets starkaste.
 
 ---
 
@@ -84,26 +84,26 @@ Alla priser i dokumentet är **jämförelsedata från källorna** — inget av d
 
 TaggaDets demo-produkter (`src/lib/demoProducts.ts`, priser enligt tidigare prismätning i `saljgranskning-del2/3`):
 
-| Produkt/kategori (TaggaDet)                      | TaggaDet (demo)   | Konkurrent                 | Konkurrentens pris    | Bedömning |
-| ------------------------------------------------ | ----------------- | -------------------------- | --------------------- | --------- |
-| Nyckelring i ek med namn                        | 179 kr            | medgravyr (spann del 1–3)  | 58–239 kr             | Mitt i spannet ✓ |
-| Nyckelring med reg.nummer                        | 199 kr            | —                          | —                     | Unikt ✓ |
-| Kors-hänge silver (dop)                          | 449 kr            | expertprint har inga smycken i butiken | —      | Lucka ✓ |
-| Namnhalsband handgraverat                        | 449 kr            | namnsmycken.com            | 690–1 390 kr          | Konkurrenskraftigt ✓ |
-| Armband i läder med initialer                    | 399 kr            | —                          | —                     | ✓ |
-| Charm/berlock                                    | 249 kr            | silvermama (spann)         | 249–690 kr            | Botten av spannet ✓ |
-| Parsmycke — två halsband                         | 890 kr            | expertprint saknar         | —                     | Unikt ✓ |
-| Kedja med berlock                                | 549 kr            | —                          | —                     | ✓ |
-| Minnesask i ek                                   | 399 kr            | —                          | —                     | Unikt ✓ |
-| Korg i ek med gravyr                             | 349 kr            | —                          | —                     | Unikt ✓ |
-| Glas (kategori finns, inga demo-produkter)       | 249–349 kr (planerat spann, fas6-dok) | expertprint glas-set (2 st) / rofa | 499 kr / 269–379 kr | Under expertprint, i paritet med rofa ✓ |
-| Skärbräda i ek (kategori finns, inga demo-produkter) | 349–549 kr (planerat spann) | AskYunik / Robro | 299 / 950 kr | Mitt emellan ✓ |
-| **Golfklubbor (tjänst, `categories.ts`)**          | 565 / 945 / 1 230 / express 470 kr | **Taggaklubban** | **595 / 995 / 1 295 / express 495 kr** | ~5 % under på alla rader ✓ |
-| Mässing dörrskylt (idé, se § 4)                   | 299–399 kr (förslag) | expertprint               | 399 kr                | Paritet ✓ |
-| Pet tag i metall (idé, se § 4)                   | 149–199 kr (förslag) | ej noterad hos någon av de två | — | Lucka ✓ |
-| Idrottspris/pokal (idé, se § 4)                  | 249–449 kr (förslag) | expertprint glasstatyetter | 85–435 kr             | Övre halvan — motiverat med metall/trä i stället för glas ✓ |
+| Produkt/kategori (TaggaDet)                          | TaggaDet (demo)                       | Konkurrent                             | Konkurrentens pris                     | Bedömning                                                   |
+| ---------------------------------------------------- | ------------------------------------- | -------------------------------------- | -------------------------------------- | ----------------------------------------------------------- |
+| Nyckelring i ek med namn                             | 179 kr                                | medgravyr (spann del 1–3)              | 58–239 kr                              | Mitt i spannet ✓                                            |
+| Nyckelring med reg.nummer                            | 199 kr                                | —                                      | —                                      | Unikt ✓                                                     |
+| Kors-hänge silver (dop)                              | 449 kr                                | expertprint har inga smycken i butiken | —                                      | Lucka ✓                                                     |
+| Namnhalsband handgraverat                            | 449 kr                                | namnsmycken.com                        | 690–1 390 kr                           | Konkurrenskraftigt ✓                                        |
+| Armband i läder med initialer                        | 399 kr                                | —                                      | —                                      | ✓                                                           |
+| Charm/berlock                                        | 249 kr                                | silvermama (spann)                     | 249–690 kr                             | Botten av spannet ✓                                         |
+| Parsmycke — två halsband                             | 890 kr                                | expertprint saknar                     | —                                      | Unikt ✓                                                     |
+| Kedja med berlock                                    | 549 kr                                | —                                      | —                                      | ✓                                                           |
+| Minnesask i ek                                       | 399 kr                                | —                                      | —                                      | Unikt ✓                                                     |
+| Korg i ek med gravyr                                 | 349 kr                                | —                                      | —                                      | Unikt ✓                                                     |
+| Glas (kategori finns, inga demo-produkter)           | 249–349 kr (planerat spann, fas6-dok) | expertprint glas-set (2 st) / rofa     | 499 kr / 269–379 kr                    | Under expertprint, i paritet med rofa ✓                     |
+| Skärbräda i ek (kategori finns, inga demo-produkter) | 349–549 kr (planerat spann)           | AskYunik / Robro                       | 299 / 950 kr                           | Mitt emellan ✓                                              |
+| **Golfklubbor (tjänst, `categories.ts`)**            | 565 / 945 / 1 230 / express 470 kr    | **Taggaklubban**                       | **595 / 995 / 1 295 / express 495 kr** | ~5 % under på alla rader ✓                                  |
+| Mässing dörrskylt (idé, se § 4)                      | 299–399 kr (förslag)                  | expertprint                            | 399 kr                                 | Paritet ✓                                                   |
+| Pet tag i metall (idé, se § 4)                       | 149–199 kr (förslag)                  | ej noterad hos någon av de två         | —                                      | Lucka ✓                                                     |
+| Idrottspris/pokal (idé, se § 4)                      | 249–449 kr (förslag)                  | expertprint glasstatyetter             | 85–435 kr                              | Övre halvan — motiverat med metall/trä i stället för glas ✓ |
 
-**Mönstret är tydligt:** TaggaDet ligger i dag *under eller i paritet med* samtliga jämförbara prisnivåer, medan golftjänsten medvetet hålls strax under Taggaklubban. Marginalutrymme finns i glas (expertprint tar 499 kr för ett 2-pack där rofa tar ~300 kr/st) och i metallprodukter där råvaran är billig och graveringen bär priset. Ingen prissänkning behövs — nästa steg är att fylla luckorna som konkurrenterna bevisat finns betalande efterfrågan på (glas, idrottspriser, namnskyltar, golfpresenter).
+**Mönstret är tydligt:** TaggaDet ligger i dag _under eller i paritet med_ samtliga jämförbara prisnivåer, medan golftjänsten medvetet hålls strax under Taggaklubban. Marginalutrymme finns i glas (expertprint tar 499 kr för ett 2-pack där rofa tar ~300 kr/st) och i metallprodukter där råvaran är billig och graveringen bär priset. Ingen prissänkning behövs — nästa steg är att fylla luckorna som konkurrenterna bevisat finns betalande efterfrågan på (glas, idrottspriser, namnskyltar, golfpresenter).
 
 ---
 
@@ -111,11 +111,11 @@ TaggaDets demo-produkter (`src/lib/demoProducts.ts`, priser enligt tidigare pris
 
 ### 3.1 Två lasrar i en verkstad — ingen av konkurrenterna spänner båda materialgrupperna
 
-TaggaDets maskin kombinerar **fiberlaser (metall: rostfritt, aluminium, mässing, silver, koppar, anodiserad aluminium, djupgravyr)** och **diodlaser (trä, plywood, kork, läder, akryl, skiffer, belagd keramik)** i samma arbetspass. Taggaklubban graverar bara metall (golfklubbor) — deras Om-sida nämner "andra metalldetaljer och tillbehör" men butiken visar inga. Expertprint blandar glasgravyr, UV-tryck och skyltar men har inget trä-/lädersortiment att tala om. **Gapet:** en kund som vill ge ett *samlat personligt paket* — metall + trä + läder i matchande stil (t.ex. bröllop: graverade ringaskar i trä, metallhängen till bröllopspartet, läder nyckelring till toastmastern) kan bara få det hos en verkstad med båda modulerna. Detta är ett positionerings-gap, inte bara produkt-gap (se § 5).
+TaggaDets maskin kombinerar **fiberlaser (metall: rostfritt, aluminium, mässing, silver, koppar, anodiserad aluminium, djupgravyr)** och **diodlaser (trä, plywood, kork, läder, akryl, skiffer, belagd keramik)** i samma arbetspass. Taggaklubban graverar bara metall (golfklubbor) — deras Om-sida nämner "andra metalldetaljer och tillbehör" men butiken visar inga. Expertprint blandar glasgravyr, UV-tryck och skyltar men har inget trä-/lädersortiment att tala om. **Gapet:** en kund som vill ge ett _samlat personligt paket_ — metall + trä + läder i matchande stil (t.ex. bröllop: graverade ringaskar i trä, metallhängen till bröllopspartet, läder nyckelring till toastmastern) kan bara få det hos en verkstad med båda modulerna. Detta är ett positionerings-gap, inte bara produkt-gap (se § 5).
 
 ### 3.2 Metallgravyr på smycken — djup och permanent, inte yta
 
-Expertprint har bloggposter om "graverade armband" och "graverade ringar" (dock utan produkter i butiken — kategori Accessoarer har 4 produkter, ingen smycken). Fiberlasern gör **permanent mörk gravering och djupgravyr i rostfritt stål och silver** — billigare råvara, högre upplevt värde, och gravyren slits aldrig. TaggaDet har redan smycken som största demokategori; det som saknas är *metallvarianterna*: rostfritt armband med gravering, mässingshängen, pet tags. Ingen av de två konkurrenterna säljer metallmärkta smycken i dag.
+Expertprint har bloggposter om "graverade armband" och "graverade ringar" (dock utan produkter i butiken — kategori Accessoarer har 4 produkter, ingen smycken). Fiberlasern gör **permanent mörk gravering och djupgravyr i rostfritt stål och silver** — billigare råvara, högre upplevt värde, och gravyren slits aldrig. TaggaDet har redan smycken som största demokategori; det som saknas är _metallvarianterna_: rostfritt armband med gravering, mässingshängen, pet tags. Ingen av de två konkurrenterna säljer metallmärkta smycken i dag.
 
 ### 3.3 Pet tags — helt oskyddad kategori hos båda
 
@@ -123,13 +123,13 @@ Etsy-insikterna (branschen) rankar personliga djurprodukter som bestseller-numme
 
 ### 3.4 Idrottspriser och pokaler — Expertprint bevisat marknad, svag täckning
 
-Expertprint har 11 idrottspris-produkter (glasstatyetter 85–435 kr, Sendai-pokal, utskurna siffror/bokstäver, idrottsmotiv) och en bloggguide "idrottspriser med gravyr". **Gapet:** de är glas- och plast-tunga — inga pokaler med *metallplakett med djupgravyr*, inga träfotstycken graverade med föreningens namn, inga akrylpriser (diodlaser skär och graverar akryl fint). Lag och föreningar beställer sällan en — de beställer hela prisbordet till turneringen, volym som passar TaggaDets /foretag-offertflöde. Samma logik gäller **dash-plaketten till bilträffen** (finns redan i fas6-listan till 89 kr).
+Expertprint har 11 idrottspris-produkter (glasstatyetter 85–435 kr, Sendai-pokal, utskurna siffror/bokstäver, idrottsmotiv) och en bloggguide "idrottspriser med gravyr". **Gapet:** de är glas- och plast-tunga — inga pokaler med _metallplakett med djupgravyr_, inga träfotstycken graverade med föreningens namn, inga akrylpriser (diodlaser skär och graverar akryl fint). Lag och föreningar beställer sällan en — de beställer hela prisbordet till turneringen, volym som passar TaggaDets /foretag-offertflöde. Samma logik gäller **dash-plaketten till bilträffen** (finns redan i fas6-listan till 89 kr).
 
 ### 3.5 Golf: klubbgravyr + presenter — Taggaklubban har tjänsten, Expertprint har produkterna, ingen har båda
 
-- Taggaklubban: graverar *dina* klubbor (595 kr/st) — men säljer ingen enda fysisk produkt.
+- Taggaklubban: graverar _dina_ klubbor (595 kr/st) — men säljer ingen enda fysisk produkt.
 - Expertprint: säljer Golfboxen (795 kr) och golfbollstryck (835 kr) — men trycker bollar, graverar inte klubbor.
-- **Gapet för TaggaDet:** hela kedjan. Fiberlaser märker klubbhuvudena (tjänstekategorin finns redan med priser), diodlasern gör *träpresentaskar, träfotstycken, ekplaketter med golfmotiv* och plywood-golfboxar till presenten till golfspelaren som har allt, och metallen gör ball markers och divot-verktyg med initialer. En kategori-sida "Till golfaren" kan sälja tjänsten (gravyr på dina klubbor) + produkterna (presentask, plakett, ball markers) i samma svep — något ingen av de två kan.
+- **Gapet för TaggaDet:** hela kedjan. Fiberlaser märker klubbhuvudena (tjänstekategorin finns redan med priser), diodlasern gör _träpresentaskar, träfotstycken, ekplaketter med golfmotiv_ och plywood-golfboxar till presenten till golfspelaren som har allt, och metallen gör ball markers och divot-verktyg med initialer. En kategori-sida "Till golfaren" kan sälja tjänsten (gravyr på dina klubbor) + produkterna (presentask, plakett, ball markers) i samma svep — något ingen av de två kan.
 
 ### 3.6 Namnskyltar i mässing och aluminium — Expertprints 399 kr-dörrskylt utan hantverksnivå
 
@@ -137,11 +137,11 @@ Expertprint säljer graverad dörrskylt i mässing (399 kr) och namnskyltar i al
 
 ### 3.7 Specialbeställningsflödet — Expertprints största svaghet
 
-Expertprints specialbeställningssida är deras enda väg in för skräddarsytt — och formuläret är trasigt (JS-varning i crawl). Deras glasprodukter kräver att kunden *mejlar gravyrtexten efter köpet*. TaggaDets motsvarighet: personliseringsfältet i ProductCustomizer, graveringstexten följer med ordern som line attributes (`cartStore.ts`), skiss-godkännande före laser ("du får en digital skiss att godkänna" — copy som redan finns på varenda kategorisida), och /kontakt + /foretag för volym. **Gapet är processmässigt:** "skiss först, personlig text i beställningen, aldrig mejl efteråt" är en kapabilitet ingen av konkurrenterna har — den ska synas i copy och struktur (se § 5).
+Expertprints specialbeställningssida är deras enda väg in för skräddarsytt — och formuläret är trasigt (JS-varning i crawl). Deras glasprodukter kräver att kunden _mejlar gravyrtexten efter köpet_. TaggaDets motsvarighet: personliseringsfältet i ProductCustomizer, graveringstexten följer med ordern som line attributes (`cartStore.ts`), skiss-godkännande före laser ("du får en digital skiss att godkänna" — copy som redan finns på varenda kategorisida), och /kontakt + /foretag för volym. **Gapet är processmässigt:** "skiss först, personlig text i beställningen, aldrig mejl efteråt" är en kapabilitet ingen av konkurrenterna har — den ska synas i copy och struktur (se § 5).
 
 ### 3.8 Express medan du väntar — Taggaklubban tar betalt för det TaggaDet kan ge gratis
 
-Taggaklubban prissätter expressläget till 495 kr som tillval. För små produkter (pet tag, nyckelring, charm) är graveringen ett minuter; en fibre-diod-verkstad kan positionera "graverat medan du väntar i verkstaden" som *ingår* för vissa produkter och som rimligt tillval för klubbor — utan att kopiera deras 495-kronorskälvning. Notera: TaggaDets golf-prislista har redan en expressrad (470 kr, strax under), vilket är korrekt för klubbor — men för småprodukter är gratis-express ett konverteringsgrepp konkurrenterna saknar.
+Taggaklubban prissätter expressläget till 495 kr som tillval. För små produkter (pet tag, nyckelring, charm) är graveringen ett minuter; en fibre-diod-verkstad kan positionera "graverat medan du väntar i verkstaden" som _ingår_ för vissa produkter och som rimligt tillval för klubbor — utan att kopiera deras 495-kronorskälvning. Notera: TaggaDets golf-prislista har redan en expressrad (470 kr, strax under), vilket är korrekt för klubbor — men för småprodukter är gratis-express ett konverteringsgrepp konkurrenterna saknar.
 
 ---
 
@@ -175,23 +175,23 @@ Sorterade: först tre topplistor per kriterium (marginal, bildkomplexitet, jul 2
 
 ### Sammanvägd prioritetslista (10–15 idéer, ordning = rekommenderad sekvens)
 
-| # | Idé | Material/modul | Prisnivå | Marginal | Bild | Jul-26 | Motivering |
-| - | --- | -------------- | -------- | -------- | ---- | ------ | ---------- |
-| 1 | Pet tag rostfritt/mässing, namn + telefon | Fiber | 149–199 | ★★★ | ★★★ | ★★ | Oskyddat gap, snabbast att producera |
-| 2 | Julgranskula trä/plywood med namn | Diod | 199 | ★★ | ★★★ | ★★★ | Saknad jul-demo, paritet med rofa |
-| 3 | Skärbräda i ek (färdiga motiv + egen text) | Diod | 349–549 | ★★ | ★★ | ★★★ | Kategori + copy finns, saknar produkter |
-| 4 | Graverat glas — öl/vin/whisky per dryck | Diod (yta) / fiber (metallkant) | 249–349 | ★★ | ★★ | ★★★ | Under expertprints 499, paritet rofa |
-| 5 | Läderplånbok med monogram | Diod | 399–549 | ★★ | ★★ | ★★★ | Etsy-bestseller, "till honom" |
-| 6 | Mässing dörrskylt till dörren/brevlådan | Fiber | 299–399 | ★★ | ★★ | ★ | Paritet expertprint, bättre flöde |
-| 7 | Namnskylt i ek till barnrummet | Diod | 249–349 | ★★ | ★★★ | ★ | Trä-gap + barn/dop-tillfällena finns |
-| 8 | Plywood-presentask med monogram | Diod | 249–349 | ★★ | ★★★ | ★★★ | Julpresent-förpackning, enkel bild |
-| 9 | Idrottspokal: träfot + metallplakett med gravering | Båda | 249–449 | ★★ | ★★ | ★ | Expertprint bevisat marknad, glas-tungt där |
-| 10 | Ball markers/divot i metall med initialer | Fiber | 199–249 | ★★★ | ★★★ | ★ | Golfkategorin saknar lågpris-ingång |
-| 11 | Läderhalsband + pet tag-paket till hunden | Båda | 249–299 | ★★★ | ★★ | ★ | Bundling av #1, hund-presentflödet |
-| 12 | Gravörbricka i skiffer (husregel, hälsning) | Diod | 349–449 | ★★ | ★★★ | ★★ | Enkel bild, gåva till hemmet |
-| 13 | Dash-plakett aluminium till bilträffen | Fiber | 89–129 | ★★ | ★★★ | ★ | Volym/B2B, expertprint-paritet |
-| 14 | Golfpresentask i plywood + plakett i ek | Diod | 299–449 | ★★ | ★★ | ★★ | Fyller gapet mellan klubbtjänst och golfpresent |
-| 15 | Akryl-nattljus med namn (barnrum) | Diod | 249–299 | ★★ | ★★ | ★ | Etsy-insikt nummer 5, diodmodulen skär akryl |
+| #   | Idé                                                | Material/modul                  | Prisnivå | Marginal | Bild | Jul-26 | Motivering                                      |
+| --- | -------------------------------------------------- | ------------------------------- | -------- | -------- | ---- | ------ | ----------------------------------------------- |
+| 1   | Pet tag rostfritt/mässing, namn + telefon          | Fiber                           | 149–199  | ★★★      | ★★★  | ★★     | Oskyddat gap, snabbast att producera            |
+| 2   | Julgranskula trä/plywood med namn                  | Diod                            | 199      | ★★       | ★★★  | ★★★    | Saknad jul-demo, paritet med rofa               |
+| 3   | Skärbräda i ek (färdiga motiv + egen text)         | Diod                            | 349–549  | ★★       | ★★   | ★★★    | Kategori + copy finns, saknar produkter         |
+| 4   | Graverat glas — öl/vin/whisky per dryck            | Diod (yta) / fiber (metallkant) | 249–349  | ★★       | ★★   | ★★★    | Under expertprints 499, paritet rofa            |
+| 5   | Läderplånbok med monogram                          | Diod                            | 399–549  | ★★       | ★★   | ★★★    | Etsy-bestseller, "till honom"                   |
+| 6   | Mässing dörrskylt till dörren/brevlådan            | Fiber                           | 299–399  | ★★       | ★★   | ★      | Paritet expertprint, bättre flöde               |
+| 7   | Namnskylt i ek till barnrummet                     | Diod                            | 249–349  | ★★       | ★★★  | ★      | Trä-gap + barn/dop-tillfällena finns            |
+| 8   | Plywood-presentask med monogram                    | Diod                            | 249–349  | ★★       | ★★★  | ★★★    | Julpresent-förpackning, enkel bild              |
+| 9   | Idrottspokal: träfot + metallplakett med gravering | Båda                            | 249–449  | ★★       | ★★   | ★      | Expertprint bevisat marknad, glas-tungt där     |
+| 10  | Ball markers/divot i metall med initialer          | Fiber                           | 199–249  | ★★★      | ★★★  | ★      | Golfkategorin saknar lågpris-ingång             |
+| 11  | Läderhalsband + pet tag-paket till hunden          | Båda                            | 249–299  | ★★★      | ★★   | ★      | Bundling av #1, hund-presentflödet              |
+| 12  | Gravörbricka i skiffer (husregel, hälsning)        | Diod                            | 349–449  | ★★       | ★★★  | ★★     | Enkel bild, gåva till hemmet                    |
+| 13  | Dash-plakett aluminium till bilträffen             | Fiber                           | 89–129   | ★★       | ★★★  | ★      | Volym/B2B, expertprint-paritet                  |
+| 14  | Golfpresentask i plywood + plakett i ek            | Diod                            | 299–449  | ★★       | ★★   | ★★     | Fyller gapet mellan klubbtjänst och golfpresent |
+| 15  | Akryl-nattljus med namn (barnrum)                  | Diod                            | 249–299  | ★★       | ★★   | ★      | Etsy-insikt nummer 5, diodmodulen skär akryl    |
 
 **Notering om glas (rad 4):** diodlasern graverar vinvärdigt på glas yta; expertprints glas är kristall. TaggaDets vinkel är "tål maskindisk, permanent gravyr inte tryck" — det copy-blocket finns redan på kategorisidan och ska behållas.
 
@@ -203,15 +203,15 @@ Konkurrenternas gemensamma svaghet: Taggaklubban har tekniken men inget flöde, 
 
 1. **"Från rostfritt stål till ek och läder — samma händer, samma laser."** Ingen konkurrent spänner båda materialgrupperna. En mening på startsidan som sammanfattar gap 3.1 och låser kombinerade paket (bröllop, dop, golf) som konkurrenterna inte ens kan offerta.
 
-2. **"Du godkänner en skiss innan lasern startar."** Varken Taggaklubban (förfrågan→bokning→bok) eller Expertprint (mejla texten efter beställningen) har detta. Det är redan TaggaDets copy på varenda kategorisida — lyft upp det till startsidans löfte, för det är konkurrenternas enskilt största process-gap (3.7). Robro Design har liknande ("digital illustration innan tillverkning") men bara för skärbrädor — TaggaDet har det för *allt*.
+2. **"Du godkänner en skiss innan lasern startar."** Varken Taggaklubban (förfrågan→bokning→bok) eller Expertprint (mejla texten efter beställningen) har detta. Det är redan TaggaDets copy på varenda kategorisida — lyft upp det till startsidans löfte, för det är konkurrenternas enskilt största process-gap (3.7). Robro Design har liknande ("digital illustration innan tillverkning") men bara för skärbrädor — TaggaDet har det för _allt_.
 
 3. **"Personlig text skrivs in här, i beställningen — inte i ett mejl efteråt."** Självklart inte den formuleringen mot kund, men strukturellt: det syns i flödet att graveringstexten är ett fält i köpet. Expertprints mejl-cirkus är det TaggaDet ska accentuera genom att helt enkelt aldrig nämna den.
 
-4. **"Graverat medan du väntar — inga veckors väntan på en nyckelring."** Taggaklubban tar 495 kr för express på klubbor; TaggaDet kan positionera medan-du-väntar som *normalfallet* för småprodukter i verkstaden och behålla expressraden (470 kr) endast för klubbservice. Det är ett service-löfte konkurrenterna inte matchar utan att ändra affärsmodell.
+4. **"Graverat medan du väntar — inga veckors väntan på en nyckelring."** Taggaklubban tar 495 kr för express på klubbor; TaggaDet kan positionera medan-du-väntar som _normalfallet_ för småprodukter i verkstaden och behålla expressraden (470 kr) endast för klubbservice. Det är ett service-löfte konkurrenterna inte matchar utan att ändra affärsmodell.
 
 5. **"Jag gör det här själv, här i verkstaden."** Förstaperson-jag:et är borta hos båda konkurrenterna (Taggaklubban skriver "vi" om ett företag som verkar vara en person; Expertprint är "Filip" bara i en telefonrad). TaggaDet har redan hela jag-narrativet + verkstadsadressen i Aneby + xTool F1 Ultra namngiven på golfsidan. Konkret: behåll maskinnamnet där det är relevant (golfsidan — teknikkunnig målgrupp) och låt "jag" bära resten. Inga påhittade omdömen — båda konkurrenterna bränner sig på mall-testimonialer och noll recensioner; TaggaDets ReviewSection ska förbli tom tills riktiga omdömen finns, hellre det än expertprints "Det finns inga recensioner än".
 
-6. **"En partner till hela golfen"** — tjänst *och* produkter: "graverar dina klubbor och gör presenten till den som redan har allt". Taggaklubban kan inte sälja en fysisk gåva, Expertprint graverar inte klubbor. TaggaDets golfkategorisida är redan strukturerad för tjänsten — fyll den med produktlänkar (raderna 10 och 14 i § 4) när produkterna finns.
+6. **"En partner till hela golfen"** — tjänst _och_ produkter: "graverar dina klubbor och gör presenten till den som redan har allt". Taggaklubban kan inte sälja en fysisk gåva, Expertprint graverar inte klubbor. TaggaDets golfkategorisida är redan strukturerad för tjänsten — fyll den med produktlänkar (raderna 10 och 14 i § 4) när produkterna finns.
 
 7. **Geo-anspråk utan spam.** Expertprints 20+ lokala landningssidor (`gravyr-taby`, `gravyr-norrtalje` …) fungerar i dag men är sårbara (dubblettbloggar, temademo-läckor). TaggaDet behöver inte 20 sidor — en ärlig "gravyr i Småland, beställt online, levererat i hela Sverige"-position plus Aneby-verkstaden täcker det lokal sök TaggaDet rimligen vill äga, utan att bygga det som Expertprint riskerar en Google-sanering av.
 
