@@ -1,7 +1,7 @@
 /**
  * Delade URL:er – ändras här, ingen annanstans.
  */
-export const SITE_URL = "https://linsochlager.net";
+export const SITE_URL = "https://linsochlager.net/shop";
 
 /**
  * Den fotografiska sajten – mål för /fotografering-redirecten och alla
