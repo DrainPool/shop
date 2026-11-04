@@ -1,7 +1,7 @@
 # Roadmap
 
-- [ ] Synka senaste butiken till DrainPool/shop utan miljöfil och med Shopify-platshållare.
-- [ ] Sätt Shopify-token som projektmiljö, ersätt hårdkodad reservtoken med platshållare och verifiera att riktiga Shopify-produkter visas utan demoläge.
+- [x] Synka senaste butiken till DrainPool/shop utan miljöfil och med Shopify-platshållare.
+- [x] Koppla den hanterade Shopify-tokenen till projektets publika byggmiljö, ersätt hårdkodad reservtoken med platshållare och verifiera riktiga Shopify-produkter utan demoläge: 69 produkter laddades med lyckat API-svar. Skyddad .env-fil lämnad orörd.
 
 - [x] Fotouppladdning på alla produktsidor med privat lagring, bildkontroll och Shopify-radattribut; verklig uppladdning, varukorg och återläsning verifierade.
 
