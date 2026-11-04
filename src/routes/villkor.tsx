@@ -1,34 +1,26 @@
 import type { ReactNode } from "react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  CreditCard,
-  FileQuestion,
-  Hammer,
-  MessageCircleWarning,
-  Package,
-  PenLine,
-  Scale,
-} from "lucide-react";
 import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
+import { DELIVERY_PROMISE } from "@/lib/delivery";
 
 export const Route = createFileRoute("/villkor")({
   head: () => ({
     meta: [
-      { title: "Allmänna villkor | TaggaDet" },
+      { title: "Allmänna villkor | Taggat" },
       { rel: "canonical", href: `${SITE_URL}/villkor` },
       {
         name: "description",
         content:
-          "Villkor för köp hos TaggaDet: beställning och skiss, priser och betalning, leveranstid, reklamationsrätt och att ångerrätten inte gäller personligt tillverkade varor.",
+          "Villkor för köp hos Taggat: beställning och skiss, priser och betalning, leveranstid, reklamationsrätt och att ångerrätten inte gäller personligt tillverkade varor.",
       },
-      { property: "og:title", content: "Allmänna villkor | TaggaDet" },
+      { property: "og:title", content: "Allmänna villkor | Taggat" },
       {
         property: "og:description",
         content:
-          "Villkor för köp hos TaggaDet: skiss, betalning, leverans, ångerrätt och reklamation.",
+          "Villkor för köp hos Taggat: skiss, betalning, leverans, ångerrätt och reklamation.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -41,7 +33,7 @@ const sections: { title: string; body: ReactNode[] }[] = [
   {
     title: "Allmänt",
     body: [
-      "Dessa villkor gäller när du beställer varor från TaggaDet (enskild firma, org.nummer 870624-2453, Aneby, Sverige). Genom att slutföra ett köp i webshoppen godkänner du villkoren nedan. Beställningar lägger du i webshopen; för skräddarsydda uppdrag kan vi även komma överens via e-post.",
+      "Dessa villkor gäller när du beställer varor från Taggat (enskild firma, org.nummer 870624-2453, Aneby, Sverige). Genom att slutföra ett köp i butiken godkänner du villkoren nedan. Vanliga beställningar lägger du här i butiken. Vill du ha något skräddarsytt löser vi det enkelt via e-post.",
     ],
   },
   {
@@ -61,7 +53,7 @@ const sections: { title: string; body: ReactNode[] }[] = [
   {
     title: "Tillverkning & leverans",
     body: [
-      "Ordertid: beställningar som läggs innan söndag 23:59 tillverkas och skickas under följande vecka. Ange gärna ett önskat leveransdatum om du beställer till ett bestämt tillfälle – jag gör mitt bästa för att hinna, men kontakta mig först om datumet är nära förestående.",
+      `${DELIVERY_PROMISE} Ange gärna ett önskat leveransdatum om du beställer till ett bestämt tillfälle – kontakta mig först om datumet är nära förestående.`,
       "Leverans sker med spårbar frakt inom Sverige. Läs mer om leveranstider på sidan ",
       <Link to="/frakt-leverans" className="text-primary-deep underline">
         Frakt &amp; leverans
@@ -102,9 +94,9 @@ function TermsPage() {
         tillverkar, och jag håller vad jag lovar.
       </p>
 
-      <div className="mt-10 space-y-8">
+      <div className="mt-10 divide-y divide-border border-y border-border">
         {sections.map((s) => (
-          <section key={s.title} className="card-shop p-7">
+          <section key={s.title} className="py-6">
             <h2 className="font-serif text-2xl">{s.title}</h2>
             {s.body.map((p, i) => (
               <p key={i} className="mt-3 leading-relaxed text-muted-foreground">
@@ -114,26 +106,6 @@ function TermsPage() {
           </section>
         ))}
       </div>
-
-      <section className="mt-12 rounded-3xl bg-cream p-8 text-center">
-        <p className="text-muted-foreground">
-          Frågor om villkoren? Hör av dig så förklarar jag gärna.
-        </p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <Link
-            to="/kontakt"
-            className="rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Kontakta mig
-          </Link>
-          <Link
-            to="/retur"
-            className="rounded-full border-2 border-border px-6 py-3 font-semibold transition-colors hover:border-primary"
-          >
-            Retur &amp; reklamation
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

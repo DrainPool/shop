@@ -7,14 +7,14 @@ import { Kicker } from "@/components/Kicker";
 export const Route = createFileRoute("/garanti")({
   head: () => ({
     meta: [
-      { title: "Garanti | TaggaDet" },
+      { title: "Garanti | Taggat" },
       { rel: "canonical", href: `${SITE_URL}/garanti` },
       {
         name: "description",
         content:
-          "Kvalitetsgaranti på alla handgjorda produkter från TaggaDet – material, gravyr och utförande.",
+          "Kvalitetsgaranti på alla handgjorda produkter från Taggat – material, gravyr och utförande.",
       },
-      { property: "og:title", content: "Garanti | TaggaDet" },
+      { property: "og:title", content: "Garanti | Taggat" },
       {
         property: "og:description",
         content:
@@ -86,8 +86,8 @@ function WarrantyPage() {
 
       <p className="mt-10 text-sm text-muted-foreground">
         Behöver du nyttja garantin? Maila{" "}
-        <a href="mailto:hej@linsochlager.se" className="text-primary-deep underline">
-          hej@linsochlager.se
+        <a href="mailto:taggat@linsochlager.net" className="text-primary-deep underline">
+          taggat@linsochlager.net
         </a>{" "}
         med ordernummer och foto. Se även{" "}
         <Link to="/retur" className="text-primary-deep underline">
@@ -99,24 +99,6 @@ function WarrantyPage() {
         </Link>
         .
       </p>
-
-      <div className="mt-10 rounded-3xl bg-cream p-8 text-center">
-        <p className="font-serif text-xl">Redo att ge bort något som håller?</p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <Link
-            to="/sortiment"
-            className="rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Till sortimentet
-          </Link>
-          <Link
-            to="/kontakt"
-            className="rounded-full border-2 border-border px-6 py-3 font-semibold transition-colors hover:border-primary"
-          >
-            Hör av dig
-          </Link>
-        </div>
-      </div>
     </article>
   );
 }

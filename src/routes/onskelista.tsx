@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Heart, Mail } from "lucide-react";
+import { Heart, Link2, Mail } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { WishlistRow } from "@/components/WishlistRow";
 import { useWishlist } from "@/lib/wishlist";
+import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/onskelista")({
   head: () => ({
     meta: [
-      { title: "Min önskelista – TaggaDet" },
+      { title: "Min önskelista – Taggat" },
       {
         name: "description",
         content:
-          "Dina sparade favoriter hos TaggaDet – samla presentidéer och maila listan till dig själv.",
+          "Dina sparade favoriter hos Taggat – samla presentidéer och maila listan till dig själv.",
       },
       // Personlig sida baserad på localStorage – ska inte indexeras
       { name: "robots", content: "noindex" },
@@ -33,11 +35,28 @@ function WishlistPage() {
   const hasItems = mounted && items.length > 0;
 
   // Maila listan till sig själv: titlar + länkar som kropptext
+  const listText = items.map((p) => `• ${p.title}\n${SITE_URL}/produkt/${p.handle}`).join("\n\n");
   const mailLink = hasItems
-    ? `mailto:?subject=${encodeURIComponent("Min önskelista hos TaggaDet")}&body=${encodeURIComponent(
-        items.map((p) => `• ${p.title}\nhttps://linsochlager.net/produkt/${p.handle}`).join("\n\n"),
+    ? `mailto:?subject=${encodeURIComponent("Min önskelista hos Taggat")}&body=${encodeURIComponent(
+        listText,
       )}`
     : null;
+
+  // Kopiera listan som text – enklaste vägen att skicka den i sms eller chatt.
+  const copyList = async () => {
+    try {
+      await navigator.clipboard.writeText(listText);
+      toast.success("Listan är kopierad", {
+        description: "Klistra in den i ett sms eller en chatt.",
+        position: "top-center",
+      });
+    } catch {
+      toast.error("Kunde inte kopiera listan", {
+        description: "Prova att maila den till dig själv istället.",
+        position: "top-center",
+      });
+    }
+  };
 
   return (
     <article className="mx-auto max-w-3xl px-5 py-16">
@@ -66,6 +85,10 @@ function WishlistPage() {
                 <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
                 Maila min lista till mig själv
               </a>
+            </Button>
+            <Button variant="outline" onClick={copyList}>
+              <Link2 className="mr-2 h-4 w-4" aria-hidden="true" />
+              Kopiera listan
             </Button>
             <Button asChild variant="outline">
               <Link to="/sortiment">Bläddra i sortimentet</Link>

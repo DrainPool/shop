@@ -12,3 +12,7 @@ export const SITE_URL = "https://linsochlager.net";
  * ihop ordentligt senare. Byt här om fotografi-sajten flyttar.
  */
 export const FOTOGRAFERING_URL = "https://linsochlager.net/foto";
+
+/** Google-företagsprofilen "Lins och Lager" (Aneby). */
+export const GOOGLE_PLACE_ID = "ChIJ5eiE7RZtWkYRrAd31QuXMaU";
+export const GOOGLE_MAPS_URL = "https://maps.google.com/maps?cid=11903461367198713772";

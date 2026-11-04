@@ -4,8 +4,9 @@ import { FaqAccordion } from "@/components/FaqAccordion";
 import { FOTOGRAFERING_URL, SITE_URL } from "@/lib/siteUrls";
 import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 import { Kicker } from "@/components/Kicker";
+import { DELIVERY_PROMISE } from "@/lib/delivery";
 
-const TITLE = "Vanliga frågor om gravyr, leverans och personliga presenter | TaggaDet";
+const TITLE = "Vanliga frågor om gravyr, leverans och personliga presenter | Taggat";
 const DESCRIPTION =
   "Svar på de vanligaste frågorna: leveranstid, material, digital skiss, gravyr, returer på personliga varor och hur du beställer till bröllop, dop och företag.";
 
@@ -17,15 +18,23 @@ const DESCRIPTION =
 type FaqEntry = {
   q: string;
   a: string;
-  link?: { label: string; to: "/frakt-leverans" | "/retur" | "/foretag" };
+  link?: {
+    label: string;
+    to: "/frakt-leverans" | "/retur" | "/foretag" | "/tillverkningsprocessen";
+  };
   categoryLink?: { label: string; slug: string };
   externalLink?: { label: string; href: string };
 };
 
 const FAQ: FaqEntry[] = [
   {
+    q: "Hur går beställningen till, steg för steg?",
+    a: "Tre steg: 1) Du väljer presenten och skriver namnet, datumet eller raden du vill ha graverad – fastnar du i formuleringen hittar jag på ihop med dig. 2) Du får en digital skiss på gravyren och ingenting graveras förrän du sagt ja. 3) Jag graverar i verkstaden, packar presentklart och skickar spårbart hem till dig.",
+    link: { label: "Så tillverkas din present", to: "/tillverkningsprocessen" },
+  },
+  {
     q: "Hur lång är leveranstiden?",
-    a: "Tillverkningen tar normalt 3–7 arbetsdagar, med frakten är du oftast framme inom 5–11 arbetsdagar. Har du ett datum som måste hållas – skriv det i beställningen, så säger jag ärligt om det går.",
+    a: `${DELIVERY_PROMISE} Därefter tillkommer frakttiden. Har du ett datum som måste hållas – skriv det i beställningen, så säger jag ärligt om det går.`,
     link: { label: "Läs om frakt och leverans", to: "/frakt-leverans" },
   },
   {
@@ -67,7 +76,7 @@ const FAQ: FaqEntry[] = [
   },
   {
     q: "Hinner du klart innan jul eller farsdagen?",
-    a: "Allt tillverkas efter beställning, normalt på 3–7 arbetsdagar plus frakt – ju tidigare du beställer desto säkrare. Skriv att presenten ska vara framme till jul, så prioriterar jag den och svarar ärligt om jag hinner.",
+    a: `${DELIVERY_PROMISE} Inför högtider kan trycket vara högre, så skriv vilket datum presenten behöver vara framme. Då svarar jag ärligt om jag hinner.`,
     categoryLink: { label: "Se julklapparna", slug: "jul" },
   },
   {

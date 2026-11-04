@@ -139,7 +139,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "charm-personlig-berlock",
     description:
       "Liten berlock i silver att kombinera med ditt halsband eller armband. Graverad med bokstav, siffra eller liten symbol.",
-    tags: ["smycken", "fodelsedag", "nyhet", "halloween", "hjartansdag", "konfirmation", "jul"],
+    tags: ["smycken", "fodelsedag", "nyhet", "hjartansdag", "konfirmation", "jul"],
     price: "249.00",
     image: img("charms_bord_H60ab2.webp"),
     extraImages: [
@@ -153,7 +153,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     handle: "korg-i-ek-med-gravyr",
     description:
       "Handgjord korg i ek, graverad med familjenamn eller en hälsning. Till nycklarna, brödet eller som gåva.",
-    tags: ["foretag", "tra", "gravyr", "halloween", "nytt-hem", "pension", "jul"],
+    tags: ["foretag", "tra", "gravyr", "nytt-hem", "pension", "jul"],
     price: "349.00",
     image: img("korgar_bord_H0a665.webp"),
     extraImages: [
@@ -434,7 +434,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
   },
   {
     // Roffi-pass (sep 2026): roffi säljer glasunderlägg i 4-pack som ren
-    // standardvara – ek och naturkork med lasergravyr är TaggaDets egen vinkel
+    // standardvara – ek och naturkork med lasergravyr är Taggats egen vinkel
     // (diodlasern bränner permanent i båda materialen, och personaliseringen
     // skrivs in i beställningen, inte i ett mejl efteråt).
     title: "Glasunderlägg i ek — 4-pack med initialer",
@@ -484,7 +484,7 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     ],
   },
   {
-    // Humorgravyr-linjen (sep 2026): roffis humor säljer – TaggaDet behåller
+    // Humorgravyr-linjen (sep 2026): roffis humor säljer – Taggat behåller
     // sepia-tonen men lägger varm retur i färdiga gravyrtexter, aldrig grovt.
     title: "Skärbräda i ek — Mästarkocken (enligt honom själv)",
     handle: "skarbrada-mastarkocken",
@@ -531,6 +531,39 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
     ],
   },
   {
+    // Djupporträtt (sep 2026): kundens djurfoto -> porträtt av frallan (AI i
+    // verkstaden) -> skiss -> graverad produkt. Bilderna är verkliga test-
+    // genereringar (långhårig tax), platsmarkörer tills fler exempel finns.
+    title: "Djupporträtt — studioskiss",
+    handle: "djupportratt-studioskiss",
+    description:
+      "Skicka ett vanligt mobilfoto på ditt djur, så tar jag fram ett studiotrogent porträtt som digital fil i hög upplösning. Samma porträtt blir skissen om du vill ha det graverat — du godkänner alltid den innan jag tillverkar.",
+    tags: ["djupportratt", "djur", "fodelsedag", "nyhet"],
+    price: "249.00",
+    image: img("djupportratt_studio.webp"),
+    extraImages: [img("djupportratt_fore.webp"), img("djupportratt_rosett.webp")],
+  },
+  {
+    title: "Djupporträtt — hela kollektionen",
+    handle: "djupportratt-kollektionen",
+    description:
+      "Ett foto in, en hel kollektion ut: flera porträtt i olika stilar och humör — det lekfulla, det ståtliga, det sömniga. Digitala filer i hög upplösning, fina som tapet eller inramade på väggen.",
+    tags: ["djupportratt", "djur", "jul", "nyhet"],
+    price: "449.00",
+    image: img("djupportratt_rosett.webp"),
+    extraImages: [img("djupportratt_konstverk.webp"), img("djupportratt_studio.webp")],
+  },
+  {
+    title: "Nyckelring i ek med djupporträtt",
+    handle: "nyckelring-i-ek-med-djupportratt",
+    description:
+      "Ditt djurs porträtt lasergraverat i massiv ek, med namn eller en kort rad. Du skickar fotot, jag skissar gravyren och du godkänner den innan lasern startar.",
+    tags: ["djupportratt", "nyckelring", "tra", "farsdag"],
+    price: "299.00",
+    image: img("djupportratt_konstverk.webp"),
+    extraImages: [img("djupportratt_studio.webp"), img("nyckelringar_hall_H13eab.webp")],
+  },
+  {
     // Fångar besökaren som inte kan bestämma – konverterar i stället för
     // att lämna sajten. Bilden är platsmarkör tills riktiga finns.
     title: "Presentkort — 500 kr",
@@ -546,11 +579,169 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
       img("korgar_hem_H0a665.webp"),
     ],
   },
+  // Nya F1 Ultra-produkter (preliminära demopriser – sätts på riktigt i Shopify)
+  ...[
+    {
+      title: "Skifferunderlägg 4-pack med initialer",
+      handle: "skifferunderlagg-4-pack",
+      description:
+        "Fyra underlägg i naturskiffer, lasergraverade med initialer och ett litet bladmotiv. Varje platta har sin egen kant – naturens egen variation. Skiss inom 48 timmar innan jag graverar.",
+      tags: ["glasunderlagg", "gravyr", "nytt-hem", "brollop", "arsdag", "nyhet"],
+      price: "349.00",
+    },
+    {
+      title: "Husskylt i skiffer med namn och nummer",
+      handle: "husskylt-i-skiffer",
+      description:
+        "Husskylt i naturskiffer med familjenamn och husnummer. Tål väder och vind och åldras vackert på fasaden. Du godkänner skissen innan jag graverar.",
+      tags: ["skylt", "gravyr", "nytt-hem", "nyhet"],
+      price: "549.00",
+    },
+    {
+      title: "Termosmugg i rostfritt stål med gravyr",
+      handle: "termosmugg-rostfritt-med-gravyr",
+      description:
+        "Dubbelväggig termosmugg i rostfritt stål med lock. Gravyren tar fram det blanka stålet under lacken – namn, motiv eller kort hälsning.",
+      tags: ["mugg", "tumbler", "gravyr", "till-honom", "farsdag", "jul", "foretag", "nyhet"],
+      price: "299.00",
+    },
+    {
+      title: "Vattenflaska i stål med namn och motiv",
+      handle: "vattenflaska-stal-med-gravyr",
+      description:
+        "Borstad vattenflaska i rostfritt stål med bärhandtag. Graveras med namn och valfritt motiv – fjäll, skog eller en egen idé.",
+      tags: ["tumbler", "gravyr", "till-henne", "student", "idrott", "nyhet"],
+      price: "329.00",
+    },
+    {
+      title: "Fickkniv med graverat blad",
+      handle: "fickkniv-med-gravyr",
+      description:
+        "Fällkniv med trähandtag och blad i rostfritt stål. Jag graverar namn eller kort text på bladet. Säljs endast till dig som fyllt 18 år.",
+      tags: ["gravyr", "till-honom", "farsdag", "pension", "nyhet"],
+      price: "449.00",
+    },
+    {
+      title: "Penna i metall med namngravyr",
+      handle: "penna-med-gravyr",
+      description:
+        "Kulspetspenna i matt svart metall med namn graverat längs skaftet. Fin som studentpresent, avtackning eller företagsgåva.",
+      tags: ["gravyr", "student", "foretag", "pension", "nyhet"],
+      price: "199.00",
+    },
+    {
+      title: "Fotogravyr på trä",
+      handle: "fotogravyr-pa-tra",
+      description:
+        "Ditt eget foto lasergraverat på massivt trä. Jag justerar bilden för bästa resultat och skickar en skiss inom 48 timmar innan något graveras.",
+      tags: ["foto", "gravyr", "till-mor-farforaldrar", "morsdag", "farsdag", "jul", "nyhet"],
+      price: "599.00",
+    },
+    // Skyltar & trätavlor (okt 2026, efter granskning av bynia.se). Priser är förslag.
+    {
+      title: "Gårdsskylt i furu med fräst text",
+      handle: "gardsskylt-i-furu-med-frast-text",
+      description:
+        "Kraftig gårdsskylt i furu där gårdens namn fräses djupt in i träet och betsas i ljus eller mörk ton. Tål väder året runt – jag skickar en skiss på text och motiv innan jag börjar.",
+      tags: ["skylt", "tra", "nytt-hem", "farsdag", "nyhet"],
+      price: "1059.00",
+    },
+    {
+      title: "Husskylt i ek med relief",
+      handle: "husskylt-i-ek-med-relief",
+      description:
+        "Massiv ek med husets namn i upphöjd svart relief – bokstäverna sitter i eget skikt och ger skuggverkan på fasaden. En inflyttningspresent som syns från grinden.",
+      tags: ["skylt", "tra", "nytt-hem", "brollop", "nyhet"],
+      price: "889.00",
+    },
+    {
+      title: "Födelsetavla i björk",
+      handle: "fodelsetavla-i-bjork",
+      description:
+        "Rund tavla i björk med barnets namn, födelsedatum, klockslag, vikt och längd. Hängs med juteband i barnrummet – en dopgåva som blir kvar på väggen i många år.",
+      tags: ["skylt", "tra", "dop", "barn", "till-barn", "nyhet"],
+      price: "1419.00",
+    },
+    {
+      title: "Familjetavla rund med namn",
+      handle: "familjetavla-rund-med-namn",
+      description:
+        "Rund tavla i ek med efternamnet i mitten och hela familjens förnamn runt kanten. Fin till nytt hem, bröllop eller som julklapp till hela familjen.",
+      tags: ["skylt", "tra", "nytt-hem", "brollop", "jul", "till-paret", "nyhet"],
+      price: "2649.00",
+    },
+    {
+      title: "Medaljtavla i trä med namn",
+      handle: "medaljtavla-i-tra",
+      description:
+        "Medaljhängare i ek med namn, ett eget motto och loppen graverade ovanför varje plats. För löparen, skidåkaren eller den som klarat sin klassiker.",
+      tags: ["skylt", "tra", "idrott", "farsdag", "till-honom", "nyhet"],
+      price: "2039.00",
+    },
+    {
+      title: "Boxskylt till stallet",
+      handle: "boxskylt-stall-med-namn",
+      description:
+        "Boxskylt i massiv ek med hästens namn och stallets namn, ifyllt i guld eller vitt. Skruvas på boxdörren – tål stallmiljö och blir snyggare med åren.",
+      tags: ["skylt", "tra", "husdjur", "fodelsedag", "nyhet"],
+      price: "1049.00",
+    },
+    {
+      title: "Odlingsetiketter för kryddor – 6-pack",
+      handle: "odlingsetiketter-kryddor-set",
+      description:
+        "Sex etiketter i trä med kryddans namn och ett litet motiv – basilika, timjan, rosmarin eller dina egna val. En liten present till den som odlar på fönsterbrädan.",
+      tags: ["tra", "nytt-hem", "morsdag", "till-henne", "nyhet"],
+      price: "299.00",
+    },
+    {
+      title: "Luffarschack i trä med egen text",
+      handle: "luffarschack-i-tra-med-text",
+      description:
+        "Luffarschack i massivt trä med ljusa och mörka pjäser och familjens namn graverat på kanten. Ett spel som får ligga framme på altanen hela sommaren.",
+      tags: ["tra", "barn", "till-barn", "jul", "nyhet"],
+      price: "879.00",
+    },
+    {
+      title: "Citattavla i trä med egen vers",
+      handle: "citattavla-i-tra-egen-vers",
+      description:
+        "Vitmålad trätavla i klassisk lantlig stil med en vers du väljer – eller en av mina egna, skrivna i gammaldags svensk ton. Gravyren blir svart och skarp mot den vita ytan.",
+      tags: ["skylt", "tra", "nytt-hem", "morsdag", "till-mor-farforaldrar", "nyhet"],
+      price: "1209.00",
+    },
+  ].map((p) => ({ ...p, image: `/images/products/v2/${p.handle}_miljo.webp` })),
 ];
 
-/** ShopifyProduct-shapad demo-produkt (exakt de fält UI:t läser). */
+/** Produkter som har AI-visualiseringar (miljö + vardag) i /images/products/v2/. */
+const V2_HANDLES = new Set([
+  "armband-i-lader-med-initialer", "ball-markers-i-metall-med-initialer",
+  "bar-set-ek-glasunderlagg-med-stall", "barhalsband-dopgava", "charm-personlig-berlock",
+  "dash-plakett-i-aluminium", "dorrskylt-i-massing-med-namn", "glasunderlagg-ek-4-pack-initialer",
+  "glasunderlagg-kork-4-pack-med-glimten", "golfpresentask-i-plywood-med-plakett",
+  "hjarta-dopminne", "hundpaket-laderhalsband-pet-tag", "idrottspokal-trafot-med-metallplakett",
+  "julgranskula-tra-med-namn", "kedja-halsband-med-gravyr", "korg-i-ek-med-gravyr",
+  "kors-hange-dop-silver", "minnesask-i-tra-med-namn", "namnhalsband-handgraverat",
+  "namnskylt-i-ek-till-barnrummet", "nyckelring-i-ek-med-eget-namn", "nyckelring-med-regnummer",
+  "nyckelring-om-jag-tappar-den-ar-den-inte-min", "olglas-en-till-sedan-lugnar-det-sig",
+  "olglas-med-gravyr", "parsmycke-tva-halsband", "pet-tag-rostfritt-stal",
+  "planbok-i-lader-med-monogram", "presentask-i-plywood-med-monogram",
+  "skarbrada-ek-grallmastaren", "skarbrada-mastarkocken", "skarbrada-med-favoritreceptet",
+  "vinglas-par-med-datum", "whiskyglas-med-gravyr", "skifferunderlagg-4-pack",
+  "husskylt-i-skiffer", "termosmugg-rostfritt-med-gravyr", "vattenflaska-stal-med-gravyr",
+  "fickkniv-med-gravyr", "penna-med-gravyr", "fotogravyr-pa-tra",
+  "djupportratt-kollektionen", "djupportratt-studioskiss",
+  "nyckelring-i-ek-med-djupportratt", "presentkort-500",
+  "gardsskylt-i-furu-med-frast-text", "husskylt-i-ek-med-relief", "fodelsetavla-i-bjork",
+  "familjetavla-rund-med-namn", "medaljtavla-i-tra", "boxskylt-stall-med-namn",
+  "odlingsetiketter-kryddor-set", "luffarschack-i-tra-med-text", "citattavla-i-tra-egen-vers",
+]);
+
 function toShopifyShape(p: DemoProduct): ShopifyProduct {
-  const images = [p.image, ...(p.extraImages ?? [])];
+  const v2 = V2_HANDLES.has(p.handle)
+    ? [`/images/products/v2/${p.handle}_miljo.webp`, `/images/products/v2/${p.handle}_vardag.webp`]
+    : [];
+  const images = [...new Set([p.image, ...(p.extraImages ?? []), ...v2])];
   return {
     node: {
       id: `demo-${p.handle}`,
@@ -583,7 +774,8 @@ function toShopifyShape(p: DemoProduct): ShopifyProduct {
 }
 
 export function isDemoMode(): boolean {
-  return import.meta.env["VITE_DEMO_MODE"] === "1";
+  // Förhandsvisningen använder Shopify-sandlådan, aldrig testkatalogen.
+  return false;
 }
 
 export function demoFetchProducts(first: number, query?: string): ShopifyProduct[] {

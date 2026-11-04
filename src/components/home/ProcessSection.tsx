@@ -1,8 +1,6 @@
-import { Check, PackageCheck, Palette, PenLine, Zap } from "lucide-react";
+import { Check, PackageCheck, Palette, PenLine } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/home/Reveal";
-import { useReveal } from "@/components/home/useReveal";
 
 /**
  * Desire-steget: "Så funkar det" som mörkt kapitel mitt på sidan – en paus
@@ -42,23 +40,15 @@ const STEPS: Step[] = [
   },
   {
     n: "3",
-    icon: Zap,
-    title: "Jag graverar för hand",
-    text: "I verkstaden i Småland ställer jag in lasern efter just ditt material – trä, läder, glas eller metall.",
-  },
-  {
-    n: "4",
     icon: PackageCheck,
-    title: "Presentklart hem",
-    text: "Omsorgsfullt inpackat och skickat till dörren. Skriv att det är en present, så håller jag prislapparna borta.",
+    title: "Jag graverar och skickar",
+    text: "Jag tillverkar i verkstaden, packar presentklart och skickar spårbart hem till dig.",
   },
 ];
 
 export function ProcessSection() {
   // Samma IntersectionObserver som Reveal bygger på – här för att rita
   // spår-linjen (stroke-dashoffset) när steppen scrollas in.
-  const { ref, state } = useReveal<HTMLOListElement>();
-
   return (
     <section
       id="sa-gar-det-till"
@@ -82,45 +72,12 @@ export function ProcessSection() {
           </Reveal>
           <Reveal delay={120}>
             <p className="max-w-md leading-relaxed text-ink-foreground/80 lg:pb-1">
-              Fyra steg från din rad till klar gravyr – och du godkänner varenda ett innan lasern
-              startar.
+              Tre steg från din text till en present som är klar att ge bort.
             </p>
           </Reveal>
         </div>
 
-        <ol ref={ref} className="relative mt-10 grid gap-x-4 gap-y-6 lg:grid-cols-4">
-          {/* Spår-linjen, mobil: lodrät genom medaljonerna (vänsterkant).
-              Desktop: vågig guldlinje bakom medaljonraden (se SVG:n nedan). */}
-          <span
-            aria-hidden="true"
-            className="absolute left-7 top-6 bottom-10 w-px bg-gold/25 lg:hidden"
-          />
-          {/* Spår-linjen, desktop: en våg som "graveras" fram (pathLength 1,
-              dashoffset 1 -> 0 via useReveal). Ikoneniska medaljoner har solid
-              botten och täcker linjen där den passerar – den läser som en
-              sammanhängande gravyr mellan stegen. motion-reduce: statisk linje. */}
-          <svg
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 hidden h-14 w-full lg:block"
-            viewBox="0 0 1200 56"
-            preserveAspectRatio="none"
-            fill="none"
-          >
-            <path
-              d="M0 28 C 200 14, 400 42, 600 28 C 800 14, 1000 42, 1200 28"
-              pathLength={1}
-              strokeDasharray={1}
-              vectorEffect="non-scaling-stroke"
-              strokeLinecap="round"
-              className={cn(
-                "stroke-gold/60 motion-safe:transition-[stroke-dashoffset] motion-safe:duration-[1500ms] motion-safe:ease-out",
-                state === "hidden"
-                  ? "motion-safe:[stroke-dashoffset:1]"
-                  : "motion-safe:[stroke-dashoffset:0]",
-              )}
-            />
-          </svg>
-
+        <ol className="relative mt-10 grid gap-5 lg:grid-cols-3">
           {STEPS.map((step, i) => (
             <Reveal
               key={step.n}

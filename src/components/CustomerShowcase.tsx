@@ -94,7 +94,7 @@ export function CustomerShowcase() {
           Tagga @linsochlager
         </a>
         <a
-          href="mailto:hej@linsochlager.se?subject=Bild%20p%C3%A5%20min%20present"
+          href="mailto:taggat@linsochlager.net?subject=Bild%20p%C3%A5%20min%20present"
           className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-5 py-3 text-sm font-semibold transition-colors hover:border-primary hover:text-primary-deep"
         >
           <Mail className="h-4 w-4" aria-hidden="true" />

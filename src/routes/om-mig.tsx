@@ -12,8 +12,8 @@ const PERSON_JSON_LD = {
   "@type": "Person",
   name: "Fredrik Arvidsson",
   url: `${SITE_URL}/om-mig`,
-  jobTitle: "Grundare av TaggaDet",
-  worksFor: { "@type": "Organization", name: "TaggaDet" },
+  jobTitle: "Grundare av Taggat",
+  worksFor: { "@type": "Organization", name: "Taggat" },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Aneby",
@@ -24,14 +24,14 @@ const PERSON_JSON_LD = {
 export const Route = createFileRoute("/om-mig")({
   head: () => ({
     meta: [
-      { title: "Verkstaden i Aneby – möt Fredrik | TaggaDet" },
+      { title: "Verkstaden i Aneby – möt Fredrik | Taggat" },
       { rel: "canonical", href: `${SITE_URL}/om-mig` },
       {
         name: "description",
         content:
-          "Möt Fredrik Arvidsson i Aneby – verkstaden bakom TaggaDet: handgjorda personliga presenter med gravyr, 3D-utskrift och foto, tillverkade i Småland sedan 2016.",
+          "Möt Fredrik Arvidsson i Aneby – verkstaden bakom Taggat: handgjorda personliga presenter med gravyr, 3D-utskrift och foto, tillverkade i Småland sedan 2016.",
       },
-      { property: "og:title", content: "Verkstaden i Aneby – möt Fredrik | TaggaDet" },
+      { property: "og:title", content: "Verkstaden i Aneby – möt Fredrik | Taggat" },
       {
         property: "og:description",
         content:
@@ -77,7 +77,7 @@ function AboutPage() {
         <div>
           <Kicker>hej, och välkommen in!</Kicker>
           <h1 className="mt-3 font-serif text-5xl leading-[1.05] tracking-tight md:text-6xl">
-            Bakom TaggaDet står jag
+            Bakom Taggat står jag
           </h1>
           <p className="mt-7 max-w-md text-lg text-muted-foreground">
             Jag heter Fredrik Arvidsson och driver verkstaden hemma i Aneby, här i Småland. Det
@@ -90,11 +90,17 @@ function AboutPage() {
             tillfällen – med namn, datum och en massa kärlek.
           </p>
           <p className="mt-4 max-w-md text-lg text-muted-foreground">
+            Verkstaden är garaget hemma. Därifrån ser jag skogen, de böljande bergen och bäcken som
+            porlar förbi. Träet jag graverar kommer från Småland, och resten av materialet köper jag
+            inom EU. Jag tror på det småländska sättet: gör det ordentligt, slösa inte och gör saker
+            som håller i många år.
+          </p>
+          <p className="mt-4 max-w-md text-lg text-muted-foreground">
             Varje beställning tillverkas för hand när den kommer in. Därför tar jag in ett begränsat
             antal per vecka – varje beställning får tid den förtjänar.
           </p>
           <Button asChild size="lg" className="mt-8 rounded-full px-7 text-base">
-            <a href="mailto:hej@linsochlager.se?subject=Min presentid%C3%A9">
+            <a href="mailto:taggat@linsochlager.net?subject=Min presentid%C3%A9">
               <Mail className="mr-2 h-4 w-4" aria-hidden="true" /> Skriv till mig
             </a>
           </Button>
@@ -133,31 +139,6 @@ function AboutPage() {
           </Link>
           .
         </p>
-      </section>
-
-      <section className="mt-14 rounded-3xl bg-cream p-8 md:p-12">
-        <h2 className="font-serif text-3xl tracking-tight md:text-4xl">
-          Har du en presentidé i åtanke?
-        </h2>
-        <p className="mt-3 max-w-xl text-muted-foreground">
-          Skriv några rader om tillfället, namnen och känslan du vill fånga – du får ett förslag med
-          skiss innan vi börjar tillverka.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Button asChild size="lg" className="rounded-full px-7 text-base">
-            <a href="mailto:hej@linsochlager.se?subject=Min presentid%C3%A9">
-              <Mail className="mr-2 h-4 w-4" aria-hidden="true" /> Skriv till mig
-            </a>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="rounded-full border-2 px-7 text-base"
-          >
-            <Link to="/sortiment">Se hela sortimentet</Link>
-          </Button>
-        </div>
       </section>
     </div>
   );

@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { toast } from "sonner";
 import { storefrontApiRequest, type ShopifyProduct } from "@/lib/shopify";
+import { validateCartLine } from "@/lib/cartValidation";
 
 export interface CartAttribute {
   key: string;
@@ -33,6 +34,17 @@ function cleanAttributes(attributes: CartAttribute[] = []) {
   return attributes
     .filter((a) => a.key?.trim() && a.value?.trim())
     .map((a) => ({ key: a.key.trim(), value: a.value.trim().slice(0, 250) }));
+}
+
+function validatedLine(item: Pick<CartItem, "variantId" | "quantity" | "attributes">) {
+  const input = {
+    variantId: item.variantId,
+    quantity: item.quantity,
+    attributes: cleanAttributes(item.attributes),
+  };
+  const result = validateCartLine(input);
+  if (!result.success) throw new Error(result.error.issues[0]?.message || "Ogiltiga produktval");
+  return result.data;
 }
 
 const LINE_FIELDS = `
@@ -126,13 +138,14 @@ async function createShopifyCart(item: CartItem) {
       lineId: `demo-line-${Date.now()}`,
     };
   }
+  const line = validatedLine(item);
   const data = await storefrontApiRequest(CART_CREATE_MUTATION, {
     input: {
       lines: [
         {
-          quantity: item.quantity,
-          merchandiseId: item.variantId,
-          attributes: cleanAttributes(item.attributes),
+          quantity: line.quantity,
+          merchandiseId: line.variantId,
+          attributes: line.attributes,
         },
       ],
     },
@@ -157,13 +170,14 @@ async function addLineToShopifyCart(cartId: string, item: CartItem) {
   if (isDemoMode()) {
     return { success: true, lineId: `demo-line-${Date.now()}` };
   }
+  const line = validatedLine(item);
   const data = await storefrontApiRequest(CART_LINES_ADD_MUTATION, {
     cartId,
     lines: [
       {
-        quantity: item.quantity,
-        merchandiseId: item.variantId,
-        attributes: cleanAttributes(item.attributes),
+        quantity: line.quantity,
+        merchandiseId: line.variantId,
+        attributes: line.attributes,
       },
     ],
   });
@@ -250,6 +264,14 @@ export const useCartStore = create<CartStore>()(
           lineId: null,
           lineKey: buildLineKey(input.variantId, attributes),
         };
+        const validation = validateCartLine(item);
+        if (!validation.success) {
+          toast.error("Kontrollera dina produktval", {
+            description: validation.error.issues[0]?.message,
+            position: "top-center",
+          });
+          return false;
+        }
         const { items, cartId, clearCart } = get();
         const existingItem = items.find((i) => i.lineKey === item.lineKey);
 
@@ -430,7 +452,13 @@ export const useCartStore = create<CartStore>()(
           const data = await storefrontApiRequest(CART_QUERY, { id: cartId });
           if (!data) return;
           const cart = data?.data?.cart;
-          if (!cart || cart.totalQuantity === 0) clearCart();
+          if (!cart || cart.totalQuantity === 0) {
+            toast.info("Varukorgen hade upphört hos Shopify", {
+              description: "Den rensades – lägg till produkterna igen, så blir det en ny.",
+              position: "top-center",
+            });
+            clearCart();
+          }
         } catch (error) {
           console.error("Failed to sync cart with Shopify:", error);
         } finally {
@@ -440,7 +468,7 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: "shopify-cart",
-      version: 2,
+      version: 3,
       migrate: () => ({ items: [], cartId: null, checkoutUrl: null }) as any,
       storage: createJSONStorage(() => localStorage),
       // Rehydrera inte förrän AppShell monterats (__root.tsx anropar

@@ -59,7 +59,7 @@ export function ReviewSection({ reviews = [] }: { reviews?: Review[] }) {
             av mig?
           </p>
           <a
-            href="mailto:hej@linsochlager.se?subject=Ber%C3%A4tta%20vad%20du%20fick"
+            href="mailto:taggat@linsochlager.net?subject=Ber%C3%A4tta%20vad%20du%20fick"
             className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-primary-deep transition-colors duration-300 hover:underline md:min-h-9"
           >
             <MessageSquareHeart className="h-4 w-4" aria-hidden="true" />

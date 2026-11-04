@@ -8,7 +8,9 @@ import ikonLader from "@/assets/ikon-lader.png";
 import ikonSticker from "@/assets/ikon-sticker.png";
 import ikonFototavla from "@/assets/ikon-fototavla.png";
 import ikon3d from "@/assets/ikon-3d.png";
+import ikonDjupportratt from "@/assets/ikon-djupportratt.svg";
 import ikonGolf from "@/assets/ikon-golf.svg";
+import ikonSkylt from "@/assets/ikon-skylt.png";
 
 export interface PricingRow {
   label: string;
@@ -41,6 +43,83 @@ export interface Category {
   pricing?: PricingBlock[];
 }
 
+/** Mottagare – en tredje ingång till samma produkter, utan dubbletter. */
+export const recipients: Category[] = [
+  {
+    slug: "presenter",
+    tag: "present",
+    title: "Personliga presenter",
+    kicker: "något som bara finns i ett exemplar",
+    description:
+      "Hitta en personlig present efter mottagare, tillfälle eller sak. Jag graverar namn, datum och egna hälsningar – och skickar en skiss att godkänna först.",
+    about:
+      "Här samlar jag presenter som blir personliga på riktigt: glas, smycken, trä, metall, askar och små detaljer med din egen text. Samma produkt kan passa flera människor och högtider, därför får du välja väg utan att mötas av kopior av samma sak.",
+    subcategories: [
+      { slug: "till-henne", label: "Till henne" },
+      { slug: "till-honom", label: "Till honom" },
+      { slug: "till-barn", label: "Till barn" },
+      { slug: "till-mor-farforaldrar", label: "Till mor- och farföräldrar" },
+      { slug: "till-paret", label: "Till paret" },
+    ],
+    related: ["fodelsedag", "brollop", "jul"],
+  },
+  {
+    slug: "till-henne",
+    tag: "till-henne",
+    title: "Presenter till henne",
+    kicker: "valt för just henne",
+    description:
+      "Personliga smycken, glas, minnesaskar och vardagsfavoriter med hennes namn, datum eller en hälsning från dig.",
+    about:
+      "En present till henne behöver inte vara stor för att kännas genomtänkt. Välj något hon faktiskt använder och gör det personligt med ett namn, ett datum eller en rad som bara ni förstår. Jag skickar alltid en skiss innan jag tillverkar.",
+    related: ["morsdag", "alla-hjartans-dag", "arsdag"],
+  },
+  {
+    slug: "till-honom",
+    tag: "till-honom",
+    title: "Presenter till honom",
+    kicker: "till honom som redan har allt",
+    description:
+      "Graverade glas, läder, skärbrädor och detaljer till bilen, jakten eller golfen – personliga utan att bli tillgjorda.",
+    about:
+      "Till honom som redan har allt fungerar det egna namnet, initialerna eller den interna raden bättre än ännu en standardpryl. Jag hjälper dig hitta rätt placering och skickar en skiss innan gravyren blir permanent.",
+    related: ["farsdag", "golfpresenter", "bil"],
+  },
+  {
+    slug: "till-barn",
+    tag: "till-barn",
+    title: "Presenter till barn",
+    kicker: "ett namn att växa med",
+    description:
+      "Namnskyltar, minnesaskar, dopsmycken och personliga detaljer som följer med från den första stora dagen.",
+    about:
+      "Till barn gör jag presenter som kan sparas länge: namnet till rummet, asken för de första minnena eller smycket från dopet. Du väljer texten och får se skissen innan jag börjar.",
+    related: ["dop", "barn", "fodelsedag"],
+  },
+  {
+    slug: "till-mor-farforaldrar",
+    tag: "till-mor-farforaldrar",
+    title: "Presenter till mor- och farföräldrar",
+    kicker: "barnbarnen nära varje dag",
+    description:
+      "Smycken, fotominnen, muggar och trädetaljer med barnbarnens namn, ett recept eller ett viktigt datum.",
+    about:
+      "Mormor, morfar, farmor och farfar uppskattar ofta det som bär familjens egen historia. Barnbarnens namn, ett handskrivet recept eller ett gammalt foto blir en present som används och sparas.",
+    related: ["morsdag", "farsdag", "jul"],
+  },
+  {
+    slug: "till-paret",
+    tag: "till-paret",
+    title: "Presenter till paret",
+    kicker: "två namn i samma berättelse",
+    description:
+      "Matchande glas, parsmycken, askar och detaljer till hemmet med namn, datum eller koordinater.",
+    about:
+      "Till paret håller jag ihop namn, datum och typsnitt genom hela presenten. Det passar lika fint till bröllopet som till årsdagen eller inflyttningen, och du godkänner alltid skissen först.",
+    related: ["brollop", "arsdag", "nytt-hem"],
+  },
+];
+
 /** Produkttyper – primär navigation, visas som ikonrad */
 export const productTypes: Category[] = [
   {
@@ -51,17 +130,41 @@ export const productTypes: Category[] = [
     title: "Nyckelringar med gravyr",
     kicker: "något att bära med sig varje dag",
     description:
-      "Nyckelringar i trä, läder och stål – graverade med namn, koordinater eller en hälsning som bara ni två förstår.",
+      "Välj material – ek, stål eller läder – och vad jag ska gravera: namn, reg.nummer, koordinater eller ett foto i hög upplösning.",
     about:
-      "En nyckelring med namn eller eget motiv är en av de presenter som verkligen används – varje dag, i fickan, i handväskan, i bilen. Här hittar du nyckelringar i massiv ek, läder och rostfritt stål, alla graverade med precis den text du vill ha: ett namn, ett datum, era koordinater eller nåt som bara ni två fattar. Gravyren ingår alltid i priset och du får en digital skiss att godkänna innan jag graverar. Populärt som present till hon som har allt, till nycklarna till det nya hemmet och till födelsedagen.",
+      "En nyckelring med namn eller eget motiv är en av de presenter som verkligen används – varje dag, i fickan, i handväskan, i bilen. Här hittar du nyckelringar i massiv ek, läder och rostfritt stål, alla graverade med precis den text du vill ha: ett namn, ett datum, era koordinater eller nåt som bara ni två fattar. Mest stolt är jag över fotogravyren: skicka en bild på ditt husdjur, barnen eller er plats, så graverar min lasermaskin den i mycket hög upplösning – hårstrån och ansiktsdrag blir skarpa. Gravyren ingår alltid i priset och du får en digital skiss att godkänna innan jag graverar. Populärt som present till hon som har allt, till nycklarna till det nya hemmet och till födelsedagen.",
     related: ["fodelsedag", "nytt-hem", "farsdag"],
+  },
+  {
+    slug: "mikrofiberdukar",
+    tag: "mikrofiber",
+    short: "Mikrofiber",
+    title: "Mikrofiberdukar med logga",
+    kicker: "din logga inbränd i duken",
+    description:
+      "Mikrofiberdukar med logga eller motiv inbränt med laser – för barberare, frisörer, bilvård, optiker, gym och företag.",
+    about:
+      "Jag bränner in din logga direkt i fibrerna med laser, så den varken flagnar eller tvättas bort som ett tryck kan göra. Dukarna passar barberare och frisörer vid stationen, bilvårdare som vill ge kunden något med sig hem, optiker, gym och företag som vill ha ett användbart profilmaterial. Ladda upp din logga på produktsidan, välj färg och antal – du får en digital skiss att godkänna innan jag bränner.",
+    related: ["foretag", "bil"],
+  },
+  {
+    slug: "akryl",
+    tag: "akryl",
+    short: "Akryl",
+    title: "Akryl med gravyr",
+    kicker: "utskuret och graverat i klar akryl",
+    description:
+      "Tårttoppers, bröllopsskyltar, bordsplaceringar, fotoplattor och julhängen – laserskurna och graverade i akryl (plexiglas) i min verkstad.",
+    about:
+      "Akryl låter mig skära ut precis den form och text du vill ha, och gravera foton i mycket hög upplösning. Materialet är lätt, klart och tål både sol och fukt – därför passar det lika bra till en tårttopper som till skylten vid ytterdörren. Jag skär i skivor upp till 600×300 mm. Standard är 3 mm, men jag kan gå upp till 18 mm för en gedignare känsla, och jag kan ta hem i princip alla färger – klar, frostad, svart, vit eller färgad. Du får alltid en digital skiss att godkänna innan jag skär och graverar.",
+    related: ["brollop", "jul", "fodelsedag", "nytt-hem"],
   },
   {
     slug: "glas",
     tag: "glas",
     short: "Glas",
     icon: ikonGlas,
-    title: "Graverade glas",
+    title: "Graverat glas",
     kicker: "skål för det ni firar",
     description:
       "Ölglas, vinglas, champagneglas och whiskyglas med lasergraverad text som tål maskindisk. Till toastmastern, brudparet, studenten och farsdagen.",
@@ -72,7 +175,7 @@ export const productTypes: Category[] = [
   {
     // Ny kategori (sep 2026) – roffi säljer glasunderlägg i 4-pack som ren
     // standardvara; ek och naturkork med lasergravyr och personlig text är
-    // TaggaDets egen vinkel. Ikon: lägg in egen bild som
+    // Taggats egen vinkel. Ikon: lägg in egen bild som
     // src/assets/ikon-glasunderlagg.png så swappen sker automatiskt.
     slug: "glasunderlagg",
     tag: "glasunderlagg",
@@ -189,6 +292,23 @@ export const productTypes: Category[] = [
     related: ["brollop", "morsdag", "alla-hjartans-dag"],
   },
   {
+    // Djupporträtt (sep 2026): kundens eget djurfoto -> AI-porträtt i flera
+    // "alter egos" -> skiss att godkänna -> graverad produkt. Själva
+    // AI-genereringen sker i verkstaden (lokal SwarmUI), inte i webbläsaren –
+    // kunden skickar fotot via kontakt/köp, jag skissar som vanligt.
+    slug: "djupportratt",
+    tag: "djupportratt",
+    short: "Djupporträtt",
+    icon: ikonDjupportratt,
+    title: "Djupporträtt",
+    kicker: "en bild på din bästis, en hel kollektion",
+    description:
+      "Skicka ett mobilfoto på ditt djur, så gör jag en kollektion personlighetsfyllda porträtt – och graverar din favorit på nyckelring, skylt eller hänge. Du godkänner skissen innan lasern startar.",
+    about:
+      "Du behöver inte det perfekta fotot – bara djuret du redan är besatt av. Skicka ett vanligt mobilfoto där ansiktet syns, så tar jag fram porträtt i flera stilar: den lekfulle, den ståtlige, den som sover med ena ögat öppet. Välj din favorit och få den graverad i ek, läder eller silver – eller ta hela kollektionen som digitala filer. Alltid en skiss att godkänna innan jag tillverkar, som med allt annat i verkstaden.",
+    related: ["fototavlor", "nyckelringar", "smycken"],
+  },
+  {
     slug: "3d-utskrifter",
     tag: "3d",
     short: "3D-print",
@@ -260,11 +380,12 @@ export const productTypes: Category[] = [
     // dörrskylt, men med skiss-godkännande och personlig text i beställningen.
     slug: "skyltar",
     tag: "skylt",
-    short: "Skyltar",
-    title: "Skyltar & namnskyltar",
+    short: "Skyltar & tavlor",
+    title: "Skyltar & trätavlor",
     kicker: "namnet i metall och trä",
+    icon: ikonSkylt,
     description:
-      "Dörrskyltar i mässing och namnskyltar i ek – graverade med husets namn, familjen eller barnets namn. Metallen tål väder och vind, eken åldras vackert.",
+      "Gårdsskyltar, husskyltar, boxskyltar, födelsetavlor, familjetavlor och medaljtavlor – graverade med ditt namn, din text eller din vers. Metallen tål väder och vind, eken åldras vackert.",
     about:
       "En namnskylt är den present som tittas på oftast – varje morgon vid dörren, varje kväll i barnrummet. Jag graverar dörrskyltar i mässing med fiberlasern, djupt in i metallen, och namnskyltar i oljad ek där träets ådring blir en del av motivet. Namnet på huset till inflyttningspresenten, barnets namn till dopet eller rummet, familjens namn vid grinden – texten är alltid din egen och du godkänner en skiss på placering och storlek innan lasern startar.",
     related: ["nytt-hem", "dop"],
@@ -389,11 +510,11 @@ export const occasions: Category[] = [
     slug: "halloween",
     tag: "halloween",
     title: "Till halloween",
-    kicker: "läskigt personligt",
+    kicker: "läskigt fint, personligt graverat",
     description:
-      "Graverade dekorer, charms och stickers till årets läskigaste kväll – med din egen text eller en symbol som bara gänget förstår. Beställ i god tid.",
+      "Halloweenpynt med gravyr – pumpor i trä, skyltar till dörren och muggar till varma drycker. Beställ senast i mitten av oktober.",
     about:
-      "Halloween växer för varje år – och de allra flesta dekorationerna köps i butikshyllan, samma som grannen har. Här samlar jag det som går att gravera med namn, årtal eller en egen tvist: charmen till kostymen, dekoren till kalaset och presenten till värden. Berätta om kalaset, så föreslår jag något som passar – och något som håller till nästa år också.",
+      "Halloween växer för varje år i Sverige, och det som graveras håller längre än plastpyntet. En träpumpa med familjenamnet, en skylt till dörren eller muggen till äppelmusten är sådant som åker fram år efter år. Skriv vad du funderar på, så skissar jag något lagom läskigt.",
   },
   {
     slug: "jul",
@@ -457,9 +578,9 @@ export const occasions: Category[] = [
     title: "Till företaget",
     kicker: "personligt på jobbet",
     description:
-      "Namnbrickor, graverade skyltar och stickers med er logotyp – till personal, kunder och mässan.",
+      "Färdiga företagspresenter med gravyr – namnbrickor, graverade skyltar och stickers med er logotyp, klara att beställa direkt.",
     about:
-      "Företagssidan av verkstaden: namnbrickor till personalen, presenter till kunder som stöttat genom året och profilprodukter till mässan. Från tio enheter får du offert med staffelpris, och faktura går bra. Skriv några rader om er logotyp och era datum, så svarar jag med ett upplägg.",
+      "Färdiga företagspresenter att beställa direkt: namnbrickor till personalen, presenter till kunder som stöttat genom året och profilprodukter till mässan. Behöver ni en större serie med offert och faktura? Se sidan För företag, där jag beskriver upplägget för volymbeställningar.",
   },
   {
     slug: "pension",
@@ -489,6 +610,17 @@ export const occasions: Category[] = [
     description: "Skärbrädor, askar, skyltar och läderdetaljer graverade efter dina önskemål.",
     about:
       "Gravyr är verkstadens kärna – allt jag gör börjar med en skiss och slutar med texten bränd eller skuren in i trä, läder, glas eller metall. Här samlar jag det som går att beställa klart och personligt: skärbrädor, askar, skyltar och läderdetaljer med din egen text. Saknar du något särskilt skriver du några rader, så skissar jag på ett upplägg innan något graveras.",
+  },
+  {
+    slug: "fotogravyr",
+    tag: "fotogravyr",
+    title: "Fotogravyr",
+    kicker: "ditt foto, graverat i hög upplösning",
+    description:
+      "Husdjur, barn, bröllopsbilder eller er favoritplats – graverat i trä, stål eller akryl. Du laddar upp bilden och får en skiss innan jag graverar.",
+    about:
+      "Fotogravyr är det jag är mest stolt över. Min lasermaskin graverar i mycket hög upplösning, så hårstrån, ansiktsdrag och små detaljer blir skarpa. Så går det till: du väljer produkt och laddar upp ditt foto direkt på produktsidan. Jag ser över bilden, justerar kontrast och beskärning och skickar en digital skiss inom 48 timmar. Först när du har godkänt skissen graverar jag. Bäst resultat får du med en skarp bild med bra ljus där motivet syns tydligt.",
+    related: ["husdjur", "akryl", "nyckelringar", "morsdag"],
   },
   {
     slug: "barn",
@@ -521,7 +653,7 @@ export const occasions: Category[] = [
   },
 ];
 
-export const categories: Category[] = [...productTypes, ...occasions];
+export const categories: Category[] = [...productTypes, ...occasions, ...recipients];
 
 export function getCategory(slug: string) {
   return categories.find((c) => c.slug === slug);

@@ -4,21 +4,22 @@ import { Package, Clock, Truck, MapPin } from "lucide-react";
 import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
+import { DELIVERY_PROMISE, SKETCH_TIME, SPECIAL_ORDER_TIME, STOCK_ITEM_TIME } from "@/lib/delivery";
 
 export const Route = createFileRoute("/frakt-leverans")({
   head: () => ({
     meta: [
-      { title: "Frakt & leveranstid | TaggaDet" },
+      { title: "Frakt & leveranstid | Taggat" },
       { rel: "canonical", href: `${SITE_URL}/frakt-leverans` },
       {
         name: "description",
         content:
-          "Så levererar jag dina personliga produkter: fraktkostnader, tillverkningstid och leveransalternativ hos TaggaDet.",
+          "Så levererar jag dina personliga produkter: fraktkostnader, tillverkningstid och leveransalternativ hos Taggat.",
       },
-      { property: "og:title", content: "Frakt & leveranstid | TaggaDet" },
+      { property: "og:title", content: "Frakt & leveranstid | Taggat" },
       {
         property: "og:description",
-        content: "Fraktkostnader, tillverkningstid och leveransalternativ hos TaggaDet.",
+        content: "Fraktkostnader, tillverkningstid och leveransalternativ hos Taggat.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -34,7 +35,7 @@ function ShippingPage() {
       <Kicker className="mt-6">Bra att veta</Kicker>
       <h1 className="mt-2 font-serif text-4xl">Frakt & leveranstid</h1>
       <p className="mt-4 text-muted-foreground">
-        Allt hos TaggaDet tillverkas för hand efter din beställning. Därför består leveranstiden
+        Allt hos Taggat tillverkas för hand efter din beställning. Därför består leveranstiden
         alltid av två delar: <strong>tillverkningstid</strong> + <strong>frakttid</strong>.
       </p>
 
@@ -53,9 +54,10 @@ function ShippingPage() {
           <Clock className="h-6 w-6 text-primary-deep" aria-hidden="true" />
           <h2 className="mt-3 font-serif text-xl">Leveranstid</h2>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>• Tillverkning: 3–7 arbetsdagar</li>
+            <li>• Digital skiss: {SKETCH_TIME}</li>
+            <li>• Specialbeställningar: tillverkas {SPECIAL_ORDER_TIME}</li>
+            <li>• Lagervaror med namn eller enkel gravyr: hanteras {STOCK_ITEM_TIME}</li>
             <li>• Frakt inom Sverige: 2–4 arbetsdagar</li>
-            <li>• Totalt: räkna med 5–11 arbetsdagar</li>
             <li>• Vid brådska (t.ex. bröllop eller dop) – hör av dig, jag löser det ofta!</li>
           </ul>
         </section>
@@ -79,10 +81,12 @@ function ShippingPage() {
         </section>
       </div>
 
+      <p className="mt-8 text-sm text-muted-foreground">{DELIVERY_PROMISE}</p>
+
       <p className="mt-10 text-sm text-muted-foreground">
         Frågor om din leverans? Maila{" "}
-        <a href="mailto:hej@linsochlager.se" className="text-primary-deep underline">
-          hej@linsochlager.se
+        <a href="mailto:taggat@linsochlager.net" className="text-primary-deep underline">
+          taggat@linsochlager.net
         </a>{" "}
         så återkommer jag snabbast möjligt. Se även villkoren för{" "}
         <Link to="/retur" className="text-primary-deep underline">

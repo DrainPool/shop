@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-const CONTACT_EMAIL = "hej@linsochlager.se";
+const CONTACT_EMAIL = "taggat@linsochlager.net";
 
 /** Enkel pragmatisk e-postkontroll – inte en RFC-monsterregel, men fångar
  * stavfel som saknar @ eller domän så närmast fältet som möjligt. */

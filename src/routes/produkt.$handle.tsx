@@ -1,17 +1,7 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  Clock,
-  Heart,
-  Share2,
-  ShieldCheck,
-  Sparkles,
-  Truck,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { Kicker } from "@/components/Kicker";
@@ -22,16 +12,11 @@ import { Kicker } from "@/components/Kicker";
 const ProductCustomizer = lazy(() =>
   import("@/components/ProductCustomizer").then((m) => ({ default: m.ProductCustomizer })),
 );
-import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ProductGallery, type GalleryBadge } from "@/components/product/ProductGallery";
-import { SpecBand } from "@/components/product/SpecBand";
-import { RecentlyViewed, useTrackRecentlyViewed } from "@/components/RecentlyViewed";
-import { WishlistHeart } from "@/components/WishlistHeart";
-import { PaymentLogos } from "@/components/PaymentLogos";
+import { useTrackRecentlyViewed } from "@/components/RecentlyViewed";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
-import { ReviewSection } from "@/components/ReviewSection";
 import { productTypes } from "@/lib/categories";
-import { addWorkdays, nextCutoff, PRODUCT_SPECS } from "@/lib/productSpecs";
+import { PRODUCT_SPECS } from "@/lib/productSpecs";
 import {
   fetchProductByHandle,
   fetchProducts,
@@ -39,28 +24,47 @@ import {
   FREE_SHIPPING_LIMIT,
   getPricing,
 } from "@/lib/shopify";
-import { SITE_URL } from "@/lib/siteUrls";
+import { SITE_URL, GOOGLE_MAPS_URL } from "@/lib/siteUrls";
+import { DELIVERY_SHORT, SKETCH_TIME, SPECIAL_ORDER_TIME, STOCK_ITEM_TIME } from "@/lib/delivery";
+
+const MERGED_KEYRINGS = [
+  "nyckelring-med-reg-nummer",
+  "nyckelring-i-ek-om-jag-tappar-den-ar-den-inte-min",
+  "nyckelring-i-ek-med-djupportratt",
+  "nyckelring-med-koordinater-i-rostfritt-stal",
+  "nyckelring-i-lader-med-initialer",
+];
 
 export const Route = createFileRoute("/produkt/$handle")({
   component: ProductPage,
+  // ?gravyr= kommer från presentguiden och förifyller gravyrtexten.
+  validateSearch: (search: Record<string, unknown>): { gravyr?: string } =>
+    typeof search["gravyr"] === "string" && search["gravyr"].trim()
+      ? { gravyr: search["gravyr"].replace(/[<>]/g, "").slice(0, 40) }
+      : {},
   // Produkten hämtas i loadern så Product-JSON-LD och meta finns
   // med i SSR-HTML:en – robotar kör inget klient-JS.
   loader: async ({ params }) => {
     const product = await fetchProductByHandle(params.handle);
-    if (!product) throw notFound();
+    if (!product) {
+      // Sammanslagna nyckelringar: gamla motivprodukter går till den gemensamma produkten
+      if (MERGED_KEYRINGS.includes(params.handle))
+        throw redirect({ to: "/produkt/$handle", params: { handle: "nyckelring-i-ek-med-eget-namn" }, statusCode: 301 });
+      throw notFound();
+    }
     return { product };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
         meta: [
-          { title: "Produkten hittades inte – TaggaDet" },
+          { title: "Produkten hittades inte – Taggat" },
           { name: "robots", content: "noindex" },
         ],
       };
     }
     const node = loaderData.product.node;
-    const title = `${node.title} – TaggaDet`;
+    const title = `${node.title} – Taggat`;
     const description = klippMetaBeskrivning(
       node.description ||
         `${node.title} – personligt hantverk, graverat i verkstaden på beställning.`,
@@ -85,7 +89,7 @@ export const Route = createFileRoute("/produkt/$handle")({
       description: node.description,
       sku,
       image: node.images.edges.map((e) => e.node.url),
-      brand: { "@type": "Brand", name: "TaggaDet" },
+      brand: { "@type": "Brand", name: "Taggat" },
       offers: {
         "@type": "Offer",
         url,
@@ -105,8 +109,11 @@ export const Route = createFileRoute("/produkt/$handle")({
         { property: "og:description", content: description },
         { property: "og:type", content: "product" },
         { property: "og:url", content: url },
-        ...(node.images.edges[0]?.node?.url
-          ? [{ property: "og:image", content: node.images.edges[0].node.url }]
+        ...(node.images.edges[0]?.node?.url?.startsWith("https://")
+          ? [
+              { property: "og:image", content: node.images.edges[0].node.url },
+              { name: "twitter:image", content: node.images.edges[0].node.url },
+            ]
           : []),
         { name: "twitter:card", content: "summary_large_image" },
       ],
@@ -162,67 +169,9 @@ function klippMetaBeskrivning(beskrivning: string): string {
   return `${(mellanslag > 0 ? klipp.slice(0, mellanslag) : klipp).trimEnd()}…`;
 }
 
-/**
- * "Beställer du idag är den hos dig ca {datum}" – räknas ut på klienten
- * (ogiltigt på servern, och vi vill inte riskera SSR-mismatch).
- *
- * Räkningen startar vid nästa tillverkningsstopp (vardagar 14:00, samma
- * nextCutoff som FomoBanner-nedräkningen): beställer du efter dagens stopp
- * börjar tillverkningen nästa vardag – inte "idag" som den gamla beräkningen
- * påstod. Sedan garantitaken per fas: 7 arbetsdagar tillverkning + 4
- * arbetsdagar frakt = 11 arbetsdagar, exakt taket som /frakt-leverans
- * anger ("räkna med 5–11 arbetsdagar").
- */
-function DeliveryEstimate() {
-  const [dateText, setDateText] = useState<string | null>(null);
-  useEffect(() => {
-    const delivery = addWorkdays(addWorkdays(nextCutoff(new Date()), 7), 4);
-    setDateText(
-      new Intl.DateTimeFormat("sv-SE", { day: "numeric", month: "long" }).format(delivery),
-    );
-  }, []);
-  // Reservera radens höjd medan datumet räknas ut på klienten – annars
-  // knuffas allt under sammanfattningen ner ett stycke när texten dyker
-  // upp efter mount (layout-shift/CLS).
-  if (!dateText) return <span className="mt-1 block min-h-6" aria-hidden="true" />;
-  return (
-    <span className="mt-1 block text-muted-foreground">
-      Beställer du idag är den hos dig ca den {dateText}.
-    </span>
-  );
-}
-
-/** Dela-knapp – Web Share API på mobil, kopierad länk som fallback. */
-function ShareButton({ title }: { title: string }) {
-  const [copied, setCopied] = useState(false);
-  const share = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, url });
-        return;
-      } catch {
-        // Avbröts av användaren – inget att rapportera
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2500);
-    } catch {
-      // Klippminnet otillgängligt – länken syns i adressfältet ändå
-    }
-  };
-  return (
-    <Button variant="outline" size="sm" className="rounded-full" onClick={share}>
-      <Share2 className="mr-2 h-4 w-4" aria-hidden="true" />
-      {copied ? "Länk kopierad!" : "Dela presentidén"}
-    </Button>
-  );
-}
-
 function ProductPage() {
   const { handle } = Route.useParams();
+  const { gravyr } = Route.useSearch();
   const { product } = Route.useLoaderData();
 
   // Göm den fasta mobil-radern medan gravyrsektionen syns – annars
@@ -274,17 +223,25 @@ function ProductPage() {
     ...(freeShipping ? [{ label: "Fri frakt ingår", tone: "ink" as const }] : []),
   ];
 
-  // Köpnära frågor – samma mekanism som vanliga-fragor-sidan.
-  // Material och skötsel ligger i SpecBand ovanför när produkttypen
-  // har en spec – FAQ:n fyller i det som saknas i stället för att upprepa.
-  const braAttVeta: FaqItem[] = [
+  // All information som inte behövs för själva köpet samlas efter knappen.
+  const produktinformation: FaqItem[] = [
+    {
+      q: "Om produkten",
+      a: <span className="whitespace-pre-line">{node.description}</span>,
+    },
+    ...(spec
+      ? [
+          { q: "Material", a: spec.material },
+          { q: "Skötsel", a: spec.skotsel },
+        ]
+      : []),
     {
       q: "Så tillverkas den",
       a: "Allt görs här i verkstaden efter din beställning. Du får en digital skiss på gravyren innan jag börjar, och jag hör av mig om något i texten ser konstigt ut.",
     },
     {
       q: "Leverans & leveranstid",
-      a: `Tillverkning 3–7 arbetsdagar, därefter spårbar frakt med PostNord. Fri frakt inom Sverige vid köp över ${FREE_SHIPPING_LIMIT} kr. Har du ett datum som måste hållas – skriv det i beställningen.`,
+      a: `Du får en digital skiss ${SKETCH_TIME}. Specialbeställningar tillverkas ${SPECIAL_ORDER_TIME}, medan lagervaror med namn eller enkel gravyr hanteras ${STOCK_ITEM_TIME}. Därefter skickas beställningen spårbart med PostNord. Fri frakt inom Sverige vid köp över ${FREE_SHIPPING_LIMIT} kr.`,
     },
     {
       q: "Retur & reklamation",
@@ -298,45 +255,38 @@ function ProductPage() {
         </>
       ),
     },
-    ...(spec
-      ? []
-      : [
-          {
-            q: "Skötselråd",
-            a: "Trä torkas av för hand och oljas då och då. Smycken tål vardag men mår bäst utan parfym och klor. Läder blir vackrare med åren.",
-          },
-        ]),
+    {
+      q: "Beställer du 10 eller fler?",
+      a: (
+        <>
+          Till företag, bröllop, föreningar och lag gör jag gärna större upplagor. Skriv hur många
+          du behöver och vilken text, så återkommer jag med en offert.{" "}
+          <Link to="/foretag" className="font-semibold text-primary-deep hover:underline">
+            Begär offert
+          </Link>
+        </>
+      ),
+    },
+    ...(!spec
+      ? [{ q: "Skötsel", a: "Skötselråd för just din produkt följer med beställningen." }]
+      : []),
   ];
 
   return (
-    <div className="mx-auto max-w-7xl px-5 py-10 pb-28 md:pb-10">
-      <Breadcrumbs
-        items={[
-          { label: "Sortiment", to: "/sortiment" },
-          ...(typeCategory ? [{ label: typeCategory.title, slug: typeCategory.slug }] : []),
-          { label: node.title },
-        ]}
-      />
-      <Link
-        to="/sortiment"
-        className="mt-4 mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary-deep"
-      >
-        <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Tillbaka till sortimentet
-      </Link>
-
-      <div className="grid gap-10 md:grid-cols-2 md:gap-12">
+    <div className="mx-auto max-w-7xl px-4 py-5 pb-28 md:px-5 md:py-8 md:pb-10">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
         {/* Galleriet följer med när köpkolumnen scrollar (sticky inom
             gridytan – self-start behövs för att sticky överhuvudtaget
             ska kunna glida i raden). */}
-        <div className="md:sticky md:top-24 md:self-start">
-          <ProductGallery images={images} title={node.title} badges={badges} />
+        <div className="min-w-0 md:sticky md:top-20 md:self-start">
+          <ProductGallery images={images} title={node.title} badges={badges} tags={tags} handle={node.handle} />
         </div>
 
-        <div>
+        <div className="min-w-0">
           <h1 className="font-serif text-3xl leading-tight tracking-tight text-balance md:text-4xl">
             {node.title}
           </h1>
-          <div className="mt-4 flex flex-wrap items-baseline gap-3">
+          <div className="mt-3 flex flex-wrap items-baseline gap-3">
             <p className="font-serif text-3xl tabular-nums text-primary-deep">
               {fromPrice && "Från "}
               {formatPrice(price, currency)}
@@ -352,70 +302,15 @@ function ProductPage() {
               </>
             )}
           </div>
-          <p className="mt-2 text-sm font-medium">
+          <p className="mt-2 text-sm font-medium text-primary-deep">
             {inStock ? (
-              <span className="text-primary-deep">
-                Plats finns i veckans tillverkning – tillverkas efter din beställning
-              </span>
+              <span>Gravyr ingår · skiss {SKETCH_TIME} · snabb tillverkning</span>
             ) : (
               <span className="text-muted-foreground">
-                Tillfälligt slut – hör av dig så bokar vi in nästa tillverkning
+                Tillfälligt slut – hör av dig, så säger jag när nästa omgång är klar
               </span>
             )}
           </p>
-
-          {/* Spara/dela direkt vid prisraden – de som inte är redo att köpa
-              idag ska inte lämna sidan utan spår. */}
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            <WishlistHeart
-              variant="labeled"
-              item={{
-                handle: node.handle,
-                title: node.title,
-                image: images[0]?.url,
-                price: minPrice.amount,
-                currency: minPrice.currencyCode,
-              }}
-            />
-            <ShareButton title={node.title} />
-          </div>
-
-          <ul className="mt-6 space-y-2.5 text-sm">
-            {[
-              "Handgjord av mig – aldrig massproducerad",
-              "Gravyren ingår i priset – inga dolda tillägg",
-              "Du får en digital skiss innan jag graverar, helt utan kostnad",
-              freeShipping
-                ? "Fri frakt och presentklar förpackning ingår"
-                : `Presentklar förpackning ingår – fri frakt över ${FREE_SHIPPING_LIMIT} kr`,
-            ].map((point) => (
-              <li key={point} className="flex items-start gap-2">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* Ingen nedräkning här – FomoBanner i headern visar redan
-              veckans cutoff; dubbel FOMO i samma vy känns som hård säljpress. */}
-          {/* Krämpanelerna i kroppen håller samma radie (2xl) – platt
-              informationsyta, .card-shop:s hover-lift är bara för kort. */}
-          <div className="mt-6 flex items-start gap-3 rounded-2xl bg-cream p-4 text-sm">
-            <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
-            <p>
-              Jag tar in ett begränsat antal beställningar per vecka – beställer du idag börjar jag
-              på din redan denna vecka, klar och skickad inom 3–7 arbetsdagar.
-              <DeliveryEstimate />
-            </p>
-          </div>
-
-          <p className="mt-6 whitespace-pre-line leading-relaxed text-muted-foreground">
-            {node.description}
-          </p>
-
-          {/* Material & skötsel från PRODUCT_SPECS via produkttypens
-              tagg – synligt i stället för gömt i en dragspel. */}
-          {spec && <SpecBand spec={spec} />}
 
           {/* scroll-mt-28: sticky headern (~70 px) täcker annars sektionens
               topp när den fasta mobilraden hoppar hit. */}
@@ -427,91 +322,29 @@ function ProductPage() {
                 <div className="mt-8 min-h-72 animate-pulse rounded-2xl border border-border bg-card/60" />
               }
             >
-              <ProductCustomizer product={product} />
+              <ProductCustomizer product={product} initialText={gravyr ?? ""} />
             </Suspense>
-          </div>
-
-          <div className="mt-8 grid grid-flow-dense gap-3 sm:grid-cols-3">
-            {(
-              [
-                {
-                  icon: Truck,
-                  title: "Skickas med PostNord",
-                  text: "2–4 arbetsdagar i Sverige, alternativen visas i kassan",
-                },
-                {
-                  icon: ShieldCheck,
-                  title: "2 års garanti",
-                  text: "På gravyr och utförande",
-                  to: "/garanti" as const,
-                },
-                { icon: Heart, title: "Personlig kontakt", text: "Du pratar alltid med mig" },
-              ] satisfies { icon: typeof Truck; title: string; text: string; to?: "/garanti" }[]
-            ).map((b) => (
-              <div key={b.title} className="rounded-2xl bg-cream p-4 text-sm">
-                <b.icon className="h-4 w-4 text-primary-deep" />
-                <p className="mt-2 font-medium text-foreground">
-                  {b.to ? (
-                    <Link to={b.to} className="hover:text-primary-deep hover:underline">
-                      {b.title}
-                    </Link>
-                  ) : (
-                    b.title
-                  )}
-                </p>
-                <p className="text-muted-foreground">{b.text}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 rounded-2xl bg-cream p-5 text-sm text-muted-foreground">
-            <p className="flex items-center gap-2 font-medium text-foreground">
-              <Sparkles className="h-4 w-4 text-gold" aria-hidden="true" /> Personlig touch ingår
-            </p>
-            <p className="mt-2">
-              Namn, datum eller en liten hälsning – fyll i din text ovan, så hör jag av mig med en
-              skiss innan jag sätter igång. Vill du ha något helt eget?{" "}
-              <Link to="/kontakt" className="font-semibold text-primary-deep hover:underline">
-                Skriv till mig
-              </Link>
-              , jag säger sällan nej.
+            <p className="mt-4 text-sm text-muted-foreground">
+              Tillverkas i min verkstad i Aneby, Småland.{" "}
+              <a
+                href={GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary-deep hover:underline"
+              >
+                Hitta verkstaden på Google
+              </a>
             </p>
           </div>
         </div>
       </div>
 
-      <div className="mt-14 grid gap-10 md:grid-cols-2">
-        <div>
-          <h2 className="font-serif text-2xl">Bra att veta</h2>
-          <FaqAccordion items={braAttVeta} />
-          <PaymentLogos className="mt-6" />
-        </div>
-        {/* Sociala bevis växer fram med de första riktiga beställningarna –
-            tills dess visas hantverket här i stället för tomma stjärnor. */}
-        <div className="rounded-2xl bg-cream p-6">
-          <h2 className="font-serif text-2xl">Så går det till</h2>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Din present graveras för hand här i verkstaden, och du får en digital skiss att godkänna
-            innan jag sätter igång. Inga överraskningar, inga dolda val – och jag har skapat
-            personliga presenter sedan 2016.
-          </p>
-          <Link
-            to="/tillverkningsprocessen"
-            className="mt-4 inline-block font-semibold text-primary-deep hover:underline"
-          >
-            Se hur tillverkningen går till →
-          </Link>
-        </div>
+      <div className="mx-auto mt-10 max-w-3xl border-t border-border pt-6">
+        <h2 className="font-serif text-2xl">Produktinformation</h2>
+        <FaqAccordion items={produktinformation} />
       </div>
-
-      {/* Omdömesmodulen – ärlighetsramen gäller: bara riktiga omdömen
-          visas; tom-läget bjuder in den första kundrösten i stället för
-          att hitta på social proof (konkurrenternas svaghet, inte vår). */}
-      <ReviewSection />
 
       <RelatedProducts tags={product.node.tags || []} handle={handle} />
-
-      <RecentlyViewed excludeHandle={handle} />
 
       {/* Fast köprad på mobil – doljs när gravyrsektionen är synlig,
           safe-area skyddar knappen från iPhonens hemfältssvep. */}
@@ -532,7 +365,7 @@ function ProductPage() {
                 )}
               </span>
               <span className="text-[11px] text-muted-foreground">
-                {inStock ? "Tillverkas efter beställning · 3–7 arbetsdagar" : "Tillfälligt slut"}
+                {inStock ? DELIVERY_SHORT : "Tillfälligt slut"}
               </span>
             </span>
             <Button asChild size="lg" className="rounded-full">

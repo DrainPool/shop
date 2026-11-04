@@ -1,11 +1,11 @@
+import { withBase } from "@/lib/basePath";
+import { GlassTypes } from "@/components/category/GlassTypes";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Sparkles } from "lucide-react";
+import { Camera, PawPrint, Sparkles } from "lucide-react";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductGridSkeleton } from "@/components/ProductCardSkeleton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { RecentlyViewed } from "@/components/RecentlyViewed";
-import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
 import { Button } from "@/components/ui/button";
 import { CategoryHero } from "@/components/category/CategoryHero";
@@ -13,7 +13,7 @@ import { RelatedCategoryCards } from "@/components/category/RelatedCategoryCards
 import { ServicePricingSection } from "@/components/category/ServicePricingSection";
 import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 import { getCategory } from "@/lib/categories";
-import { FOTOGRAFERING_URL, SITE_URL } from "@/lib/siteUrls";
+import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/kategori/$slug")({
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/kategori/$slug")({
       // kan bygga ItemList-JSON-LD av samma produkter som värmts upp.
       products = await context.queryClient.ensureQueryData({
         queryKey: ["products", "tag", category.tag],
-        queryFn: () => fetchProducts(50, `tag:${category.tag}`),
+        queryFn: () => fetchProducts(Infinity, `tag:${category.tag}`),
       });
     } catch (error) {
       // Transient Storefront-fel i SSR: låt sidan rendera med skeleton i
@@ -46,13 +46,13 @@ export const Route = createFileRoute("/kategori/$slug")({
     if (!loaderData) {
       return {
         meta: [
-          { title: "Kategorin hittades inte – TaggaDet" },
+          { title: "Kategorin hittades inte – Taggat" },
           { name: "robots", content: "noindex" },
         ],
       };
     }
     const { title, description, slug } = loaderData.category;
-    const pageTitle = `${title} – TaggaDet`;
+    const pageTitle = `${title} – Taggat`;
     // BreadcrumbList skrivs av Breadcrumbs-komponenten (absoluta URL:er) –
     // ett block per sida räcker, två blir motströmmande för crawlers.
     const jsonLd: object[] = [
@@ -105,7 +105,7 @@ function CategoryNotFound() {
     <div className="mx-auto max-w-3xl px-5 py-24 text-center">
       <h1 className="font-serif text-4xl tracking-tight">Kategorin finns inte</h1>
       <p className="mt-3 text-muted-foreground">
-        Kika i sortimentet – tillsammans hittar vi rätt present.
+        Kika runt i sortimentet, eller hör av dig – så hittar vi rätt present tillsammans.
       </p>
       <Link to="/" className="mt-6 inline-block font-semibold text-primary-deep hover:underline">
         Till startsidan
@@ -115,14 +115,16 @@ function CategoryNotFound() {
 }
 
 function CategoryPage() {
-  const { category } = Route.useLoaderData();
+  const { category, products: loaderProducts } = Route.useLoaderData();
   const {
     data: products = [],
     isPending,
     isError,
   } = useQuery({
     queryKey: ["products", "tag", category.tag],
-    queryFn: () => fetchProducts(50, `tag:${category.tag}`),
+    queryFn: () => fetchProducts(Infinity, `tag:${category.tag}`),
+    initialData: loaderProducts,
+    initialDataUpdatedAt: 0,
   });
 
   const filters = useProductFilters(products, [category.tag]);
@@ -132,30 +134,30 @@ function CategoryPage() {
 
   return (
     <>
-      <CategoryIconRow activeSlug={category.slug} />
       <CategoryHero category={category}>
         <Breadcrumbs
           items={[{ label: "Sortiment", to: "/sortiment" }, { label: category.title }]}
         />
       </CategoryHero>
 
-      <div className="mx-auto max-w-7xl px-5 py-10 md:py-12">
+      <div className="mx-auto max-w-7xl px-5 py-8 md:py-10">
         {/* Butikens löften syns redan i den globala löfte-raden under
             menyn – inget band här som upprepar samma rader en gång till. */}
 
         {/* Tjänstekategorier: berättelse + prislista i samma hierarki
             som en produktsida (bild/text vänster, pris höger). */}
         {isService && <ServicePricingSection category={category} />}
+        {category.slug === "glas" && <GlassTypes products={products} />}
 
         <section
-          className={isService ? "mt-12 md:mt-14" : "mt-10"}
+          id="produkter"
+          className={isService ? "mt-12 scroll-mt-24 md:mt-14" : "mt-10 scroll-mt-24"}
           aria-labelledby={isService ? undefined : "utbud-heading"}
         >
           {!isService && (
             <>
-              <Kicker>från verkstaden</Kicker>
-              <h2 id="utbud-heading" className="mt-1 font-serif text-3xl tracking-tight">
-                Välj bland det jag gör
+              <h2 id="utbud-heading" className="sr-only">
+                Produkter i {category.title}
               </h2>
             </>
           )}
@@ -214,6 +216,12 @@ function CategoryPage() {
               )}
             </>
           )}
+          <p className="mt-8 text-center text-sm text-muted-foreground">
+            Svårt att välja?{" "}
+            <Link to="/presentguide" className="font-semibold text-foreground underline">
+              Hitta rätt med presentguiden
+            </Link>
+          </p>
         </section>
 
         {/* Intern länkflod: related-kategorierna som kort, data-driven
@@ -253,6 +261,69 @@ function CategoryPage() {
           </section>
         )}
 
+        {/* Djupporträtt: före/efter med ett riktigt exempel (frallans tax)
+            – bara på denna kategori, samma mönster som jul-sektionen. */}
+        {category.slug === "djupportratt" && (
+          <section className="mt-12 rounded-3xl bg-cream p-8 md:mt-14 md:p-10">
+            <Kicker>så funkar det</Kicker>
+            <h2 className="mt-1 font-serif text-3xl tracking-tight">
+              Ett mobilfoto in. <em className="italic">En hel kollektion ut.</em>
+            </h2>
+            <div className="mt-6 grid items-start gap-4 md:grid-cols-3">
+              <figure className="card-shop p-3">
+                <img
+                  src={withBase("/images/djupportratt/djupportratt_fore.webp")}
+                  alt="Originalfoto: långhårig röd tax i kvällsljus"
+                  width={1024}
+                  height={819}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full rounded-2xl object-cover"
+                />
+                <figcaption className="mt-2 flex items-center gap-1.5 px-1 pb-1 text-xs text-muted-foreground">
+                  <Camera className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  Ditt foto — ett vanligt mobilfoto räcker
+                </figcaption>
+              </figure>
+              <figure className="card-shop p-3">
+                <img
+                  src={withBase("/images/djupportratt/djupportratt_rosett.webp")}
+                  alt="Porträtt av samma tax, studioljus med gul rosett"
+                  width={1024}
+                  height={1024}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full rounded-2xl object-cover"
+                />
+                <figcaption className="mt-2 flex items-center gap-1.5 px-1 pb-1 text-xs text-muted-foreground">
+                  <PawPrint className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  Porträttet — studioprosett med personlighet
+                </figcaption>
+              </figure>
+              <figure className="card-shop p-3">
+                <img
+                  src={withBase("/images/djupportratt/djupportratt_konstverk.webp")}
+                  alt="Illustrerat porträtt av samma tax mot mörkgrön botten"
+                  width={1024}
+                  height={1024}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full rounded-2xl object-cover"
+                />
+                <figcaption className="mt-2 flex items-center gap-1.5 px-1 pb-1 text-xs text-muted-foreground">
+                  <Sparkles className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  Alter egon — samma djur, nya stilar
+                </figcaption>
+              </figure>
+            </div>
+            <p className="mt-6 flex items-center gap-2 rounded-2xl bg-ink-foreground/5 p-4 text-sm">
+              <PawPrint className="h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
+              Exemplen ovan är testgenererade i verkstaden från ett riktigt hundfoto. Ditt djur blir
+              nästa — och den skiss du godkänner är den som graveras.
+            </p>
+          </section>
+        )}
+
         <section className="mt-12 rounded-3xl bg-cream p-8 md:mt-14 md:p-10">
           <h2 className="font-serif text-2xl">
             {isService ? "Bra att veta" : `Om ${category.title.toLowerCase()}`}
@@ -275,21 +346,11 @@ function CategoryPage() {
             <Link to="/tillverkningsprocessen" className="text-primary-deep hover:underline">
               Så tillverkas det
             </Link>
-            <a
-              href={FOTOGRAFERING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary-deep hover:underline"
-            >
-              Boka fotografering
-            </a>
             <Link to="/kontakt" className="text-primary-deep hover:underline">
               Fråga mig direkt
             </Link>
           </div>
         </section>
-
-        <RecentlyViewed />
       </div>
     </>
   );

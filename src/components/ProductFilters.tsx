@@ -30,7 +30,6 @@ const TAG_LABELS: Record<string, string> = {
   jul: "Julen",
   bil: "Bil",
   presentkort: "Presentkort",
-  halloween: "Halloween",
   student: "Student",
   morsdag: "Mors dag",
   hjartansdag: "Alla hjärtans dag",
@@ -46,6 +45,12 @@ const TAG_LABELS: Record<string, string> = {
   mugg: "Mugg",
   tumbler: "Tumbler",
   skarbrada: "Skärbräda",
+  present: "Presenter",
+  "till-henne": "Till henne",
+  "till-honom": "Till honom",
+  "till-barn": "Till barn",
+  "till-mor-farforaldrar": "Till mor- och farföräldrar",
+  "till-paret": "Till paret",
 };
 
 /** Taggar som räknas som produkttyp (egen filtergrupp) */
@@ -60,6 +65,14 @@ const TYPE_TAGS = [
   "stickers",
   "foto",
   "3d",
+];
+
+const RECIPIENT_TAGS = [
+  "till-henne",
+  "till-honom",
+  "till-barn",
+  "till-mor-farforaldrar",
+  "till-paret",
 ];
 
 const PRICE_BUCKETS = [
@@ -234,13 +247,24 @@ export function ProductFilters(props: FiltersProps) {
           med hidden – i stället för att monteras bort i stängt läge. */}
       <div
         id="filter-panel"
-        hidden={!open}
-        className="mt-5 grid gap-6 border-t border-border pt-5 sm:grid-cols-3"
+        className={cn(
+          "mt-5 gap-6 border-t border-border pt-5 sm:grid-cols-2 lg:grid-cols-4",
+          open ? "grid" : "hidden lg:grid",
+        )}
       >
         {(
           [
             ["Produkttyp", props.availableTags.filter((t) => TYPE_TAGS.includes(t.tag))],
-            ["Passar till", props.availableTags.filter((t) => !TYPE_TAGS.includes(t.tag))],
+            ["Till vem?", props.availableTags.filter((t) => RECIPIENT_TAGS.includes(t.tag))],
+            [
+              "Passar till",
+              props.availableTags.filter(
+                (t) =>
+                  !TYPE_TAGS.includes(t.tag) &&
+                  !RECIPIENT_TAGS.includes(t.tag) &&
+                  t.tag !== "present",
+              ),
+            ],
           ] as const
         ).map(([groupTitle, tags]) =>
           tags.length === 0 ? null : (

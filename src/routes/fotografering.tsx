@@ -7,6 +7,12 @@ export const Route = createFileRoute("/fotografering")({
   component: RedirectPage,
   head: () => ({
     meta: [
+      { title: "Fotografering hos Lins & Lager – Taggat" },
+      { name: "description", content: "Min fotografering för bröllop, familj och produkter finns hos Lins & Lager. Här kommer du vidare från Taggat till min fotosajt." },
+      { property: "og:title", content: "Fotografering hos Lins & Lager – Taggat" },
+      { property: "og:description", content: "Besök min fotosajt för bröllopsbilder, familjefotografering och produktbilder." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       {
         // Meta-refresh som reserv: skickar vidare omdirigering i SSR/innehållsförhandlare
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,27 +1,16 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Building2,
-  CalendarClock,
-  Check,
-  Flag,
-  Mail,
-  Percent,
-  Sparkles,
-  Sticker,
-  Trophy,
-} from "lucide-react";
+import { Check, Mail, Percent, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE_URL } from "@/lib/siteUrls";
 import katForetag from "@/assets/till-foretag-2.jpg";
-import katGravyr from "@/assets/kat-gravyr.jpg";
 import { Kicker } from "@/components/Kicker";
 
 /**
  * Offert-mailet startar ifyllt med exakt de fält sidan ber om –
  * en tom "ämnesrad bara"-länk är en barriär för B2B-kunden.
  */
-const OFFERT_MAILTO = `mailto:hej@linsochlager.se?subject=${encodeURIComponent(
+const OFFERT_MAILTO = `mailto:taggat@linsochlager.net?subject=${encodeURIComponent(
   "Företagsbeställning",
 )}&body=${encodeURIComponent(
   "Hej!\n\nJag vill fråga om en offert.\n\nAntal: \nBudget: \nTillfälle/leveransdatum: \nÖnskad produkt/material: \n\nMvh ",
@@ -30,18 +19,18 @@ const OFFERT_MAILTO = `mailto:hej@linsochlager.se?subject=${encodeURIComponent(
 export const Route = createFileRoute("/foretag")({
   head: () => ({
     meta: [
-      { title: "Företagsgåvor & profilprodukter | TaggaDet" },
+      { title: "Företagsgåvor & profilprodukter | Taggat" },
       { rel: "canonical", href: `${SITE_URL}/foretag` },
       {
         name: "description",
         content:
-          "Personliga företagsgåvor: graverade namnbrickor, kundgåvor med er logga, dash-plaketter och klasspriser för bilträffar. Paketpris till arrangören – offert inom 24 timmar.",
+          "Personliga företagsgåvor: graverade namnbrickor, kundgåvor och profilprodukter med er logga. Små serier och offert inom 24 timmar.",
       },
-      { property: "og:title", content: "Företagsgåvor & profilprodukter | TaggaDet" },
+      { property: "og:title", content: "Företagsgåvor & profilprodukter | Taggat" },
       {
         property: "og:description",
         content:
-          "Graverade namnbrickor, kundgåvor, bilträff-paket med plaketter och troféer – och lasergravyr på golfklubbor ute på banan. Små serier, offert inom 24 timmar.",
+          "Graverade namnbrickor, kundgåvor och profilprodukter i små serier – offert inom 24 timmar.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -167,6 +156,15 @@ function BusinessPage() {
             <Percent className="h-4 w-4 text-primary-deep" aria-hidden="true" />
             Volym 10–150 st · faktura · offert inom 24 timmar
           </p>
+          <p className="mt-3 text-sm">
+            <Link
+              to="/kategori/$slug"
+              params={{ slug: "foretag" }}
+              className="font-semibold text-primary-deep underline underline-offset-2"
+            >
+              Se färdiga företagspresenter i sortimentet
+            </Link>
+          </p>
         </div>
         <img
           src={katForetag}
@@ -178,10 +176,10 @@ function BusinessPage() {
         />
       </div>
 
-      <section className="mt-14">
+      <section className="mt-12">
         <Kicker>det här kan jag göra</Kicker>
         <h2 className="mt-1 font-serif text-4xl tracking-tight">Vad behöver ert team?</h2>
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {offerings.map((o) => (
             <div key={o.title} className="card-shop p-7">
               <Sparkles className="h-6 w-6 text-primary-deep" aria-hidden="true" />
@@ -192,59 +190,15 @@ function BusinessPage() {
         </div>
       </section>
 
-      <section className="mt-14">
-        <Kicker>för arrangören</Kicker>
-        <h2 className="mt-1 font-serif text-4xl tracking-tight">
-          Bilträff-paketet – allt till träffen i en beställning
-        </h2>
-        <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
-          Plaketter till alla deltagare, priser till vinnarna och dekaler till klubben. Du väljer
-          motiv – jag skissar, graverar och levererar i tid till träffen.
-        </p>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {[
-            {
-              icon: Flag,
-              title: "Dash-plaketter i bulk",
-              text: "En plakett till varje deltagare med träffens namn, år och klass – paketpris enligt offerten.",
-            },
-            {
-              icon: Trophy,
-              title: "Klasspriser & troféer",
-              text: "Bäst i klass, Publikens val, Best in Show – graverade priser med biltema, pris enligt offerten.",
-            },
-            {
-              icon: Sticker,
-              title: "Klubbdekaler & nyckelringar",
-              text: "Klubbmärket som dekal och graverad nyckelring – populärt i försäljning på plats. Från 10 st.",
-            },
-          ].map((p) => (
-            <div key={p.title} className="card-shop p-7">
-              <p.icon className="h-6 w-6 text-primary-deep" aria-hidden="true" />
-              <h3 className="mt-4 font-serif text-xl">{p.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{p.text}</p>
-            </div>
-          ))}
-        </div>
-        <p className="mt-6 rounded-2xl bg-cream p-4 text-sm">
-          Ungefärliga paketpriser – exakt pris får du med offerten (inom 24 timmar) tillsammans med
-          digital skiss. On-site-gravyr på träffen kan bokas efter överenskommelse.
-        </p>
-      </section>
-
-      <section className="mt-14 grid items-center gap-10 md:grid-cols-2">
-        <img
-          src={katGravyr}
-          alt="Handgraverad ekbricka i verkstaden"
-          width={1200}
-          height={1200}
-          loading="lazy"
-          className="rotate-1 rounded-3xl border-4 border-ink shadow-lift"
-        />
-        <div>
-          <Kicker>så enkelt går det till</Kicker>
-          <h2 className="mt-1 font-serif text-4xl tracking-tight">Från förfrågan till leverans</h2>
-          <ol className="mt-8 space-y-6">
+      <section className="mt-12 border-t border-border pt-10">
+        <div className="grid gap-8 md:grid-cols-[2fr_3fr]">
+          <div>
+            <Kicker>så enkelt går det till</Kicker>
+            <h2 className="mt-1 font-serif text-3xl tracking-tight">
+              Från förfrågan till leverans
+            </h2>
+          </div>
+          <ol className="space-y-5">
             {process.map((s) => (
               <li key={s.n} className="flex gap-4">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary font-serif text-lg text-primary-foreground">
@@ -260,67 +214,20 @@ function BusinessPage() {
         </div>
       </section>
 
-      <section className="mt-14 rounded-3xl border border-border bg-card p-10 md:p-12">
-        <Kicker>staffelpriser</Kicker>
-        <h2 className="mt-1 font-serif text-3xl tracking-tight md:text-4xl">
-          Ju fler, desto vänligare pris
-        </h2>
-        <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
-          Volymstaffeln nedan är vägledande – exakt pris sätts efter motiv, material och antal i
-          offerten (inom 24 timmar, alltid fast pris innan ni bestämmer er).
-        </p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { n: "10+ st", d: "Profilprodukter & gåvor – startnivån" },
-            { n: "25+ st", d: "Bilträff-plaketter – paketpris till arrangören" },
-            { n: "50+ st", d: "Personal- & kundgåvor – staffelrabatt nivå 2" },
-            { n: "100+ st", d: "Större serier – skräddarsytt paket + faktura 30 d" },
-          ].map((s) => (
-            <div key={s.n} className="rounded-2xl bg-cream p-5">
-              <p className="font-serif text-2xl text-primary-deep">{s.n}</p>
-              <p className="mt-1.5 text-sm text-muted-foreground">{s.d}</p>
-            </div>
+      <section className="mt-12 rounded-2xl bg-cream p-7">
+        <h2 className="font-serif text-2xl">Tydligt för inköparen</h2>
+        <ul className="mt-5 grid gap-3 text-sm md:grid-cols-2">
+          {benefits.map((benefit) => (
+            <li key={benefit} className="flex items-start gap-2">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
+              {benefit}
+            </li>
           ))}
-        </div>
-        <p className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
+        </ul>
+        <p className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">
           <Check className="h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
-          Alltid: digital skiss godkänns innan tillverkning · faktura med godkänd kredit ·
-          presentklart per mottagare.
+          Volympris sätts efter motiv, material och antal och framgår alltid före beställning.
         </p>
-      </section>
-
-      <section className="mt-14 rounded-3xl bg-ink p-10 text-ink-foreground md:p-12">
-        <div className="grid items-center gap-10 md:grid-cols-2">
-          <div>
-            <p className="font-inscription text-sm text-gold md:text-base">tryggt för inköpare</p>
-            <h2 className="mt-2 font-serif text-3xl tracking-tight md:text-4xl">
-              Därför företag väljer TaggaDet
-            </h2>
-            <ul className="mt-6 space-y-3 text-sm opacity-90">
-              {benefits.map((b) => (
-                <li key={b} className="flex items-start gap-3">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
-                  {b}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-2xl bg-ink-foreground/5 p-8">
-            <h3 className="font-serif text-2xl">Begär offert</h3>
-            <p className="mt-3 text-sm opacity-80">
-              Skriv antal, budget och tillfälle – du får svar med prisförslag och skiss inom 24
-              timmar på vardagar.
-            </p>
-            <Button asChild size="lg" className="mt-6 w-full rounded-full">
-              <a href={OFFERT_MAILTO}>
-                <Mail className="mr-2 h-4 w-4" aria-hidden="true" /> hej@linsochlager.se
-              </a>
-            </Button>
-            <p className="mt-3 text-center text-xs opacity-60">
-              Svar inom 24 timmar vardagar – ofta mycket snabbare.
-            </p>
-          </div>
-        </div>
       </section>
     </div>
   );

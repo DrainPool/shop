@@ -1,9 +1,11 @@
+import { withBase } from "@/lib/basePath";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -13,11 +15,11 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { TrustPromises } from "@/components/TrustPromises";
+import { MinimalProductHeader } from "@/components/product/MinimalProductHeader";
 import { Toaster } from "@/components/ui/sonner";
 import { useCartSync } from "@/hooks/useCartSync";
 import { useCartStore } from "@/stores/cartStore";
-import { SITE_URL } from "@/lib/siteUrls";
+import { SITE_URL, GOOGLE_MAPS_URL } from "@/lib/siteUrls";
 import { SHOPIFY_STORE_PERMANENT_DOMAIN } from "@/lib/shopify";
 import { Kicker } from "@/components/Kicker";
 
@@ -29,15 +31,15 @@ import { Kicker } from "@/components/Kicker";
 const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "TaggaDet",
+  name: "Taggat",
   url: SITE_URL,
   // Google vill ha en kvadratisk rasterbild, minst 112×112, med opagen botten
   // för organisationslogotypen. apple-touch-icon.png är precis det (180×180,
   // pappersbotten) och är samma märke som favicon.svg. Den pekade tidigare på
-  // /favicon.ico – scaffold-ikonen från Initial release, alltså inte TaggaDets
+  // /favicon.ico – scaffold-ikonen från Initial release, alltså inte Taggats
   // märke alls.
   logo: `${SITE_URL}/apple-touch-icon.png`,
-  email: "hej@linsochlager.se",
+  email: "taggat@linsochlager.net",
   description:
     "Handgjorda personliga presenter med gravyr, 3D-utskrifter, foto och stickers – tillverkade i Småland sedan 2016.",
   founder: {
@@ -49,6 +51,9 @@ const ORGANIZATION_JSON_LD = {
     addressLocality: "Aneby",
     addressCountry: "SE",
   },
+  // Kopplar sajten till Google-företagsprofilen (Lins och Lager, Aneby).
+  sameAs: [GOOGLE_MAPS_URL, "https://linsochlager.net"],
+  hasMap: GOOGLE_MAPS_URL,
 };
 
 /**
@@ -59,7 +64,7 @@ const ORGANIZATION_JSON_LD = {
 const WEBSITE_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "TaggaDet",
+  name: "Taggat",
   url: SITE_URL,
   potentialAction: {
     "@type": "SearchAction",
@@ -91,7 +96,7 @@ const PLAUSIBLE_DOMAIN = "linsochlager.net";
  */
 const OG_IMAGE = `${SITE_URL}/og-default.png`;
 const OG_IMAGE_ALT =
-  "TaggaDet – märket och raden ”lasergravyr & personliga presenter, gjorda för hand i Småland”";
+  "Taggat – märket och raden ”lasergravyr & personliga presenter, gjorda för hand i Småland”";
 
 function NotFoundComponent() {
   return (
@@ -101,11 +106,11 @@ function NotFoundComponent() {
         <h1 className="mt-1 font-serif text-6xl tracking-tight text-foreground">404</h1>
         <h2 className="mt-3 text-xl font-semibold text-foreground">Sidan hittades inte</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Sidan du letar efter finns inte eller har flyttats. Här är några vända vägar vidare:
+          Sidan du letar efter finns inte eller har flyttats. Här är några vägar vidare:
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           {[
-            { slug: "bastsaljare", label: "Mest älskade" },
+            { slug: "presenter", label: "Alla presenter" },
             { slug: "brollop", label: "Till bröllopet" },
             { slug: "dop", label: "Till dopet" },
             { slug: "bil", label: "Till bilen" },
@@ -131,10 +136,10 @@ function NotFoundComponent() {
         <p className="mt-6 text-sm text-muted-foreground">
           Söker du något särskilt? Skriv till{" "}
           <a
-            href="mailto:hej@linsochlager.se"
+            href="mailto:taggat@linsochlager.net"
             className="font-medium text-primary-deep hover:underline"
           >
-            hej@linsochlager.se
+            taggat@linsochlager.net
           </a>{" "}
           så hittar jag det åt dig.
         </p>
@@ -143,7 +148,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -184,23 +189,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TaggaDet – personligt hantverk" },
+      { title: "Taggat – personligt hantverk" },
       {
         name: "description",
         content:
           "Handgjorda och personliga presenter: smycken, gravyr, 3D-utskrifter, foto och stickers till bröllop, dop och företag.",
       },
-      { name: "author", content: "TaggaDet" },
+      { name: "author", content: "Taggat" },
       // Google Search Console-verifiering (frallan, sep 2026)
       { name: "google-site-verification", content: "7378177556809660516" },
-      { property: "og:title", content: "TaggaDet – personligt hantverk" },
+      { property: "og:title", content: "Taggat – personligt hantverk" },
       {
         property: "og:description",
         content:
           "Handgjorda och personliga presenter: smycken, gravyr, 3D-utskrifter, foto och stickers.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "TaggaDet" },
+      { property: "og:site_name", content: "Taggat" },
       { property: "og:locale", content: "sv_SE" },
       { property: "og:image", content: OG_IMAGE },
       { property: "og:image:width", content: "1200" },
@@ -216,20 +221,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // LCP. crossOrigin krävs för woff2 (annars hämtas filen dubelt).
       {
         rel: "preload",
-        href: "/fonts/worksans-latin.woff2",
+        href: withBase("/fonts/worksans-latin.woff2"),
         as: "font",
         type: "font/woff2",
         crossOrigin: "anonymous",
       },
       {
         rel: "preload",
-        href: "/fonts/marcellus-latin.woff2",
+        href: withBase("/fonts/marcellus-latin.woff2"),
         as: "font",
         type: "font/woff2",
         crossOrigin: "anonymous",
       },
-      // Fonterna är självhostade (se @font-face i styles.css) – inga
-      // Google-länkar kvar, ingen tredjepartsförfrågan vid sidladdning.
+      // Sajtens fonter är självhostade (se @font-face i styles.css).
+      // Gravyrtypsnitten i anpassningsformuläret kommer däremot från
+      // Google Fonts – de injiceras av ProductCustomizer först när kunden
+      // öppnar formuläret och blockerar aldrig övriga sidors rendering.
       // Preconnect mot Shopify-domänen bara i riktigt läge (demo läser
       // aldrig dit, då blir det bara en onödig uppslagning).
       ...(import.meta.env["VITE_DEMO_MODE"] === "1"
@@ -246,10 +253,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // för hemskärmen. favicon.ico ligger kvar sist som sista utväg – den är
       // scaffold-ikonen från Initial release och kan inte ersättas i ICO-format
       // utan ett bildverktyg, vilket repot inte har. Den förfalskas inte.
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
-      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: withBase("/favicon.svg"), type: "image/svg+xml" },
+      { rel: "icon", href: withBase("/favicon-32.png"), type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: withBase("/apple-touch-icon.png"), sizes: "180x180" },
+      { rel: "icon", href: withBase("/favicon.ico"), type: "image/x-icon" },
     ],
     scripts: [
       {
@@ -305,6 +312,7 @@ function RootComponent() {
 
 function AppShell() {
   useCartSync();
+  const isProductPage = useLocation().pathname.startsWith("/produkt/");
 
   // Varukorgen persistar med skipHydration – SSR-html och första klientrender
   // matchar (ingen badge-mismatch), sedan rehydreras den här efter montering.
@@ -326,9 +334,7 @@ function AppShell() {
       >
         Hoppa till innehållet
       </a>
-      <SiteHeader />
-      {/* Butikens löften direkt under menyn — syns innan första scrollen */}
-      <TrustPromises />
+      {isProductPage ? <MinimalProductHeader /> : <SiteHeader />}
       <main id="main" className="flex-1">
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />

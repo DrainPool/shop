@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "@tanstack/react-router";
-import { CreditCard, Heart, Menu } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Heart, Menu, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,31 +13,22 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { CartDrawer } from "@/components/CartDrawer";
-import { CutoffInline } from "@/components/FomoBanner";
 import { MegaMenu } from "@/components/MegaMenu";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { Wordmark } from "@/components/Wordmark";
-import { occasions } from "@/lib/categories";
+import { occasions, recipients } from "@/lib/categories";
 import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
 import { useWishlist } from "@/lib/wishlist";
 import { useUiStore } from "@/stores/uiStore";
 
-// Frakt/tillverkning löper nu i löfte-raden under menyn (TrustPromises) —
-// här behålls bara det som inte upprepas: betaltryggheten + nedräkningen.
-const trustItems = [{ icon: CreditCard, text: "Trygg betalning med kort & Klarna" }];
-
-// Sidor vars syfte är att stilla oro – där ska ingen nedräkning ticka
-const COUNTDOWN_FREE_PATHS = ["/retur", "/garanti", "/vanliga-fragor"];
-
 const navLinks = [
-  { label: "Hem", href: "/" },
-  { label: "Mest älskade", slug: "bastsaljare" },
-  { label: "Nyheter", slug: "nyheter" },
-  { label: "Fotografering", external: FOTOGRAFERING_URL },
+  { label: "Presenter", slug: "presenter" },
   { label: "Alla produkter", href: "/sortiment" },
-  { label: "Så funkar det", hash: "sa-gar-det-till" },
+  { label: "Presentguide", href: "/presentguide" },
+  { label: "För företag", href: "/foretag" },
   // Info-/förtroende-sidor: bara i mobilmeny + footer (håller topp-menyn ren)
-  { label: "Vem ska du överraska?", hash: "tillfallen", mobileOnly: true },
+  { label: "Hem", href: "/", mobileOnly: true },
+  { label: "Fotografering", external: FOTOGRAFERING_URL, mobileOnly: true },
   { label: "Vanliga frågor", href: "/vanliga-fragor", mobileOnly: true },
   { label: "Om mig", href: "/om-mig", mobileOnly: true },
   { label: "Så tillverkas det", href: "/tillverkningsprocessen", mobileOnly: true },
@@ -60,6 +52,7 @@ function NavItem({
       <Link
         to="/kategori/$slug"
         params={{ slug: link.slug }}
+        hash="produkter"
         className={className}
         onClick={onNavigate}
       >
@@ -129,9 +122,10 @@ function WishlistHeaderButton() {
 }
 
 export function SiteHeader() {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const setSearchOpen = useUiStore((s) => s.setSearchOpen);
-  const pathname = useLocation().pathname;
 
   // ⌘K / Ctrl-K öppnar söket (pekplattor har redan sökknappen i headern)
   useEffect(() => {
@@ -147,27 +141,13 @@ export function SiteHeader() {
 
   return (
     <>
-      {/* Trygghet + nedräkning i samma mörka rad – toppen ska inte äta
-          hela första skärmen. */}
-      <div className="bg-ink text-ink-foreground">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-5 py-2.5 text-xs font-medium sm:text-sm">
-          {trustItems.map((item) => (
-            <span key={item.text} className="flex items-center gap-1.5">
-              <item.icon className="h-4 w-4 text-gold" aria-hidden="true" />
-              {item.text}
-            </span>
-          ))}
-          {!COUNTDOWN_FREE_PATHS.includes(pathname) && <CutoffInline />}
-        </div>
-      </div>
-
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
-          <Link to="/" aria-label="TaggaDet – till startsidan">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
+          <Link to="/" aria-label="Taggat – till startsidan">
             <Wordmark />
           </Link>
 
-          <nav className="hidden items-center gap-6 text-sm font-semibold lg:flex">
+          <nav className="hidden items-center gap-7 text-sm font-semibold lg:flex">
             <MegaMenu />
             {primaryLinks.map((l) => (
               <NavItem
@@ -214,6 +194,28 @@ export function SiteHeader() {
                   ))}
                 </nav>
 
+                <nav
+                  className="mt-2 border-t border-border/60 px-4 pt-4"
+                  aria-label="Presenter till"
+                >
+                  <p className="px-3 font-serif text-sm text-muted-foreground">Presenter till</p>
+                  <ul className="mt-2 grid grid-cols-2 gap-1">
+                    {recipients.map((recipient) => (
+                      <li key={recipient.slug}>
+                        <Link
+                          to="/kategori/$slug"
+                          params={{ slug: recipient.slug }}
+                          hash="produkter"
+                          onClick={() => setMobileOpen(false)}
+                          className="flex min-h-11 items-center rounded-lg px-3 py-2 text-sm leading-snug font-medium transition-colors hover:bg-cream hover:text-primary-deep"
+                        >
+                          {recipient.slug === "presenter" ? "Alla presenter" : recipient.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+
                 {/* Tillfällen – samma urval som dator-megamenyns "Passar till" */}
                 <nav className="mt-2 border-t border-border/60 px-4 pt-4" aria-label="Passar till">
                   <p className="px-3 font-serif text-sm text-muted-foreground">Passar till</p>
@@ -223,6 +225,7 @@ export function SiteHeader() {
                         <Link
                           to="/kategori/$slug"
                           params={{ slug: o.slug }}
+                          hash="produkter"
                           onClick={() => setMobileOpen(false)}
                           className="flex min-h-11 items-center rounded-lg px-3 py-2 text-sm leading-snug font-medium transition-colors hover:bg-cream hover:text-primary-deep"
                         >
@@ -236,10 +239,10 @@ export function SiteHeader() {
                 <p className="mt-auto px-6 pb-6 text-sm text-muted-foreground">
                   Frågor? Skriv till{" "}
                   <a
-                    href="mailto:hej@linsochlager.se"
+                    href="mailto:taggat@linsochlager.net"
                     className="font-medium text-primary-deep hover:underline"
                   >
-                    hej@linsochlager.se
+                    taggat@linsochlager.net
                   </a>
                 </p>
               </SheetContent>
@@ -247,6 +250,40 @@ export function SiteHeader() {
           </div>
         </div>
       </header>
+      <div className="border-b border-border bg-background">
+        <form
+          role="search"
+          aria-label="Sök i hela butiken"
+          className="mx-auto flex max-w-7xl items-center gap-2 px-5 py-3"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void navigate({
+              to: "/sortiment",
+              search: { q: searchTerm.trim(), category: "" },
+              hash: "sortiment",
+            });
+          }}
+        >
+          <div className="relative min-w-0 flex-1">
+            <Search
+              aria-hidden="true"
+              className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            />
+            <Input
+              type="search"
+              aria-label="Sök produkter i butiken"
+              placeholder="Sök produkter…"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              className="h-11 pl-10"
+            />
+          </div>
+          <Button type="submit" className="h-11">
+            <Search aria-hidden="true" className="h-4 w-4" />
+            Sök
+          </Button>
+        </form>
+      </div>
     </>
   );
 }

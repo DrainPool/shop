@@ -1,15 +1,17 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/home/Reveal";
-import katBarn from "@/assets/kat-barn.jpg";
-import katBrollop from "@/assets/kat-brollop.jpg";
-import katGravyr from "@/assets/kat-gravyr.jpg";
-import katSmycken from "@/assets/kat-smycken.jpg";
-import tillFarsdag2 from "@/assets/till-farsdag-2.jpg";
-import tillForetag2 from "@/assets/till-foretag-2.jpg";
+import tillDop from "@/assets/tillfalle-dop.jpg";
+import tillBrollop from "@/assets/tillfalle-brollop.jpg";
+import tillJul from "@/assets/tillfalle-julkulor.jpg";
+import tillMorsdag from "@/assets/tillfalle-morsdag.jpg";
+import tillFarsdag from "@/assets/tillfalle-farsdag.jpg";
+import tillForetag from "@/assets/tillfalle-foretag.jpg";
 import { Kicker } from "@/components/Kicker";
+import { seasonFor } from "@/lib/seasons";
 
 /**
  * Tillfälles-bento (Interest-steget i AIDA): sex tillfällen i ett tätslutande
@@ -35,47 +37,47 @@ const CARDS: BentoCard[] = [
   {
     slug: "brollop",
     title: "Bröllop",
-    text: "Toastglas till toasten, ringaskar och placeringsdetaljer – allt med era namn och ert datum, i samma stil genom hela dagen.",
-    image: katBrollop,
-    alt: "Graverade bröllopsglas och ringask med namn – bröllopspresenter från verkstaden",
+    text: "Glas, ringaskar och detaljer med era namn och datum.",
+    image: tillBrollop,
+    alt: "AI-genererad inspirationsbild för bröllop: champagneglas och ringask i trä på dukat bord",
     span: "lg:col-span-2",
   },
   {
     slug: "jul",
     title: "Jul",
-    text: "Julklappar med eget namn och kulor graverade i trä – till hela listan, från strumpan till paketet under granen.",
-    image: katGravyr,
-    alt: "Graverad julklapp i trä från verkstaden – personliga julpresenter",
+    text: "Julklappar med namn, datum eller en egen hälsning.",
+    image: tillJul,
+    alt: "AI-genererad inspirationsbild för jul: personliga julkulor och genomskinlig glaskula med namn och julhälsning i granen",
     span: "lg:row-span-2",
   },
   {
     slug: "dop",
     title: "Dop",
     text: "Minnesask, dopsmycke och namnskylt till den nya lilla.",
-    image: katBarn,
-    alt: "Doppresent med graverat namn – minnesask och smycke från verkstaden",
+    image: tillDop,
+    alt: "AI-genererad inspirationsbild för dop: minnesask i trä, silverhänge och liten stickad babysko",
   },
   {
     slug: "morsdag",
     title: "Mors dag",
     text: "Smycken med barnens namn och minnen hon inte skulle köpa själv.",
-    image: katSmycken,
-    alt: "Graverat smycke med namn – present till mors dag från verkstaden",
+    image: tillMorsdag,
+    alt: "AI-genererad inspirationsbild för mors dag: silverhalsband i träask bredvid rosa tulpaner",
   },
   {
     slug: "farsdag",
     title: "Fars dag & jakt",
-    text: "Skärbrädor i ek, läderdetaljer och fototavlor – med namn och datum, till pappa som redan har allt.",
-    image: tillFarsdag2,
-    alt: "Skärbräda i ek med gravyr – present till farsdagen och jägaren",
+    text: "Graverat i trä, läder eller metall till pappa som har allt.",
+    image: tillFarsdag,
+    alt: "AI-genererad inspirationsbild för fars dag och jakt: skärbräda med hjortmotiv, termos och lädernyckelring",
     span: "lg:col-span-2",
   },
   {
     slug: "foretag",
     title: "Företag",
     text: "Namnbrickor, skyltar och gåvor till kunder och personalen.",
-    image: tillForetag2,
-    alt: "Graverad namnbricka och företagsgåvor med logotyp från verkstaden",
+    image: tillForetag,
+    alt: "AI-genererad inspirationsbild för företagsgåvor: stålmugg, lädernyckelring och namnbricka på träbricka",
   },
 ];
 
@@ -83,13 +85,29 @@ const CARDS: BentoCard[] = [
  * Id-bindning: SiteHeaderns mobil-länk "Vem ska du överraska?" pekar på
  * #tillfallen – behåll id och scroll-marginal här.
  */
+// Säsongens tillfälle (schemat i lib/seasons.ts) får det stora första kortet.
+const featuredSlug = () => seasonFor(new Date()).slug;
+// Spannen är positionella så cellmatematiken (9 celler) alltid håller.
+const SPANS = CARDS.map((c) => c.span);
+
 export function CategoryBento() {
+  // SSR och första rendering använder standardordningen – säsongen byts
+  // in efter hydrering så att html:en inte skiljer sig.
+  const [featured, setFeatured] = useState<string | null>(null);
+  useEffect(() => setFeatured(featuredSlug()), []);
+  const ordered = featured
+    ? [
+        ...CARDS.filter((c) => c.slug === featured),
+        ...CARDS.filter((c) => c.slug !== featured),
+      ].map((c, i) => ({ ...c, span: SPANS[i] }))
+    : CARDS;
+
   return (
-    <section id="tillfallen" className="mx-auto max-w-7xl scroll-mt-28 px-5 py-16 md:py-20">
+    <section id="tillfallen" className="mx-auto max-w-7xl scroll-mt-28 px-5 py-12 md:py-14">
       <Reveal className="max-w-2xl">
         <Kicker>vem ska du överraska?</Kicker>
         <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">
-          Presenter för livets fina dagar
+          Presenter för livets stora dagar
         </h2>
         <p className="mt-4 text-lg text-muted-foreground">
           Varje tillfälle har sina klassiker – och allihop går att göra helt personliga med namn,
@@ -99,12 +117,13 @@ export function CategoryBento() {
 
       {/* Lägre radhöjd (13rem) och tätare gap – bento:n tar mindre vertikalt
           utrymme utan att hover-dramatiken eller cellmatessen rubbas. */}
-      <div className="mt-10 grid auto-rows-auto grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[13rem] lg:grid-flow-dense lg:grid-cols-3">
-        {CARDS.map((card, i) => (
+      <div className="mt-8 grid auto-rows-auto grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[11rem] lg:grid-flow-dense lg:grid-cols-3">
+        {ordered.map((card, i) => (
           <Reveal key={card.slug} delay={i * 90} className={cn("h-full", card.span)}>
             <Link
               to="/kategori/$slug"
               params={{ slug: card.slug }}
+              hash="produkter"
               // Butikens kortspec (.card-shop): border, skugga och guld-hairline
               // vid hover kommer härifrån – fokusmarkeringen sköts av global
               // :focus-visible-outline i styles.css.
@@ -113,8 +132,8 @@ export function CategoryBento() {
               <img
                 src={card.image}
                 alt={card.alt}
-                width={700}
-                height={700}
+                width={1024}
+                height={1024}
                 loading="lazy"
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"

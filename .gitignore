@@ -33,3 +33,8 @@ dist-ssr
 
 # Firecrawl-scrapedata (lokala konkurrentanalyser, committas ej)
 .firecrawl/
+
+# Lokala hemligheter - ska aldrig in i git (Shopify-token etc)
+.env
+
+__pycache__/

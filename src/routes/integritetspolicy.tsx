@@ -1,24 +1,23 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Cookie, Lock, Mail, Truck, UserCheck } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
 
 export const Route = createFileRoute("/integritetspolicy")({
   head: () => ({
     meta: [
-      { title: "Integritetspolicy | TaggaDet" },
+      { title: "Integritetspolicy | Taggat" },
       { rel: "canonical", href: `${SITE_URL}/integritetspolicy` },
       {
         name: "description",
         content:
-          "Hur TaggaDet behandlar dina personuppgifter: vilka uppgifter som samlas in, varför, hur länge de sparas och dina rättigheter enligt GDPR.",
+          "Hur Taggat behandlar dina personuppgifter: vilka uppgifter som samlas in, varför, hur länge de sparas och dina rättigheter enligt GDPR.",
       },
-      { property: "og:title", content: "Integritetspolicy | TaggaDet" },
+      { property: "og:title", content: "Integritetspolicy | Taggat" },
       {
         property: "og:description",
         content:
-          "Hur dina personuppgifter behandlas när du handlar hos TaggaDet – kortfattat och begripligt.",
+          "Hur dina personuppgifter behandlas när du handlar hos Taggat – kortfattat och begripligt.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -52,7 +51,7 @@ const sections = [
     title: "Klarna & Shopify",
     body: [
       "Vid betalning via Klarna behandlar Klarna Bank AB (Sveavägen 46, Stockholm) dina uppgifter, bl.a. för identifikation och riskbedömning. Läs Klarnas integritetspolicy på klarna.se för fullständig information.",
-      "Webshoppen drivs med teknisk plattform Shopify International Ltd. Dina orderuppgifter lagras hos Shopify, enligt deras GDPR-policy. Läs mer på shopify.com/legal/privacy.",
+      "Butiken bygger på Shopify International Ltd. Dina orderuppgifter lagras hos Shopify, enligt deras GDPR-policy. Läs mer på shopify.com/legal/privacy.",
     ],
   },
   {
@@ -71,7 +70,7 @@ const sections = [
   {
     title: "Cookies",
     body: [
-      "Webshoppen använder tekniska cookies som krävs för att varukorgen och kassan ska fungera. Inga spårande cookies för reklam används, och ingen cookie-samtyckesruta behövs därför förutom Shopifys standardlösning.",
+      "Butiken använder bara de cookies som krävs för att varukorgen och kassan ska fungera. Inga spårande cookies för reklam används, och ingen cookie-samtyckesruta behövs därför förutom Shopifys standardlösning.",
     ],
   },
 ];
@@ -109,26 +108,13 @@ function PrivacyPage() {
         ))}
       </div>
 
-      <section className="mt-12 rounded-3xl bg-cream p-8 text-center">
-        <Mail className="mx-auto h-6 w-6 text-primary-deep" aria-hidden="true" />
-        <p className="mt-3 text-muted-foreground">
-          Frågor om dina uppgifter? Skriv till mig – jag ansvarar för dem.
-        </p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <a
-            href="mailto:hej@linsochlager.se"
-            className="inline-block rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            hej@linsochlager.se
-          </a>
-          <Link
-            to="/kontakt"
-            className="inline-block rounded-full border-2 border-border px-6 py-3 font-semibold transition-colors hover:border-primary"
-          >
-            Kontaktsidan
-          </Link>
-        </div>
-      </section>
+      <p className="mt-8 text-sm text-muted-foreground">
+        Frågor om dina uppgifter?{" "}
+        <a href="mailto:taggat@linsochlager.net" className="text-primary-deep underline">
+          Skriv till mig
+        </a>
+        .
+      </p>
     </div>
   );
 }

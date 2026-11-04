@@ -1,4 +1,4 @@
-export const SHOPIFY_API_VERSION = "2025-07";
+export const SHOPIFY_API_VERSION = "2026-10";
 export const SHOPIFY_STORE_PERMANENT_DOMAIN = "sweet-savvy-shop-qfxf9-bktz9kkn.myshopify.com";
 export const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 export const SHOPIFY_STOREFRONT_TOKEN =
@@ -36,6 +36,7 @@ export async function storefrontApiRequest(query: string, variables: any = {}) {
   // Faila med en tydlig orsak i stället för att skicka platshållar-tokenen
   // och låta alla produktvyer dö tyst. (Demo-läget anropar aldrig hit, men
   // vägspärren står här så att ingen ny konsument glömmer den.)
+  // Den publika tokenen hämtas från projektmiljön vid bygge, aldrig från koden.
   if (!SHOPIFY_STOREFRONT_TOKEN || SHOPIFY_STOREFRONT_TOKEN === "DIN_SHOPIFY_STOREFRONT_TOKEN") {
     const { isDemoMode } = await import("@/lib/demoProducts");
     if (!isDemoMode()) {
@@ -82,7 +83,7 @@ const PRODUCT_FIELDS = `
   availableForSale
   priceRange { minVariantPrice { amount currencyCode } }
   compareAtPriceRange { minVariantPrice { amount currencyCode } }
-  images(first: 5) { edges { node { url altText } } }
+  images(first: 250) { edges { node { url altText } } }
   variants(first: 20) {
     edges {
       node {
@@ -99,9 +100,10 @@ const PRODUCT_FIELDS = `
 `;
 
 const STOREFRONT_QUERY = `
-  query GetProducts($first: Int!, $query: String) {
-    products(first: $first, query: $query) {
+  query GetProducts($first: Int!, $query: String, $after: String) {
+    products(first: $first, query: $query, after: $after) {
       edges { node { ${PRODUCT_FIELDS} } }
+      pageInfo { hasNextPage endCursor }
     }
   }
 `;
@@ -112,11 +114,22 @@ const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
-export async function fetchProducts(first = 50, query?: string): Promise<ShopifyProduct[]> {
+export async function fetchProducts(first = Infinity, query?: string): Promise<ShopifyProduct[]> {
   const { isDemoMode, demoFetchProducts } = await import("@/lib/demoProducts");
   if (isDemoMode()) return demoFetchProducts(first, query);
-  const data = await storefrontApiRequest(STOREFRONT_QUERY, { first, query });
-  return data?.data?.products?.edges ?? [];
+  const products: ShopifyProduct[] = [];
+  let after: string | undefined;
+  while (products.length < first) {
+    const data = await storefrontApiRequest(STOREFRONT_QUERY, {
+      first: Math.min(250, first - products.length), query, after,
+    });
+    const page = data?.data?.products;
+    products.push(...(page?.edges ?? []));
+    const cursor = page?.pageInfo?.endCursor;
+    if (!page?.pageInfo?.hasNextPage || !cursor || cursor === after) break;
+    after = cursor;
+  }
+  return products;
 }
 
 export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | null> {

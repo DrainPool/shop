@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/home/Reveal";
-import { CustomerShowcase } from "@/components/CustomerShowcase";
 import storyHands from "@/assets/story-hands.jpg";
 import { Kicker } from "@/components/Kicker";
 
@@ -21,18 +20,17 @@ export function StorySection() {
         <Reveal>
           <Kicker>allt började med kameran</Kicker>
           <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">
-            Hej – jag heter Fredrik, och jag står bakom varje gravyr
+            Hej – det är jag Fredrik, jag står bakom varje gravyr
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            Verkstaden ligger i Aneby, i Småland, och dit tog vägen om via kameran: det började med
-            bröllopsfotona, med paren och med alla de där stunderna som förtjänar något att spara.
-            Idag gör jag samma minnen fast i material man kan hålla i – graverade med namn, datum
-            och rader som betyder något.
+            Verkstaden ligger i garaget hemma i Aneby. Genom fönstret ser jag skogen och de böljande
+            bergen, och när lasern tystnar hörs bäcken som porlar nedanför. Allt började med kameran
+            och bröllopsfotona – idag gör jag samma minnen fast i material man kan hålla i.
           </p>
           <p className="mt-4 leading-relaxed text-muted-foreground">
-            Varje beställning tillverkas för hand av mig, och du pratar alltid direkt med mig – från
-            din första rad till skissen du godkänner. Skriv om personen som ska få presenten, så
-            hittar jag på något som landar rätt.
+            Träet kommer från Småland, och resten av materialet köper jag inom EU. Här gör man saker
+            ordentligt och slänger inget i onödan – en present ska hålla länge. Du pratar alltid
+            direkt med mig, från din första rad till skissen du godkänner.
           </p>
           <Button
             asChild
@@ -61,11 +59,6 @@ export function StorySection() {
           </figure>
         </Reveal>
       </div>
-
-      {/* Socialt bevis: kundväggen (fylls med riktiga bidrag allteftersom) */}
-      <Reveal className="mt-16 border-t border-border pt-10">
-        <CustomerShowcase />
-      </Reveal>
     </section>
   );
 }

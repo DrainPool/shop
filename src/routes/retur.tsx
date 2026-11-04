@@ -7,14 +7,14 @@ import { Kicker } from "@/components/Kicker";
 export const Route = createFileRoute("/retur")({
   head: () => ({
     meta: [
-      { title: "Retur & reklamation | TaggaDet" },
+      { title: "Retur & reklamation | Taggat" },
       { rel: "canonical", href: `${SITE_URL}/retur` },
       {
         name: "description",
         content:
           "Personligt tillverkade produkter omfattas inte av ångerrätten – men full reklamationsrätt gäller alltid. Läs villkoren.",
       },
-      { property: "og:title", content: "Retur & reklamation | TaggaDet" },
+      { property: "og:title", content: "Retur & reklamation | Taggat" },
       {
         property: "og:description",
         content:
@@ -82,8 +82,8 @@ function ReturnsPage() {
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
               <strong>Så reklamerar du:</strong> Maila{" "}
-              <a href="mailto:hej@linsochlager.se" className="text-primary-deep underline">
-                hej@linsochlager.se
+              <a href="mailto:taggat@linsochlager.net" className="text-primary-deep underline">
+                taggat@linsochlager.net
               </a>{" "}
               inom rimlig tid (senast 2 månader efter att du upptäckt felet) med ditt ordernummer,
               en beskrivning av felet och gärna ett foto. Jag återkommer inom 2 arbetsdagar.

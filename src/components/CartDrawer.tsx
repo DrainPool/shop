@@ -17,6 +17,7 @@ import { ShoppingBag, Minus, Plus, Trash2, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { LiquidLoader } from "@/components/ui/liquid-loader";
 import { WishlistRow } from "@/components/WishlistRow";
+import { FreeShippingNudge } from "@/components/FreeShippingNudge";
 import { useCartStore } from "@/stores/cartStore";
 import { useUiStore } from "@/stores/uiStore";
 import { isDemoMode } from "@/lib/demoProducts";
@@ -76,6 +77,15 @@ export function CartDrawer() {
       return;
     }
     const checkoutUrl = getCheckoutUrl();
+    const unsyncedItem = items.some((item) => !item.lineId);
+    if (unsyncedItem) {
+      toast.error("Varukorgen behöver synkas", {
+        description: "Stäng varukorgen och försök igen innan du går till kassan.",
+        position: "top-center",
+      });
+      void syncCart();
+      return;
+    }
     if (checkoutUrl) {
       // Värna mot en persistad demo-kassa (demo.checkout.invalid) som kan
       // ligga kvar i localStorage från demoläget – aldrig skicka kunden dit.
@@ -94,9 +104,10 @@ export function CartDrawer() {
         });
         return;
       }
-      // Samma flik: kunden ska inte komma tillbaka till en varukorg som
-      // ser oköpt ut (window.open lämnade drawern öppen bakom kassan).
-      window.location.href = checkoutUrl;
+      const url = new URL(checkoutUrl);
+      url.searchParams.set("channel", "online_store");
+      const checkoutWindow = window.open(url.toString(), "_blank", "noopener,noreferrer");
+      if (checkoutWindow) setCartOpen(false);
     } else {
       toast.error("Kassan kunde inte öppnas", {
         description: "Prova igen, eller skriv till mig så hjälper jag dig.",
@@ -114,7 +125,7 @@ export function CartDrawer() {
     if (!useCartStore.getState().items.some((i) => i.lineKey === item.lineKey)) {
       toast.success("Borttagen från varukorgen", {
         description: item.product.node.title,
-        position: "bottom-right",
+        position: "top-center",
         action: {
           label: "Ångra",
           onClick: () => {
@@ -181,6 +192,13 @@ export function CartDrawer() {
             <div className="flex flex-1 flex-col justify-center gap-4 text-center">
               <ShoppingBag className="mx-auto h-12 w-12 text-muted-foreground" aria-hidden="true" />
               <p className="text-muted-foreground">Här dyker dina utvalda favoriter upp.</p>
+              <Link
+                to="/presentguide"
+                onClick={() => setCartOpen(false)}
+                className="text-sm font-medium text-primary-deep underline-offset-4 hover:underline"
+              >
+                Osäker? Låt presentguiden föreslå något
+              </Link>
               <div className="flex flex-wrap justify-center gap-2">
                 {[
                   { slug: "bastsaljare", label: "Mest älskade" },
@@ -207,10 +225,37 @@ export function CartDrawer() {
             </div>
           ) : (
             <>
+              <div className="mb-4 rounded-xl bg-cream p-3">
+                {totalPrice >= FREE_SHIPPING_LIMIT ? (
+                  <p className="text-sm font-semibold text-primary-deep">
+                    Du har fri frakt inom Sverige.
+                  </p>
+                ) : (
+                  <p className="text-sm">
+                    <span className="font-semibold text-primary-deep">
+                      {formatPrice(FREE_SHIPPING_LIMIT - totalPrice, currency)}
+                    </span>{" "}
+                    kvar till fri frakt.
+                  </p>
+                )}
+                <Progress
+                  className="mt-2 h-1.5"
+                  value={Math.min(100, (totalPrice / FREE_SHIPPING_LIMIT) * 100)}
+                  aria-label={
+                    totalPrice >= FREE_SHIPPING_LIMIT
+                      ? "Fri frakt uppnått"
+                      : "Framsteg mot fri frakt"
+                  }
+                />
+              </div>
+              <FreeShippingNudge onNavigate={() => setCartOpen(false)} />
               <div className="min-h-0 flex-1 overflow-y-auto pr-2">
                 <div className="space-y-4">
                   {items.map((item) => (
-                    <div key={item.lineKey} className="flex gap-4 rounded-2xl bg-cream/60 p-3">
+                    <div
+                      key={item.lineKey}
+                      className="grid grid-cols-[4rem_minmax(0,1fr)] gap-3 rounded-2xl bg-cream/60 p-3 sm:flex sm:gap-4"
+                    >
                       <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-muted">
                         {item.product.node.images?.edges?.[0]?.node && (
                           <img
@@ -226,7 +271,7 @@ export function CartDrawer() {
                         )}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="truncate font-medium">
+                        <h3 className="line-clamp-2 font-medium">
                           <Link
                             to="/produkt/$handle"
                             params={{ handle: item.product.node.handle }}
@@ -240,11 +285,13 @@ export function CartDrawer() {
                           {item.selectedOptions.map((o) => o.value).join(" • ")}
                         </p>
                         {item.attributes?.length > 0 && (
-                          <ul className="mt-1 space-y-0.5 text-xs text-muted-foreground">
+                          <ul className="mt-2 space-y-1 rounded-lg bg-background/80 p-2 text-xs text-muted-foreground">
                             {item.attributes.map((a) => (
-                              <li key={a.key}>
+                              <li key={a.key} className="break-words">
                                 <span className="font-medium text-foreground">{a.key}:</span>{" "}
-                                {a.value}
+                                {a.key === "Foto för gravyr" && /^https?:\/\/[^/]+\/api\/public\/engraving-photo\?/.test(a.value)
+                                  ? <a href={a.value} target="_blank" rel="noopener noreferrer" className="text-primary-deep underline">Visa uppladdat foto</a>
+                                  : a.value}
                               </li>
                             ))}
                           </ul>
@@ -262,7 +309,7 @@ export function CartDrawer() {
                           )}
                         </p>
                       </div>
-                      <div className="flex flex-shrink-0 flex-col items-end gap-3">
+                      <div className="col-span-2 flex flex-row-reverse items-center justify-between border-t border-border pt-2 sm:col-auto sm:flex-shrink-0 sm:flex-col sm:items-end sm:border-0 sm:pt-0">
                         <Button
                           variant="ghost"
                           size="icon"
@@ -301,29 +348,13 @@ export function CartDrawer() {
                 </div>
               </div>
               <div className="flex-shrink-0 space-y-4 border-t bg-background pt-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
-                <div className="rounded-2xl bg-cream p-4">
-                  {totalPrice >= FREE_SHIPPING_LIMIT ? (
-                    <p className="text-sm font-semibold text-primary-deep">
-                      Grattis – du har fri frakt inom Sverige!
-                    </p>
-                  ) : (
-                    <p className="text-sm">
-                      Handla för{" "}
-                      <span className="font-semibold text-primary-deep">
-                        {formatPrice(FREE_SHIPPING_LIMIT - totalPrice, currency)}
-                      </span>{" "}
-                      till så bjuder jag på frakten.
-                    </p>
-                  )}
-                  <Progress
-                    className="mt-2 h-2"
-                    value={Math.min(100, (totalPrice / FREE_SHIPPING_LIMIT) * 100)}
-                    aria-label={
-                      totalPrice >= FREE_SHIPPING_LIMIT
-                        ? "Fri frakt uppnått"
-                        : "Framsteg mot fri frakt"
-                    }
-                  />
+                <div className="rounded-xl bg-cream p-3 text-xs">
+                  <p className="font-semibold text-primary-deep">Kontrollera innan kassan</p>
+                  <p className="mt-1 text-muted-foreground">
+                    {items.every((item) => item.attributes?.length > 0)
+                      ? "Alla produktval följer med till beställningen."
+                      : "Någon vara saknar personliga val. Öppna produkten igen om du vill lägga till gravyr."}
+                  </p>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-semibold">Summa</span>
@@ -333,9 +364,9 @@ export function CartDrawer() {
                 </div>
                 <p className="text-xs text-muted-foreground">
                   <Link to="/frakt-leverans" className="underline hover:text-primary-deep">
-                    Fraktalternativ och leveranstid
+                    Frakt och leveranstid
                   </Link>{" "}
-                  väljs i kassan – dina gravyrtexter följer med i beställningen.
+                  väljs i kassan.
                 </p>
 
                 <Button
@@ -356,8 +387,7 @@ export function CartDrawer() {
                 {/* Skiss-löftet vid sista steget – stillar stavnings- och
                     personoron precis före främmande kassa. */}
                 <p className="text-center text-xs text-muted-foreground">
-                  Du får alltid en skiss på gravyren att godkänna innan jag börjar tillverka – skriv
-                  till mig när som helst om du känner dig tveksam.
+                  Du godkänner alltid en digital skiss innan jag graverar.
                 </p>
                 <PaymentLogos className="justify-center" />
               </div>

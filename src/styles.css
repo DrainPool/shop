@@ -453,6 +453,31 @@
     }
   }
 
+  /* --- icon-marquee: långsam slinga för CategoryIconRow. Samma princip som
+         .marquee-track men långsammare och med gap från listans egna klasser.
+         Pausar vid hovring och fokus så länkarna går att klicka. --- */
+  .icon-marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 0.5rem;
+    padding-inline: 1.25rem;
+    animation: marquee-scroll 90s linear infinite;
+  }
+
+  .icon-marquee:hover .icon-marquee-track,
+  .icon-marquee:focus-within .icon-marquee-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icon-marquee-track {
+      animation: none;
+      flex-wrap: wrap;
+      width: auto;
+      justify-content: center;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .marquee-track {
       animation: none;

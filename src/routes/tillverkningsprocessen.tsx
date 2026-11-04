@@ -1,35 +1,34 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   Check,
   ClipboardCheck,
   Gift,
   Hammer,
   Heart,
-  Mail,
   PencilRuler,
   Search,
   Sparkles,
   Truck,
   type LucideIcon,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { FREE_SHIPPING_LIMIT } from "@/lib/shopify";
 import katGravyr from "@/assets/kat-gravyr.jpg";
 import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
+import { SKETCH_TIME, SPECIAL_ORDER_TIME, STOCK_ITEM_TIME } from "@/lib/delivery";
 
 export const Route = createFileRoute("/tillverkningsprocessen")({
   head: () => ({
     meta: [
-      { title: "Tillverkningsprocessen | TaggaDet" },
+      { title: "Tillverkningsprocessen | Taggat" },
       { rel: "canonical", href: `${SITE_URL}/tillverkningsprocessen` },
       {
         name: "description",
         content:
-          "Så tillverkas din personliga present hos TaggaDet: digital skiss, handgravyr i verkstaden och presentklar leverans. Följ varje steg från idé till gåva.",
+          "Så tillverkas din personliga present hos Taggat: digital skiss, handgravyr i verkstaden och presentklar leverans. Följ varje steg från idé till gåva.",
       },
-      { property: "og:title", content: "Tillverkningsprocessen | TaggaDet" },
+      { property: "og:title", content: "Tillverkningsprocessen | Taggat" },
       {
         property: "og:description",
         content:
@@ -68,7 +67,7 @@ const phases: Phase[] = [
       {
         icon: PencilRuler,
         title: "Digital skiss att godkänna",
-        body: "Du får alltid en skiss på graveringen. Först när du bekräftat stavningen och detaljerna börjar tillverkningen.",
+        body: `Du får alltid en skiss på graveringen ${SKETCH_TIME}. Först när du bekräftat stavningen och detaljerna börjar tillverkningen.`,
       },
       {
         icon: Search,
@@ -85,7 +84,7 @@ const phases: Phase[] = [
       {
         icon: Hammer,
         title: "Tillverkning",
-        body: "Gravyr, snickeri, tryck eller 3D-utskrift beroende på produkt. Varje steg tas i lugn takt – det är därför jag tar in ett begränsat antal beställningar per vecka.",
+        body: `Specialbeställningar tillverkas ${SPECIAL_ORDER_TIME}. Lagervaror med namn eller enkel gravyr hanteras ${STOCK_ITEM_TIME}.`,
       },
       {
         icon: Sparkles,
@@ -133,7 +132,7 @@ function ProcessPage() {
         Tillverkningsprocessen
       </h1>
       <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-        Varje produkt hos TaggaDet tillverkas för hand efter din beställning. Här följer du resan
+        Varje produkt hos Taggat tillverkas för hand efter din beställning. Här följer du resan
         genom verkstaden – från din beställning till att presenten packas och skickas hem.
       </p>
 
@@ -146,7 +145,7 @@ function ProcessPage() {
         className="mt-10 -rotate-1 rounded-3xl border-4 border-ink shadow-lift"
       />
 
-      <div className="mt-12 space-y-12">
+      <div className="mt-10 space-y-8">
         {phases.map((phase) => (
           <section key={phase.n}>
             <div className="flex items-baseline gap-3">
@@ -157,7 +156,7 @@ function ProcessPage() {
             </div>
             <p className="mt-2 text-muted-foreground">{phase.intro}</p>
 
-            <ol className="mt-6 space-y-4">
+            <ol className="mt-5 grid gap-4 md:grid-cols-3">
               {phase.steps.map((s) => (
                 <li key={s.title} className="flex gap-4 card-shop p-6">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cream">
@@ -173,31 +172,6 @@ function ProcessPage() {
           </section>
         ))}
       </div>
-
-      <section className="mt-12 rounded-3xl bg-cream p-8 md:p-10">
-        <h2 className="font-serif text-2xl tracking-tight md:text-3xl">
-          Redo att skapa något personligt?
-        </h2>
-        <p className="mt-3 max-w-lg text-muted-foreground">
-          Beställ innan söndag 23:59 så ryms din present i veckans tillverkning. Du får alltid en
-          skiss att godkänna innan jag börjar.
-        </p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          <Button asChild size="lg" className="rounded-full px-7 text-base">
-            <Link to="/sortiment">Se hela sortimentet</Link>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="rounded-full border-2 px-7 text-base"
-          >
-            <a href="mailto:hej@linsochlager.se">
-              <Mail className="mr-2 h-4 w-4" aria-hidden="true" /> Ställ en fråga
-            </a>
-          </Button>
-        </div>
-      </section>
     </div>
   );
 }

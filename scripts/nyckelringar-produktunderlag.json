@@ -1,0 +1,74 @@
+{
+  "status": "Skapade i Shopify-sandlådan 2026-10-28 med jämförelsebaserade priser och material enligt modellförslagen. Ingen claim eller provperiod.",
+  "source": "Originalmodeller inspirerade av sortimentsbredden på https://www.personlignyckelring.se/; inga konkurrentbilder eller texter kopierade",
+  "products": [
+    {
+      "title": "Husformad nyckelring i ek med familjenamn",
+      "body": "<p>En liten påminnelse om platsen där du hör hemma. Jag graverar ditt familjenamn eller en kort hälsning på en husformad nyckelring i ek.</p><p>En personlig present till någon som flyttar hemifrån, får sina första nycklar eller delar ett nytt hem med dig. Du väljer texten – jag hjälper till att få den att passa formen.</p><p>Bilderna är AI-visualiseringar av ett produktförslag. Material enligt modellförslaget; priset är jämförelsebaserat.</p>",
+      "tags": "nyckelring, nya-nyckelringar, tra, gravyr, nytt-hem, fodelsedag, jul",
+      "price": 159,
+      "images": [
+        {
+          "file_path": "src/assets/nyckelringar/hus-ek-studio.jpg",
+          "alt": "AI-visualisering: husformad nyckelring i ek med exempeltexten Hemma, Familjen Lind"
+        },
+        {
+          "file_path": "src/assets/nyckelringar/hus-ek-vardag.jpg",
+          "alt": "AI-visualisering: samma husformade nyckelring i ek hållen vid en ytterdörr"
+        }
+      ],
+      "shopify_product_id": "16126586356043"
+    },
+    {
+      "title": "Hjärtformad nyckelring i ek med egen text",
+      "body": "<p>En liten hälsning som följer med varje dag. Jag graverar dina ord på ett hjärta i ek – ett namn, ett datum eller något som bara ni två förstår.</p><p>Ge den till din partner, en nära vän eller någon du vill påminna om att du finns där. Du väljer texten, och jag hjälper till med en personlig utformning.</p><p>Bilderna är AI-visualiseringar av ett produktförslag. Material enligt modellförslaget; priset är jämförelsebaserat.</p>",
+      "tags": "nyckelring, nya-nyckelringar, tra, gravyr, brollop, hjartansdag, fodelsedag",
+      "price": 219,
+      "images": [
+        {
+          "file_path": "src/assets/nyckelringar/hjarta-ek-studio.jpg",
+          "alt": "AI-visualisering: hjärtformad nyckelring i ek med exempeltexten Du & jag och datum"
+        },
+        {
+          "file_path": "src/assets/nyckelringar/hjarta-ek-vardag.jpg",
+          "alt": "AI-visualisering: samma hjärtformade nyckelring i ek i en öppen hand"
+        }
+      ],
+      "shopify_product_id": "16126586421579"
+    },
+    {
+      "title": "Nyckelring med koordinater i rostfritt stål",
+      "body": "<p>Vissa platser betyder mer än andra. Jag graverar koordinaterna till din plats på en stilren bricka i rostfritt stål, tillsammans med en kort text om du vill.</p><p>Hemmet, sommarstugan eller platsen där ni träffades – en personlig påminnelse att bära med sig. Du anger koordinaterna och texten, så hjälper jag till med utformningen.</p><p>Bilderna är AI-visualiseringar av ett produktförslag. Material enligt modellförslaget; priset är jämförelsebaserat.</p>",
+      "tags": "nyckelring, nya-nyckelringar, metall, gravyr, nytt-hem, brollop, farsdag",
+      "price": 259,
+      "images": [
+        {
+          "file_path": "src/assets/nyckelringar/koordinater-stal-studio.jpg",
+          "alt": "AI-visualisering: borstad stålbricka med exempelkoordinater och texten Vår plats"
+        },
+        {
+          "file_path": "src/assets/nyckelringar/koordinater-stal-vardag.jpg",
+          "alt": "AI-visualisering: samma koordinatnyckelring på en karta"
+        }
+      ],
+      "shopify_product_id": "16126586487115"
+    },
+    {
+      "title": "Nyckelring i läder med initialer",
+      "body": "<p>Dina initialer, enkelt och personligt. Jag märker en lädernyckelring med bokstäver som gör den till din – eller till en omtänksam liten present.</p><p>Läderöglan ger ett lugnt uttryck utan mycket text. Välj initialerna till dig själv, en vän eller någon som just fått sina första bilnycklar.</p><p>Bilderna visar ett grönt produktförslag och är AI-visualiseringar. Exakt lädernyans bekräftas i skissen.</p>",
+      "tags": "nyckelring, nya-nyckelringar, lader, gravyr, farsdag, fodelsedag, bil",
+      "price": 219,
+      "images": [
+        {
+          "file_path": "src/assets/nyckelringar/lader-initialer-studio.jpg",
+          "alt": "AI-visualisering: grön läderögla med exempelinitialerna AL"
+        },
+        {
+          "file_path": "src/assets/nyckelringar/lader-initialer-vardag.jpg",
+          "alt": "AI-visualisering: samma gröna lädernyckelring i en hand bredvid en tygväska"
+        }
+      ],
+      "shopify_product_id": "16126586552651"
+    }
+  ]
+}

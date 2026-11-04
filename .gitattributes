@@ -1,0 +1,14 @@
+# Radslut: LF overall (samma som Lovable genererar) - CRLF ar kallan till
+# tusentals "Delete CR"-fel i lint. Binara filer lmnas ororda.
+* text=auto eol=lf
+
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.webp -text
+*.gif -text
+*.ico -text
+*.woff -text
+*.woff2 -text
+*.ttf -text
+*.otf -text

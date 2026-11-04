@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Gift, PackageCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/home/Reveal";
-import { IdeaBand } from "@/components/IdeaBand";
 import { Kicker } from "@/components/Kicker";
+import { fetchProducts, formatPrice, type ShopifyProduct } from "@/lib/shopify";
 
 /**
  * Presentpaket – höjer snittordern genom att föreslå kombinationer
@@ -39,7 +40,7 @@ const BUNDLES: Bundle[] = [
     kicker: "till stora dagen",
     title: "Bröllopspaketet",
     text: "Allt det graverade till bröllopet i en och samma beställning – samma stil och typsnitt hela vägen.",
-    includes: ["Graverade tostglas", "Ringask i trä", "Namnbrickor till borden"],
+    includes: ["Graverade toastglas", "Ringask i trä", "Namnbrickor till borden"],
     slug: "brollop",
   },
   {
@@ -61,6 +62,22 @@ const BUNDLES: Bundle[] = [
 ];
 
 export function GiftBundles() {
+  // Finns paketen som riktiga produkter i butiken (tagg: presentpaket) visas de
+  // med bild, innehåll och verkligt Shopify-pris. Saknas de behålls
+  // offertkorten nedan – aldrig ett påhittat paketpris.
+  const [packages, setPackages] = useState<ShopifyProduct[]>([]);
+  useEffect(() => {
+    let alive = true;
+    fetchProducts(6, "tag:presentpaket")
+      .then((list) => {
+        if (alive) setPackages(list ?? []);
+      })
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   return (
     <section className="mx-auto max-w-7xl px-5 py-14">
       {/* En gemensam rubrikrad, vänsterställd: kicker + rubrik till vänster,
@@ -79,8 +96,49 @@ export function GiftBundles() {
         </Reveal>
       </div>
 
+      {packages.length > 0 && (
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {packages.map((p, i) => {
+            const node = p.node;
+            const image = node.images?.edges?.[0]?.node;
+            const price = node.priceRange?.minVariantPrice;
+            return (
+              <Reveal key={node.id} delay={i * 100} className="h-full">
+                <Link
+                  to="/produkt/$handle"
+                  params={{ handle: node.handle }}
+                  className="card-shop group flex h-full flex-col overflow-hidden"
+                >
+                  {image && (
+                    <img
+                      src={image.url}
+                      alt={image.altText || node.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[4/3] w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.03]"
+                    />
+                  )}
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="font-serif text-2xl">{node.title}</h3>
+                    <p className="mt-1.5 line-clamp-3 text-sm text-muted-foreground">
+                      {node.description}
+                    </p>
+                    <p className="mt-auto pt-4 font-semibold tabular-nums">
+                      {price && formatPrice(price.amount, price.currencyCode)}
+                    </p>
+                    <span className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary-deep">
+                      Personifiera paketet <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
+        </div>
+      )}
+
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {BUNDLES.map((b, i) => (
+        {(packages.length > 0 ? [] : BUNDLES).map((b, i) => (
           <Reveal key={b.title} delay={i * 100} className="h-full">
             <div className="card-shop group flex h-full flex-col p-5">
               {/* Ikonen i samma cream-cirkel som CategoryCard – enhetlig kortgrammatik */}
@@ -129,9 +187,6 @@ export function GiftBundles() {
           </Reveal>
         ))}
       </div>
-
-      {/* Samma kapitel, nästa steg: egna designer + foto-cross-sell */}
-      <IdeaBand />
     </section>
   );
 }

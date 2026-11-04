@@ -1,5 +1,5 @@
 /**
- * TaggaDet-märket — koncept B, "Puns": en gravörs stämpel. En grov ring med ett
+ * Taggat-märket — koncept B, "Puns": en gravörs stämpel. En grov ring med ett
  * geometriskt T i öppningen. T:et är ritat av streck och inte en typsnittsglyf,
  * så märket är inte beroende av att Marcellus hunnit laddas.
  *

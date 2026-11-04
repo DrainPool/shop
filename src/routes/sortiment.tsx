@@ -1,23 +1,25 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowDown, Loader2, Search } from "lucide-react";
+import { Loader2, Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { filterCatalog } from "@/lib/catalogSearch";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { RecentlyViewed } from "@/components/RecentlyViewed";
-import { CategoryIconRow } from "@/components/CategoryIconRow";
-import { TrustedMarquee } from "@/components/TrustedMarquee";
-import { IdeaBand } from "@/components/IdeaBand";
-import { CategoryCard } from "@/components/category/CategoryCard";
-import { Reveal } from "@/components/category/Reveal";
 import { ProductFilters, useProductFilters } from "@/components/ProductFilters";
-import { Button } from "@/components/ui/button";
-import { useUiStore } from "@/stores/uiStore";
-import { occasions, productTypes } from "@/lib/categories";
+import { occasions, productTypes, recipients } from "@/lib/categories";
 import { fetchProducts } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
 
-const SORTIMENT_TITLE = "Alla personliga presenter med gravyr – hela sortimentet | TaggaDet";
+const SORTIMENT_TITLE = "Alla personliga presenter med gravyr – hela sortimentet | Taggat";
 
 /**
  * ItemList-schema för de kategorikort som faktiskt renderas på sidan
@@ -27,7 +29,7 @@ const SORTIMENT_TITLE = "Alla personliga presenter med gravyr – hela sortiment
 const CATEGORY_ITEM_LIST_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  itemListElement: [...productTypes, ...occasions].map((category, i) => ({
+  itemListElement: [...productTypes, ...recipients, ...occasions].map((category, i) => ({
     "@type": "ListItem",
     position: i + 1,
     name: category.title,
@@ -36,6 +38,10 @@ const CATEGORY_ITEM_LIST_JSON_LD = {
 };
 
 export const Route = createFileRoute("/sortiment")({
+  validateSearch: (search: Record<string, unknown>): { q?: string; category?: string } => ({
+    q: typeof search["q"] === "string" ? search["q"] : "",
+    category: typeof search["category"] === "string" ? search["category"] : "",
+  }),
   component: SortimentPage,
   // Värm produktcachen före SSR (samma queryKey som useQuery nedan).
   // Transient Storefront-fel: låt sidan rendera och visa felgrenen i stället
@@ -44,7 +50,7 @@ export const Route = createFileRoute("/sortiment")({
     try {
       await context.queryClient.ensureQueryData({
         queryKey: ["products"],
-        queryFn: () => fetchProducts(50),
+        queryFn: () => fetchProducts(),
       });
     } catch (error) {
       console.error("Sortiment-loadern: kunde inte värma produktcachen", error);
@@ -78,26 +84,30 @@ export const Route = createFileRoute("/sortiment")({
 });
 
 function SortimentPage() {
+  const { q = "", category = "" } = Route.useSearch();
+  const navigate = Route.useNavigate();
   const {
     data: products = [],
     isPending,
     isError,
-  } = useQuery({ queryKey: ["products"], queryFn: () => fetchProducts(50) });
+  } = useQuery({ queryKey: ["products"], queryFn: () => fetchProducts() });
 
-  const filters = useProductFilters(products);
-  const setSearchOpen = useUiStore((s) => s.setSearchOpen);
-
+  const selectedCategory = productTypes.find((item) => item.slug === category);
+  const searchedProducts = filterCatalog(products, q, selectedCategory?.tag);
+  const filters = useProductFilters(searchedProducts);
+  const updateSearch = (values: { q?: string; category?: string }) => {
+    void navigate({
+      search: (prev) => ({ ...prev, ...values }),
+      replace: true,
+      resetScroll: false,
+    });
+  };
   return (
     <>
-      {/* Bandet direkt under menyn — samma atmosfär som på startsidan */}
-      <TrustedMarquee />
-      <CategoryIconRow />
-      {/* Hero-kapitel: säljer bredden och visar två vägar in – sök
-          (primär) eller skrolla till utbudet (sekundär). */}
       <header className="border-b border-border/60 bg-cream">
-        <div className="mx-auto max-w-7xl px-5 pt-6 pb-10 md:pt-8 md:pb-12">
+        <div className="mx-auto max-w-7xl px-5 py-8 md:py-10">
           <Breadcrumbs items={[{ label: "Hela sortimentet" }]} />
-          <Kicker className="mt-8 md:mt-10">hela sortimentet</Kicker>
+          <Kicker className="mt-6">hela sortimentet</Kicker>
           <h1 className="mt-1 font-serif text-4xl tracking-tight text-balance md:text-5xl">
             Allt jag gör
           </h1>
@@ -105,79 +115,82 @@ function SortimentPage() {
             Varje produkt kan personaliseras med namn, datum eller din egen hälsning – och du får
             alltid en skiss innan jag graverar.
           </p>
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <Button
-              size="lg"
-              className="min-h-11 rounded-full px-6"
-              onClick={() => setSearchOpen(true)}
-            >
-              <Search className="h-4 w-4" aria-hidden="true" />
-              Sök i sortimentet
-            </Button>
-            <Button asChild variant="outline" size="lg" className="min-h-11 rounded-full px-6">
-              <a href="#sortiment">
-                Se hela utbudet
-                <ArrowDown className="h-4 w-4" aria-hidden="true" />
-              </a>
-            </Button>
-          </div>
         </div>
       </header>
 
-      <div className="mx-auto max-w-7xl px-5 py-10 md:py-12">
-        {/* Kapitel: produkttyper – datadrivet från kategorikartan, så nya
-            kategorier syns här utan att sidan behöver röras. */}
-        <section aria-labelledby="produkttyper-heading">
-          <Reveal>
-            <Kicker>vad vill du gravera på?</Kicker>
-            <h2 id="produkttyper-heading" className="mt-1 font-serif text-3xl tracking-tight">
-              Välj utifrån sak
-            </h2>
-            <p className="mt-2 max-w-2xl text-muted-foreground">
-              Glas, trä, läder, metall och tryck – varje sak har sin egen gravyr, och texten är
-              alltid din egen.
-            </p>
-          </Reveal>
-          <div className="mt-8 grid grid-flow-dense gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {productTypes.map((category, i) => (
-              <Reveal key={category.slug} className="h-full" delay={(i % 3) * 60}>
-                <CategoryCard category={category} />
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        {/* Kapitel: tillfällen – kompaktare kort, fortfarande datadrivet. */}
-        <section className="mt-14" aria-labelledby="tillfallen-heading">
-          <Reveal>
-            <Kicker>eller utifrån tillfälle</Kicker>
-            <h2 id="tillfallen-heading" className="mt-1 font-serif text-3xl tracking-tight">
-              Fira något
-            </h2>
-            <p className="mt-2 max-w-2xl text-muted-foreground">
-              Presenter sorterade på kalaset i stället för saken – bröllop, dop, födelsedagen och
-              alla årets stora dagar.
-            </p>
-          </Reveal>
-          <div className="mt-8 grid grid-flow-dense gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {occasions.map((category, i) => (
-              <Reveal key={category.slug} className="h-full" delay={(i % 3) * 60}>
-                <CategoryCard category={category} compact />
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        {/* Kapitel: hela utbudet med filter – sidans kärna. */}
-        <section
-          id="sortiment"
-          className="mt-14 scroll-mt-24 border-t border-border pt-10"
-          aria-labelledby="utbud-heading"
-        >
-          <Kicker>allt på en plats</Kicker>
-          <h2 id="utbud-heading" className="mt-1 font-serif text-3xl tracking-tight">
-            Hela utbudet
+      <div className="mx-auto max-w-7xl px-5 py-8 md:py-10">
+        <section id="sortiment" className="scroll-mt-24" aria-labelledby="utbud-heading">
+          <h2 id="utbud-heading" className="sr-only">
+            Alla produkter
           </h2>
+
+          <div
+            role="search"
+            aria-label="Sök och filtrera sortimentet"
+            className="grid items-end gap-4 border-b border-border pb-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,16rem)_auto]"
+          >
+            <div>
+              <label htmlFor="catalog-search" className="mb-2 block text-sm font-semibold">
+                Sök produkter
+              </label>
+              <div className="relative">
+                <Search
+                  aria-hidden="true"
+                  className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                />
+                <Input
+                  id="catalog-search"
+                  type="search"
+                  value={q}
+                  onChange={(event) => updateSearch({ q: event.target.value })}
+                  placeholder="Produkt, material eller tillfälle…"
+                  className="h-11 pl-10"
+                />
+              </div>
+            </div>
+            <div className="min-w-0">
+              <span id="category-filter-label" className="mb-2 block text-sm font-semibold">
+                Kategori
+              </span>
+              <Select
+                value={selectedCategory?.slug || "all"}
+                onValueChange={(value) => updateSearch({ category: value === "all" ? "" : value })}
+              >
+                <SelectTrigger
+                  aria-labelledby="category-filter-label"
+                  className="h-11 w-full min-w-0 bg-background"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Alla kategorier</SelectItem>
+                  {productTypes
+                    .filter(
+                      (item) =>
+                        products.some((p) => p.node.tags?.includes(item.tag)),
+                    )
+                    .map((item) => (
+                      <SelectItem key={item.slug} value={item.slug}>
+                        {item.short || item.title}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            </div>
+            {(q || category || filters.activeCount > 0) && (
+              <Button
+                variant="ghost"
+                className="h-11"
+                onClick={() => {
+                  updateSearch({ q: "", category: "" });
+                  filters.clear();
+                }}
+              >
+                <X aria-hidden="true" className="h-4 w-4" />
+                Rensa alla
+              </Button>
+            )}
+          </div>
 
           {isPending ? (
             <div className="flex justify-center py-16" role="status">
@@ -200,7 +213,7 @@ function SortimentPage() {
               <ProductFilters {...filters} total={products.length} />
               {filters.filtered.length === 0 ? (
                 <div className="mt-8 rounded-3xl border-2 border-dashed border-border bg-cream p-12 text-center">
-                  <p className="font-serif text-xl">Inget matchade ditt filter</p>
+                  <p className="font-serif text-xl">Inga produkter matchade dina val</p>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Rensa filtret – eller{" "}
                     <Link to="/kontakt" className="font-semibold text-primary-deep hover:underline">
@@ -210,16 +223,46 @@ function SortimentPage() {
                   </p>
                 </div>
               ) : (
-                <ProductGrid products={filters.filtered} resetKey="sortiment" />
+                <ProductGrid
+                  products={filters.filtered}
+                  resetKey={`${q}:${category}:${filters.activeTags.join(",")}:${filters.bucket}:${filters.sort}`}
+                />
               )}
             </>
           )}
         </section>
 
-        <RecentlyViewed />
+        <section className="mt-12 border-t border-border pt-8" aria-labelledby="hitta-heading">
+          <h2 id="hitta-heading" className="font-serif text-2xl">
+            Hitta på ditt sätt
+          </h2>
+          <div className="mt-5 grid gap-7 md:grid-cols-3">
+            {[
+              { title: "Produkttyp", items: productTypes },
+              { title: "Mottagare", items: recipients },
+              { title: "Tillfälle", items: occasions },
+            ].map((group) => (
+              <nav key={group.title} aria-label={group.title}>
+                <h3 className="font-semibold">{group.title}</h3>
+                <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                  {group.items.map((category) => (
+                    <li key={category.slug}>
+                      <Link
+                        to="/kategori/$slug"
+                        params={{ slug: category.slug }}
+                        hash="produkter"
+                        className="hover:text-primary-deep hover:underline"
+                      >
+                        {category.short || category.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+          </div>
+        </section>
       </div>
-
-      <IdeaBand />
     </>
   );
 }

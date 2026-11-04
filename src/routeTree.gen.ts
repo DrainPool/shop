@@ -18,6 +18,7 @@ import { Route as IntegritetspolicyRouteImport } from './routes/integritetspolic
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as OmMigRouteImport } from './routes/om-mig'
 import { Route as OnskelistaRouteImport } from './routes/onskelista'
+import { Route as PresentguideRouteImport } from './routes/presentguide'
 import { Route as ReturRouteImport } from './routes/retur'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SortimentRouteImport } from './routes/sortiment'
@@ -25,7 +26,9 @@ import { Route as TillverkningsprocessenRouteImport } from './routes/tillverknin
 import { Route as VanligaFragorRouteImport } from './routes/vanliga-fragor'
 import { Route as VillkorRouteImport } from './routes/villkor'
 import { Route as KategoriSlugRouteImport } from './routes/kategori.$slug'
+import { Route as PresenttipsSlugRouteImport } from './routes/presenttips.$slug'
 import { Route as ProduktHandleRouteImport } from './routes/produkt.$handle'
+import { Route as ApiPublicEngravingPhotoRouteImport } from './routes/api/public/engraving-photo'
 import { Route as ApiPublicFirecrawlCrawlRouteImport } from './routes/api/public/firecrawl-crawl'
 
 const IndexRoute = IndexRouteImport.update({
@@ -73,6 +76,11 @@ const OnskelistaRoute = OnskelistaRouteImport.update({
   path: '/onskelista',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PresentguideRoute = PresentguideRouteImport.update({
+  id: '/presentguide',
+  path: '/presentguide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReturRoute = ReturRouteImport.update({
   id: '/retur',
   path: '/retur',
@@ -108,9 +116,19 @@ const KategoriSlugRoute = KategoriSlugRouteImport.update({
   path: '/kategori/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PresenttipsSlugRoute = PresenttipsSlugRouteImport.update({
+  id: '/presenttips/$slug',
+  path: '/presenttips/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProduktHandleRoute = ProduktHandleRouteImport.update({
   id: '/produkt/$handle',
   path: '/produkt/$handle',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicEngravingPhotoRoute = ApiPublicEngravingPhotoRouteImport.update({
+  id: '/api/public/engraving-photo',
+  path: '/api/public/engraving-photo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicFirecrawlCrawlRoute = ApiPublicFirecrawlCrawlRouteImport.update({
@@ -129,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
   '/onskelista': typeof OnskelistaRoute
+  '/presentguide': typeof PresentguideRoute
   '/retur': typeof ReturRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sortiment': typeof SortimentRoute
@@ -136,7 +155,9 @@ export interface FileRoutesByFullPath {
   '/vanliga-fragor': typeof VanligaFragorRoute
   '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
+  '/presenttips/$slug': typeof PresenttipsSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
+  '/api/public/engraving-photo': typeof ApiPublicEngravingPhotoRoute
   '/api/public/firecrawl-crawl': typeof ApiPublicFirecrawlCrawlRoute
 }
 export interface FileRoutesByTo {
@@ -149,6 +170,7 @@ export interface FileRoutesByTo {
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
   '/onskelista': typeof OnskelistaRoute
+  '/presentguide': typeof PresentguideRoute
   '/retur': typeof ReturRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sortiment': typeof SortimentRoute
@@ -156,7 +178,9 @@ export interface FileRoutesByTo {
   '/vanliga-fragor': typeof VanligaFragorRoute
   '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
+  '/presenttips/$slug': typeof PresenttipsSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
+  '/api/public/engraving-photo': typeof ApiPublicEngravingPhotoRoute
   '/api/public/firecrawl-crawl': typeof ApiPublicFirecrawlCrawlRoute
 }
 export interface FileRoutesById {
@@ -170,6 +194,7 @@ export interface FileRoutesById {
   '/kontakt': typeof KontaktRoute
   '/om-mig': typeof OmMigRoute
   '/onskelista': typeof OnskelistaRoute
+  '/presentguide': typeof PresentguideRoute
   '/retur': typeof ReturRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sortiment': typeof SortimentRoute
@@ -177,7 +202,9 @@ export interface FileRoutesById {
   '/vanliga-fragor': typeof VanligaFragorRoute
   '/villkor': typeof VillkorRoute
   '/kategori/$slug': typeof KategoriSlugRoute
+  '/presenttips/$slug': typeof PresenttipsSlugRoute
   '/produkt/$handle': typeof ProduktHandleRoute
+  '/api/public/engraving-photo': typeof ApiPublicEngravingPhotoRoute
   '/api/public/firecrawl-crawl': typeof ApiPublicFirecrawlCrawlRoute
 }
 export interface FileRouteTypes {
@@ -192,6 +219,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/om-mig'
     | '/onskelista'
+    | '/presentguide'
     | '/retur'
     | '/sitemap.xml'
     | '/sortiment'
@@ -199,7 +227,9 @@ export interface FileRouteTypes {
     | '/vanliga-fragor'
     | '/villkor'
     | '/kategori/$slug'
+    | '/presenttips/$slug'
     | '/produkt/$handle'
+    | '/api/public/engraving-photo'
     | '/api/public/firecrawl-crawl'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -212,6 +242,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/om-mig'
     | '/onskelista'
+    | '/presentguide'
     | '/retur'
     | '/sitemap.xml'
     | '/sortiment'
@@ -219,7 +250,9 @@ export interface FileRouteTypes {
     | '/vanliga-fragor'
     | '/villkor'
     | '/kategori/$slug'
+    | '/presenttips/$slug'
     | '/produkt/$handle'
+    | '/api/public/engraving-photo'
     | '/api/public/firecrawl-crawl'
   id:
     | '__root__'
@@ -232,6 +265,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/om-mig'
     | '/onskelista'
+    | '/presentguide'
     | '/retur'
     | '/sitemap.xml'
     | '/sortiment'
@@ -239,7 +273,9 @@ export interface FileRouteTypes {
     | '/vanliga-fragor'
     | '/villkor'
     | '/kategori/$slug'
+    | '/presenttips/$slug'
     | '/produkt/$handle'
+    | '/api/public/engraving-photo'
     | '/api/public/firecrawl-crawl'
   fileRoutesById: FileRoutesById
 }
@@ -253,6 +289,7 @@ export interface RootRouteChildren {
   KontaktRoute: typeof KontaktRoute
   OmMigRoute: typeof OmMigRoute
   OnskelistaRoute: typeof OnskelistaRoute
+  PresentguideRoute: typeof PresentguideRoute
   ReturRoute: typeof ReturRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SortimentRoute: typeof SortimentRoute
@@ -260,7 +297,9 @@ export interface RootRouteChildren {
   VanligaFragorRoute: typeof VanligaFragorRoute
   VillkorRoute: typeof VillkorRoute
   KategoriSlugRoute: typeof KategoriSlugRoute
+  PresenttipsSlugRoute: typeof PresenttipsSlugRoute
   ProduktHandleRoute: typeof ProduktHandleRoute
+  ApiPublicEngravingPhotoRoute: typeof ApiPublicEngravingPhotoRoute
   ApiPublicFirecrawlCrawlRoute: typeof ApiPublicFirecrawlCrawlRoute
 }
 
@@ -329,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnskelistaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/presentguide': {
+      id: '/presentguide'
+      path: '/presentguide'
+      fullPath: '/presentguide'
+      preLoaderRoute: typeof PresentguideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/retur': {
       id: '/retur'
       path: '/retur'
@@ -378,11 +424,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KategoriSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/presenttips/$slug': {
+      id: '/presenttips/$slug'
+      path: '/presenttips/$slug'
+      fullPath: '/presenttips/$slug'
+      preLoaderRoute: typeof PresenttipsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produkt/$handle': {
       id: '/produkt/$handle'
       path: '/produkt/$handle'
       fullPath: '/produkt/$handle'
       preLoaderRoute: typeof ProduktHandleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/engraving-photo': {
+      id: '/api/public/engraving-photo'
+      path: '/api/public/engraving-photo'
+      fullPath: '/api/public/engraving-photo'
+      preLoaderRoute: typeof ApiPublicEngravingPhotoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/firecrawl-crawl': {
@@ -405,6 +465,7 @@ const rootRouteChildren: RootRouteChildren = {
   KontaktRoute: KontaktRoute,
   OmMigRoute: OmMigRoute,
   OnskelistaRoute: OnskelistaRoute,
+  PresentguideRoute: PresentguideRoute,
   ReturRoute: ReturRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SortimentRoute: SortimentRoute,
@@ -412,7 +473,9 @@ const rootRouteChildren: RootRouteChildren = {
   VanligaFragorRoute: VanligaFragorRoute,
   VillkorRoute: VillkorRoute,
   KategoriSlugRoute: KategoriSlugRoute,
+  PresenttipsSlugRoute: PresenttipsSlugRoute,
   ProduktHandleRoute: ProduktHandleRoute,
+  ApiPublicEngravingPhotoRoute: ApiPublicEngravingPhotoRoute,
   ApiPublicFirecrawlCrawlRoute: ApiPublicFirecrawlCrawlRoute,
 }
 export const routeTree = rootRouteImport

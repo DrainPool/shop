@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUiStore } from "@/stores/uiStore";
-import { productTypes } from "@/lib/categories";
+import { productTypes, recipients } from "@/lib/categories";
 import { badgeTone } from "@/lib/badgeTone";
 import { formatPrice, searchProducts } from "@/lib/shopify";
 
@@ -136,6 +136,22 @@ export function SearchOverlay() {
                 </div>
               </div>
               <div>
+                <p className="text-sm font-semibold">Vem är presenten till?</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {recipients.map((r) => (
+                    <Link
+                      key={r.slug}
+                      to="/kategori/$slug"
+                      params={{ slug: r.slug }}
+                      onClick={() => setSearchOpen(false)}
+                      className="flex min-h-11 items-center rounded-full border border-border px-3 py-1.5 text-sm transition-colors hover:border-primary md:min-h-9"
+                    >
+                      {r.short || r.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div>
                 <p className="text-sm font-semibold">Bläddra i sortimentet</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {productTypes.slice(0, 8).map((c) => (
@@ -242,10 +258,12 @@ export function SearchOverlay() {
                 </span>
                 <Link
                   to="/sortiment"
+                  search={{ q: debounced.trim(), category: "" }}
+                  hash="sortiment"
                   onClick={() => setSearchOpen(false)}
                   className="font-medium text-primary-deep hover:underline"
                 >
-                  Bläddra i hela sortimentet
+                  Visa alla sökträffar
                 </Link>
               </div>
             </>

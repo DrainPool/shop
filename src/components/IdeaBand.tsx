@@ -20,7 +20,7 @@ export function IdeaBand() {
         {/* Vänster: egna designer + kontakt-CTA */}
         <div>
           <Kicker>hittar du inte den rätta presenten?</Kicker>
-          <h2 className="mt-1 font-serif text-3xl tracking-tight">Jag gör egna designer</h2>
+          <h2 className="mt-1 font-serif text-3xl tracking-tight">Jag genomför din egna design</h2>
           <p className="mt-3 text-muted-foreground">
             Det som finns i butiken är bara en början. Berätta om tillfället, namnet och känslan du
             vill fånga – så skissar jag något som bara finns i ett exemplar. Ofta kan jag gravera på
@@ -34,7 +34,7 @@ export function IdeaBand() {
 
         {/* Höger: foto-cross-sell (länk ut till fotosajten) */}
         <div className="md:border-l md:border-ink/10 md:pl-10">
-          <Kicker>jag fotograferar också</Kicker>
+          <Kicker>VISSTE DU ATT JAG FOTOGRAFERAR OCKSÅ?</Kicker>
           <p className="mt-2 text-sm text-muted-foreground">
             Bröllop, dop, familj och produktbilder – bilden du älskar kan bli tavla, smycke eller
             graverat minne i samma verkstad.

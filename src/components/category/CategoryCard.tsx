@@ -25,6 +25,7 @@ export function CategoryCard({
     <Link
       to="/kategori/$slug"
       params={{ slug: category.slug }}
+      hash="produkter"
       className={cn(
         // .card-shop äger kant, skugga och hover (inkl. motion-reduce) —
         // inga egna border-/hover-patchar här längre

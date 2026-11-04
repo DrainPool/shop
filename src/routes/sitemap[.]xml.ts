@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { categories, occasions, productTypes } from "@/lib/categories";
+import { occasions, productTypes, recipients } from "@/lib/categories";
 import { fetchProducts } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
 
@@ -22,6 +22,7 @@ const LASTMOD = "2026-09-09";
 const STATIC_PAGES: { path: string; priority: string; changefreq?: string }[] = [
   { path: "/", priority: "1.0", changefreq: "weekly" },
   { path: "/sortiment", priority: "0.9", changefreq: "weekly" },
+  { path: "/presentguide", priority: "0.7", changefreq: "monthly" },
   { path: "/foretag", priority: "0.8" },
   { path: "/vanliga-fragor", priority: "0.8" },
   { path: "/om-mig", priority: "0.6" },
@@ -32,6 +33,12 @@ const STATIC_PAGES: { path: string; priority: string; changefreq?: string }[] = 
   { path: "/garanti", priority: "0.5" },
   { path: "/villkor", priority: "0.3" },
   { path: "/integritetspolicy", priority: "0.3" },
+  { path: "/presenttips/julklappstips-med-gravyr", priority: "0.7", changefreq: "monthly" },
+  { path: "/presenttips/presenter-till-honom-med-gravyr", priority: "0.7", changefreq: "monthly" },
+  { path: "/presenttips/varfor-graverat-glas-haller", priority: "0.6", changefreq: "monthly" },
+  { path: "/presenttips/doppresent-med-gravyr", priority: "0.7", changefreq: "monthly" },
+  { path: "/presenttips/studentpresent-med-gravyr", priority: "0.7", changefreq: "monthly" },
+  { path: "/presenttips/brollopspresent-med-gravyr", priority: "0.7", changefreq: "monthly" },
 ];
 
 /** Högt prioriterade tillfällen (säsongssidorna som driver trafik) */
@@ -86,6 +93,13 @@ export const Route = createFileRoute("/sitemap.xml")({
               ? "0.4"
               : "0.7";
           entries.push({ loc: `${SITE_URL}/kategori/${o.slug}`, lastmod: LASTMOD, priority });
+        }
+        for (const recipient of recipients) {
+          entries.push({
+            loc: `${SITE_URL}/kategori/${recipient.slug}`,
+            lastmod: LASTMOD,
+            priority: recipient.slug === "presenter" ? "0.9" : "0.8",
+          });
         }
 
         // Produktsidorna – hämtas live i båda lägena (demo/Shopify)

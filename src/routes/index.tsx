@@ -5,14 +5,16 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryIconRow } from "@/components/CategoryIconRow";
 import { GiftBundles } from "@/components/GiftBundles";
-import { TrustedMarquee } from "@/components/TrustedMarquee";
 import { TrustFaq } from "@/components/TrustFaq";
-import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { HomeHero } from "@/components/home/HomeHero";
 import { CategoryBento } from "@/components/home/CategoryBento";
-import { ProcessSection } from "@/components/home/ProcessSection";
-import { StorySection } from "@/components/home/StorySection";
+import { GuideTeaser } from "@/components/home/GuideTeaser";
 import { FinalCta } from "@/components/home/FinalCta";
+import { StorySection } from "@/components/home/StorySection";
+import { SeoIntro } from "@/components/home/SeoIntro";
+import { PhotoEngravingTeaser } from "@/components/home/PhotoEngravingTeaser";
+import { SeasonCampaign } from "@/components/home/SeasonCampaign";
+import { ProductLifestyleSection } from "@/components/home/ProductLifestyleSection";
 
 import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
@@ -26,14 +28,14 @@ export const Route = createFileRoute("/")({
     // Transient Storefront-fel: låt startsidan rendera tomt i stället för
     // att dö till roten – sidan visar ett väntande-meddelande i butikssektionen.
     try {
-      return { products: await fetchProducts(50) };
+      return { products: await fetchProducts() };
     } catch {
       return { products: [], failed: true };
     }
   },
   head: () => ({
     meta: [
-      { title: "Personliga presenter med gravyr – handgjort i Småland | TaggaDet" },
+      { title: "Personliga presenter med gravyr – handgjort i Småland | Taggat" },
       { rel: "canonical", href: SITE_URL },
       {
         name: "description",
@@ -42,7 +44,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "Personliga presenter med gravyr – handgjort i Småland | TaggaDet",
+        content: "Personliga presenter med gravyr – handgjort i Småland | Taggat",
       },
       {
         property: "og:description",
@@ -62,27 +64,41 @@ function Index() {
   };
   const isError = !!failed;
 
-  const bestsellers = products.filter((p) => p.node.tags?.includes("bastsaljare"));
-  const news = products.filter((p) => p.node.tags?.includes("nyhet"));
+  const featured = [
+    ...products.filter((p) => p.node.tags?.includes("bastsaljare")),
+    ...products.filter((p) => p.node.tags?.includes("nyhet")),
+  ]
+    .filter(
+      (product, index, list) =>
+        list.findIndex((item) => item.node.id === product.node.id) === index,
+    )
+    .slice(0, 8);
 
   return (
     <>
       {/* ATTENTION – cinematisk hero med fullbreddsbild och mörk radial-wash */}
       <HomeHero />
 
-      {/* Bandet "Foto & hantverk till livets tillfällen" – flyttat hit
-          från sidans botten (frallans önskan: högre upp) */}
-      <TrustedMarquee />
-
-      {/* Primär navigation: produkttyps-ikoner (renderas som den är) */}
+      {/* En enda, självstyrd kategoriväg direkt efter introduktionen. */}
       <CategoryIconRow />
+
+      {/* Säsongskampanj enligt schemat i lib/seasons.ts (jul, fars dag …) */}
+      <SeasonCampaign />
 
       {/* INTEREST – tillfällen i tätslutande bento (ersätter gamla tillfällesrutnätet) */}
       <CategoryBento />
+      <GuideTeaser />
+      <PhotoEngravingTeaser />
+
+      {/* Riktiga presentpaket från Shopify, när sådana finns. */}
+      <GiftBundles />
+
+      {/* Egen idé – specialbeställning lyft högre upp (inspirerat av Stoor of Lappland). */}
+      <FinalCta />
 
       {/* Om produkterna inte kunde hämtas: säg det i stället för att visa
           en tyst tom butik. (Körs bara när båda listorna ovan är tomma.) */}
-      {bestsellers.length === 0 && news.length === 0 && (isError || products.length === 0) && (
+      {featured.length === 0 && (isError || products.length === 0) && (
         <section className="mx-auto max-w-6xl px-5 pb-8">
           {isError ? (
             <p className="py-10 text-center text-muted-foreground">
@@ -103,68 +119,23 @@ function Index() {
         </section>
       )}
 
-      {(bestsellers.length > 0 || news.length > 0) && (
+      {featured.length > 0 && (
         <section id="butiken" className="scroll-mt-28 bg-cream py-12 md:py-16">
           <div className="mx-auto max-w-7xl px-5">
-            {/* Två lättrörliga produktvyer sida-vid-sida – vardera 2×2.
-                Renderar halva fullbredd om bara den ena listan har produkter. */}
-            <div className="grid gap-10 lg:grid-cols-2">
-              {bestsellers.length > 0 && (
-                <div>
-                  <div className="flex flex-wrap items-end justify-between gap-3">
-                    <div>
-                      <Kicker>de som beställs mest</Kicker>
-                      <h2 className="mt-1 font-serif text-3xl tracking-tight">
-                        Mest älskade just nu
-                      </h2>
-                    </div>
-                    <Button asChild variant="outline" size="sm" className="rounded-full px-5">
-                      <Link to="/kategori/$slug" params={{ slug: "bastsaljare" }}>
-                        Se alla favoriter <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-                      </Link>
-                    </Button>
-                  </div>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Presenterna jag graverar oftast – de fyller veckans tillverkning snabbast, så
-                    beställ i god tid.
-                  </p>
-                  <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                    {bestsellers.slice(0, 4).map((p, i) => (
-                      <ProductCard key={p.node.id} product={p} priority={i < 2} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {news.length > 0 && (
-                <div>
-                  <div className="flex flex-wrap items-end justify-between gap-3">
-                    <div>
-                      <Kicker>färskt från arbetsbänken</Kicker>
-                      <h2 className="mt-1 font-serif text-3xl tracking-tight">Nytt i verkstaden</h2>
-                    </div>
-                    <Button asChild variant="outline" size="sm" className="rounded-full px-5">
-                      <Link to="/kategori/$slug" params={{ slug: "nyheter" }}>
-                        Se alla nyheter <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-                      </Link>
-                    </Button>
-                  </div>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Nya idéer i små serier. När materialet tar slut dröjer det några veckor innan
-                    jag kan göra fler.
-                  </p>
-                  <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                    {news.slice(0, 4).map((p) => (
-                      <ProductCard key={p.node.id} product={p} />
-                    ))}
-                  </div>
-                </div>
-              )}
+            <div>
+              <Kicker>utvalt från verkstaden</Kicker>
+              <h2 className="mt-1 font-serif text-3xl tracking-tight">Personliga favoriter</h2>
+              <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+                Ett litet urval av omtyckta och nya presenter. Allt går att anpassa med din egen
+                text.
+              </p>
             </div>
-
-            {/* Hela sortimentet är en klick bort – den tidigare separat-
-                visade produktlistan var samma produkter en gång till. */}
-            <div className="mt-10 text-center">
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {featured.map((product, index) => (
+                <ProductCard key={product.node.id} product={product} priority={index < 4} />
+              ))}
+            </div>
+            <div className="mt-8 text-center">
               <Button asChild size="lg" className="rounded-full px-8">
                 <Link to="/sortiment">
                   Se hela sortimentet <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
@@ -175,24 +146,13 @@ function Index() {
         </section>
       )}
 
-      {/* DESIRE – mörkt processkapitel: från din rad till presentklart paket */}
-      <ProcessSection />
-
-      {/* Desire del 2 – presentpaket + egna designer/foto (IdeaBand ingår) */}
-      <GiftBundles />
-
-      {/* Desire del 3 – om mig + kundvägg (socialt bevis) */}
-      <StorySection />
-
+      {/* Köptvekan är störst direkt efter produkterna – svara här. */}
+      <ProductLifestyleSection products={products} />
       <TrustFaq />
 
-      {/* Nyhetsbrevet – flyttat från sidfoten till en egen sektion före CTA:n */}
-      <section className="mx-auto max-w-2xl px-5 pb-16">
-        <NewsletterSignup />
-      </section>
-
-      {/* ACTION – avslutande mörkt CTA-kapitel */}
-      <FinalCta />
+      {/* Desire – om mig + verkstaden avslutar sidan varmt */}
+      <StorySection />
+      <SeoIntro />
     </>
   );
 }
