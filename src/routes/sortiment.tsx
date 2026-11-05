@@ -18,6 +18,7 @@ import { occasions, productTypes, recipients } from "@/lib/categories";
 import { fetchProducts } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
+import { IdeaBand } from "@/components/IdeaBand";
 
 const SORTIMENT_TITLE = "Alla personliga presenter med gravyr – hela sortimentet | Taggat";
 
@@ -264,6 +265,10 @@ function SortimentPage() {
             ))}
           </div>
         </section>
+
+        {/* Idé-bandet: egna designer + foto-cross-sell – sista steget för
+            den som inte hittade den rätta presenten (koppling till kontakt). */}
+        <IdeaBand />
       </div>
     </>
   );

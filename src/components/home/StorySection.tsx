@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/home/Reveal";
+import { CustomerShowcase } from "@/components/CustomerShowcase";
 import storyHands from "@/assets/story-hands.jpg";
 import { Kicker } from "@/components/Kicker";
 
@@ -58,6 +59,12 @@ export function StorySection() {
             </figcaption>
           </figure>
         </Reveal>
+      </div>
+
+      {/* Kundväggen – tom tills riktiga kundbidrag finns (ärlighetsram:
+          inga påhittade citat), men CTA:n att skicka in bilder är levande. */}
+      <div className="mt-16">
+        <CustomerShowcase />
       </div>
     </section>
   );

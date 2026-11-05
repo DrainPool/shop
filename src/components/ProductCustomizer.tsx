@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { useEngravingPreview } from "@/stores/engravingPreviewStore";
 import { Link } from "@tanstack/react-router";
-import { Check, Loader2 } from "lucide-react";
+import { Check, Clock, Loader2 } from "lucide-react";
+import { CutoffCountdown } from "@/components/FomoBanner";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -815,6 +816,17 @@ export function ProductCustomizer({
             </>
           )}
         </Button>
+
+        {/* Ärligt tillverkningsstopp: räknar ner till verkstadens nästa
+            produktionstillfälle (vardagar 14:00) – inte en påhittad kampanj. */}
+        {selected?.availableForSale && (
+          <p className="mt-3 flex flex-wrap items-center justify-center gap-x-1.5 text-center text-sm text-muted-foreground">
+            <Clock className="h-4 w-4 shrink-0 text-primary-deep" aria-hidden="true" />
+            Beställ inom
+            <CutoffCountdown className="font-semibold text-primary-deep" />
+            så hinner den med i dagens tillverkning.
+          </p>
+        )}
 
         {!selected?.availableForSale && (
           <p className="mt-4 rounded-xl bg-gold/15 p-3 text-sm">

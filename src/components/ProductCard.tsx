@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { WishlistHeart } from "@/components/WishlistHeart";
+import { QuickView } from "@/components/QuickView";
 import { formatPrice, getPricing, type ShopifyProduct } from "@/lib/shopify";
 import { badgeTone } from "@/lib/badgeTone";
 
@@ -30,6 +31,8 @@ export function ProductCard({
 
   // Kortet länkar till produktsidan istället för snabbköp – personaliseringen
   // (gravyrtext, digital skiss) är butikens kärnvärde och ska aldrig kringgås.
+  // Snabbtitt-ögat (QuickView) ger en titt på detaljerna utan att lämna
+  // rutnätet – köpet sker alltid på produktsidan.
 
   return (
     <article className="card-shop group relative flex flex-col overflow-hidden">
@@ -46,6 +49,11 @@ export function ProductCard({
           }}
         />
       </div>
+
+      {/* Snabbtitt-öga – syns på pekskärm alltid, på desktop vid hover
+          (group-hover); positioneras under hjärtat. Köpet sker på
+          produktsidan, snabbtitten är bara en förhandstitt. */}
+      <QuickView product={product} />
       <Link
         to="/produkt/$handle"
         params={{ handle: node.handle }}
