@@ -49,6 +49,9 @@ export const Route = createFileRoute("/kategori/$slug")({
           { title: "Kategorin hittades inte – Taggat" },
           { name: "robots", content: "noindex" },
         ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/kategori/${slug}` },
+      ]
       };
     }
     const { title, description, slug } = loaderData.category;
@@ -83,7 +86,6 @@ export const Route = createFileRoute("/kategori/$slug")({
       meta: [
         { title: pageTitle },
         { name: "description", content: description },
-        { rel: "canonical", href: `${SITE_URL}/kategori/${slug}` },
         { property: "og:title", content: pageTitle },
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },

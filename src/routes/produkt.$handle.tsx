@@ -15,6 +15,8 @@ const ProductCustomizer = lazy(() =>
 import { ProductGallery, type GalleryBadge } from "@/components/product/ProductGallery";
 import { useTrackRecentlyViewed } from "@/components/RecentlyViewed";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
+import { ReviewSection } from "@/components/ReviewSection";
+import { PaymentLogos } from "@/components/PaymentLogos";
 import { productTypes } from "@/lib/categories";
 import { PRODUCT_SPECS } from "@/lib/productSpecs";
 import {
@@ -61,6 +63,9 @@ export const Route = createFileRoute("/produkt/$handle")({
           { title: "Produkten hittades inte – Taggat" },
           { name: "robots", content: "noindex" },
         ],
+      links: [
+        { rel: "canonical", href: url },
+      ]
       };
     }
     const node = loaderData.product.node;
@@ -104,7 +109,6 @@ export const Route = createFileRoute("/produkt/$handle")({
       meta: [
         { title },
         { name: "description", content: description },
-        { rel: "canonical", href: url },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "product" },
@@ -342,6 +346,17 @@ function ProductPage() {
       <div className="mx-auto mt-10 max-w-3xl border-t border-border pt-6">
         <h2 className="font-serif text-2xl">Produktinformation</h2>
         <FaqAccordion items={produktinformation} />
+      </div>
+
+      <div className="mx-auto mt-10 max-w-3xl">
+        <ReviewSection reviews={[]} />
+      </div>
+
+      <div className="mx-auto mt-8 max-w-3xl">
+        <p className="mb-3 text-center text-sm font-medium text-muted-foreground">
+          Tryggt att handla – välj betalsätt i kassan
+        </p>
+        <PaymentLogos className="justify-center" />
       </div>
 
       <RelatedProducts tags={product.node.tags || []} handle={handle} />

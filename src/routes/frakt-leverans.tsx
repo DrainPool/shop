@@ -10,7 +10,6 @@ export const Route = createFileRoute("/frakt-leverans")({
   head: () => ({
     meta: [
       { title: "Frakt & leveranstid | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/frakt-leverans` },
       {
         name: "description",
         content:
@@ -24,6 +23,9 @@ export const Route = createFileRoute("/frakt-leverans")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/frakt-leverans` },
+      ]
   }),
   component: ShippingPage,
 });

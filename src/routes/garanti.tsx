@@ -8,7 +8,6 @@ export const Route = createFileRoute("/garanti")({
   head: () => ({
     meta: [
       { title: "Garanti | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/garanti` },
       {
         name: "description",
         content:
@@ -23,6 +22,9 @@ export const Route = createFileRoute("/garanti")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/garanti` },
+      ]
   }),
   component: WarrantyPage,
 });

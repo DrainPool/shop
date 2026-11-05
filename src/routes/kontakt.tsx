@@ -1,15 +1,16 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { Clock, Mail, MapPin, MessageCircleQuestion } from "lucide-react";
 import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
+import { Button } from "@/components/ui/button";
 import { DELIVERY_PROMISE } from "@/lib/delivery";
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
     meta: [
       { title: "Kontakt | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/kontakt` },
       {
         name: "description",
         content:
@@ -22,11 +23,29 @@ export const Route = createFileRoute("/kontakt")({
       },
       { property: "og:type", content: "website" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/kontakt` },
+      ]
   }),
   component: ContactPage,
 });
 
 function ContactPage() {
+  const [form, setForm] = useState({ namn: "", epost: "", meddelande: "" });
+  const [skickat, setSkickat] = useState(false);
+
+  function skicka(e: React.FormEvent) {
+    e.preventDefault();
+    // Ingen backend än – förifyllt mail ger mig namn, epost och frågan
+    // i ett svep, och kunden slipper skriva om allt.
+    const subject = encodeURIComponent(`Fråga till Taggat från ${form.namn || "besökare"}`);
+    const body = encodeURIComponent(
+      `Hej!\n\n${form.meddelande}\n\n— ${form.namn}\nSvara gärna till: ${form.epost}`,
+    );
+    window.location.href = `mailto:taggat@linsochlager.net?subject=${subject}&body=${body}`;
+    setSkickat(true);
+  }
+
   return (
     <div className="mx-auto max-w-4xl px-5 py-14">
       <Breadcrumbs items={[{ label: "Kontakt" }]} />
@@ -37,6 +56,60 @@ function ContactPage() {
         Fråga om en beställning, bolla en presentidé eller bara säga hej – jag svarar personligen,
         aldrig ett callcenter.
       </p>
+
+      <div className="card-shop mt-8 p-8">
+        <h2 className="font-serif text-2xl">Skriv till mig direkt</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Fyll i rutorna – ditt e-postprogram öppnas med allt förifyllt, klart att skickas.
+        </p>
+        <form className="mt-6 space-y-4" onSubmit={skicka}>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block">
+              <span className="text-sm font-medium">Ditt namn</span>
+              <input
+                type="text"
+                required
+                value={form.namn}
+                onChange={(e) => setForm({ ...form, namn: e.target.value })}
+                className="mt-1 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm transition-colors focus:border-primary-deep focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="Anna Andersson"
+              />
+            </label>
+            <label className="block">
+              <span className="text-sm font-medium">Din e-post</span>
+              <input
+                type="email"
+                required
+                value={form.epost}
+                onChange={(e) => setForm({ ...form, epost: e.target.value })}
+                className="mt-1 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm transition-colors focus:border-primary-deep focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="anna@example.se"
+              />
+            </label>
+          </div>
+          <label className="block">
+            <span className="text-sm font-medium">Vad vill du fråga om?</span>
+            <textarea
+              required
+              rows={5}
+              value={form.meddelande}
+              onChange={(e) => setForm({ ...form, meddelande: e.target.value })}
+              className="mt-1 w-full resize-y rounded-xl border border-input bg-background px-4 py-3 text-sm transition-colors focus:border-primary-deep focus:outline-none focus:ring-2 focus:ring-primary/30"
+              placeholder="Hej! Jag undrar om…"
+            />
+          </label>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button type="submit" size="lg" className="transition-[color,background-color,transform] duration-200 hover:scale-[1.02] active:scale-95 motion-reduce:transition-none">
+              Skicka frågan
+            </Button>
+            {skickat && (
+              <p className="text-sm text-primary-deep" role="status">
+                Ditt e-postprogram öppnades – tryck på skicka där så når frågan mig!
+              </p>
+            )}
+          </div>
+        </form>
+      </div>
 
       <div className="mt-8 grid gap-5 md:grid-cols-2">
         <div className="card-shop p-8">

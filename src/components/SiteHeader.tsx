@@ -15,6 +15,7 @@ import {
 import { CartDrawer } from "@/components/CartDrawer";
 import { MegaMenu } from "@/components/MegaMenu";
 import { SearchOverlay } from "@/components/SearchOverlay";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Wordmark } from "@/components/Wordmark";
 import { occasions, recipients } from "@/lib/categories";
 import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
@@ -160,6 +161,7 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-2">
             <SearchOverlay />
+            <ThemeToggle />
             <WishlistHeaderButton />
             <CartDrawer />
 

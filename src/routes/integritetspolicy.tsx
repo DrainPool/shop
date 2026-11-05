@@ -7,7 +7,6 @@ export const Route = createFileRoute("/integritetspolicy")({
   head: () => ({
     meta: [
       { title: "Integritetspolicy | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/integritetspolicy` },
       {
         name: "description",
         content:
@@ -22,6 +21,9 @@ export const Route = createFileRoute("/integritetspolicy")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/integritetspolicy` },
+      ]
   }),
   component: PrivacyPage,
 });

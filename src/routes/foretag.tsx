@@ -20,7 +20,6 @@ export const Route = createFileRoute("/foretag")({
   head: () => ({
     meta: [
       { title: "Företagsgåvor & profilprodukter | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/foretag` },
       {
         name: "description",
         content:
@@ -34,6 +33,9 @@ export const Route = createFileRoute("/foretag")({
       },
       { property: "og:type", content: "website" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/foretag` },
+      ]
   }),
   component: BusinessPage,
 });

@@ -25,7 +25,6 @@ export const Route = createFileRoute("/om-mig")({
   head: () => ({
     meta: [
       { title: "Verkstaden i Aneby – möt Fredrik | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/om-mig` },
       {
         name: "description",
         content:
@@ -40,6 +39,9 @@ export const Route = createFileRoute("/om-mig")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/om-mig` },
+      ],
     scripts: [
       {
         type: "application/ld+json",

@@ -36,7 +36,6 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Personliga presenter med gravyr – handgjort i Småland | Taggat" },
-      { rel: "canonical", href: SITE_URL },
       {
         name: "description",
         content:
@@ -54,6 +53,9 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+      links: [
+        { rel: "canonical", href: SITE_URL },
+      ]
   }),
 });
 

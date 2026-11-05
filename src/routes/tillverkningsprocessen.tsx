@@ -22,7 +22,6 @@ export const Route = createFileRoute("/tillverkningsprocessen")({
   head: () => ({
     meta: [
       { title: "Tillverkningsprocessen | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/tillverkningsprocessen` },
       {
         name: "description",
         content:
@@ -36,6 +35,9 @@ export const Route = createFileRoute("/tillverkningsprocessen")({
       },
       { property: "og:type", content: "website" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/tillverkningsprocessen` },
+      ]
   }),
   component: ProcessPage,
 });

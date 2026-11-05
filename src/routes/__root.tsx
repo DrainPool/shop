@@ -14,6 +14,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/SiteHeader";
+import { ScrollExtras } from "@/components/ScrollExtras";
 import { SiteFooter } from "@/components/SiteFooter";
 import { MinimalProductHeader } from "@/components/product/MinimalProductHeader";
 import { Toaster } from "@/components/ui/sonner";
@@ -327,20 +328,21 @@ function AppShell() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-full focus:bg-primary-deep focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-background"
-      >
-        Hoppa till innehållet
-      </a>
-      {isProductPage ? <MinimalProductHeader /> : <SiteHeader />}
-      <main id="main" className="flex-1">
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-      </main>
-      <SiteFooter />
-      <Toaster position="top-center" />
-    </div>
-  );
+      <div className="flex min-h-screen flex-col">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-full focus:bg-primary-deep focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-background"
+        >
+          Hoppa till innehållet
+        </a>
+        <ScrollExtras />
+        {isProductPage ? <MinimalProductHeader /> : <SiteHeader />}
+        <main id="main" className="flex-1">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <SiteFooter />
+        <Toaster position="top-center" />
+      </div>
+    );
 }

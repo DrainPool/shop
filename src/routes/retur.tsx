@@ -8,7 +8,6 @@ export const Route = createFileRoute("/retur")({
   head: () => ({
     meta: [
       { title: "Retur & reklamation | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/retur` },
       {
         name: "description",
         content:
@@ -23,6 +22,9 @@ export const Route = createFileRoute("/retur")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/retur` },
+      ]
   }),
   component: ReturnsPage,
 });

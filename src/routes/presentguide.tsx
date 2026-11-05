@@ -24,7 +24,6 @@ export const Route = createFileRoute("/presentguide")({
   head: () => ({
     meta: [
       { title: "Presentguide – hitta rätt personliga present | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/presentguide` },
       {
         name: "description",
         content:
@@ -39,6 +38,9 @@ export const Route = createFileRoute("/presentguide")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/presentguide` },
+      ]
   }),
 });
 

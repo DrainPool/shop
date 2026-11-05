@@ -59,7 +59,6 @@ export const Route = createFileRoute("/sortiment")({
   head: () => ({
     meta: [
       { title: SORTIMENT_TITLE },
-      { rel: "canonical", href: `${SITE_URL}/sortiment` },
       {
         name: "description",
         content:
@@ -74,6 +73,9 @@ export const Route = createFileRoute("/sortiment")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/sortiment` },
+      ],
     scripts: [
       {
         type: "application/ld+json",

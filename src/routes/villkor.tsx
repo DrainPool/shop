@@ -10,7 +10,6 @@ export const Route = createFileRoute("/villkor")({
   head: () => ({
     meta: [
       { title: "Allmänna villkor | Taggat" },
-      { rel: "canonical", href: `${SITE_URL}/villkor` },
       {
         name: "description",
         content:
@@ -24,6 +23,9 @@ export const Route = createFileRoute("/villkor")({
       },
       { property: "og:type", content: "website" },
     ],
+      links: [
+        { rel: "canonical", href: `${SITE_URL}/villkor` },
+      ]
   }),
   component: TermsPage,
 });

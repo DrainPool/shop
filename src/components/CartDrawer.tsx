@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "@tanstack/react-router";
 import { PaymentLogos } from "@/components/PaymentLogos";
+import { CartSuggestions } from "@/components/CartSuggestions";
 import { Progress } from "@/components/ui/progress";
 
 import { Button } from "@/components/ui/button";
@@ -249,6 +250,7 @@ export function CartDrawer() {
                 />
               </div>
               <FreeShippingNudge onNavigate={() => setCartOpen(false)} />
+              <CartSuggestions onNavigate={() => setCartOpen(false)} />
               <div className="min-h-0 flex-1 overflow-y-auto pr-2">
                 <div className="space-y-4">
                   {items.map((item) => (

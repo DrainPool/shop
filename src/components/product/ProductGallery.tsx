@@ -155,7 +155,11 @@ export function ProductGallery({
             >
               <img
                 src={img.url}
-                alt=""
+                alt={
+                  img.altText?.trim()
+                    ? `${img.altText} – ${title}, bild ${i + 1}`
+                    : `${title}, bild ${i + 1} av ${galleryImages.length}`
+                }
                 loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transform-none"
               />
