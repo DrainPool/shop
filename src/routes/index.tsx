@@ -15,6 +15,7 @@ import { SeoIntro } from "@/components/home/SeoIntro";
 import { PhotoEngravingTeaser } from "@/components/home/PhotoEngravingTeaser";
 import { SeasonCampaign } from "@/components/home/SeasonCampaign";
 import { ProductLifestyleSection } from "@/components/home/ProductLifestyleSection";
+import { ProcessSection } from "@/components/home/ProcessSection";
 
 import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
@@ -150,6 +151,9 @@ function Index() {
 
       {/* Köptvekan är störst direkt efter produkterna – svara här. */}
       <ProductLifestyleSection products={products} />
+      {/* "Så funkar det" – mörkt Desire-kapitel med processens fyra steg
+          (ProcessSection), direkt följt av trygghets-FAQ som fångar tvekan. */}
+      <ProcessSection />
       <TrustFaq />
 
       {/* Desire – om mig + verkstaden avslutar sidan varmt */}

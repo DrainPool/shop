@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Mail } from "lucide-react";
 import { PaymentLogos } from "@/components/PaymentLogos";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { Wordmark } from "@/components/Wordmark";
 import { FOTOGRAFERING_URL } from "@/lib/siteUrls";
 
@@ -113,6 +114,7 @@ export function SiteFooter() {
           </div>
         </div>
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-5 pb-6">
+          <NewsletterSignup className="w-full max-w-md" />
           <p className="text-xs opacity-70">Trygg betalning via Shopifys kassa</p>
           <PaymentLogos />
         </div>

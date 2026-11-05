@@ -17,6 +17,7 @@ import { useTrackRecentlyViewed } from "@/components/RecentlyViewed";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
 import { ReviewSection } from "@/components/ReviewSection";
 import { PaymentLogos } from "@/components/PaymentLogos";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { productTypes } from "@/lib/categories";
 import { PRODUCT_SPECS } from "@/lib/productSpecs";
 import {
@@ -278,6 +279,17 @@ function ProductPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-5 pb-28 md:px-5 md:py-8 md:pb-10">
+      {/* Synlig brödsmula + BreadcrumbList-schema (JSON-LD sätts av
+          komponenten) – Google får stig: Butik › Kategori › Produkt. */}
+      {typeCategory && (
+        <Breadcrumbs
+          items={[
+            { label: "Butik", to: "/sortiment" },
+            { label: typeCategory.title, slug: typeCategory.slug },
+            { label: node.title },
+          ]}
+        />
+      )}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
         {/* Galleriet följer med när köpkolumnen scrollar (sticky inom
             gridytan – self-start behövs för att sticky överhuvudtaget
