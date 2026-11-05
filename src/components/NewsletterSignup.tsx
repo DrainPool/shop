@@ -3,6 +3,7 @@ import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { prenumereraNyhetsbrev } from "@/lib/kontaktApi";
 
 const CONTACT_EMAIL = "taggat@linsochlager.net";
 
@@ -21,7 +22,7 @@ export function NewsletterSignup({ className }: { className?: string }) {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = email.trim();
     if (!isValidEmail(trimmed)) {
@@ -31,12 +32,20 @@ export function NewsletterSignup({ className }: { className?: string }) {
       return;
     }
     setError(null);
-    const subject = encodeURIComponent("Jag vill ha nyhetsbrevet");
-    const body = encodeURIComponent(
-      `Hej! Lägg gärna till mig i nyhetsbrevet.\n\nE-post: ${trimmed}\n`,
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-    setSent(true);
+    // Prenumerationen sparas direkt i huvudsajtens newsletter_subscribers
+    // (samma lista som fotobutiken) – ingen mejlklient behövs.
+    try {
+      await prenumereraNyhetsbrev(trimmed);
+      setSent(true);
+    } catch {
+      // Fall tillbaka på förifyllt mejl — anmälan ska aldrig tappas.
+      const subject = encodeURIComponent("Jag vill ha nyhetsbrevet");
+      const body = encodeURIComponent(
+        `Hej! Lägg gärna till mig i nyhetsbrevet.\n\nE-post: ${trimmed}\n`,
+      );
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+      setSent(true);
+    }
   };
 
   return (
@@ -54,7 +63,7 @@ export function NewsletterSignup({ className }: { className?: string }) {
       {sent ? (
         <div className="mt-4 text-sm" role="status">
           <p className="font-semibold text-primary-deep">
-            Tack! Skicka mejlet som öppnades så lägger jag till dig.
+            Tack! Du är nu anmäld till nyhetsbrevet – första presenttipset är på väg.
           </p>
           {/* mailto öppnar ingen mejlklient på alla mobilsystem – visa
               adressen som synlig reservväg så anmälan inte försvinner tyst. */}

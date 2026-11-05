@@ -6,6 +6,7 @@ import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
 import { Button } from "@/components/ui/button";
 import { DELIVERY_PROMISE } from "@/lib/delivery";
+import { skickaKontaktMedFallback } from "@/lib/kontaktApi";
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
@@ -32,18 +33,21 @@ export const Route = createFileRoute("/kontakt")({
 
 function ContactPage() {
   const [form, setForm] = useState({ namn: "", epost: "", meddelande: "" });
-  const [skickat, setSkickat] = useState(false);
+  const [skickat, setSkickat] = useState<"edge" | "mailto" | null>(null);
+  const [fel, setFel] = useState<string | null>(null);
 
-  function skicka(e: React.FormEvent) {
+  async function skicka(e: React.FormEvent) {
     e.preventDefault();
-    // Ingen backend än – förifyllt mail ger mig namn, epost och frågan
-    // i ett svep, och kunden slipper skriva om allt.
-    const subject = encodeURIComponent(`Fråga till Taggat från ${form.namn || "besökare"}`);
-    const body = encodeURIComponent(
-      `Hej!\n\n${form.meddelande}\n\n— ${form.namn}\nSvara gärna till: ${form.epost}`,
-    );
-    window.location.href = `mailto:taggat@linsochlager.net?subject=${subject}&body=${body}`;
-    setSkickat(true);
+    setFel(null);
+    // Edge-funktionen (huvudsajtens Supabase) sparar i CRM + mailar mig
+    // med reply_to = kunden. Om den inte svarar öppnas förifyllt mail
+    // i stället — meddelandet ska aldrig tappas.
+    try {
+      const vag = await skickaKontaktMedFallback(form);
+      setSkickat(vag);
+    } catch {
+      setFel("Det gick inte att skicka just nu – försök igen eller maila mig direkt.");
+    }
   }
 
   return (
@@ -60,7 +64,7 @@ function ContactPage() {
       <div className="card-shop mt-8 p-8">
         <h2 className="font-serif text-2xl">Skriv till mig direkt</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Fyll i rutorna – ditt e-postprogram öppnas med allt förifyllt, klart att skickas.
+          Fyll i rutorna – frågan kommer direkt till min inkorg och du får svar personligen.
         </p>
         <form className="mt-6 space-y-4" onSubmit={skicka}>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -102,9 +106,19 @@ function ContactPage() {
             <Button type="submit" size="lg" className="transition-[color,background-color,transform] duration-200 hover:scale-[1.02] active:scale-95 motion-reduce:transition-none">
               Skicka frågan
             </Button>
-            {skickat && (
+            {skickat === "edge" && (
+              <p className="text-sm text-primary-deep" role="status">
+                Tack! Din fråga är skickad – jag svarar personligen, oftast inom 24 timmar.
+              </p>
+            )}
+            {skickat === "mailto" && (
               <p className="text-sm text-primary-deep" role="status">
                 Ditt e-postprogram öppnades – tryck på skicka där så når frågan mig!
+              </p>
+            )}
+            {fel && (
+              <p className="text-sm text-destructive" role="alert">
+                {fel}
               </p>
             )}
           </div>
