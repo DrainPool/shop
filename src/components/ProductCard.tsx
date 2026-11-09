@@ -163,7 +163,7 @@ export function ProductCard({
             )}
           </span>
           <span className="text-sm font-semibold text-primary-deep">
-            {soldOut ? "Fråga om nytt" : "Visa produkt"}
+            {soldOut ? "Fråga om nytt" : "Gör den till din"}
           </span>
         </div>
       </div>

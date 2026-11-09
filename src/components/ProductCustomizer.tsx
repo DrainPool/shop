@@ -812,7 +812,7 @@ export function ProductCustomizer({
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
             <>
-              <Check className="mr-2 h-4 w-4" aria-hidden="true" /> Lägg i varukorgen
+              <Check className="mr-2 h-4 w-4" aria-hidden="true" /> Gör den till din
             </>
           )}
         </Button>

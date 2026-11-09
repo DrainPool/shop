@@ -16,6 +16,8 @@ import { PhotoEngravingTeaser } from "@/components/home/PhotoEngravingTeaser";
 import { SeasonCampaign } from "@/components/home/SeasonCampaign";
 import { ProductLifestyleSection } from "@/components/home/ProductLifestyleSection";
 import { ProcessSection } from "@/components/home/ProcessSection";
+import { FeaturedSlider } from "@/components/FeaturedSlider";
+import { HandmadePromise } from "@/components/HandmadePromise";
 
 import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 import { SITE_URL } from "@/lib/siteUrls";
@@ -84,6 +86,13 @@ function Index() {
 
       {/* En enda, självstyrd kategoriväg direkt efter introduktionen. */}
       <CategoryIconRow />
+
+      {/* Mest älskade – produktbilder i horisontell slider (bilder säljer
+          känslan; kategoriikonerna ovan svarar på navigation). */}
+      <FeaturedSlider />
+
+      {/* Det personliga löftet: gjord för hand, för just dig. */}
+      <HandmadePromise />
 
       {/* Säsongskampanj enligt schemat i lib/seasons.ts (jul, fars dag …) */}
       <SeasonCampaign />
