@@ -59,9 +59,10 @@ export async function skickaKontaktMedFallback(data: KontaktData): Promise<"edge
 
 /**
  * Nyhetsbrevsprenumeration: direkt insert i newsletter_subscribers
- * (RLS tillåter anonyma inserts; mailbekräftelsen sköts av befintliga
- * automationer i huvudsajten). Tabellen kräver name+email; status
- * har default 'active'.
+ * (RLS tillåter anonyma INSERT men inte UPDATE — därför ingen upsert/
+ * on_conflict: den kräver UPDATE-policy och ger 401). Dubbletter fångas
+ * av unique-constraintet som 409 = "redan anmäld" — samma lyckade
+ * utfall för kunden. Tabellen kräver name+email+service_type.
  */
 export async function prenumereraNyhetsbrev(epost: string, namn = "Nyhetsbrevsprenumerant"): Promise<void> {
   const key = (import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] as string | undefined) ||
@@ -73,10 +74,15 @@ export async function prenumereraNyhetsbrev(epost: string, namn = "Nyhetsbrevspr
       "Content-Type": "application/json",
       apikey: key,
       Authorization: `Bearer ${key}`,
-      Prefer: "resolution=ignore-duplicates",
     },
-    body: JSON.stringify({ email: epost.toLowerCase(), name: namn }),
+    body: JSON.stringify({
+      email: epost.toLowerCase(),
+      name: namn,
+      service_type: "taggat",
+      status: "active",
+    }),
   });
+  // 409 = unik-constraint → redan prenumererad; samma lyckade utfall
   if (!res.ok && res.status !== 409) {
     throw new Error(`Prenumeration misslyckades (${res.status})`);
   }
