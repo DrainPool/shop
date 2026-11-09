@@ -1,0 +1,139 @@
+[
+  {
+    "title": "Barnlampa med namn – Raket",
+    "handle": "barnlampa-raket-med-namn",
+    "price": 449,
+    "description": "En barnlampa skuren i akryl med ditt barns namn gravrerat i stjärnorna. Mjukt, tryggt sken för natten – och en present som följer barnet i många år. Jag skär och gravrerar varje lampa för hand i verkstaden i Aneby, och du godkänner alltid en skiss innan jag börjar. Levereras med värmeljus-LED (batteridriven, ingen sladd).",
+    "tags": ["barn", "dop", "nytt-hem", "fodelsedag", "3d", "lampa"],
+    "category": "barn",
+    "options": { "personalText": { "enabled": true, "label": "Barnets namn", "maxLength": 15 } }
+  },
+  {
+    "title": "Barnlampa med namn – Nalle",
+    "handle": "barnlampa-nalle-med-namn",
+    "price": 449,
+    "description": "En nalle som lyser i mörkret med barnets namn gravrerat. Skuren i mjölvit akryl som sprider ett lugnt ljus över sänggavel och byrå. Perfekt present till dop eller födelsedag – jag gör den först efter din beställning, i min verkstad i Aneby. Skiss skickas alltid för godkännande.",
+    "tags": ["barn", "dop", "fodelsedag", "3d", "lampa"],
+    "category": "barn",
+    "options": { "personalText": { "enabled": true, "label": "Barnets namn", "maxLength": 15 } }
+  },
+  {
+    "title": "Barnlampa med namn – Stjärna",
+    "handle": "barnlampa-stjarna-med-namn",
+    "price": 449,
+    "description": "En stjärna i akryl som lyser med barnets namn i mitten – nattlampa och minnespresent i ett. Skuren och gravrerad för hand i Aneby. Mått ca 35 cm. Du godkänner skissen innan jag bränner namnet.",
+    "tags": ["barn", "dop", "fodelsedag", "3d", "lampa"],
+    "category": "barn",
+    "options": { "personalText": { "enabled": true, "label": "Barnets namn", "maxLength": 15 } }
+  },
+  {
+    "title": "Barnlampa med namn – Hjärta",
+    "handle": "barnlampa-hjarta-med-namn",
+    "price": 449,
+    "description": "Ett hjärta som lyser med namnet som betyder mest. Gravrerat i röd akryl – ett varmt, mjukt ljus för natten. Jag tillverkar varje lampa för hand i min verkstad i Aneby, och du ser en skiss innan jag bränner. Mått ca 25 cm.",
+    "tags": ["barn", "dop", "fodelsedag", "3d", "lampa"],
+    "category": "barn",
+    "options": { "personalText": { "enabled": true, "label": "Barnets namn", "maxLength": 15 } }
+  },
+  {
+    "title": "Barnlampa med namn – Moln",
+    "handle": "barnlampa-moln-med-namn",
+    "price": 449,
+    "description": "Ett mjukt moln i vit akryl med barnets namn gravrerat – som en liten himmel över sängen. Skuren för hand i Aneby, med LED-ljus som ger tryggt ljus hela natten. Ca 35 cm brett. Skiss godkänns alltid först.",
+    "tags": ["barn", "dop", "nytt-hem", "3d", "lampa"],
+    "category": "barn",
+    "options": { "personalText": { "enabled": true, "label": "Barnets namn", "maxLength": 15 } }
+  },
+  {
+    "title": "Födelse-tavla med foto – namn, vikt och datum graverat",
+    "handle": "fodelsetavla-med-foto",
+    "price": 599,
+    "description": "Barnets allra första porträtt, graverat i trä tillsammans med namn, födelsevikt och datum. Du laddar upp ett foto i beställningen – jag gravrerar det fotorealistiskt i fin björk, och du godkänner skissen innan jag bränner. En tavla som blir kvar hela livet. Ca 20x25 cm, väggmonterad med dold upphängning.",
+    "tags": ["barn", "dop", "fotogravyr", "foto", "nytt-hem"],
+    "category": "fotogravyr",
+    "options": {
+      "photoUpload": true,
+      "personalText": { "enabled": true, "label": "Namn, vikt och datum", "maxLength": 60 }
+    }
+  },
+  {
+    "title": "Husnummer i ek med personlig skylt",
+    "handle": "husnummer-ek-skylt",
+    "price": 349,
+    "description": "Ett husnummer som gör första intrycket – graverat i svensk ek med ditt nummer och efternamn. Tål väder och årstider, skruvas eller limmas vid dörren. Jag gravrerar varje skylt för hand i Aneby. Storlek efter val: 20x12 eller 30x15 cm.",
+    "tags": ["nytt-hem", "skylt", "gravyr"],
+    "category": "skylt",
+    "options": {
+      "personalText": { "enabled": true, "label": "Gatunummer och efternamn", "maxLength": 25 },
+      "sizes": [
+        { "label": "Liten (20x12 cm)", "priceAdd": 0 },
+        { "label": "Stor (30x15 cm)", "priceAdd": 100 }
+      ]
+    }
+  },
+  {
+    "title": "Mätsticka för barnlängd med namn",
+    "handle": "matsticka-barnlangd-namn",
+    "price": 399,
+    "description": "En mätsticka i furu att sätta på väggen – med barnets namn gravrerat överst och pilar som märker ut varje ny längd. Från 50 till 150 cm, perfekt present som väntar på dop eller födelsedag. Gravrerad för hand i Aneby. 120 cm hög, väggmonterad.",
+    "tags": ["barn", "dop", "nytt-hem", "gravyr"],
+    "category": "barn",
+    "options": { "personalText": { "enabled": true, "label": "Barnets namn", "maxLength": 15 } }
+  },
+  {
+    "title": "Medaljhållare med namn – väggsköld i trä",
+    "handle": "medaljhallare-namn",
+    "price": 449,
+    "description": "För alla medaljer som förtjänar att synas: en väggsköld i trä med namnet gravrerat och krokar för att hänga pokaler och medaljer. Jag skär och gravrerar varje sköld för hand. En present till idrottaren som redan har allt – utom platsen att visa upp det. 30 cm bred, 4 krokar.",
+    "tags": ["idrott", "idrottspriser", "barn", "fodelsedag", "gravyr"],
+    "category": "idrott",
+    "options": { "personalText": { "enabled": true, "label": "Namn eller lag", "maxLength": 20 } }
+  },
+  {
+    "title": "Nyckelhållare för hallen med namn",
+    "handle": "nyckelhallare-namn",
+    "price": 249,
+    "description": "Slut på jagade nycklar: en graverad nyckelhållare i ek med namn eller familjenamn och fyra solida krokar. Jag gravrerar varje hållare för hand i Aneby – perfekt present till den som flyttat in. 25 cm bred, skruvmonterad.",
+    "tags": ["nytt-hem", "gravyr"],
+    "category": "gravyr",
+    "options": { "personalText": { "enabled": true, "label": "Namn eller ord", "maxLength": 20 } }
+  },
+  {
+    "title": "Värmeljushållare i trä med gravyr",
+    "handle": "varmeljushallare-trä-gravyr",
+    "price": 199,
+    "description": "En varm krets av graverat trä för värmeljus – med namn, ett ord eller ett datum gravrerat i kantens silvergrå kontrast. Skuren och gravrerad för hand i min verkstad i Aneby. Tre lys placerade, diameter ca 20 cm.",
+    "tags": ["jul", "nytt-hem", "gravyr", "arsdag"],
+    "category": "gravyr",
+    "options": { "personalText": { "enabled": true, "label": "Namn, ord eller datum", "maxLength": 25 } }
+  },
+  {
+    "title": "Dörrskylt med personlig text",
+    "handle": "dorrskylt-personlig-text",
+    "price": 249,
+    "description": "En dörrskylt med texten du väljer – \"Måns rum\", \"Kontoret\", \"Här sover bästisen\" – graverad i trä. Välj själv raden, så skär jag skylten och gravrerar din text för hand i Aneby. 9x21 cm, med dold upphängning eller tejp.",
+    "tags": ["barn", "nytt-hem", "skylt", "gravyr"],
+    "category": "skylt",
+    "options": { "personalText": { "enabled": true, "label": "Din text", "maxLength": 30 } }
+  },
+  {
+    "title": "Grytunderlägg i trä med gravyr",
+    "handle": "grytunderlagg-tra-gravyr",
+    "price": 299,
+    "description": "Ett rejält grytunderlägg i massiv ek med din text eller ditt Familjenamn gravrerat – skyddar bordet och syns vid varje middag. Skuret och gravrerat för hand i Aneby. Diameter 22 cm.",
+    "tags": ["nytt-hem", "gravyr", "brollop"],
+    "category": "gravyr",
+    "options": { "personalText": { "enabled": true, "label": "Namn eller text", "maxLength": 25 } }
+  },
+  {
+    "title": "Familjekalender i trä med namn",
+    "handle": "familjekalender-tra-namn",
+    "price": 649,
+    "description": "En väggkalender i trä med hela familjens namn gravrerade – veckans dagar och sju rader för var sitt spår. Raderas och skrivs om, år efter år. Jag gravrerar namnen för hand i Aneby; skissen godkänner du först. 60x40 cm, väggmonterad.",
+    "tags": ["nytt-hem", "barn", "gravyr"],
+    "category": "gravyr",
+    "options": {
+      "personalText": { "enabled": true, "label": "Namnen (en rad per person)", "maxLength": 80 }
+    }
+  }
+]
