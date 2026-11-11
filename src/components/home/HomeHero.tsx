@@ -58,8 +58,9 @@ export function HomeHero() {
           Aneby, Småland
         </h1>
         <p className="hero-rise mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-foreground/85 [animation-delay:260ms]">
-          Jag graverar din text eller ditt foto i trä, läder, glas, akryl och metall – i mitt garage
-          med skogen utanför fönstret. Du får alltid se en skiss innan lasern drar igång.
+          Jag graverar din text eller ditt foto i glas, trä, metall och läder. Jag gör även
+          fotokonst och hem-inredning på beställning – allt i mitt garage med skogen utanför
+          fönstret. Du får alltid se en skiss innan jag börjar.
         </p>
 
         <div className="hero-rise mt-8 flex flex-wrap items-center justify-center gap-4 [animation-delay:390ms]">

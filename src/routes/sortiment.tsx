@@ -20,7 +20,7 @@ import { SITE_URL } from "@/lib/siteUrls";
 import { Kicker } from "@/components/Kicker";
 import { IdeaBand } from "@/components/IdeaBand";
 
-const SORTIMENT_TITLE = "Alla personliga presenter med gravyr – hela sortimentet | Taggat";
+const SORTIMENT_TITLE = "Personliga presenter med gravyr på glas, trä, metall och läder – hela sortimentet | Taggat";
 
 /**
  * ItemList-schema för de kategorikort som faktiskt renderas på sidan
@@ -63,13 +63,13 @@ export const Route = createFileRoute("/sortiment")({
       {
         name: "description",
         content:
-          "Alla handgjorda presenter: smycken, gravyr i trä och läder, skärbrädor, muggar, stickers, fototavlor och 3D-utskrifter. Filtrera och hitta din present.",
+          "Hela sortimentet: gravering på glas, trä, metall och läder, fotokonst, hem-inredning och 3D-utskrifter. Handgjorda personliga presenter på beställning i Småland.",
       },
       { property: "og:title", content: SORTIMENT_TITLE },
       {
         property: "og:description",
         content:
-          "Handgjorda personliga presenter – smycken, gravyr, 3D-utskrifter, stickers och fototavlor.",
+          "Gravering på glas, trä, metall och läder. Fotokonst, hem-inredning och 3D-utskrifter på beställning. Handgjort i Småland.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -115,8 +115,8 @@ function SortimentPage() {
             Allt jag gör
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Varje produkt kan personaliseras med namn, datum eller din egen hälsning – och du får
-            alltid en skiss innan jag graverar.
+            Gravering på glas, trä, metall och läder. Fotokonst, hem-inredning och 3D-utskrifter
+            på beställning. Du får alltid en skiss innan jag börjar.
           </p>
         </div>
       </header>

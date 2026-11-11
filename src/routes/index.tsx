@@ -38,20 +38,20 @@ export const Route = createFileRoute("/")({
   },
   head: () => ({
     meta: [
-      { title: "Personliga presenter med gravyr – handgjort i Småland | Taggat" },
+      { title: "Personliga presenter med gravyr på glas, trä, metall och läder | Taggat" },
       {
         name: "description",
         content:
-          "Personliga presenter med gravyr: nyckelringar med namn, graverade glas till bröllop, skärbrädor till farsdagen och julklappar med eget namn. Handgjort på beställning i Småland – digital skiss innan jag graverar.",
+          "Personliga presenter med gravyr på glas, trä, metall och läder – och nu även fotokonst och hem-inredning på beställning. Nyckelringar, skärbrädor, whiskyglas och graverade smycken. Handgjort i Småland – du får se en skiss innan jag graverar.",
       },
       {
         property: "og:title",
-        content: "Personliga presenter med gravyr – handgjort i Småland | Taggat",
+        content: "Personliga presenter med gravyr på glas, trä, metall och läder | Taggat",
       },
       {
         property: "og:description",
         content:
-          "Nyckelringar, glas, skärbrädor och julklappar – graverade med namn, datum eller egen text. Handgjort på beställning i Småland.",
+          "Gravering på glas, trä, metall och läder. Fotokonst och hem-inredning på beställning. Handgjort i Småland – du får se en skiss innan jag börjar.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -138,8 +138,8 @@ function Index() {
               <Kicker>utvalt från verkstaden</Kicker>
               <h2 className="mt-1 font-serif text-3xl tracking-tight">Personliga favoriter</h2>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                Ett litet urval av omtyckta och nya presenter. Allt går att anpassa med din egen
-                text.
+                Glas, trä, metall och läder – och nu även fotokonst och hem-inredning. Ett litet
+                urval av omtyckta och nya presenter. Allt går att anpassa med din egen text.
               </p>
             </div>
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
