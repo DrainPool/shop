@@ -774,8 +774,7 @@ function toShopifyShape(p: DemoProduct): ShopifyProduct {
 }
 
 export function isDemoMode(): boolean {
-  // Förhandsvisningen använder Shopify-sandlådan, aldrig testkatalogen.
-  return false;
+  return (import.meta.env["VITE_DEMO_MODE"] as string | undefined) === "1";
 }
 
 export function demoFetchProducts(first: number, query?: string): ShopifyProduct[] {

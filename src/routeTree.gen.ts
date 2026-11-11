@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DemoKassaRouteImport } from './routes/demo-kassa'
+import { Route as DemoTackRouteImport } from './routes/demo-tack'
 import { Route as ForetagRouteImport } from './routes/foretag'
 import { Route as FotograferingRouteImport } from './routes/fotografering'
 import { Route as FraktLeveransRouteImport } from './routes/frakt-leverans'
@@ -34,6 +36,16 @@ import { Route as ApiPublicFirecrawlCrawlRouteImport } from './routes/api/public
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoKassaRoute = DemoKassaRouteImport.update({
+  id: '/demo-kassa',
+  path: '/demo-kassa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoTackRoute = DemoTackRouteImport.update({
+  id: '/demo-tack',
+  path: '/demo-tack',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForetagRoute = ForetagRouteImport.update({
@@ -139,6 +151,8 @@ const ApiPublicFirecrawlCrawlRoute = ApiPublicFirecrawlCrawlRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/demo-kassa': typeof DemoKassaRoute
+  '/demo-tack': typeof DemoTackRoute
   '/foretag': typeof ForetagRoute
   '/fotografering': typeof FotograferingRoute
   '/frakt-leverans': typeof FraktLeveransRoute
@@ -162,6 +176,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/demo-kassa': typeof DemoKassaRoute
+  '/demo-tack': typeof DemoTackRoute
   '/foretag': typeof ForetagRoute
   '/fotografering': typeof FotograferingRoute
   '/frakt-leverans': typeof FraktLeveransRoute
@@ -186,6 +202,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/demo-kassa': typeof DemoKassaRoute
+  '/demo-tack': typeof DemoTackRoute
   '/foretag': typeof ForetagRoute
   '/fotografering': typeof FotograferingRoute
   '/frakt-leverans': typeof FraktLeveransRoute
@@ -211,6 +229,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/demo-kassa'
+    | '/demo-tack'
     | '/foretag'
     | '/fotografering'
     | '/frakt-leverans'
@@ -234,6 +254,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/demo-kassa'
+    | '/demo-tack'
     | '/foretag'
     | '/fotografering'
     | '/frakt-leverans'
@@ -257,6 +279,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/demo-kassa'
+    | '/demo-tack'
     | '/foretag'
     | '/fotografering'
     | '/frakt-leverans'
@@ -281,6 +305,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DemoKassaRoute: typeof DemoKassaRoute
+  DemoTackRoute: typeof DemoTackRoute
   ForetagRoute: typeof ForetagRoute
   FotograferingRoute: typeof FotograferingRoute
   FraktLeveransRoute: typeof FraktLeveransRoute
@@ -310,6 +336,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo-kassa': {
+      id: '/demo-kassa'
+      path: '/demo-kassa'
+      fullPath: '/demo-kassa'
+      preLoaderRoute: typeof DemoKassaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo-tack': {
+      id: '/demo-tack'
+      path: '/demo-tack'
+      fullPath: '/demo-tack'
+      preLoaderRoute: typeof DemoTackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/foretag': {
@@ -457,6 +497,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DemoKassaRoute: DemoKassaRoute,
+  DemoTackRoute: DemoTackRoute,
   ForetagRoute: ForetagRoute,
   FotograferingRoute: FotograferingRoute,
   FraktLeveransRoute: FraktLeveransRoute,

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { PaymentLogos } from "@/components/PaymentLogos";
 import { CartSuggestions } from "@/components/CartSuggestions";
 import { Progress } from "@/components/ui/progress";
@@ -26,6 +26,7 @@ import { FREE_SHIPPING_LIMIT, formatPrice, SHOPIFY_STORE_PERMANENT_DOMAIN } from
 import type { CartItem } from "@/stores/cartStore";
 
 export function CartDrawer() {
+  const router = useRouter();
   // Öppet-läge ligger i uiStore så toastens "Öppna varukorgen" kan nå den
   const isOpen = useUiStore((s) => s.cartOpen);
   const setCartOpen = useUiStore((s) => s.setCartOpen);
@@ -70,11 +71,8 @@ export function CartDrawer() {
   // event-loop-svar som klicket – en await emellan blockerar popups i Safari.
   const handleCheckout = () => {
     if (isDemoMode()) {
-      toast.info("Kassan är avstängd i demoläget", {
-        description:
-          "Butiken körs just nu med exempelprodukter. När riktiga produkter finns i Shopify kopplas kassan på automatiskt.",
-        position: "top-center",
-      });
+      router.navigate({ to: "/demo-kassa" });
+      setCartOpen(false);
       return;
     }
     const checkoutUrl = getCheckoutUrl();

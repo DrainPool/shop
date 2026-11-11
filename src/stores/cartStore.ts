@@ -134,7 +134,7 @@ async function createShopifyCart(item: CartItem) {
   if (isDemoMode()) {
     return {
       cartId: `demo-cart-${Date.now()}`,
-      checkoutUrl: "https://demo.checkout.invalid",
+      checkoutUrl: "/demo-kassa",
       lineId: `demo-line-${Date.now()}`,
     };
   }
