@@ -5,7 +5,7 @@ const cleanText = (max: number, label: string) =>
     .string()
     .trim()
     .max(max, `${label} får innehålla högst ${max} tecken`)
-    .refine((value) => !/[<>]/.test(value), `${label} innehåller tecken som inte kan användas`);
+    .refine((value) => !/[<>\'"&]/.test(value), `${label} innehåller tecken som inte kan användas`);
 
 export const customizationSchema = z
   .object({

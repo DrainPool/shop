@@ -43,7 +43,7 @@ export const Route = createFileRoute("/produkt/$handle")({
   // ?gravyr= kommer från presentguiden och förifyller gravyrtexten.
   validateSearch: (search: Record<string, unknown>): { gravyr?: string } =>
     typeof search["gravyr"] === "string" && search["gravyr"].trim()
-      ? { gravyr: search["gravyr"].replace(/[<>\'"&]/g, "").slice(0, 40) }
+      ? { gravyr: search["gravyr"].replace(/[<>'"&]/g, "").slice(0, 40) }
       : {},
   // Produkten hämtas i loadern så Product-JSON-LD och meta finns
   // med i SSR-HTML:en – robotar kör inget klient-JS.

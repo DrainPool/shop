@@ -44,7 +44,7 @@ export function HomeHero() {
         {/* Gulden variant av taggmärket: mörk yta, märket får stå först. */}
         <img
           src={taggMarkGold}
-          alt=""
+          alt="Taggat logotyp"
           width={512}
           height={512}
           decoding="async"

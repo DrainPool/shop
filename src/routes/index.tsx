@@ -81,6 +81,12 @@ function Index() {
 
   return (
     <>
+      {/* Defensivt sr-only h1 – fallback om hero inte lyckas renderas eller
+          om en skärmläsare hoppar förbi visuella rubriken. */}
+      <h1 className="sr-only">
+        Personliga presenter med gravyr på glas, trä, metall och läder – Taggat
+      </h1>
+
       {/* ATTENTION – cinematisk hero med fullbreddsbild och mörk radial-wash */}
       <HomeHero />
 
