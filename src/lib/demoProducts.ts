@@ -913,7 +913,7 @@ function toShopifyShape(p: DemoProduct): ShopifyProduct {
 }
 
 export function isDemoMode(): boolean {
-  return (import.meta.env["VITE_DEMO_MODE"] as string | undefined) === "1";
+  return import.meta.env.VITE_DEMO_MODE === "1";
 }
 
 export function demoFetchProducts(first: number, query?: string): ShopifyProduct[] {
