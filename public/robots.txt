@@ -4,4 +4,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://linsochlager.net/sitemap.xml
+Sitemap: https://linsochlager.net/shop/sitemap.xml

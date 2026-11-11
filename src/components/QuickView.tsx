@@ -54,6 +54,8 @@ export function QuickView({ product }: { product: ShopifyProduct }) {
                 alt={image.altText || node.title}
                 loading="lazy"
                 decoding="async"
+                width={700}
+                height={700}
                 className="aspect-square w-full object-cover"
               />
             )}

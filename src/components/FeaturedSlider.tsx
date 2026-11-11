@@ -27,13 +27,13 @@ export function FeaturedSlider() {
 
   useEffect(() => {
     let cancelled = false;
-    fetchProducts(50)
+    fetchProducts(16)
       .then((all) => {
         if (cancelled) return;
-        // Bästsäljare först, resten som utfyllnad upp till 10 kort
+        // Bästsäljare först, resten som utfyllnad upp till 8 kort
         const best = all.filter((p) => (p.node.tags || []).includes("bastsaljare"));
         const others = all.filter((p) => !best.includes(p));
-        setProducts([...best, ...others].slice(0, 10));
+        setProducts([...best, ...others].slice(0, 8));
       })
       .catch(() => setProducts([]));
     return () => {

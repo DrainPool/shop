@@ -17,8 +17,10 @@ export function SeoIntro() {
       <h2 className="mb-3 font-serif text-xl text-foreground">Personliga presenter med gravyr</h2>
       <p>
         Jag graverar presenter för hand i min verkstad i Aneby, mitt i Småland: {cat("glas", "glas")},{" "}
-        {cat("skarbrador", "skärbrädor")} och andra saker som används i vardagen. Du väljer texten,
-        jag skickar en skiss – och först när du säger ja börjar jag gravera.
+        {cat("skarbrador", "skärbrädor")}, {cat("nyckelringar", "nyckelringar")} och andra saker i trä,
+        metall och läder. Jag gör även {cat("fotokonst", "fotokonst")} och {cat("hem-inredning", "hem-inredning")} på
+        beställning. Du väljer texten, jag skickar en skiss – och först när du säger ja börjar jag
+        gravera.
       </p>
       <p className="mt-3">
         Letar du efter något till ett särskilt tillfälle? Läs mina tips om {tip("doppresent-med-gravyr", "doppresenter")},{" "}

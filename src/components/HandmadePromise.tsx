@@ -22,8 +22,9 @@ export function HandmadePromise() {
             Ingen massproduktion – din produkt tillverkas först när du beställt
           </h2>
           <p className="mt-4 leading-relaxed text-muted-foreground">
-            Jag gravrerar ditt namn, din text eller ditt datum i verkstaden i Aneby. Du
-            godkänner alltid en digital skiss innan jag bränner — så presenten blir precis
+            Jag graverar din text i glas, trä, metall och läder. Jag gör även fotokonst,
+            hem-inredning och 3D-utskrifter på beställning i verkstaden i Aneby. Du
+            godkänner alltid en skiss innan jag börjar – så presenten blir precis
             som du tänkt den, inte nästan.
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
