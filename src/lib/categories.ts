@@ -7,6 +7,8 @@ import ikonSkarbrada from "@/assets/ikon-skarbrada.png";
 import ikonLader from "@/assets/ikon-lader.png";
 import ikonSticker from "@/assets/ikon-sticker.png";
 import ikonFototavla from "@/assets/ikon-fototavla.png";
+import ikonKonsttryck from "@/assets/ikon-konsttryck.png";
+import ikonHeminredning from "@/assets/ikon-heminredning.png";
 import ikon3d from "@/assets/ikon-3d.png";
 import ikonDjupportratt from "@/assets/ikon-djupportratt.svg";
 import ikonGolf from "@/assets/ikon-golf.svg";
@@ -292,11 +294,11 @@ export const productTypes: Category[] = [
     related: ["brollop", "morsdag", "alla-hjartans-dag"],
   },
   {
-    // Fine-art konsttryck – färdiga konstprintar i begränsad upplaga,
-    // till skillnad från fototavlorna där kunden skickar eget foto.
+    // Fine-art konsttryck
     slug: "konsttryck",
     tag: "konsttryck",
     short: "Konsttryck",
+    icon: ikonKonsttryck,
     title: "Fine-art konsttryck",
     kicker: "bilder att hänga upp",
     description:
@@ -306,11 +308,11 @@ export const productTypes: Category[] = [
     related: ["nytt-hem", "fodelsedag", "morsdag"],
   },
   {
-    // Heminredning – taklampor, vägghyllor, krukor. Ingen gravyr,
-    // färdiga detaljer som lyfter rummet.
+    // Heminredning
     slug: "hem-inredning",
     tag: "heminredning",
     short: "Inredning",
+    icon: ikonHeminredning,
     title: "Heminredning",
     kicker: "detaljer som gör hemmet",
     description:
