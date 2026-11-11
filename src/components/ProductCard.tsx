@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { withBase } from "@/lib/basePath";
 import { WishlistHeart } from "@/components/WishlistHeart";
 import { QuickView } from "@/components/QuickView";
 import { formatPrice, getPricing, type ShopifyProduct } from "@/lib/shopify";
@@ -101,7 +102,7 @@ export function ProductCard({
         {image ? (
           <>
             <img
-              src={image.url}
+              src={withBase(image.url)}
               alt={image.altText || node.title}
               loading={priority ? "eager" : "lazy"}
               fetchPriority={priority ? "high" : "auto"}
@@ -117,7 +118,7 @@ export function ProductCard({
                 först vid hover och får inte störa LCP-bilden. */}
             {secondImage && (
               <img
-                src={secondImage.url}
+                src={withBase(secondImage.url)}
                 alt=""
                 loading="lazy"
                 decoding="async"
