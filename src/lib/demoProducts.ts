@@ -579,6 +579,145 @@ export const DEMO_PRODUCTS: DemoProduct[] = [
       img("korgar_hem_H0a665.webp"),
     ],
   },
+  // Gamla /butik-produkter — konsttryck, heminredning, 3D-prints
+  {
+    title: "Fine-art print — Pastel Petal Dream",
+    handle: "fine-art-pastel-petal-dream",
+    description:
+      "Pastellblommor i mjuka toner på högkvalitativt fotopapper. Begränsad upplaga, signerad och numrerad på baksidan.",
+    tags: ["konsttryck", "fine-art", "natur", "nytt-hem", "present", "morsdag", "fodelsedag"],
+    price: "199.00",
+    image: img("1771681076321-p9eaa73.webp"),
+  },
+  {
+    title: "Fine-art print — Neon Koi Flow",
+    handle: "fine-art-neon-koi-flow",
+    description:
+      "Abstrakt koifisk i neonfärger på matt fotopapper. Kontrastrik och livfull — ett blickfång på väggen.",
+    tags: ["konsttryck", "fine-art", "abstrakt", "nytt-hem", "present", "morsdag", "fodelsedag"],
+    price: "349.00",
+    image: img("1772030636432-5afungg.webp"),
+  },
+  {
+    title: "Fine-art print — The Green Frontier",
+    handle: "fine-art-green-frontier",
+    description:
+      "Grönt landskap i mjuka övergångar på canvas-tryck. Lugnande naturmotiv för sovrum eller vardagsrum.",
+    tags: ["konsttryck", "fine-art", "natur", "nytt-hem", "present", "fodelsedag"],
+    price: "259.00",
+    image: img("1772030983802-utic7x7.webp"),
+  },
+  {
+    title: "Fine-art print — Bluebell Botanical",
+    handle: "fine-art-bluebell-botanical",
+    description:
+      "Botaniskt blåklocksmotiv på akvarellpapper. Detaljrikt och klassiskt — passar i ram eller uppspänt på träpanel.",
+    tags: ["konsttryck", "fine-art", "botanik", "nytt-hem", "present", "morsdag"],
+    price: "349.00",
+    image: img("1772031087165-esvbdwr.webp"),
+  },
+  {
+    title: "Fine-art print — Citadellet i Skymningen",
+    handle: "fine-art-citadellet-skymningen",
+    description:
+      "Fotokonst från Aneby — Citadellet i gyllene skymningsljus. Lokalt motiv, tryckt på museumspapper.",
+    tags: ["konsttryck", "fine-art", "natur", "nytt-hem", "present", "fodelsedag"],
+    price: "259.00",
+    image: img("1772031709604-fihv3nl.webp"),
+  },
+  {
+    title: "Fine-art print — Ochre Harmony",
+    handle: "fine-art-ochre-harmony",
+    description:
+      "Ockrafärgat abstrakt motiv med jordtoner. Väggkonst som värmer rummet — tryckt på matt konstpapper.",
+    tags: ["konsttryck", "fine-art", "abstrakt", "nytt-hem", "present", "fodelsedag"],
+    price: "259.00",
+    image: img("1772032112236-s31z8g1.webp"),
+  },
+  {
+    title: "Fine-art print — Modern Companion",
+    handle: "fine-art-modern-companion",
+    description:
+      "Modernt djurporträtt i stilren stil. Svarvita linjer på ljust underlag — elegant och tidlös.",
+    tags: ["konsttryck", "fine-art", "abstrakt", "nytt-hem", "present", "djur"],
+    price: "349.00",
+    image: img("1772047425050-h9ts7uh.webp"),
+  },
+  {
+    title: "Fine-art print — Vintage Poppy Study",
+    handle: "fine-art-vintage-poppy-study",
+    description:
+      "Vallmo i vintagestil — mjuka färger och detaljerad stång. Botaniskt konsttryck på museumspapper.",
+    tags: ["konsttryck", "fine-art", "botanik", "nytt-hem", "present", "morsdag"],
+    price: "199.00",
+    image: img("1772047585377-5i1kq47.webp"),
+  },
+  // 3D-printade produkter från gamla /butik
+  {
+    title: "Stickis-apan — personlig 3D-figur",
+    handle: "stickis-apan-3d-figur",
+    description:
+      "Charmig 3D-printad apa i PLA. Fås i valfri färg — perfekt som liten present eller skrivbordsprydnad.",
+    tags: ["3d", "barn", "nytt-hem", "present", "nyhet"],
+    price: "189.00",
+    image: img("1772030941353-6u5ksec.webp"),
+  },
+  {
+    title: "Bläckfiskelampa — 3D-printad LED",
+    handle: "blackfiskelampa-3d-printad",
+    description:
+      "3D-printad bläckfisk som sprider mjukt LED-ljus genom väggarna. Unik belysning som passar i barnrummet eller som nattlampa.",
+    tags: ["3d", "heminredning", "lampa", "nytt-hem", "present", "nyhet"],
+    price: "499.00",
+    image: img("1786387386074-zaoafvr.webp"),
+  },
+  {
+    title: "Layers of Light — LED-ljuslåda",
+    handle: "layers-of-light-led-ljuslada",
+    description:
+      "3D-printad LED-ljuslåda med flera lager som skapar djup och skugga. Justerbar ljusstyrka — en konstverk-lampa.",
+    tags: ["3d", "heminredning", "lampa", "nytt-hem", "present", "nyhet"],
+    price: "499.00",
+    image: img("1786565741845-3vz2k0k.webp"),
+  },
+  // Heminredning från gamla /butik
+  {
+    title: "Ribbad Taklampa — 3D-printad",
+    handle: "ribbad-taklampa-3d-printad",
+    description:
+      "Taklampa med ribbat skal — 3D-printad i återvunnet PLA. Mjukt ljus som skapar mönster på väggarna.",
+    tags: ["heminredning", "lampa", "nytt-hem", "present", "nyhet"],
+    price: "699.00",
+    image: img("taklampa-ribbad-3d-print.webp"),
+  },
+  {
+    title: "Organisk Vägghylla — 3D-printad",
+    handle: "organisk-vagghylla-3d-printad",
+    description:
+      "Vägghylla med organiska former — 3D-printad i bioplast. Håller böcker, växter eller småprylar med stil.",
+    tags: ["heminredning", "hylla", "nytt-hem", "present", "nyhet"],
+    price: "349.00",
+    image: img("vagghylla-organisk-3d-print.webp"),
+  },
+  {
+    title: "Självvattnande Kruka — 3D-printad",
+    handle: "sjalvvattnande-kruka-3d-printad",
+    description:
+      "Självvattnande kruka i modern design — 3D-printad i bioplast. Vattnet räcker längre och plantan mår bättre.",
+    tags: ["heminredning", "kruka", "nytt-hem", "present", "nyhet"],
+    price: "329.00",
+    image: img("1787733217179-bh7u1sh.webp"),
+  },
+  // Tillbehör
+  {
+    title: "Exklusiv Presentask",
+    handle: "exklusiv-presentask",
+    description:
+      "Liten presentask i plywood — perfekt som tillval till nyckelringen, smycket eller glaset.",
+    tags: ["askar", "present", "jul", "brollop", "dop"],
+    price: "49.00",
+    image: img("presentask-exklusiv.webp"),
+  },
   // Nya F1 Ultra-produkter (preliminära demopriser – sätts på riktigt i Shopify)
   ...[
     {
