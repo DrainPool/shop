@@ -88,8 +88,8 @@ export const Route = createFileRoute("/produkt/$handle")({
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "Product",
-      name: node.title,
-      description: node.description,
+      name: JSON.stringify(node.title).slice(1, -1),
+      description: JSON.stringify(node.description || "").slice(1, -1),
       sku,
       image: node.images.edges.map((e) => e.node.url),
       brand: { "@type": "Brand", name: "Taggat" },
@@ -114,9 +114,13 @@ export const Route = createFileRoute("/produkt/$handle")({
         ...(node.images.edges[0]?.node?.url?.startsWith("https://")
           ? [
               { property: "og:image", content: node.images.edges[0].node.url },
+              { property: "og:image:alt", content: `Produktbild: ${node.title}` },
               { name: "twitter:image", content: node.images.edges[0].node.url },
             ]
-          : []),
+          : [
+              { property: "og:image", content: `${SITE_URL}/og-default.png` },
+              { name: "twitter:image", content: `${SITE_URL}/og-default.png` },
+            ]),
         { name: "twitter:card", content: "summary_large_image" },
       ],
       links: [
