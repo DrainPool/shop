@@ -9,7 +9,7 @@ import type { ShopifyProduct } from "@/lib/shopify";
  * bilder pekar på de AI-genererade miljöbilderna i /images/products/.
  */
 
-const img = (file: string) => `/images/products/${file}`;
+const img = (file: string) => `images/products/${file}`;
 
 type DemoProduct = {
   title: string;
