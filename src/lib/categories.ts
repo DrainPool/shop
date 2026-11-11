@@ -292,6 +292,34 @@ export const productTypes: Category[] = [
     related: ["brollop", "morsdag", "alla-hjartans-dag"],
   },
   {
+    // Fine-art konsttryck – färdiga konstprintar i begränsad upplaga,
+    // till skillnad från fototavlorna där kunden skickar eget foto.
+    slug: "konsttryck",
+    tag: "konsttryck",
+    short: "Konsttryck",
+    title: "Fine-art konsttryck",
+    kicker: "bilder att hänga upp",
+    description:
+      "Färdiga konstprintar i begränsad upplaga – naturmotiv, abstrakt och svartvitt fotokonst på högkvalitativt papper eller canvas.",
+    about:
+      "Konsttrycken är färdiga verk i begränsad upplaga – till skillnad från fototavlorna där du skickar in ditt eget foto. Här väljer du motivet direkt och får en print redo att ramma in. Varje motiv finns i ett begränsat antal exemplar, och när upplagan är slut tar det några veckor innan nästa omgång finns tillgänglig.",
+    related: ["nytt-hem", "fodelsedag", "morsdag"],
+  },
+  {
+    // Heminredning – taklampor, vägghyllor, krukor. Ingen gravyr,
+    // färdiga detaljer som lyfter rummet.
+    slug: "hem-inredning",
+    tag: "heminredning",
+    short: "Inredning",
+    title: "Heminredning",
+    kicker: "detaljer som gör hemmet",
+    description:
+      "Taklampor, vägghyllor och krukor i trä och metall – handplockade detaljer som lyfter rummet.",
+    about:
+      "Här samlar jag inredningsdetaljer som jag själv skulle vilja ha hemma: taklampor i trä, vägghyllor i ek och krukor med stilrena former. Inget av det är graverat eller personaliserat – det är helt enkelt saker som gör hemmet trevligare. Passar perfekt som inflyttningspresent eller när du vill unna dig själv något.",
+    related: ["nytt-hem", "jul", "presenter"],
+  },
+  {
     // Djupporträtt (sep 2026): kundens eget djurfoto -> AI-porträtt i flera
     // "alter egos" -> skiss att godkänna -> graverad produkt. Själva
     // AI-genereringen sker i verkstaden (lokal SwarmUI), inte i webbläsaren –

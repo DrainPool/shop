@@ -51,6 +51,8 @@ const TAG_LABELS: Record<string, string> = {
   "till-barn": "Till barn",
   "till-mor-farforaldrar": "Till mor- och farföräldrar",
   "till-paret": "Till paret",
+  konsttryck: "Konsttryck",
+  heminredning: "Heminredning",
 };
 
 /** Taggar som räknas som produkttyp (egen filtergrupp) */
@@ -65,6 +67,8 @@ const TYPE_TAGS = [
   "stickers",
   "foto",
   "3d",
+  "konsttryck",
+  "heminredning",
 ];
 
 const RECIPIENT_TAGS = [
