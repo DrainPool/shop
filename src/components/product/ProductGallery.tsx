@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { withBase } from "@/lib/basePath";
 import { badgeTone } from "@/lib/badgeTone";
 import { useEngravingPreview } from "@/stores/engravingPreviewStore";
 import { Button } from "@/components/ui/button";
@@ -76,7 +77,7 @@ export function ProductGallery({
         )}
         {image ? (
           <img
-            src={image.url}
+            src={withBase(image.url)}
             alt={image.altText || title}
             // width/height = demo-bildernas 700×700 – ger rätt
             // platsreservation i html:en (aspect-square räcker inte
@@ -154,7 +155,7 @@ export function ProductGallery({
               )}
             >
               <img
-                src={img.url}
+                src={withBase(img.url)}
                 alt={
                   img.altText?.trim()
                     ? `${img.altText} – ${title}, bild ${i + 1}`
