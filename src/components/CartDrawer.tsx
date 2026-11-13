@@ -176,7 +176,7 @@ export function CartDrawer() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex h-full w-full flex-col sm:max-w-lg">
+      <SheetContent className="flex h-full w-full flex-col overflow-hidden sm:max-w-lg">
         <SheetHeader className="flex-shrink-0">
           <SheetTitle className="font-serif text-2xl">Din varukorg</SheetTitle>
           <SheetDescription>
